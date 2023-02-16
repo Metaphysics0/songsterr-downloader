@@ -1,11 +1,14 @@
 <script>
 	import Form from '../ui/Form.svelte';
 	import Header from '../ui/Header.svelte';
+	import SocialLinks from '../ui/SocialLinks.svelte';
 </script>
 
-<main class="h-screen flex flex-col justify-center items-center">
-	<div class="pb-36">
-		<Header />
-		<Form />
-	</div>
+<main>
+	<Header />
+	<Form />
 </main>
+
+<footer>
+	<SocialLinks />
+</footer>
