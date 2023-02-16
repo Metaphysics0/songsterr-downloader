@@ -1,13 +1,23 @@
+import { songsterrUrlRegex } from '../consts';
 import { getDownloadLinkFromSongsterr } from '../utils/getDownloadLink';
-import getDownloadResponseForClient from '../utils/getDownloadResponseForClient';
-import getSongTitleFromUrl from '../utils/getSongTitleFromUrl';
 import type { Actions } from './$types';
 
 export const actions = {
 	getDownloadLink: async ({ request }) => {
-		const data = await request.formData();
-		const userInput = data.get('url');
-		// @ts-ignore
-		return await getDownloadLinkFromSongsterr(userInput);
+		try {
+			const data = await request.formData();
+			const userInput = data.get('url')?.toString();
+
+			if (!userInput) return;
+
+			if (!songsterrUrlRegex.test(String(userInput))) {
+				console.error('invalid input');
+				return;
+			}
+			return await getDownloadLinkFromSongsterr(userInput);
+		} catch (error) {
+			console.error('error');
+			return;
+		}
 	}
 } satisfies Actions;
