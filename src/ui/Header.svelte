@@ -8,6 +8,14 @@
 			rel="noreferrer"
 			class="text-blue-400">songsterr</a
 		>
-		and click the button to get a Guitar Pro file!
+		and click the button to get a
+		<a
+			href="https://www.guitar-pro.com/"
+			target="_blank"
+			rel="noreferrer"
+			class="text-blue-400"
+			>Guitar Pro
+		</a>
+		file!
 	</p>
 </div>
