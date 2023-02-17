@@ -2,5 +2,6 @@
 
 ## Current Tech Stack 👨🏻‍💻
 
-- ♻️ SveleteKit 1.0 + TypeScript
-- 💅🏻 UnoCSS, (Preset Wind)
+- ♻️ [SveleteKit](https://kit.svelte.dev/) + TypeScript
+- 💅🏻 [UnoCSS](https://github.com/unocss/unocss) for styling
+- 🔥 [Vercel](https://vercel.com/) for deployment
