@@ -27,6 +27,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@vercel/analytics": "^0.1.10",
 		"@xmldom/xmldom": "^0.8.6",
 		"svelte-icons": "^2.1.0"
 	}
