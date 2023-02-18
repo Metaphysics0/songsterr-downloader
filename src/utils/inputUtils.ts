@@ -5,6 +5,8 @@ export function setValidationMessage(event: Event): void {
 	} else {
 		input.setCustomValidity('Please enter a valid Songsterr URL.');
 	}
+
+	input.reportValidity();
 }
 export function clearValidationMessage(event: Event): void {
 	const input = event.target as HTMLInputElement;
