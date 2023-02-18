@@ -4,7 +4,7 @@
 	import FaLinkedinIn from 'svelte-icons/fa/FaLinkedinIn.svelte';
 </script>
 
-<section class="flex mx-auto w-fit h-7 mt-8">
+<section class="flex items-center mx-auto w-fit h-7">
 	<a href="https://github.com/Metaphysics0" target="_blank" rel="noreferrer">
 		<GoMarkGithub />
 	</a>
@@ -26,6 +26,7 @@
 
 <style>
 	a {
+		height: 100%;
 		margin: 0 10px;
 		opacity: 0.5;
 		transition: all 0.3s ease;
