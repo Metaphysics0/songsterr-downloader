@@ -1,25 +1,37 @@
 import { SONGSTERR_URL_REGEX_PATTERN } from '../consts';
-import { getDownloadLinkFromSongsterr } from '../utils/getDownloadLink';
+import {
+	buildFileName,
+	getDownloadLinkFromSongsterr
+} from '../utils/getDownloadLink';
 import type { Actions } from './$types';
 
 export const actions = {
-	/* see how to return a blob here:
-	 * https://github.com/sveltejs/kit/issues/6008#issuecomment-1227510231
-	 */
-	getDownloadLink: async ({ request }) => {
+	getFileResource: async ({
+		request
+	}): Promise<SongsterrDownloadResponse | undefined> => {
 		try {
 			const data = await request.formData();
 			const userInput = data.get('url')?.toString();
-
 			if (!userInput) return;
 
 			if (!SONGSTERR_URL_REGEX_PATTERN.test(String(userInput))) {
-				console.error('invalid input');
-				return;
+				throw 'invalid input!';
 			}
-			return await getDownloadLinkFromSongsterr(userInput);
+
+			const link = await getDownloadLinkFromSongsterr(userInput);
+			if (!link) throw 'Unable to get download link';
+
+			const downloadResponse = await fetch(link);
+			const buf = await downloadResponse.arrayBuffer();
+
+			return {
+				file: Array.from(new Uint8Array(buf)),
+				fileName: buildFileName(userInput, link),
+				contentType:
+					downloadResponse.headers.get('Content-Type') || 'application/gp'
+			};
 		} catch (error) {
-			console.error('error');
+			console.error('error', error);
 			return;
 		}
 	}

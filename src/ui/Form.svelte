@@ -6,27 +6,33 @@
 		clearValidationMessage
 	} from '../utils/inputUtils';
 
-	function triggerLinkDownload(generatedUrl: string): void {
-		if (!/\.gp/.test(generatedUrl)) {
-			alert('There was a problem getting the file from this url ):');
+	function triggerLinkDownload(
+		res: SongsterrDownloadResponse | undefined
+	): void {
+		if (!res) {
+			alert('Unable to download the Guitar pro link from this URL ):');
+			return;
 		}
+
+		const uint8Array = new Uint8Array(res.file);
+		const blob = new Blob([uint8Array], { type: res.contentType });
+
 		const link = document.createElement('a');
-		link.href = generatedUrl;
-		document.body.appendChild(link);
+		link.href = window.URL.createObjectURL(blob);
+		link.download = res.fileName;
 		link.click();
-		document.body.removeChild(link);
 	}
 </script>
 
 <form
 	class="flex flex-col items-center"
 	method="POST"
-	action="?/getDownloadLink"
+	action="?/getFileResource"
 	use:enhance={() => {
 		return async ({ result, update }) => {
 			update({ reset: false });
 			// @ts-ignore
-			triggerLinkDownload(result.data);
+			triggerLinkDownload(result?.data);
 		};
 	}}
 >
