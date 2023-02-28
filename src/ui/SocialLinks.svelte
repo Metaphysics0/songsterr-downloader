@@ -5,7 +5,11 @@
 </script>
 
 <section class="flex items-center mx-auto w-fit h-7">
-	<a href="https://github.com/Metaphysics0" target="_blank" rel="noreferrer">
+	<a
+		href="https://github.com/Metaphysics0/songsterr-downloader"
+		target="_blank"
+		rel="noreferrer"
+	>
 		<GoMarkGithub />
 	</a>
 	<a
