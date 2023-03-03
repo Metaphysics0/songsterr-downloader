@@ -11,6 +11,5 @@
 </main>
 
 <footer class="flex flex-col items-center justify-center">
-	<BuyMeCoffeeButton />
 	<SocialLinks />
 </footer>
