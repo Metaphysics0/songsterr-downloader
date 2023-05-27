@@ -1,5 +1,4 @@
 <script>
-	import Form from '../ui/Form.svelte';
 	import Header from '../ui/Header.svelte';
 	import SocialLinks from '../ui/SocialLinks.svelte';
 	import TabMenu from '../ui/Tabs/Menu.svelte';

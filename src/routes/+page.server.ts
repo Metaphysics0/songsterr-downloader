@@ -1,8 +1,9 @@
 import { SONGSTERR_URL_REGEX_PATTERN } from '../consts';
 import {
-	buildFileName,
-	getDownloadLinkFromSongsterr
-} from '../utils/getDownloadLink';
+	getDownloadLinkFromSongsterr,
+	buildFileName
+} from '$lib/server/getDownloadLink';
+
 import type { Actions } from './$types';
 
 export const actions = {
@@ -33,5 +34,15 @@ export const actions = {
 			console.error('error', error);
 			return;
 		}
+	},
+	searchForArtist: async ({ request }) => {
+		const data = await request.formData();
+		const userInput = data.get('artistNameSearch')?.toString();
+
+		if (!userInput) throw 'Input not provided!';
+
+		return {
+			foo: 'bar'
+		};
 	}
 } satisfies Actions;
