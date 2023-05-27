@@ -2,7 +2,6 @@
 	import Form from '../ui/Form.svelte';
 	import Header from '../ui/Header.svelte';
 	import SocialLinks from '../ui/SocialLinks.svelte';
-	import BuyMeCoffeeButton from '../ui/BuyMeCoffeeButton.svelte';
 </script>
 
 <main class="mb-12">

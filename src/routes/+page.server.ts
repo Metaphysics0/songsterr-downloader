@@ -14,9 +14,8 @@ export const actions = {
 			const userInput = data.get('url')?.toString();
 			if (!userInput) return;
 
-			if (!SONGSTERR_URL_REGEX_PATTERN.test(String(userInput))) {
+			if (!SONGSTERR_URL_REGEX_PATTERN.test(String(userInput)))
 				throw 'invalid input!';
-			}
 
 			const link = await getDownloadLinkFromSongsterr(userInput);
 			if (!link) throw 'Unable to get download link';
