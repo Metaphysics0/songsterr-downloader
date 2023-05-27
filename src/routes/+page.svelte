@@ -2,11 +2,12 @@
 	import Form from '../ui/Form.svelte';
 	import Header from '../ui/Header.svelte';
 	import SocialLinks from '../ui/SocialLinks.svelte';
+	import TabMenu from '../ui/Tabs/Menu.svelte';
 </script>
 
 <main class="mb-12">
 	<Header />
-	<Form />
+	<TabMenu />
 </main>
 
 <footer class="flex flex-col items-center justify-center">
