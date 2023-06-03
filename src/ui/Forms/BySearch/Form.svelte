@@ -9,8 +9,10 @@
 	});
 </script>
 
-{#if selectedSong}
-	<SelectedForm {selectedSong} />
-{:else}
-	<SearchForm />
-{/if}
+<div>
+	{#if selectedSong}
+		<SelectedForm {selectedSong} />
+	{:else}
+		<SearchForm />
+	{/if}
+</div>
