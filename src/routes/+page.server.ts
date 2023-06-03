@@ -34,15 +34,5 @@ export const actions = {
 			console.error('error', error);
 			return;
 		}
-	},
-	searchForArtist: async ({ request }) => {
-		const data = await request.formData();
-		const userInput = data.get('artistNameSearch')?.toString();
-
-		if (!userInput) throw 'Input not provided!';
-
-		return {
-			foo: 'bar'
-		};
 	}
 } satisfies Actions;

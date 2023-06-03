@@ -1,10 +1,50 @@
+<script lang="ts">
+	import { apiService } from '$lib/apiService';
+	import mockSearchResultResponse from '$lib/mockSearchResultResponse';
+	import { cssClasses } from '$lib/sharedCssClasses';
+	import SearchResults from './shared/SearchResults.svelte';
+
+	let searchResults: ISearchResult[] = [];
+	async function searchForArtists(inputText: string): Promise<void> {
+		try {
+			// const response = await apiService.artists.search(inputText);
+			// const data = await response.json();
+			// console.log('DATA', data);
+
+			// @ts-ignore
+			searchResults = Array(10).fill(mockSearchResultResponse);
+			// searchRe
+			// searchResults = data.searchResults;
+		} catch (error) {
+			console.log('error fetching search results', error);
+		} finally {
+			isPromiseInProgress = false;
+		}
+	}
+
+	const debounceDurationInMs = 750;
+	let timer: any;
+	let isPromiseInProgress: boolean = false;
+	const debounceThenSearchForArtists = (event: Event) => {
+		const { value } = <HTMLTextAreaElement>event.target;
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			isPromiseInProgress = true;
+			searchForArtists(value);
+		}, debounceDurationInMs);
+	};
+</script>
+
 <label for="artistNameSearch">
-	1. Search artist name:
+	1. Search by song or artist
 	<input
 		type="text"
 		name="artistNameSearch"
+		on:keyup={debounceThenSearchForArtists}
 		placeholder="Led Zepplin"
 		id="artistNameSearch"
-		class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2 w-xl lg:w-lg md:w-sm sm:w-sm text-center"
+		class={cssClasses.textInput}
 	/>
 </label>
+
+<SearchResults {searchResults} isLoading={isPromiseInProgress} />

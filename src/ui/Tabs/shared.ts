@@ -1,5 +1,5 @@
-import ByArtist from '../Forms/ByArtist.svelte';
-import ByLink from '../Forms/ByLink.svelte';
+import ByArtist from '../forms/ByArtist.svelte';
+import ByLink from '../forms/ByLink.svelte';
 
 export const createClassNames = (
 	...classes: (string | false | null | undefined)[]

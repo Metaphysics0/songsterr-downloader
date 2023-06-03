@@ -1,13 +1,16 @@
-export async function searchForArtists(searchText: string) {
+export async function searchForArtists(
+	searchText: string
+): Promise<ISearchResult[]> {
+	const searchResponse = await search(searchText);
+	return searchResponse.json();
+}
+
+/*
+ * Private
+ */
+async function search(searchText: string) {
 	const url = createSongsterrSearchUrl(searchText);
-
-	// @ts-ignore
-	const response = await fetch(url, {
-		...fetchOptions,
-		referrer: url
-	});
-
-	console.log('RESPONSE', JSON.stringify(response));
+	return fetch(url, getFetchOptions(url));
 }
 
 const createSongsterrSearchUrl = (searchText: string) => {
@@ -15,7 +18,8 @@ const createSongsterrSearchUrl = (searchText: string) => {
 	return baseUrl + searchText;
 };
 
-const fetchOptions = {
+const getFetchOptions = (url: string): RequestInit => ({
+	referrer: url,
 	headers: {
 		'sec-ch-ua':
 			'"Google Chrome";v="113", "Chromium";v="113", "Not-A.Brand";v="24"',
@@ -27,24 +31,4 @@ const fetchOptions = {
 	method: 'GET',
 	mode: 'cors',
 	credentials: 'omit'
-};
-
-interface ISearchResult {
-	hasPlayer: boolean;
-	artist: string;
-	artistId: number;
-	title: string;
-	songId: number;
-	tracks: IArtistTrack[];
-	hasChords: boolean;
-	defaultTrack: number;
-}
-
-interface IArtistTrack {
-	tuning?: number[];
-	tuningString?: string;
-	instrumentId: number;
-	dailyViews: number;
-	views: number;
-	difficulty?: string;
-}
+});
