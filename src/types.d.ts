@@ -4,6 +4,8 @@ interface SongsterrDownloadResponse {
 	contentType: string;
 }
 
+type IBadge = 'new' | 'pro';
+
 interface ISearchResultResponse {
 	searchResults: ISearchResult[];
 }

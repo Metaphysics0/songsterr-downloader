@@ -38,7 +38,7 @@
 	}}
 >
 	<label for="url" class="w-full">
-		1. Enter in a Songsterr tab url:
+		Enter in a Songsterr tab url:
 		<input
 			type="url"
 			name="url"
@@ -50,10 +50,7 @@
 			class={cssClasses.textInput}
 		/>
 	</label>
-	<button
-		class="w-fit px-2 py-1 bg-red-500 hover:bg-red-400 text-white font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer"
-		>Download Guitar Pro File!</button
-	>
+	<button class={cssClasses.downloadBtn}>Download Tab!</button>
 </form>
 
 <style>
