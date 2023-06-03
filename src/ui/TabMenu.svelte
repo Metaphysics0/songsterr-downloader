@@ -6,15 +6,23 @@
 		TabPanel,
 		TabPanels
 	} from '@rgossiaux/svelte-headlessui';
-	import { createClassNames, tabs } from './tabs/shared';
 	import {
 		activeTabMenuIndex,
 		type ITabMenuIndex
 	} from '../stores/activeTabMenu';
 
+	import BySearch from './forms/BySearch/Form.svelte';
+	import ByLink from './forms/ByLink/Form.svelte';
+	import { createClassNames } from '$lib/utils/cssUtils';
+
 	function setActiveTabIndex(idx: ITabMenuIndex): void {
 		activeTabMenuIndex.set(idx);
 	}
+
+	const tabs = [
+		{ name: 'By Link', content: ByLink },
+		{ name: 'By Search', content: BySearch }
+	];
 </script>
 
 <TabGroup
