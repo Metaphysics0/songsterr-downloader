@@ -1,3 +1,4 @@
+import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { DOMParser } from '@xmldom/xmldom';
 
 export async function getDownloadLinkFromSongsterr(
@@ -41,9 +42,21 @@ export function buildFileName(url: string, downloadUrl: string): string {
 		url.lastIndexOf('/') + 1,
 		url.lastIndexOf('-')
 	);
-	const fileType = downloadUrl.endsWith('.gp5') ? '.gp5' : '.gp';
+	const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
+
 	return fileName + fileType;
 }
+
+export function buildFileNameFromSongName(
+	songName: string,
+	downloadUrl: string
+): string {
+	const normalizedSongName = normalize(songName);
+	const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
+
+	return normalizedSongName + fileType;
+}
+
 async function getDocumentFromUrl(url: string, websiteType: 'xml' | 'html') {
 	const request = await fetch(url);
 	const text = await request.text();

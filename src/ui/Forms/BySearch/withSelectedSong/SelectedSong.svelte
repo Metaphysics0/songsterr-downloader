@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
-	import { selectedSongToDownload } from '../../../../stores/activeTabMenu';
+	import { selectedSongToDownload } from '../../../../stores/selectedSong';
 	export let selectedSong: ISearchResult;
 
 	function deselectSong(): void {
@@ -8,7 +8,7 @@
 	}
 </script>
 
-<div class="flex items-center">
+<div class="flex items-center bg-slate-100 rounded p-3 shadow-md">
 	<div class="mr-auto">
 		<p>Song - {selectedSong.title}</p>
 		<p class="font-light">Artist - {selectedSong.artist}</p>

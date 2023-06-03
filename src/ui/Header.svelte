@@ -12,7 +12,6 @@
 	let headerText = headerTextMap[0];
 
 	activeTabMenuIndex.subscribe((val) => {
-		console.log('TAB MENU INDEX', val);
 		headerText = headerTextMap[val];
 	});
 </script>

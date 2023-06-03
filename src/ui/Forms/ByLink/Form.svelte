@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { cssClasses } from '$lib/sharedCssClasses';
+	import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
 	import { SONGSTERR_URL_REGEX_PATTERN } from '../../../consts';
 	import {
 		setValidationMessage,
@@ -14,14 +14,7 @@
 			alert('Unable to download the Guitar pro link from this URL ):');
 			return;
 		}
-
-		const uint8Array = new Uint8Array(res.file);
-		const blob = new Blob([uint8Array], { type: res.contentType });
-
-		const link = document.createElement('a');
-		link.href = window.URL.createObjectURL(blob);
-		link.download = res.fileName;
-		link.click();
+		triggerFileDownloadFromSongsterrResponse(res);
 	}
 </script>
 

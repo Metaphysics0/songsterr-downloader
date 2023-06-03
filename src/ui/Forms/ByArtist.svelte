@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { apiService } from '$lib/apiService';
 	import { cssClasses } from '$lib/sharedCssClasses';
-	import { selectedSongToDownload } from '../../stores/activeTabMenu';
+	import { selectedSongToDownload } from '../../stores/selectedSong';
 	import SearchResults from './BySearch/withoutSelectedSong/SearchResults.svelte';
 	import SelectedSong from './BySearch/withSelectedSong/SelectedSong.svelte';
 
@@ -13,10 +13,8 @@
 	let searchResults: ISearchResult[] = [];
 	async function searchForArtists(inputText: string): Promise<void> {
 		try {
-			const response = await apiService.artists.search(inputText);
-			const data = await response.json();
-
-			searchResults = data.searchResults;
+			const response = await apiService.search.bySongOrArtist(inputText);
+			searchResults = response.searchResults;
 		} catch (error) {
 			console.log('error fetching search results', error);
 		} finally {

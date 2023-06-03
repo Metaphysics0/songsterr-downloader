@@ -1,9 +1,15 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { getDownloadLinkFromSongId } from '$lib/server/getDownloadLink';
+import {
+	buildFileNameFromSongName,
+	getDownloadLinkFromSongId
+} from '$lib/server/getDownloadLink';
 
-export const GET = (async ({ request }): Promise<Response> => {
-	const { songId } = await request.json();
+export const GET = (async ({ url }): Promise<Response> => {
+	const songId = url.searchParams.get('songId');
+	const songTitle = url.searchParams.get('songTitle') as string;
+	if (!songId) throw 'Unable to find the song id from the URL';
+
 	const link = await getDownloadLinkFromSongId(songId);
 	if (!link) throw 'Unable to find download link';
 
@@ -12,7 +18,7 @@ export const GET = (async ({ request }): Promise<Response> => {
 
 	return json({
 		file: Array.from(new Uint8Array(buf)),
-		fileName: 'test file name for now',
+		fileName: buildFileNameFromSongName(songTitle, link),
 		contentType:
 			downloadResponse.headers.get('Content-Type') || 'application/gp'
 	});

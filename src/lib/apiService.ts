@@ -1,7 +1,9 @@
 export const apiService = {
 	search: {
-		bySongOrArtist(searchText: string) {
-			return make({
+		bySongOrArtist: async (
+			searchText: string
+		): Promise<ISearchResultResponse> => {
+			return fetchAndReturnJson({
 				endpoint: 'search',
 				method: 'POST',
 				params: { searchText }
@@ -9,25 +11,25 @@ export const apiService = {
 		}
 	},
 	download: {
-		bySongId(songId: string) {
-			return make({
+		bySearchResult: async (
+			searchResult: ISearchResult
+		): Promise<SongsterrDownloadResponse> => {
+			return fetchAndReturnJson({
 				endpoint: 'download',
 				method: 'GET',
-				params: { songId }
+				params: {
+					songId: searchResult.songId,
+					songTitle: searchResult.title
+				}
 			});
 		}
 	}
 };
 
-function make({
-	endpoint,
-	method,
-	params
-}: {
-	endpoint: string;
-	method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS';
-	params?: unknown;
-}): Promise<Response> {
+const fetchAndReturnJson = async (args: IMakeApiArgs) =>
+	(await make(args)).json();
+
+function make({ endpoint, method, params }: IMakeApiArgs): Promise<Response> {
 	let baseUrl = `/api/${endpoint}`;
 	if (method === 'GET' && params) {
 		// TS-Ignoring here because params are optional for GET routes
@@ -45,4 +47,10 @@ function make({
 	};
 	const body = method !== 'GET' && params ? JSON.stringify(params) : null;
 	return fetch(baseUrl, body ? { ...options, body } : options);
+}
+
+interface IMakeApiArgs {
+	endpoint: string;
+	method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS';
+	params?: unknown;
 }

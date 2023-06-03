@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { apiService } from '$lib/apiService';
 	import { cssClasses } from '$lib/sharedCssClasses';
-	import { selectedSongToDownload } from '../../../../stores/activeTabMenu';
+	import { selectedSongToDownload } from '../../../../stores/selectedSong';
 	import SearchResults from './SearchResults.svelte';
 
 	let selectedSong: ISearchResult | undefined;
@@ -10,12 +10,12 @@
 	});
 
 	let searchResults: ISearchResult[] = [];
-	async function searchForArtists(inputText: string): Promise<void> {
+	async function search(inputText: string): Promise<void> {
 		try {
-			const response = await apiService.search.bySongOrArtist(inputText);
-			const data = await response.json();
+			const { searchResults: searchResultsFromResponse } =
+				await apiService.search.bySongOrArtist(inputText);
 
-			searchResults = data.searchResults;
+			searchResults = searchResultsFromResponse.filter(withGuitarProFile);
 		} catch (error) {
 			console.log('error fetching search results', error);
 		} finally {
@@ -23,10 +23,13 @@
 		}
 	}
 
+	const withGuitarProFile = (searchResult: ISearchResult) =>
+		searchResult.hasPlayer;
+
 	const debounceDurationInMs = 150;
 	let timer: any;
 	let isPromiseInProgress: boolean = false;
-	const debounceThenSearchForArtists = (event: Event) => {
+	const debounceThenSearch = (event: Event) => {
 		const { value } = <HTMLTextAreaElement>event.target;
 		clearTimeout(timer);
 		if (value === '') {
@@ -35,7 +38,7 @@
 		}
 		timer = setTimeout(() => {
 			isPromiseInProgress = true;
-			searchForArtists(value);
+			search(value);
 		}, debounceDurationInMs);
 	};
 </script>
@@ -45,7 +48,7 @@
 	<input
 		type="text"
 		name="artistNameSearch"
-		on:keyup={debounceThenSearchForArtists}
+		on:keyup={debounceThenSearch}
 		placeholder="Led Zepplin"
 		id="artistNameSearch"
 		class={cssClasses.textInput}
