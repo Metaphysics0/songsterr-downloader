@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SeachResult from '../ByArtist/SeachResult.svelte';
+	import SeachResult from './SeachResult.svelte';
 
 	export let searchResults: ISearchResult[] = [];
 	export let isLoading: boolean;

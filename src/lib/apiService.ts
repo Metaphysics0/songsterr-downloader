@@ -1,10 +1,19 @@
 export const apiService = {
-	artists: {
-		search(searchText: string) {
+	search: {
+		bySongOrArtist(searchText: string) {
 			return make({
-				endpoint: 'artists',
+				endpoint: 'search',
 				method: 'POST',
 				params: { searchText }
+			});
+		}
+	},
+	download: {
+		bySongId(songId: string) {
+			return make({
+				endpoint: 'download',
+				method: 'GET',
+				params: { songId }
 			});
 		}
 	}

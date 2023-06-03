@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { apiService } from '$lib/apiService';
-	import mockSearchResultResponse from '$lib/mockSearchResultResponse';
 	import { cssClasses } from '$lib/sharedCssClasses';
 	import { selectedSongToDownload } from '../../stores/activeTabMenu';
-	import SearchResults from './shared/SearchResults.svelte';
-	import SeachResult from './ByArtist/SeachResult.svelte';
-	import SelectedSong from './ByArtist/SelectedSong.svelte';
+	import SearchResults from './BySearch/withoutSelectedSong/SearchResults.svelte';
+	import SelectedSong from './BySearch/withSelectedSong/SelectedSong.svelte';
 
 	let selectedSong: ISearchResult | undefined;
 	selectedSongToDownload.subscribe((value) => {
@@ -15,11 +13,10 @@
 	let searchResults: ISearchResult[] = [];
 	async function searchForArtists(inputText: string): Promise<void> {
 		try {
-			// const response = await apiService.artists.search(inputText);
-			// const data = await response.json();
-			// @ts-ignore
-			searchResults = Array(10).fill(mockSearchResultResponse);
-			// searchResults = data.searchResults;
+			const response = await apiService.artists.search(inputText);
+			const data = await response.json();
+
+			searchResults = data.searchResults;
 		} catch (error) {
 			console.log('error fetching search results', error);
 		} finally {

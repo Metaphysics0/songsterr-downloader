@@ -1,6 +1,5 @@
-import type { SvelteComponent } from 'svelte';
-import ByArtist from '../forms/ByArtist.svelte';
-import ByLink from '../forms/ByLink.svelte';
+import BySearch from '../forms/BySearch/Form.svelte';
+import ByLink from '../forms/ByLink/Form.svelte';
 
 export const createClassNames = (
 	...classes: (string | false | null | undefined)[]
@@ -8,5 +7,5 @@ export const createClassNames = (
 
 export const tabs = [
 	{ name: 'By Link', content: ByLink },
-	{ name: 'By Search', content: ByArtist }
+	{ name: 'By Search', content: BySearch }
 ];

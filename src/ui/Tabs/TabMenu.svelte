@@ -7,9 +7,21 @@
 		TabPanels
 	} from '@rgossiaux/svelte-headlessui';
 	import { createClassNames, tabs } from './shared';
+	import {
+		activeTabMenuIndex,
+		type ITabMenuIndex
+	} from '../../stores/activeTabMenu';
+
+	function setActiveTabIndex(idx: ITabMenuIndex): void {
+		activeTabMenuIndex.set(idx);
+	}
 </script>
 
-<TabGroup class="flex flex-col max-w-md w-full mx-auto mt-2" as="div">
+<TabGroup
+	class="flex flex-col max-w-md w-full mx-auto mt-2"
+	as="div"
+	on:change={(e) => setActiveTabIndex(e.detail)}
+>
 	<TabList
 		class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 mb-2"
 	>

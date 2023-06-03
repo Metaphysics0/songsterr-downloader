@@ -10,6 +10,8 @@ export async function searchForArtists(
  */
 async function search(searchText: string) {
 	const url = createSongsterrSearchUrl(searchText);
+	console.log('URL TO FETCH', url);
+
 	return fetch(url, getFetchOptions(url));
 }
 
