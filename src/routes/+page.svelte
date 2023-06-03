@@ -1,12 +1,12 @@
 <script>
 	import Header from '../ui/Header.svelte';
 	import SocialLinks from '../ui/SocialLinks.svelte';
-	// import TabMenu from '../ui/tabs/TabMenu.svelte';
+	import TabMenu from '../ui/tabs/TabMenu.svelte';
 </script>
 
 <main class="mb-12">
 	<Header />
-	<!-- <TabMenu /> -->
+	<TabMenu />
 </main>
 
 <footer class="flex flex-col items-center justify-center">
