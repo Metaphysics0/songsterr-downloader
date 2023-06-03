@@ -1,7 +1,7 @@
 <script>
 	import Header from '../ui/Header.svelte';
 	import SocialLinks from '../ui/SocialLinks.svelte';
-	import TabMenu from '../ui/tabs/TabMenu.svelte';
+	import TabMenu from '../ui/TabMenu.svelte';
 </script>
 
 <main class="mb-12">

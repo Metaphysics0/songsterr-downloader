@@ -6,11 +6,11 @@
 		TabPanel,
 		TabPanels
 	} from '@rgossiaux/svelte-headlessui';
-	import { createClassNames, tabs } from './shared';
+	import { createClassNames, tabs } from './tabs/shared';
 	import {
 		activeTabMenuIndex,
 		type ITabMenuIndex
-	} from '../../stores/activeTabMenu';
+	} from '../stores/activeTabMenu';
 
 	function setActiveTabIndex(idx: ITabMenuIndex): void {
 		activeTabMenuIndex.set(idx);
