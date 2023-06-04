@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
-	import { selectedSongToDownload } from '../../../../stores/selectedSong';
+	import { selectedSongToDownload } from '../../../stores/selectedSong';
 	export let selectedSong: ISearchResult;
 
 	function deselectSong(): void {

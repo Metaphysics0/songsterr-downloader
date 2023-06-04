@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
-	import { SONGSTERR_URL_REGEX_PATTERN } from '../../../consts';
+	import { SONGSTERR_URL_REGEX_PATTERN } from '../../consts';
 	import {
 		setValidationMessage,
 		clearValidationMessage
-	} from '../../../utils/inputUtils';
+	} from '../../utils/inputUtils';
 
 	function triggerLinkDownload(
 		res: SongsterrDownloadResponse | undefined

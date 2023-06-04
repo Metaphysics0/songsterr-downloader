@@ -12,8 +12,8 @@
 	} from '../stores/activeTabMenu';
 
 	import { createClassNames } from '$lib/utils/cssUtils';
-	import ByLink from './forms/ByLink/Form.svelte';
-	import BySearch from './forms/BySearch/Form.svelte';
+	import ByLink from './ByLink/Form.svelte';
+	import BySearch from './BySearch/Form.svelte';
 
 	function setActiveTabIndex(idx: ITabMenuIndex): void {
 		activeTabMenuIndex.set(idx);
@@ -61,7 +61,7 @@
 	<TabPanels class="mt-4">
 		{#each tabs as tab (tab.name)}
 			<TabPanel>
-				<!-- <svelte:component this={tab./Users/ryan/Desktop/dev/songsterr-downloader/src/ui/TabMenu.sveltecontent} /> -->
+				<svelte:component this={tab.content} />
 			</TabPanel>
 		{/each}
 	</TabPanels>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { apiService } from '$lib/apiService';
 	import { cssClasses } from '$lib/sharedCssClasses';
-	import { selectedSongToDownload } from '../../../../stores/selectedSong';
+	import { selectedSongToDownload } from '../../../stores/selectedSong';
 	import SearchResults from './SearchResults.svelte';
 
 	let selectedSong: ISearchResult | undefined;

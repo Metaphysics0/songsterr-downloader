@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedSongToDownload } from '../../../../stores/selectedSong';
+	import { selectedSongToDownload } from '../../../stores/selectedSong';
 
 	export let searchResult: ISearchResult;
 	export let index: number = 0;

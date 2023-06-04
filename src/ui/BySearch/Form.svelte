@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedSongToDownload } from '../../../stores/selectedSong';
+	import { selectedSongToDownload } from '../../stores/selectedSong';
 	import SearchForm from './withoutSelectedSong/SearchForm.svelte';
 	import SelectedForm from './withSelectedSong/SelectedForm.svelte';
 
