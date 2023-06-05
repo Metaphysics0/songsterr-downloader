@@ -30,12 +30,14 @@
 <form
   class="flex flex-col items-center"
   method="POST"
-  action="?/getFileResource"
+  action="?/getSelectedSongFromUrl"
   use:enhance={() => {
     return async ({ result, update }) => {
+      console.log('RESULT', result);
+
       update({ reset: false });
       // @ts-ignore
-      triggerLinkDownload(result?.data);
+      // triggerLinkDownload(result?.data);
     };
   }}
 >
@@ -55,7 +57,7 @@
   <button
     disabled={!isValid}
     class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-red-500 hover:bg-red-400 text-white disabled:bg-slate-5 disabled:hover:bg-slate-6 disabled:hover:cursor-not-allowed"
-    >Get Download Link!</button
+    >Get Tab!</button
   >
 </form>
 

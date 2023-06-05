@@ -4,6 +4,17 @@ interface SongsterrDownloadResponse {
   contentType: string;
 }
 
+interface ISelectedSongResponse {
+  downloadLink: string;
+  selectedSong: ISearchResult;
+  songTitle: ISelectedSongTitle;
+}
+
+interface ISelectedSongTitle {
+  artist: string;
+  songName: string;
+}
+
 type IBadge = 'new' | 'pro';
 
 interface ISearchResultResponse {
