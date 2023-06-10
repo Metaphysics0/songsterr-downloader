@@ -4,7 +4,7 @@
   import { selectedSongToDownload } from '../../../stores/selectedSong';
   import SearchResults from './SearchResults.svelte';
 
-  let selectedSong: ISearchResult | undefined;
+  let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;
   });
@@ -49,7 +49,7 @@
     type="text"
     name="artistNameSearch"
     on:keyup={debounceThenSearch}
-    placeholder="Led Zepplin"
+    placeholder="Led Zeppelin"
     id="artistNameSearch"
     class={cssClasses.textInput}
   />
