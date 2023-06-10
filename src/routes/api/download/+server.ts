@@ -2,24 +2,50 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import {
   buildFileNameFromSongName,
+  downloadSongFromSongId,
   getDownloadLinkFromSongId
 } from '$lib/server/songsterrService';
+import { searchForSongsAndArtists } from '$lib/server/getArtists';
 
+/* Single download */
 export const GET = (async ({ url }): Promise<Response> => {
   const songId = url.searchParams.get('songId');
   const songTitle = url.searchParams.get('songTitle') as string;
   if (!songId) throw 'Unable to find the song id from the URL';
 
-  const link = await getDownloadLinkFromSongId(songId);
-  if (!link) throw 'Unable to find download link';
+  try {
+    const { buffer, downloadLink, contentType } = await downloadSongFromSongId(
+      songId
+    );
 
-  const downloadResponse = await fetch(link);
-  const buf = await downloadResponse.arrayBuffer();
+    return json({
+      file: Array.from(new Uint8Array(buffer)),
+      fileName: buildFileNameFromSongName(songTitle, downloadLink),
+      contentType: contentType
+    });
+  } catch (error) {
+    return json({
+      file: null,
+      fileName: '',
+      contentType: '',
+      error
+    });
+  }
+}) satisfies RequestHandler;
+
+/* Bulk download */
+export const POST = (async ({ request }): Promise<Response> => {
+  const { artist } = await request.json();
+  if (!artist) throw 'Unable to find the songs from the artist';
+
+  const searchResults = await searchForSongsAndArtists(artist);
+  const potentialSongsToDownload = searchResults.filter(
+    (result) => result.artist === artist && result.hasPlayer
+  );
+
+  const songIds = potentialSongsToDownload.map((song) => song.songId);
 
   return json({
-    file: Array.from(new Uint8Array(buf)),
-    fileName: buildFileNameFromSongName(songTitle, link),
-    contentType:
-      downloadResponse.headers.get('Content-Type') || 'application/gp'
+    foo: 'bar'
   });
 }) satisfies RequestHandler;

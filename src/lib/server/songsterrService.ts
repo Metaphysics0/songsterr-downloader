@@ -14,16 +14,19 @@ export async function getSearchResultFromSongsterrUrl(
   };
 }
 
-function getMetadataFromDoc(doc: Document) {
-  const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
-  try {
-    // @ts-ignore
-    return JSON.parse(metadataScript).meta.current;
-  } catch (error) {
-    console.error('error parsing metadata', error);
+export async function downloadSongFromSongId(
+  songId: string
+): Promise<IDownloadSongResponse> {
+  const link = await getDownloadLinkFromSongId(songId);
+  if (!link) throw 'Unable to find download link';
+  const downloadResponse = await fetch(link);
 
-    return {};
-  }
+  return {
+    buffer: await downloadResponse.arrayBuffer(),
+    contentType:
+      downloadResponse.headers.get('Content-Type') || 'application/gp',
+    downloadLink: link
+  };
 }
 
 export async function getDownloadLinkFromSongId(
@@ -35,7 +38,6 @@ export async function getDownloadLinkFromSongId(
   return findGuitarProTabLinkFromXml(xml) || '';
 }
 
-// helpers
 export function buildFileNameFromSongName(
   songName: string,
   downloadUrl: string
@@ -46,26 +48,7 @@ export function buildFileNameFromSongName(
   return normalizedSongName + fileType;
 }
 
-export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
-  const title = doc.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-  // return '';
-  if (!title) {
-    return {
-      artist: 'Unknown',
-      songName: ''
-    };
-  }
-
-  /* Fluffy by Chon | Songsterr Tabs -> [Fluffy, Chon] */
-  const onlySongAndArtist = title.split('|')[0].trim();
-  const [songName, artist] = onlySongAndArtist.split('by');
-
-  return {
-    songName,
-    artist
-  };
-}
-
+// helpers
 const urlBuilder = {
   bySongId(songId: string) {
     return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
@@ -76,6 +59,24 @@ function findGuitarProTabLinkFromXml(xml: Document) {
   return xml
     .getElementsByTagName('guitarProTab')[0]
     .getElementsByTagName('attachmentUrl')[0].firstChild?.nodeValue;
+}
+
+function getMetadataFromDoc(doc: Document): Record<string, any> {
+  const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
+  try {
+    // @ts-ignore
+    return JSON.parse(metadataScript).meta.current;
+  } catch (error) {
+    console.error('error parsing metadata', error);
+
+    return {};
+  }
+}
+
+export interface IDownloadSongResponse {
+  buffer: ArrayBuffer;
+  contentType: string;
+  downloadLink: string;
 }
 
 export interface IDownloadLinkResponse {

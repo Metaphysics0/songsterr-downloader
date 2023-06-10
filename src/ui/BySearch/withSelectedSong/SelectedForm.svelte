@@ -13,11 +13,11 @@
     triggerFileDownloadFromSongsterrResponse(resp);
   }
 
-  function displayNotReadyAlert(): void {
-    const userValue = prompt(
-      'This is currently an experimental feature. Please enter in the secret in order to try it. 👀'
+  async function downloadAllTabsFromArtist(): Promise<void> {
+    const resp = await apiService.download.bulkDownloadBySearchResult(
+      selectedSong
     );
-    console.log(`${userValue} is not the right value bro.`);
+    console.log('RESP', resp);
   }
 
   function deselectSong(): void {
@@ -35,7 +35,7 @@
   <strong class="my-2">Or</strong>
   <button
     class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-amber hover:bg-amber-300 mb-4 flex items-center"
-    on:click={displayNotReadyAlert}
+    on:click={downloadAllTabsFromArtist}
     >Download All Tabs from {selectedSong.artist}
     <span class="block ml-2 h-3">
       <FaLock />

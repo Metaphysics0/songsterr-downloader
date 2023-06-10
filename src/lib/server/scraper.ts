@@ -1,14 +1,10 @@
 import { DOMParser } from '@xmldom/xmldom';
-import { Parser, parseString } from 'xml2js';
+import { Parser } from 'xml2js';
 
 class Scraper {
   async getDocumentFromUrl(url: string, websiteType: 'xml' | 'html') {
     const text = await this.fetchAndGetText(url);
     const doc = new DOMParser().parseFromString(text, `text/${websiteType}`);
-
-    // @ts-ignore
-    const v = parseString(doc);
-    console.log('V', JSON.stringify(v));
 
     return doc;
   }
@@ -19,8 +15,6 @@ class Scraper {
   }
 
   async getSelectedSongDataFromXmlString(xmlString: string) {
-    console.log('XML STRING', typeof xmlString);
-
     try {
       return new Parser().parseStringPromise(
         xmlString

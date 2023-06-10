@@ -22,6 +22,19 @@ export const apiService = {
           songTitle: searchResult.title
         }
       });
+    },
+    bulkDownloadBySearchResult: async (
+      searchResult: ISearchResult | IPartialSearchResult
+    ) => {
+      return fetchAndReturnJson({
+        endpoint: 'download',
+        method: 'POST',
+        params: {
+          artist: searchResult.artist,
+          songId: searchResult.songId,
+          songTitle: searchResult.title
+        }
+      });
     }
   }
 };

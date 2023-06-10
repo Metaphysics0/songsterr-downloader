@@ -3,7 +3,7 @@
   import SearchForm from './withoutSelectedSong/SearchForm.svelte';
   import SelectedForm from './withSelectedSong/SelectedForm.svelte';
 
-  let selectedSong: ISearchResult | undefined;
+  let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;
   });
