@@ -1,5 +1,5 @@
 import { SONGSTERR_URL_REGEX_PATTERN } from '../consts';
-import { getSearchResultFromSongsterrUrl } from '$lib/server/getDownloadLink';
+import { getSearchResultFromSongsterrUrl } from '$lib/server/songsterrService';
 
 import type { Actions } from './$types';
 

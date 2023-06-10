@@ -35,27 +35,7 @@ export async function getDownloadLinkFromSongId(
   return findGuitarProTabLinkFromXml(xml) || '';
 }
 
-async function getRevisionIdFromSongsterrUrl(
-  songsterrUrl: string
-): Promise<string> {
-  const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
-  const metadata = doc.getElementById('state')?.childNodes[0].nodeValue;
-  // @ts-ignore
-  const { revisionId } = JSON.parse(metadata).meta.current;
-  return revisionId;
-}
-
 // helpers
-export function buildFileName(url: string, downloadUrl: string): string {
-  const fileName = url.substring(
-    url.lastIndexOf('/') + 1,
-    url.lastIndexOf('-')
-  );
-  const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
-
-  return fileName + fileType;
-}
-
 export function buildFileNameFromSongName(
   songName: string,
   downloadUrl: string
@@ -66,18 +46,6 @@ export function buildFileNameFromSongName(
   return normalizedSongName + fileType;
 }
 
-export function getRevisionIdFromDocument(doc: Document): string {
-  const metadata = doc.getElementById('state')?.childNodes[0].nodeValue;
-  if (!metadata) return '';
-  // @ts-ignore
-  try {
-    const { revisionId } = JSON.parse(metadata).meta.current;
-    return revisionId;
-  } catch (error) {
-    console.error('error getting revision ID from document');
-    return '';
-  }
-}
 export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
   const title = doc.getElementsByTagName('title')[0].childNodes[0].nodeValue;
   // return '';
@@ -99,9 +67,6 @@ export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
 }
 
 const urlBuilder = {
-  getXmlByRevisionId(revisionId: string) {
-    return `https://www.songsterr.com/a/ra/player/songrevision/${revisionId}.xml`;
-  },
   bySongId(songId: string) {
     return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
   }

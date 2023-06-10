@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 import {
   buildFileNameFromSongName,
   getDownloadLinkFromSongId
-} from '$lib/server/getDownloadLink';
+} from '$lib/server/songsterrService';
 
 export const GET = (async ({ url }): Promise<Response> => {
   const songId = url.searchParams.get('songId');
