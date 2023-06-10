@@ -1,28 +1,29 @@
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from './scraper';
-import { parseString } from 'xml2js';
 
-export async function getDownloadLinkFromSongsterrUrl(
+export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
-): Promise<IDownloadLinkResponse> {
+): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
+  const { songId, title, artist } = getMetadataFromDoc(doc);
 
-  const revisionId = getRevisionIdFromDocument(doc);
-  const songTitle = getSongTitleFromDocument(doc);
-
-  const url = urlBuilder.getXmlByRevisionId(revisionId);
-  console.log('XML XML url', url);
-  const xml = await scraper.getDocumentFromUrl(url, 'xml');
-
-  const downloadLink = await getDownloadLinkFromXml(xml);
   return {
-    downloadLink,
-    songTitle
+    songId,
+    title,
+    artist
   };
 }
 
-async function getDownloadLinkFromXml(xml: Document): Promise<string> {
-  return findGuitarProTabLinkFromXml(xml) || '';
+function getMetadataFromDoc(doc: Document) {
+  const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
+  try {
+    // @ts-ignore
+    return JSON.parse(metadataScript).meta.current;
+  } catch (error) {
+    console.error('error parsing metadata', error);
+
+    return {};
+  }
 }
 
 export async function getDownloadLinkFromSongId(

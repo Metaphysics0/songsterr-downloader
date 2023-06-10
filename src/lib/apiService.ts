@@ -12,7 +12,7 @@ export const apiService = {
   },
   download: {
     bySearchResult: async (
-      searchResult: ISearchResult
+      searchResult: ISearchResult | IPartialSearchResult
     ): Promise<SongsterrDownloadResponse> => {
       return fetchAndReturnJson({
         endpoint: 'download',

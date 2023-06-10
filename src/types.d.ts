@@ -31,6 +31,12 @@ interface ISearchResult {
   defaultTrack: number;
 }
 
+interface IPartialSearchResult {
+  title: string;
+  songId: number;
+  artist: string;
+}
+
 interface IArtistTrack {
   tuning?: number[];
   tuningString?: string;

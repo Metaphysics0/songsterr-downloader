@@ -6,7 +6,7 @@
   import SelectedSong from './SelectedSong.svelte';
   import FaLock from 'svelte-icons/fa/FaLock.svelte';
 
-  export let selectedSong: ISearchResult;
+  export let selectedSong: ISearchResult | IPartialSearchResult;
 
   async function downloadTabFromSearchResult(): Promise<void> {
     const resp = await apiService.download.bySearchResult(selectedSong);
