@@ -35,6 +35,7 @@ interface IPartialSearchResult {
   title: string;
   songId: number;
   artist: string;
+  source?: string;
 }
 
 interface IArtistTrack {

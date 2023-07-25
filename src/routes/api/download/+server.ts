@@ -10,7 +10,8 @@ export const GET = (async ({ url }): Promise<Response> => {
   const songTitle = url.searchParams.get('songTitle') as string;
   if (!songId) throw 'Unable to find the song id from the URL';
 
-  const link = await getDownloadLinkFromSongId(songId);
+  const link = await getDownloadLinkFromSongId(songId, url);
+
   if (!link) throw 'Unable to find download link';
 
   const downloadResponse = await fetch(link);
