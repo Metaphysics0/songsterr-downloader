@@ -26,6 +26,7 @@ interface ISearchResult {
   artistId: number;
   title: string;
   songId: number;
+  byLinkUrl?: string;
   tracks: IArtistTrack[];
   hasChords: boolean;
   defaultTrack: number;
@@ -35,6 +36,8 @@ interface IPartialSearchResult {
   title: string;
   songId: number;
   artist: string;
+  source?: string;
+  byLinkUrl?: string;
 }
 
 interface IArtistTrack {

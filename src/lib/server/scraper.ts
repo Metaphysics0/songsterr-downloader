@@ -1,21 +1,22 @@
 import { DOMParser } from '@xmldom/xmldom';
-import { Parser, parseString } from 'xml2js';
+import { Parser } from 'xml2js';
 
 class Scraper {
   async getDocumentFromUrl(url: string, websiteType: 'xml' | 'html') {
     const text = await this.fetchAndGetText(url);
     const doc = new DOMParser().parseFromString(text, `text/${websiteType}`);
 
-    // @ts-ignore
-    const v = parseString(doc);
-    console.log('V', JSON.stringify(v));
-
     return doc;
   }
 
   async fetchAndGetText(url: string) {
-    const request = await fetch(url);
-    return request.text();
+    try {
+      const request = await fetch(url);
+      return request.text();
+    } catch (error) {
+      console.error('Error fetching url from the scraper', error);
+      return '';
+    }
   }
 
   async getSelectedSongDataFromXmlString(xmlString: string) {

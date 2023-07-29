@@ -5,12 +5,13 @@ export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
 ): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
-  const { songId, title, artist } = getMetadataFromDoc(doc);
+  const { songId, title, artist, source } = getMetadataFromDoc(doc);
 
   return {
     songId,
     title,
-    artist
+    artist,
+    source
   };
 }
 
@@ -27,12 +28,23 @@ function getMetadataFromDoc(doc: Document) {
 }
 
 export async function getDownloadLinkFromSongId(
-  songId: string
+  songId: string,
+  fullUrl?: any
 ): Promise<string | undefined> {
   const url = urlBuilder.bySongId(songId);
-  const xml = await scraper.getDocumentFromUrl(url, 'xml');
+  try {
+    const xml = await scraper.getDocumentFromUrl(url, 'xml');
+    return findGuitarProTabLinkFromXml(xml) || '';
+  } catch (error) {
+    if (fullUrl) {
+      return attemptToGrabDownloadLinkFromSource(fullUrl.toString());
+    }
+  }
+}
 
-  return findGuitarProTabLinkFromXml(xml) || '';
+async function attemptToGrabDownloadLinkFromSource(url: string) {
+  const { source } = await getSearchResultFromSongsterrUrl(url);
+  return source;
 }
 
 // helpers

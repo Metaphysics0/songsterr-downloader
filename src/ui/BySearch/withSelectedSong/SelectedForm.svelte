@@ -4,6 +4,7 @@
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
   import { selectedSongToDownload } from '../../../stores/selectedSong';
   import SelectedSong from './SelectedSong.svelte';
+  // @ts-ignore
   import FaLock from 'svelte-icons/fa/FaLock.svelte';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
