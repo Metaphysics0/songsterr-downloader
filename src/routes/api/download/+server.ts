@@ -8,9 +8,10 @@ import {
 export const GET = (async ({ url }): Promise<Response> => {
   const songId = url.searchParams.get('songId');
   const songTitle = url.searchParams.get('songTitle') as string;
+  const byLinkUrl = url.searchParams.get('byLinkUrl');
   if (!songId) throw 'Unable to find the song id from the URL';
 
-  const link = await getDownloadLinkFromSongId(songId, url);
+  const link = await getDownloadLinkFromSongId(songId, byLinkUrl);
 
   if (!link) throw 'Unable to find download link';
 
@@ -24,3 +25,5 @@ export const GET = (async ({ url }): Promise<Response> => {
       downloadResponse.headers.get('Content-Type') || 'application/gp'
   });
 }) satisfies RequestHandler;
+
+const getSearchParam = (url: URL, param: string) => url.searchParams.get(param);

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
   import { SONGSTERR_URL_REGEX_PATTERN } from '../../consts';
   import { selectedSongToDownload } from '../../stores/selectedSong';
   import {
@@ -13,16 +12,6 @@
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;
   });
-
-  function triggerLinkDownload(
-    res: SongsterrDownloadResponse | undefined
-  ): void {
-    if (!res) {
-      alert('Unable to download the Guitar pro link from this URL ):');
-      return;
-    }
-    triggerFileDownloadFromSongsterrResponse(res);
-  }
 
   function checkIfInputIsValid(event: Event): void {
     const { value } = event.target as HTMLInputElement;
@@ -41,10 +30,15 @@
     class="flex flex-col items-center"
     method="POST"
     action="?/getSelectedSongFromUrl"
-    use:enhance={() => {
+    use:enhance={({ data }) => {
+      const byLinkUrl = data.get('url');
+
       return async ({ result, update }) => {
-        // @ts-ignore
-        selectedSongToDownload.set(result.data);
+        selectedSongToDownload.set({
+          // @ts-ignore
+          ...result.data,
+          byLinkUrl
+        });
         update({ reset: false });
       };
     }}

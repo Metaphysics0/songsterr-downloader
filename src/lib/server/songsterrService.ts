@@ -29,28 +29,21 @@ function getMetadataFromDoc(doc: Document) {
 
 export async function getDownloadLinkFromSongId(
   songId: string,
-  fullUrl?: URL
+  fullUrl?: any
 ): Promise<string | undefined> {
   const url = urlBuilder.bySongId(songId);
   try {
     const xml = await scraper.getDocumentFromUrl(url, 'xml');
     return findGuitarProTabLinkFromXml(xml) || '';
   } catch (error) {
-    console.log(
-      'there was an error getting the download link from the songId',
-      error
-    );
-
     if (fullUrl) {
-      console.log('attempting to grab the source from', fullUrl.toString());
-
-      return attemptToGrabDownloadLinkFromFullUrl(fullUrl);
+      return attemptToGrabDownloadLinkFromSource(fullUrl.toString());
     }
   }
 }
 
-async function attemptToGrabDownloadLinkFromFullUrl(url: URL) {
-  const { source } = await getSearchResultFromSongsterrUrl(url.toString());
+async function attemptToGrabDownloadLinkFromSource(url: string) {
+  const { source } = await getSearchResultFromSongsterrUrl(url);
   return source;
 }
 

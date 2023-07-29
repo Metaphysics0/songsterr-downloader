@@ -19,7 +19,8 @@ export const apiService = {
         method: 'GET',
         params: {
           songId: searchResult.songId,
-          songTitle: searchResult.title
+          songTitle: searchResult.title,
+          byLinkUrl: searchResult?.byLinkUrl
         }
       });
     }
