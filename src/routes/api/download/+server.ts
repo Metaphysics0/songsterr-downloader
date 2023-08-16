@@ -1,9 +1,12 @@
-import { json } from '@sveltejs/kit';
+import { error, json, type HttpError } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import {
   buildFileNameFromSongName,
   getDownloadLinkFromSongId
 } from '$lib/server/songsterrService';
+import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
+import AdmZip from 'adm-zip';
+import { BulkDownloadService } from '$lib/server/bulkDownloadService';
 
 export const GET = (async ({ url }): Promise<Response> => {
   const songId = url.searchParams.get('songId');
@@ -26,4 +29,30 @@ export const GET = (async ({ url }): Promise<Response> => {
   });
 }) satisfies RequestHandler;
 
-const getSearchParam = (url: URL, param: string) => url.searchParams.get(param);
+export const POST = async ({ request }): Promise<Response | HttpError> => {
+  const { artistId, secretAccessCode } = await request.json();
+
+  if (!artistId) {
+    return error(500, {
+      message: 'Param missing: artistId'
+    });
+  }
+
+  if (secretAccessCode !== BULK_DOWNLOAD_SECRET) {
+    return error(500, {
+      message: 'invalid code!'
+    });
+  }
+
+  const { getZipFileOfAllTabs } = new BulkDownloadService({
+    artistId
+  });
+
+  const zip = await getZipFileOfAllTabs();
+
+  return json({
+    file: Array.from(new Uint8Array(zip.toBuffer())),
+    fileName: 'testy-zip',
+    contentType: 'application/zip'
+  });
+};

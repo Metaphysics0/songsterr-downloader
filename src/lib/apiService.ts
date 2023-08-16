@@ -23,6 +23,22 @@ export const apiService = {
           byLinkUrl: searchResult?.byLinkUrl
         }
       });
+    },
+    bulkDownload: async ({
+      selectedSong,
+      secretAccessCode
+    }: {
+      selectedSong: ISearchResult | IPartialSearchResult;
+      secretAccessCode: string;
+    }): Promise<SongsterrDownloadResponse> => {
+      return fetchAndReturnJson({
+        endpoint: 'download',
+        method: 'POST',
+        params: {
+          artistId: selectedSong.artistId,
+          secretAccessCode
+        }
+      });
     }
   }
 };
