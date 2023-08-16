@@ -17,7 +17,7 @@
 </script>
 
 <div class="flex flex-col items-center text-center mb-4 font-sans">
-  <h1 class="text-4xl mb-2 mx-a font-bold">Songsterr to GPX 🎸</h1>
+  <h1 class="text-4xl mb-2 mx-a font-bold">Songsterr Downloader 🎸</h1>
   <p>
     {headerText} from
     <a
