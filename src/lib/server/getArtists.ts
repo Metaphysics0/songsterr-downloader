@@ -1,17 +1,10 @@
 const MAX_SEARCH_RESULTS = 50;
+
 export async function searchForArtists(
   searchText: string
 ): Promise<ISearchResult[]> {
   const searchResponse = await search(searchText);
   return searchResponse.json();
-}
-
-export async function getAllSongsByArtistId(
-  artistId: string
-): Promise<ISearchResult[]> {
-  const url = `https://www.songsterr.com/api/artist/${artistId}/songs?size=${MAX_SEARCH_RESULTS}`;
-  const response = await fetch(url, getFetchOptions(url));
-  return response.json();
 }
 
 /*
@@ -27,7 +20,7 @@ const createSongsterrSearchUrl = (searchText: string) => {
   return baseUrl + searchText;
 };
 
-const getFetchOptions = (url: string): RequestInit => ({
+export const getFetchOptions = (url: string): RequestInit => ({
   referrer: url,
   headers: {
     'sec-ch-ua':

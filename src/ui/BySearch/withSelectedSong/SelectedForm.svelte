@@ -29,8 +29,7 @@
       secretAccessCode
     });
 
-    // triggerFileDownloadFromSongsterrResponse(resp);
-    // console.log('RESP', resp);
+    triggerFileDownloadFromSongsterrResponse(resp);
   }
 
   function deselectSong(): void {

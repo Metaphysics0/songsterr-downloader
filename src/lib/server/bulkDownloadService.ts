@@ -1,33 +1,90 @@
 import AdmZip from 'adm-zip';
+import { getFetchOptions } from './getArtists';
+import { getDownloadLinkFromSongId } from './songsterrService';
+import { fetchAndReturnBuf } from './server-utils';
 
 export class BulkDownloadService {
   artistId: string;
+  MAX_SEARCH_RESULTS = 50;
 
-  constructor({ artistId }: { artistId: string }) {
+  constructor(artistId: string) {
     this.artistId = artistId;
   }
 
-  public async getZipFileOfAllTabs(): Promise<AdmZip> {
+  public getZipFileOfAllTabs = async (): Promise<any> => {
     const zip = new AdmZip();
 
-    const content = 'my content';
-    zip.addFile(
-      'test.txt',
-      Buffer.from(content, 'utf8'),
-      'entry comment goes here'
+    const { downloadLinks, songTitles } =
+      await this.getDownloadLinksFromSongIds();
+
+    const arrayBuffers = await Promise.all(
+      downloadLinks.map(this.downloadLinkAndReturnArrayBuffer)
     );
+
+    arrayBuffers.forEach((buf, idx) => {
+      zip.addFile(
+        `tabs/${songTitles[idx]}.gpx`,
+        // @ts-ignore
+        new Uint8Array(buf),
+        `storing ${songTitles[idx]} in the zip`
+      );
+    });
+
     return zip;
+  };
+
+  private async downloadLinkAndReturnArrayBuffer(
+    link: string
+  ): Promise<ArrayBuffer> {
+    const downloadResponse = await fetch(link);
+    return downloadResponse.arrayBuffer();
   }
 
-  private async getDownloadLinksFromSongIds(
-    songIds: ISongIds
-  ): Promise<IDownloadLinks> {
-    return [];
+  private async getDownloadLinksFromSongIds(): Promise<IDownloadLinksAndSongTitles> {
+    const songIdsAndSongTitles = await this.getSongIdsAndSongTitlesFromArtist();
+    const downloadLinks = await Promise.all(
+      songIdsAndSongTitles.map((obj) => getDownloadLinkFromSongId(obj.songId))
+    );
+
+    return {
+      downloadLinks,
+      songTitles: songIdsAndSongTitles.map((o) => o.title)
+    };
   }
 
-  private async getSongIdsFromArtist(): Promise<ISongIds> {
-    return [];
+  private async getSongIdsAndSongTitlesFromArtist(): Promise<
+    ISongIdAndSongTitle[]
+  > {
+    const url = `https://www.songsterr.com/api/artist/${this.artistId}/songs?size=${this.MAX_SEARCH_RESULTS}`;
+    const response = await fetch(url);
+    const results = (await response.json()) as ISearchResultByArtist[];
+
+    return results.map((result) => ({
+      songId: result.songId,
+      title: result.title
+    }));
   }
+}
+
+interface ISearchResultByArtist {
+  hasPlayer: boolean;
+  artist: string;
+  artistId: number;
+  title: string;
+  songId: number;
+  tracks: any[];
+  hasChords: false;
+  defaultTrack: number;
+}
+
+interface IDownloadLinksAndSongTitles {
+  downloadLinks: string[];
+  songTitles: string[];
+}
+
+interface ISongIdAndSongTitle {
+  songId: number;
+  title: string;
 }
 
 type ISongIds = string[];

@@ -44,9 +44,7 @@ export const POST = async ({ request }): Promise<Response | HttpError> => {
     });
   }
 
-  const { getZipFileOfAllTabs } = new BulkDownloadService({
-    artistId
-  });
+  const { getZipFileOfAllTabs } = new BulkDownloadService(artistId);
 
   const zip = await getZipFileOfAllTabs();
 
