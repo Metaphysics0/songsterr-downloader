@@ -1,5 +1,9 @@
 const MAX_SEARCH_RESULTS = 50;
 
+// export class SearchService {
+//   constructor(searchText)
+// }
+
 export async function searchForArtists(
   searchText: string
 ): Promise<ISearchResult[]> {
@@ -7,9 +11,6 @@ export async function searchForArtists(
   return searchResponse.json();
 }
 
-/*
- * Private
- */
 async function search(searchText: string) {
   const url = createSongsterrSearchUrl(searchText);
   return fetch(url, getFetchOptions(url));

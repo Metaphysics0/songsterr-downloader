@@ -36,6 +36,7 @@ export const apiService = {
         method: 'POST',
         params: {
           artistId: selectedSong.artistId,
+          artistName: selectedSong.artist,
           secretAccessCode
         }
       });

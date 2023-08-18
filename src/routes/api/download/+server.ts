@@ -5,8 +5,8 @@ import {
   getDownloadLinkFromSongId
 } from '$lib/server/songsterrService';
 import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
-import AdmZip from 'adm-zip';
 import { BulkDownloadService } from '$lib/server/bulkDownloadService';
+import { normalize } from '$lib/utils/string';
 
 export const GET = (async ({ url }): Promise<Response> => {
   const songId = url.searchParams.get('songId');
@@ -30,7 +30,7 @@ export const GET = (async ({ url }): Promise<Response> => {
 }) satisfies RequestHandler;
 
 export const POST = async ({ request }): Promise<Response | HttpError> => {
-  const { artistId, secretAccessCode } = await request.json();
+  const { artistId, secretAccessCode, artistName } = await request.json();
 
   if (!artistId) {
     return error(500, {
@@ -44,13 +44,27 @@ export const POST = async ({ request }): Promise<Response | HttpError> => {
     });
   }
 
-  const { getZipFileOfAllTabs } = new BulkDownloadService(artistId);
+  try {
+    console.log(`Starting bulk download for artistId: ${artistId} ...`);
+    const startTime = Date.now();
 
-  const zip = await getZipFileOfAllTabs();
+    const { getZipFileOfAllTabs } = new BulkDownloadService(artistId);
+    const zip = await getZipFileOfAllTabs();
 
-  return json({
-    file: Array.from(new Uint8Array(zip.toBuffer())),
-    fileName: 'testy-zip',
-    contentType: 'application/zip'
-  });
+    const endTime = Date.now();
+    const executionTimeInMs = endTime - startTime;
+
+    console.log(`Execution time: ${executionTimeInMs} ms`);
+
+    return json({
+      file: Array.from(new Uint8Array(zip.toBuffer())),
+      fileName: `${normalize(artistName)}-tabs`,
+      contentType: 'application/zip'
+    });
+  } catch (e) {
+    console.error('BULK UPLOAD FAILURE:', e);
+    return error(500, {
+      message: "Bulk upload failed, contact me and I'll resolve it immediately"
+    });
+  }
 };

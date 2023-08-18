@@ -1,5 +1,4 @@
 import { DOMParser } from '@xmldom/xmldom';
-import { Parser } from 'xml2js';
 
 class Scraper {
   async getDocumentFromUrl(url: string, websiteType: 'xml' | 'html') {
@@ -16,18 +15,6 @@ class Scraper {
     } catch (error) {
       console.error('Error fetching url from the scraper', error);
       return '';
-    }
-  }
-
-  async getSelectedSongDataFromXmlString(xmlString: string) {
-    console.log('XML STRING', typeof xmlString);
-
-    try {
-      return new Parser().parseStringPromise(
-        xmlString
-      ) as Promise<ISongRevisionJson>;
-    } catch (error) {
-      console.error('error parsing xml string', error);
     }
   }
 }

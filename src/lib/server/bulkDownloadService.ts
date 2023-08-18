@@ -1,7 +1,5 @@
 import AdmZip from 'adm-zip';
-import { getFetchOptions } from './getArtists';
 import { getDownloadLinkFromSongId } from './songsterrService';
-import { fetchAndReturnBuf } from './server-utils';
 
 export class BulkDownloadService {
   artistId: string;
@@ -21,9 +19,14 @@ export class BulkDownloadService {
       downloadLinks.map(this.downloadLinkAndReturnArrayBuffer)
     );
 
+    /*
+      Horrible pattern here, but in order for us to leverage Promise.all(),
+      it returns an array of buffers that match the same index of the songTitles.
+      When adding it to the zip, we do it like so.
+    */
     arrayBuffers.forEach((buf, idx) => {
       zip.addFile(
-        `tabs/${songTitles[idx]}.gpx`,
+        `${songTitles[idx]}.gpx`,
         // @ts-ignore
         new Uint8Array(buf),
         `storing ${songTitles[idx]} in the zip`
