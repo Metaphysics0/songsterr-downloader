@@ -1,5 +1,6 @@
 import AdmZip from 'adm-zip';
 import { getDownloadLinkFromSongId } from './songsterrService';
+import { logger } from '$lib/utils/logger';
 
 export class BulkDownloadService {
   artistId: string;
@@ -12,11 +13,12 @@ export class BulkDownloadService {
   public getZipFileOfAllTabs = async (): Promise<any> => {
     const zip = new AdmZip();
 
-    const { downloadLinks, songTitles } =
-      await this.getDownloadLinksFromSongIds();
+    const downloadLinksAndSongTitles = await this.getDownloadLinksFromSongIds();
 
     const arrayBuffers = await Promise.all(
-      downloadLinks.map(this.downloadLinkAndReturnArrayBuffer)
+      downloadLinksAndSongTitles
+        .filter(this.withCompleteDownloadLink)
+        .map((obj) => this.downloadLinkAndReturnArrayBuffer(obj.downloadLink))
     );
 
     /*
@@ -25,11 +27,13 @@ export class BulkDownloadService {
       When adding it to the zip, we do it like so.
     */
     arrayBuffers.forEach((buf, idx) => {
+      const { songTitle } = downloadLinksAndSongTitles[idx];
+
       zip.addFile(
-        `${songTitles[idx]}.gpx`,
+        `${songTitle}.gpx`,
         // @ts-ignore
         new Uint8Array(buf),
-        `storing ${songTitles[idx]} in the zip`
+        `storing ${songTitle} in the zip`
       );
     });
 
@@ -43,16 +47,20 @@ export class BulkDownloadService {
     return downloadResponse.arrayBuffer();
   }
 
-  private async getDownloadLinksFromSongIds(): Promise<IDownloadLinksAndSongTitles> {
+  private async getDownloadLinksFromSongIds(): Promise<
+    IDownloadLinkAndSongTitle[]
+  > {
     const songIdsAndSongTitles = await this.getSongIdsAndSongTitlesFromArtist();
-    const downloadLinks = await Promise.all(
-      songIdsAndSongTitles.map((obj) => getDownloadLinkFromSongId(obj.songId))
-    );
 
-    return {
-      downloadLinks,
-      songTitles: songIdsAndSongTitles.map((o) => o.title)
-    };
+    return Promise.all(
+      songIdsAndSongTitles.map(async (obj) => {
+        const downloadLink = await getDownloadLinkFromSongId(obj.songId);
+        return {
+          songTitle: obj.title,
+          downloadLink
+        };
+      })
+    );
   }
 
   private async getSongIdsAndSongTitlesFromArtist(): Promise<
@@ -67,6 +75,21 @@ export class BulkDownloadService {
       title: result.title
     }));
   }
+
+  private withCompleteDownloadLink(obj: IDownloadLinkAndSongTitle): boolean {
+    if (!obj.downloadLink) {
+      logger.warn(
+        `${JSON.stringify(
+          obj,
+          null,
+          2
+        )} has an empty download link, skipping for now`
+      );
+      return false;
+    }
+
+    return true;
+  }
 }
 
 interface ISearchResultByArtist {
@@ -80,15 +103,12 @@ interface ISearchResultByArtist {
   defaultTrack: number;
 }
 
-interface IDownloadLinksAndSongTitles {
-  downloadLinks: string[];
-  songTitles: string[];
+interface IDownloadLinkAndSongTitle {
+  downloadLink: string;
+  songTitle: string;
 }
 
 interface ISongIdAndSongTitle {
   songId: number;
   title: string;
 }
-
-type ISongIds = string[];
-type IDownloadLinks = string[];
