@@ -1,6 +1,6 @@
 <script lang="ts">
-  import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
   import { selectedSongToDownload } from '../../../stores/selectedSong';
+  import Icon from '@iconify/svelte';
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   function deselectSong(): void {
@@ -16,6 +16,6 @@
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <p class="h-4 cursor-pointer" on:click={deselectSong}>
-    <FaTimes />
+    <Icon icon="fa-solid:times" />
   </p>
 </div>
