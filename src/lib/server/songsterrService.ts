@@ -5,10 +5,11 @@ export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
 ): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
-  const { songId, title, artist, source } = getMetadataFromDoc(doc);
+  const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
 
   return {
     songId,
+    artistId,
     title,
     artist,
     source
@@ -28,23 +29,26 @@ function getMetadataFromDoc(doc: Document) {
 }
 
 export async function getDownloadLinkFromSongId(
-  songId: string,
+  songId: string | number,
   fullUrl?: any
-): Promise<string | undefined> {
+): Promise<string> {
   const url = urlBuilder.bySongId(songId);
   try {
     const xml = await scraper.getDocumentFromUrl(url, 'xml');
     return findGuitarProTabLinkFromXml(xml) || '';
   } catch (error) {
     if (fullUrl) {
-      return attemptToGrabDownloadLinkFromSource(fullUrl.toString());
+      return attemptToGrabDownloadLinkFromSource(fullUrl.toString()) || '';
     }
   }
+  return '';
 }
 
-async function attemptToGrabDownloadLinkFromSource(url: string) {
+async function attemptToGrabDownloadLinkFromSource(
+  url: string
+): Promise<string> {
   const { source } = await getSearchResultFromSongsterrUrl(url);
-  return source;
+  return source || '';
 }
 
 // helpers
@@ -79,7 +83,7 @@ export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
 }
 
 const urlBuilder = {
-  bySongId(songId: string) {
+  bySongId(songId: string | number) {
     return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
   }
 };

@@ -49,7 +49,7 @@
     type="text"
     name="artistNameSearch"
     on:keyup={debounceThenSearch}
-    placeholder="Led Zeppelin"
+    placeholder="Metallica"
     id="artistNameSearch"
     class={cssClasses.textInput}
   />

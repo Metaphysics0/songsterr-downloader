@@ -1,9 +1,12 @@
-import { json } from '@sveltejs/kit';
+import { error, json, type HttpError } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import {
   buildFileNameFromSongName,
   getDownloadLinkFromSongId
 } from '$lib/server/songsterrService';
+import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
+import { BulkDownloadService } from '$lib/server/bulkDownloadService';
+import { normalize } from '$lib/utils/string';
 
 export const GET = (async ({ url }): Promise<Response> => {
   const songId = url.searchParams.get('songId');
@@ -26,4 +29,42 @@ export const GET = (async ({ url }): Promise<Response> => {
   });
 }) satisfies RequestHandler;
 
-const getSearchParam = (url: URL, param: string) => url.searchParams.get(param);
+export const POST = async ({ request }): Promise<Response | HttpError> => {
+  const { artistId, secretAccessCode, artistName } = await request.json();
+
+  if (!artistId) {
+    return error(500, {
+      message: 'Param missing: artistId'
+    });
+  }
+
+  if (secretAccessCode !== BULK_DOWNLOAD_SECRET) {
+    return error(500, {
+      message: 'invalid code!'
+    });
+  }
+
+  try {
+    console.log(`Starting bulk download for artistId: ${artistId} ...`);
+    const startTime = Date.now();
+
+    const { getZipFileOfAllTabs } = new BulkDownloadService(artistId);
+    const zip = await getZipFileOfAllTabs();
+
+    const endTime = Date.now();
+    const executionTimeInMs = endTime - startTime;
+
+    console.log(`Execution time: ${executionTimeInMs} ms`);
+
+    return json({
+      file: Array.from(new Uint8Array(zip.toBuffer())),
+      fileName: `${normalize(artistName)}-tabs`,
+      contentType: 'application/zip'
+    });
+  } catch (e) {
+    console.error('BULK UPLOAD FAILURE:', e);
+    return error(500, {
+      message: "Bulk upload failed, contact me and I'll resolve it immediately"
+    });
+  }
+};

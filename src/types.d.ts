@@ -35,6 +35,7 @@ interface ISearchResult {
 interface IPartialSearchResult {
   title: string;
   songId: number;
+  artistId: number;
   artist: string;
   source?: string;
   byLinkUrl?: string;
