@@ -1,17 +1,11 @@
 const MAX_SEARCH_RESULTS = 50;
 
-// export class SearchService {
-//   constructor(searchText)
-// }
-
-export async function searchForArtists(
-  searchText: string
-): Promise<ISearchResult[]> {
-  const searchResponse = await search(searchText);
+export async function search(searchText: string): Promise<ISearchResult[]> {
+  const searchResponse = await callApi(searchText);
   return searchResponse.json();
 }
 
-async function search(searchText: string) {
+async function callApi(searchText: string) {
   const url = createSongsterrSearchUrl(searchText);
   return fetch(url, getFetchOptions(url));
 }
@@ -21,7 +15,7 @@ const createSongsterrSearchUrl = (searchText: string) => {
   return baseUrl + searchText;
 };
 
-export const getFetchOptions = (url: string): RequestInit => ({
+const getFetchOptions = (url: string): RequestInit => ({
   referrer: url,
   headers: {
     'sec-ch-ua':
