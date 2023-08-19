@@ -2,6 +2,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
 import UnoCss from 'unocss/vite';
 import { extractorSvelte, presetUno, presetWebFonts } from 'unocss';
+import presetAutoprefixer from 'unocss-preset-autoprefixer';
 
 export default defineConfig({
   plugins: [
@@ -14,6 +15,7 @@ export default defineConfig({
       ],
       presets: [
         presetUno(),
+        presetAutoprefixer(),
         presetWebFonts({
           provider: 'google',
           fonts: {

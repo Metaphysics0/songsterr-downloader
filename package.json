@@ -14,11 +14,14 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
+    "@iconify/svelte": "^3.1.4",
     "@rgossiaux/svelte-headlessui": "^1.0.2",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.5.0",
     "@types/adm-zip": "^0.5.0",
     "@types/xml2js": "^0.4.11",
+    "browserslist": "^4.21.10",
+    "lightningcss": "^1.21.5",
     "prettier": "^2.8.0",
     "prettier-plugin-svelte": "^2.8.1",
     "svelte": "^3.54.0",
@@ -26,6 +29,7 @@
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
     "unocss": "^0.49.5",
+    "unocss-preset-autoprefixer": "^0.0.6",
     "vite": "^4.0.0",
     "vitest": "^0.25.3"
   },
@@ -34,7 +38,6 @@
     "@vercel/analytics": "^1.0.2",
     "@xmldom/xmldom": "^0.8.6",
     "adm-zip": "^0.5.10",
-    "svelte-icons": "^2.1.0",
     "xml2js": "^0.6.0"
   }
 }
