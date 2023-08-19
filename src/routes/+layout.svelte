@@ -7,5 +7,4 @@
   inject({ mode: dev ? 'development' : 'production' });
 </script>
 
-<nav class="mb-8" />
 <slot />

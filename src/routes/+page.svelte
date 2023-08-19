@@ -4,7 +4,7 @@
   import TabMenu from '../ui/TabMenu.svelte';
 </script>
 
-<main class="mb-12">
+<main class="mt-8 mb-12">
   <Header />
   <TabMenu />
 </main>
