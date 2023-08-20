@@ -2,6 +2,7 @@ import AdmZip from 'adm-zip';
 import { getDownloadLinkFromSongId } from './songsterrService';
 import { logger } from '$lib/utils/logger';
 import { kv } from '@vercel/kv';
+import { getTotalSizeOfArrayBuffers } from '$lib/utils/bytes';
 
 export class BulkDownloadService {
   artistId: string;
@@ -11,6 +12,7 @@ export class BulkDownloadService {
   constructor(artistId: string) {
     this.artistId = artistId;
 
+    // 17625_bulk_download
     this.BULK_DOWNLOAD_CACHE_KEY = `${this.artistId}_bulk_download`;
   }
 
@@ -18,25 +20,15 @@ export class BulkDownloadService {
     const zip = new AdmZip();
 
     const downloadLinksAndSongTitles = await this.getDownloadLinksFromSongIds();
-
-    const arrayBuffers = await Promise.all(
+    const bufferObjects = await this.getBuffersFromDownloadLinks(
       downloadLinksAndSongTitles
-        .filter(this.withCompleteDownloadLink)
-        .map((obj) => this.downloadLinkAndReturnArrayBuffer(obj.downloadLink))
     );
 
-    /*
-      Horrible pattern here, but in order for us to leverage Promise.all(),
-      it returns an array of buffers that match the same index of the songTitles.
-      When adding it to the zip, we do it like so.
-    */
-    arrayBuffers.forEach((buf, idx) => {
-      const { songTitle } = downloadLinksAndSongTitles[idx];
-
+    bufferObjects.forEach(({ songTitle, buf }) => {
       zip.addFile(
         `${songTitle}.gpx`,
         // @ts-ignore
-        new Uint8Array(buf),
+        buf.buffer,
         `storing ${songTitle} in the zip`
       );
     });
@@ -44,35 +36,52 @@ export class BulkDownloadService {
     return zip;
   };
 
-  private async downloadLinkAndReturnArrayBuffer(
-    link: string
-  ): Promise<ArrayBuffer> {
+  private async getBuffersFromDownloadLinks(
+    downloadLinksAndSongTitles: IDownloadLinkAndSongTitle[]
+  ): Promise<IGuitarProBufferObject[]> {
+    try {
+      const cachedBuffers = await this.retrieveBuffersFromKv();
+      if (cachedBuffers?.length) {
+        logger.log(
+          'Cache HIT',
+          `retrieved buffers from ArtistId: ${this.artistId}`
+        );
+        return cachedBuffers;
+      }
+    } catch (error) {
+      logger.error(
+        'Cache retrieval Error',
+        `Error retrieving cached buffers from ArtistId: ${this.artistId}`,
+        error
+      );
+    }
+    const buffers = await Promise.all(
+      downloadLinksAndSongTitles
+        .filter(this.withCompleteDownloadLink)
+        .map((obj) => this.downloadLinkAndReturnBuffer(obj.downloadLink))
+    );
+
+    const arrayBufferResult = downloadLinksAndSongTitles.map((obj, idx) => ({
+      songTitle: obj.songTitle,
+      buf: buffers[idx]
+    }));
+
+    await this.storeBuffersInKv(arrayBufferResult);
+
+    return arrayBufferResult;
+  }
+
+  private async downloadLinkAndReturnBuffer(link: string): Promise<Buffer> {
     const downloadResponse = await fetch(link);
-    return downloadResponse.arrayBuffer();
+    const arrayBuffer = await downloadResponse.arrayBuffer();
+    return Buffer.from(arrayBuffer);
   }
 
   private async getDownloadLinksFromSongIds(): Promise<
     IDownloadLinkAndSongTitle[]
   > {
-    try {
-      const cachedDownloadLinks = await this.retrieveLinksFromKv();
-      if (cachedDownloadLinks?.length) {
-        logger.log(
-          'Cache HIT',
-          `retrieved links from artistID: ${this.artistId}`
-        );
-        return cachedDownloadLinks;
-      }
-    } catch (error) {
-      logger.error(
-        'Error retrieving cache',
-        `error retrieving cached links from artistId: ${this.artistId}`,
-        error
-      );
-    }
-
     const songIdsAndSongTitles = await this.getSongIdsAndSongTitlesFromArtist();
-    const downloadLinksAndSongTitles = await Promise.all(
+    return Promise.all(
       songIdsAndSongTitles.map(async (obj) => {
         const downloadLink = await getDownloadLinkFromSongId(obj.songId);
         return {
@@ -81,10 +90,6 @@ export class BulkDownloadService {
         };
       })
     );
-
-    await this.storeLinksInKv(downloadLinksAndSongTitles);
-
-    return downloadLinksAndSongTitles;
   }
 
   private async getSongIdsAndSongTitlesFromArtist(): Promise<
@@ -111,25 +116,30 @@ export class BulkDownloadService {
     return true;
   }
 
-  private async storeLinksInKv(
-    links: IDownloadLinkAndSongTitle[]
+  private async storeBuffersInKv(
+    bufferObjects: IGuitarProBufferObject[]
   ): Promise<void> {
     try {
+      logger.log(
+        `Caching buffers for artistId: ${this.artistId}`
+        // `Size in KB: ${getTotalSizeOfArrayBuffers(bufferObjects)}`
+      );
+
       await kv.lpush(
         this.BULK_DOWNLOAD_CACHE_KEY,
-        ...links.map((link) => JSON.stringify(link))
+        ...bufferObjects.map((obj) => JSON.stringify(obj))
       );
     } catch (error) {
       logger.error(
-        'vercel KV',
+        'Cache Store Error:',
         `unable to store links for artistID: ${this.artistId} in KV: `,
         error
       );
     }
   }
 
-  private async retrieveLinksFromKv(): Promise<IDownloadLinkAndSongTitle[]> {
-    return kv.lrange(this.BULK_DOWNLOAD_CACHE_KEY, 0, 100);
+  private async retrieveBuffersFromKv(): Promise<IGuitarProBufferObject[]> {
+    return kv.lrange(this.BULK_DOWNLOAD_CACHE_KEY, 0, this.MAX_SEARCH_RESULTS);
   }
 }
 
@@ -142,6 +152,11 @@ interface ISearchResultByArtist {
   tracks: any[];
   hasChords: false;
   defaultTrack: number;
+}
+
+export interface IGuitarProBufferObject {
+  songTitle: string;
+  buf: Buffer;
 }
 
 interface IDownloadLinkAndSongTitle {
