@@ -1,6 +1,7 @@
-interface SongsterrDownloadResponse {
+interface ISongsterrDownloadResponse {
   file: number[];
   fileName: string;
+  downloadLink: string;
   contentType: string;
 }
 

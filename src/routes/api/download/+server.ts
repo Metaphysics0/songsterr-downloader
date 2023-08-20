@@ -14,16 +14,17 @@ export const GET = (async ({ url }): Promise<Response> => {
   const byLinkUrl = url.searchParams.get('byLinkUrl');
   if (!songId) throw 'Unable to find the song id from the URL';
 
-  const link = await getDownloadLinkFromSongId(songId, byLinkUrl);
+  const downloadLink = await getDownloadLinkFromSongId(songId, byLinkUrl);
 
-  if (!link) throw 'Unable to find download link';
+  if (!downloadLink) throw 'Unable to find download link';
 
-  const downloadResponse = await fetch(link);
+  const downloadResponse = await fetch(downloadLink);
   const buf = await downloadResponse.arrayBuffer();
 
   return json({
+    downloadLink,
     file: Array.from(new Uint8Array(buf)),
-    fileName: buildFileNameFromSongName(songTitle, link),
+    fileName: buildFileNameFromSongName(songTitle, downloadLink),
     contentType:
       downloadResponse.headers.get('Content-Type') || 'application/gp'
   });

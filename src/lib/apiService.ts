@@ -13,7 +13,7 @@ export const apiService = {
   download: {
     bySearchResult: async (
       searchResult: ISearchResult | IPartialSearchResult
-    ): Promise<SongsterrDownloadResponse> => {
+    ): Promise<ISongsterrDownloadResponse> => {
       return fetchAndReturnJson({
         endpoint: 'download',
         method: 'GET',
@@ -30,7 +30,7 @@ export const apiService = {
     }: {
       selectedSong: ISearchResult | IPartialSearchResult;
       secretAccessCode: string;
-    }): Promise<SongsterrDownloadResponse> => {
+    }): Promise<ISongsterrDownloadResponse> => {
       return fetchAndReturnJson({
         endpoint: 'download',
         method: 'POST',

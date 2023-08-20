@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 
 export function triggerFileDownloadFromSongsterrResponse(
-  res: SongsterrDownloadResponse
+  res: ISongsterrDownloadResponse
 ): void {
   if (!browser) return;
   try {

@@ -20,5 +20,5 @@ export function normalize(input: string) {
 }
 
 export function getGuitarProFileTypeFromUrl(url: string) {
-  return url.endsWith('.gp5') ? '.gp5' : '.gp';
+  return url.endsWith('.gp') ? url.split('.').at(-1) : '.gp';
 }

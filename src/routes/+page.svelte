@@ -5,7 +5,6 @@
 </script>
 
 <main class="mb-12">
-  <Header />
   <TabMenu />
 </main>
 

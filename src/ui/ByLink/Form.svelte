@@ -1,11 +1,12 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { cssClasses } from '$lib/sharedCssClasses';
   import { SONGSTERR_URL_REGEX_PATTERN } from '../../consts';
   import { selectedSongToDownload } from '../../stores/selectedSong';
   import {
     setValidationMessage,
     clearValidationMessage
-  } from '../../utils/inputUtils';
+  } from '../../lib/utils/inputUtils';
   import SelectedForm from '../BySearch/withSelectedSong/SelectedForm.svelte';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
@@ -53,7 +54,7 @@
         on:invalid={setValidationMessage}
         on:input={checkIfInputIsValid}
         placeholder="https://www.songsterr.com/a/wsa/structures-hydroplaning-tab-s88503"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2 text-center"
+        class={cssClasses.textInput}
       />
     </label>
     <button
@@ -63,11 +64,3 @@
     >
   </form>
 {/if}
-
-<style>
-  @media only screen and (max-width: 600px) {
-    input {
-      width: calc(100% - 3rem);
-    }
-  }
-</style>
