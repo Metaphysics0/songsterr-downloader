@@ -42,6 +42,12 @@ interface IPartialSearchResult {
   byLinkUrl?: string;
 }
 
+interface IDownloadHistoryItem {
+  downloadLink: string;
+  artist: string;
+  title: string;
+}
+
 interface IArtistTrack {
   tuning?: number[];
   tuningString?: string;

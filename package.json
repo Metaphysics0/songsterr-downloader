@@ -38,6 +38,7 @@
     "@vercel/analytics": "^1.0.2",
     "@xmldom/xmldom": "^0.8.6",
     "adm-zip": "^0.5.10",
+    "svelte-local-storage-store": "^0.6.0",
     "xml2js": "^0.6.0"
   }
 }
