@@ -2,6 +2,7 @@
   import { apiService } from '$lib/apiService';
   import { cssClasses } from '$lib/sharedCssClasses';
   import { selectedSongToDownload } from '../../../stores/selectedSong';
+  import TextInput from '../../inputs/TextInput.svelte';
   import SearchResults from './SearchResults.svelte';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;

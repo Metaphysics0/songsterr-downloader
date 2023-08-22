@@ -5,6 +5,9 @@
 
   let selectedSong: ISearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
+    if (value === undefined) return;
+
+    // @ts-ignore
     selectedSong = value;
   });
 </script>

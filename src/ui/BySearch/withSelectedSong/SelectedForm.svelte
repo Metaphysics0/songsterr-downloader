@@ -5,12 +5,25 @@
   import Icon from '@iconify/svelte';
   import { selectedSongToDownload } from '../../../stores/selectedSong';
   import SelectedSong from './SelectedSong.svelte';
+  import { downloadHistory } from '../../../stores/downloadHistory';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   async function downloadTabFromSearchResult(): Promise<void> {
     const resp = await apiService.download.bySearchResult(selectedSong);
     triggerFileDownloadFromSongsterrResponse(resp);
+    pushValueToDownloadHistory(resp);
+  }
+
+  function pushValueToDownloadHistory(resp: ISongsterrDownloadResponse): void {
+    downloadHistory.update((items) => {
+      items.push({
+        artist: selectedSong.artist,
+        downloadLink: resp.downloadLink,
+        title: selectedSong.title
+      });
+      return items;
+    });
   }
 
   async function downloadAllTabsFromArtist(): Promise<void> {
