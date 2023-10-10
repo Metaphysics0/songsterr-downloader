@@ -30,6 +30,7 @@ interface ISearchResult {
   tracks: IArtistTrack[];
   hasChords: boolean;
   defaultTrack: number;
+  source?: string;
 }
 
 interface IPartialSearchResult {

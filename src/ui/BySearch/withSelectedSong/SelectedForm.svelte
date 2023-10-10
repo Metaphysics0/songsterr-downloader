@@ -9,7 +9,13 @@
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   async function downloadTabFromSearchResult(): Promise<void> {
-    const resp = await apiService.download.bySearchResult(selectedSong);
+    const downloadApiMethod = (
+      selectedSong.source ? 'bySource' : 'bySearchResult'
+    ) as keyof typeof apiService.download;
+
+    // ts-ignoring because there's one download method that requires more params.
+    // @ts-ignore
+    const resp = await apiService.download[downloadApiMethod](selectedSong);
     triggerFileDownloadFromSongsterrResponse(resp);
   }
 

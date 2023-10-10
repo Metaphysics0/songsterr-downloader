@@ -40,6 +40,18 @@ export const apiService = {
           secretAccessCode
         }
       });
+    },
+    bySource: async (
+      searchResult: ISearchResult | IPartialSearchResult
+    ): Promise<SongsterrDownloadResponse> => {
+      return fetchAndReturnJson({
+        endpoint: 'download/by_source',
+        method: 'POST',
+        params: {
+          source: searchResult.source,
+          songTitle: searchResult.title
+        }
+      });
     }
   }
 };
