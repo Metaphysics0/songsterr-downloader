@@ -1,11 +1,10 @@
 import AdmZip from 'adm-zip';
+import { MAX_SONGS_TO_BULK_DOWNLOAD } from '$env/static/private';
 import { getDownloadLinkFromSongId } from './songsterrService';
 import { logger } from '$lib/utils/logger';
 
 export class BulkDownloadService {
   artistId: string;
-  MAX_SEARCH_RESULTS = 50;
-
   constructor(artistId: string) {
     this.artistId = artistId;
   }
@@ -66,7 +65,7 @@ export class BulkDownloadService {
   private async getSongIdsAndSongTitlesFromArtist(): Promise<
     ISongIdAndSongTitle[]
   > {
-    const url = `https://www.songsterr.com/api/artist/${this.artistId}/songs?size=${this.MAX_SEARCH_RESULTS}`;
+    const url = `https://www.songsterr.com/api/artist/${this.artistId}/songs?size=${MAX_SONGS_TO_BULK_DOWNLOAD}`;
     const response = await fetch(url);
     const results = (await response.json()) as ISearchResultByArtist[];
 
