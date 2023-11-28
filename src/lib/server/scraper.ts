@@ -1,3 +1,4 @@
+import Fetcher from '$lib/utils/fetch';
 import { DOMParser } from '@xmldom/xmldom';
 
 class Scraper {
@@ -10,7 +11,7 @@ class Scraper {
 
   async fetchAndGetText(url: string) {
     try {
-      const request = await fetch(url);
+      const request = await new Fetcher().fetch(url);
       return request.text();
     } catch (error) {
       console.error('Error fetching url from the scraper', error);
