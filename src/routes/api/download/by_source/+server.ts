@@ -1,8 +1,11 @@
+import { downloadLinkRepository } from '$lib/server/repositories/downloadLink.repository.js';
 import { buildFileNameFromSongName } from '$lib/server/songsterrService';
 import { json, type HttpError } from '@sveltejs/kit';
 
 export const POST = async ({ request }): Promise<Response | HttpError> => {
-  const { source, songTitle } = await request.json();
+  const { source, songTitle, songId } = await request.json();
+  await downloadLinkRepository.createOrRetrieveByDownloadLink(source, songId);
+
   const { downloadResponse, buf } = await downloadAndGetArrayBuffer(source);
 
   return json({

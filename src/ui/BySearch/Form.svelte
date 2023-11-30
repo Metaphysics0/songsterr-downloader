@@ -3,14 +3,15 @@
   import SearchForm from './withoutSelectedSong/SearchForm.svelte';
   import SelectedForm from './withSelectedSong/SelectedForm.svelte';
 
-  let selectedSong: ISearchResult | undefined;
+  let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
+    console.log('VALUE from read', value);
     selectedSong = value;
   });
 </script>
 
-{#if selectedSong}
-  <SelectedForm {selectedSong} />
+{#if $selectedSongToDownload}
+  <SelectedForm selectedSong={$selectedSongToDownload} />
 {:else}
   <SearchForm />
 {/if}

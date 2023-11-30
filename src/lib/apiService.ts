@@ -49,7 +49,8 @@ export const apiService = {
         method: 'POST',
         params: {
           source: searchResult.source,
-          songTitle: searchResult.title
+          songTitle: searchResult.title,
+          songId: searchResult.songId
         }
       });
     }

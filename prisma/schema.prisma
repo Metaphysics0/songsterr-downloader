@@ -11,7 +11,7 @@ model GuitarProTabDownloadLinks {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt       DateTime @default(now())
   songsterrSongId String
-  songsterrUrlId  String
+  songsterrUrlId  String?
   downloadLink    String
   metadata        Json?
 }

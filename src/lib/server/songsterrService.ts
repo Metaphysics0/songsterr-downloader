@@ -5,6 +5,10 @@ export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
 ): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
+  if (!doc) {
+    throw new Error('Unable to get page data from songsterr');
+  }
+
   const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
 
   return {

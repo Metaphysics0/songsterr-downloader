@@ -42,6 +42,12 @@ interface IPartialSearchResult {
   byLinkUrl?: string;
 }
 
+interface GetSelectedSongFromUrlResponse {
+  searchResult: IPartialSearchResult;
+  existingDownloadLink?: string;
+  error?: any;
+}
+
 interface IArtistTrack {
   tuning?: number[];
   tuningString?: string;
