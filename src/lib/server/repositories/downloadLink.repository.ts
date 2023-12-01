@@ -1,7 +1,5 @@
-import { logger } from '$lib/utils/logger';
 import prisma from '../prisma';
 import type { Prisma } from '@prisma/client';
-import { getDownloadLinkFromSongId } from '../songsterrService';
 
 export class DownloadLinkRepository {
   async create(params: Prisma.GuitarProTabDownloadLinksCreateArgs) {
