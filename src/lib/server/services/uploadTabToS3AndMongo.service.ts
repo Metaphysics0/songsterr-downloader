@@ -24,7 +24,7 @@ export default class UploadTabToS3AndMongoService {
       const s3DownloadLink = await this.s3Repository.writeIfNotExists(s3Data);
       await this.downloadLinkRepository.upsertBySongsterrSongId(
         mongoData.songsterrSongId,
-        mongoData
+        { ...mongoData, s3DownloadLink }
       );
 
       return s3DownloadLink;

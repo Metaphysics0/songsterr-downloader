@@ -32,9 +32,10 @@ export const actions = {
       };
     } catch (error) {
       logger.error('#getSelectedSongFromUrl failed', error);
+
       return {
         searchResult: createGetMockSearchResultResponse(),
-        error: 'Error getting song information'
+        error: 'failed getting download link'
       };
     }
   }

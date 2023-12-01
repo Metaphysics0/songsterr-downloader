@@ -27,24 +27,6 @@ export class DownloadLinkRepository {
     });
   }
 
-  async upsertBySongsterrDownloadLink(
-    songsterrDownloadLink: string,
-    params: Prisma.GuitarProTabDownloadLinksCreateInput
-  ) {
-    return this.baseQuery.upsert({
-      where: {
-        songsterrDownloadLink
-      },
-      create: {
-        ...params,
-        songsterrDownloadLink
-      },
-      update: {
-        songsterrDownloadLink
-      }
-    });
-  }
-
   async getS3DownloadLinkSongsterrSongId(id: string) {
     const response = await this.baseQuery.findFirst({
       where: {

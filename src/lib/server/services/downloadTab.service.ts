@@ -9,7 +9,7 @@ import { convertArrayBufferToArray } from '$lib/utils/array';
 import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
 import { BulkDownloadService } from './bulkDownload.service';
 import { normalize } from '$lib/utils/string';
-import { GUITAR_PRO_CONTENT_TYPE } from '../../../consts';
+import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
 
 export class DownloadTabService {
   readonly downloadTabType: DownloadTabType;
@@ -45,28 +45,29 @@ export class DownloadTabService {
 
     const { buffer, downloadResponse } =
       await this.fetcher.fetchAndReturnArrayBuffer(
-        existingDownloadLink || source
+        // to save on the AWS bill
+        source?.includes('cloudfront') ? source : existingDownloadLink
       );
 
-    const fileName = buildFileNameFromSongName(
-      songTitle,
-      existingDownloadLink || source
-    );
+    const fileName = buildFileNameFromSongName(songTitle, source);
 
-    await this.uploadService.call({
-      s3Data: {
-        fileName,
-        data: Buffer.from(buffer),
-        artist
-      },
-      mongoData: {
-        songTitle,
-        artist,
-        songsterrSongId: String(songId),
-        songsterrOriginUrl: byLinkUrl,
-        songsterrDownloadLink: source
-      }
-    });
+    // assuming the mongo insertion happened as well
+    if (!existingDownloadLink) {
+      await this.uploadService.call({
+        s3Data: {
+          fileName,
+          data: Buffer.from(buffer),
+          artist
+        },
+        mongoData: {
+          songTitle,
+          artist,
+          songsterrSongId: String(songId),
+          songsterrOriginUrl: byLinkUrl,
+          songsterrDownloadLink: source
+        }
+      });
+    }
 
     return {
       file: convertArrayBufferToArray(buffer),

@@ -11,7 +11,7 @@ export default class Fetcher {
   }
 
   async fetchAndReturnArrayBuffer(url: string) {
-    const downloadResponse = await fetch(url);
+    const downloadResponse = await this.fetch(url);
     const buffer = await downloadResponse.arrayBuffer();
     return {
       downloadResponse,

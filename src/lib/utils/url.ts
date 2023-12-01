@@ -1,4 +1,4 @@
-import { SONGSTERR_URL_REGEX_PATTERN } from '../../consts';
+import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
 
 export function getIdFromUrl(url: string) {
   return url.split('-').at(-1);
