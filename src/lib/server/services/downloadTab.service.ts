@@ -42,16 +42,16 @@ export class DownloadTabService {
 
     const existingDownloadLink =
       await this.uploadService.getS3DownloadLinkBySongsterrSongId(songId);
+    console.log('existing download link', existingDownloadLink);
 
     const { buffer, downloadResponse } =
       await this.fetcher.fetchAndReturnArrayBuffer(
         // to save on the AWS bill
-        source?.includes('cloudfront') ? source : existingDownloadLink
+        existingDownloadLink || source
       );
 
     const fileName = buildFileNameFromSongName(songTitle, source);
 
-    // assuming the mongo insertion happened as well
     if (!existingDownloadLink) {
       await this.uploadService.call({
         s3Data: {
