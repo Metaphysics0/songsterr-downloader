@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { pick } from 'lodash-es';
 
 export const apiService = {
   search: {
@@ -17,8 +17,8 @@ export const apiService = {
       searchResult: ISearchResult | IPartialSearchResult
     ): Promise<SongsterrDownloadResponse> => {
       return fetchAndReturnJson({
-        endpoint: 'download',
-        method: 'PUT',
+        endpoint: 'download/bySearchResult',
+        method: 'POST',
         params: {
           songId: searchResult.songId,
           songTitle: searchResult.title,
@@ -35,7 +35,7 @@ export const apiService = {
       secretAccessCode: string;
     }): Promise<SongsterrDownloadResponse> => {
       return fetchAndReturnJson({
-        endpoint: 'download',
+        endpoint: 'download/bulk',
         method: 'POST',
         params: {
           artistId: selectedSong.artistId,
@@ -48,11 +48,11 @@ export const apiService = {
       searchResult: ISearchResult | IPartialSearchResult
     ): Promise<SongsterrDownloadResponse> => {
       return fetchAndReturnJson({
-        endpoint: 'download/by_source',
+        endpoint: 'download/bySource',
         method: 'POST',
         params: {
           songTitle: searchResult.title,
-          ..._.pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
+          ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
         }
       });
     }

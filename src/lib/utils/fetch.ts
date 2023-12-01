@@ -1,8 +1,22 @@
 import { getRandomElementFromArray } from './array';
 
 export default class Fetcher {
+  withRotatingUserAgent: boolean;
+  constructor({ withRotatingUserAgent = true }: FetcherOptions = {}) {
+    this.withRotatingUserAgent = withRotatingUserAgent;
+  }
+
   fetch(url: string) {
     return fetch(url, this.options);
+  }
+
+  async fetchAndReturnArrayBuffer(url: string) {
+    const downloadResponse = await fetch(url);
+    const buffer = await downloadResponse.arrayBuffer();
+    return {
+      downloadResponse,
+      buffer
+    };
   }
 
   get options() {
@@ -12,12 +26,15 @@ export default class Fetcher {
   }
 
   private get headers() {
-    return new Headers({
-      'User-Agent': this.userAgent
-    });
+    const headerObject: Record<string, any> = {};
+    if (this.withRotatingUserAgent) {
+      headerObject['User-Agent'] = this.randomUserAgent;
+    }
+
+    return new Headers(headerObject);
   }
 
-  private get userAgent() {
+  private get randomUserAgent() {
     return getRandomElementFromArray(this.userAgents);
   }
 
@@ -32,4 +49,8 @@ export default class Fetcher {
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0',
     'Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0'
   ];
+}
+
+interface FetcherOptions {
+  withRotatingUserAgent?: boolean;
 }

@@ -22,14 +22,12 @@ export default class UploadTabToS3AndMongoService {
   }) {
     try {
       const s3DownloadLink = await this.s3Repository.writeIfNotExists(s3Data);
+      await this.downloadLinkRepository.upsertBySongsterrSongId(
+        mongoData.songsterrSongId,
+        mongoData
+      );
 
-      const uploadResponse =
-        await this.downloadLinkRepository.upsertByS3DownloadLink(
-          s3DownloadLink,
-          mongoData
-        );
-
-      return uploadResponse.s3DownloadLink;
+      return s3DownloadLink;
     } catch (error) {
       logger.error('uploadTabToS3AndMongoService failed', error);
       return '';

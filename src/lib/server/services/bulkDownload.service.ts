@@ -1,6 +1,6 @@
 import AdmZip from 'adm-zip';
 import { MAX_SONGS_TO_BULK_DOWNLOAD } from '$env/static/private';
-import { getDownloadLinkFromSongId } from './songsterrService';
+import { getDownloadLinkFromSongId } from './songsterr.service';
 import { logger } from '$lib/utils/logger';
 
 export class BulkDownloadService {
