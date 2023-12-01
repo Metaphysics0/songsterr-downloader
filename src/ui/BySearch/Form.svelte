@@ -5,7 +5,6 @@
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
-    console.log('VALUE from read', value);
     selectedSong = value;
   });
 </script>

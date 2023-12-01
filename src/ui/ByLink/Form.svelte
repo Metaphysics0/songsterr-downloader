@@ -10,8 +10,6 @@
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
-    console.log('setting value', value);
-
     selectedSong = value;
   });
 
