@@ -25,6 +25,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/uuid": "^9.0.7",
     "@types/xml2js": "^0.4.11",
+    "@zerodevx/svelte-toast": "^0.9.5",
     "browserslist": "^4.21.10",
     "lightningcss": "^1.21.5",
     "prettier": "^2.8.0",
@@ -46,12 +47,11 @@
     "@aws-sdk/signature-v4-crt": "^3.461.0",
     "@prisma/client": "^5.6.0",
     "@vercel/analytics": "^1.0.2",
-    "@xmldom/xmldom": "^0.8.6",
+    "@xmldom/xmldom": "^0.8.10",
     "adm-zip": "^0.5.10",
     "aws-sdk": "^2.1508.0",
     "lodash-es": "^4.17.21",
     "mongodb": "^6.3.0",
-    "uuid": "^9.0.1",
-    "xml2js": "^0.6.0"
+    "uuid": "^9.0.1"
   }
 }

@@ -9,7 +9,7 @@ import { convertArrayBufferToArray } from '$lib/utils/array';
 import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
 import { BulkDownloadService } from './bulkDownload.service';
 import { normalize } from '$lib/utils/string';
-import { GUITAR_PRO_CONTENT_TYPE } from '../../../consts';
+import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
 
 export class DownloadTabService {
   readonly downloadTabType: DownloadTabType;

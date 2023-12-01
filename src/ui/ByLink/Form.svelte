@@ -1,12 +1,13 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { SONGSTERR_URL_REGEX_PATTERN } from '../../consts';
+  import { toast } from '@zerodevx/svelte-toast';
   import { selectedSongToDownload } from '../../stores/selectedSong';
   import {
     setValidationMessage,
     clearValidationMessage
   } from '../../utils/inputUtils';
-  import SelectedForm from '../BySearch/withSelectedSong/SelectedForm.svelte';
+  import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
+    import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -42,7 +43,16 @@
         } = result?.data || {};
 
         if (error) {
+          toast.push('Error finding song data from URL 😭', {
+            theme: {
+              '--toastBarHeight': 0,
+              '--toastColor': '#ef4444',
+              '--toastBackground': '#ef4444',
+              '--toastBarBackground': '#7f1d1d'
+            }
+          });
           console.error('result error', error);
+          return;
         }
 
         selectedSongToDownload.set({

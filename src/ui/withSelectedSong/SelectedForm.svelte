@@ -3,20 +3,26 @@
   import { cssClasses } from '$lib/sharedCssClasses';
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
   import Icon from '@iconify/svelte';
-  import { selectedSongToDownload } from '../../../stores/selectedSong';
   import SelectedSong from './SelectedSong.svelte';
+  import { toast } from '@zerodevx/svelte-toast';
+  import { selectedSongToDownload } from '../../stores/selectedSong';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
-  async function downloadTabFromSearchResult(): Promise<void> {
-    const downloadApiMethod = (
-      selectedSong.source ? 'bySource' : 'bySearchResult'
-    ) as keyof typeof apiService.download;
+  async function downloadTab(): Promise<void> {
+    try {
+      const downloadApiMethod = (
+        selectedSong.source ? 'bySource' : 'bySearchResult'
+      ) as keyof typeof apiService.download;
 
-    // ts-ignoring because there's one download method that requires more params.
-    // @ts-ignore
-    const resp = await apiService.download[downloadApiMethod](selectedSong);
-    triggerFileDownloadFromSongsterrResponse(resp);
+      // ts-ignoring because there's one download method that requires more params.
+      // @ts-ignore
+      const resp = await apiService.download[downloadApiMethod](selectedSong);
+      triggerFileDownloadFromSongsterrResponse(resp);
+    } catch (error) {
+      toast.push('Error downloading tab 😭');
+      console.error('error', error);
+    }
   }
 
   async function downloadAllTabsFromArtist(): Promise<void> {
@@ -46,7 +52,7 @@
   <div class="mb-8 w-full">
     <SelectedSong {selectedSong} />
   </div>
-  <button class={cssClasses.downloadBtn} on:click={downloadTabFromSearchResult}
+  <button class={cssClasses.downloadBtn} on:click={downloadTab}
     >Download {selectedSong.title} Tab</button
   >
   <strong class="my-2">Or</strong>
