@@ -17,10 +17,10 @@ export const actions = {
         throw `${url} is not a valid songsterr link.`;
       }
 
-      const existingDownloadLink =
-        await downloadLinkRepository.getS3DownloadLinkSongsterrSongId(
-          getIdFromUrl(url!)!
-        );
+      const existingDownloadLink = '';
+      // await downloadLinkRepository.getS3DownloadLinkSongsterrSongId(
+      //   getIdFromUrl(url!)!
+      // );
 
       if (existingDownloadLink) {
         logger.log('retrieved existing download link', existingDownloadLink);
