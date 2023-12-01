@@ -50,7 +50,8 @@ export const apiService = {
         params: {
           source: searchResult.source,
           songTitle: searchResult.title,
-          songId: searchResult.songId
+          songId: searchResult.songId,
+          artist: searchResult.artist
         }
       });
     }

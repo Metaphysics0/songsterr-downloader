@@ -12,7 +12,6 @@
     "test:unit": "vitest",
     "lint": "prettier --plugin-search-dir . --check .",
     "format": "prettier --plugin-search-dir . --write .",
-    "prisma-migrate": "npx prisma migrate",
     "prisma-push": "npx prisma db push"
   },
   "devDependencies": {
@@ -21,6 +20,8 @@
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.5.0",
     "@types/adm-zip": "^0.5.0",
+    "@types/lodash": "^4.14.202",
+    "@types/uuid": "^9.0.7",
     "@types/xml2js": "^0.4.11",
     "browserslist": "^4.21.10",
     "lightningcss": "^1.21.5",
@@ -38,11 +39,17 @@
   },
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.462.0",
+    "@aws-sdk/s3-presigned-post": "^3.462.0",
+    "@aws-sdk/signature-v4-crt": "^3.461.0",
     "@prisma/client": "^5.6.0",
     "@vercel/analytics": "^1.0.2",
     "@xmldom/xmldom": "^0.8.6",
     "adm-zip": "^0.5.10",
+    "aws-sdk": "^2.1508.0",
+    "lodash": "^4.17.21",
     "mongodb": "^6.3.0",
+    "uuid": "^9.0.1",
     "xml2js": "^0.6.0"
   }
 }

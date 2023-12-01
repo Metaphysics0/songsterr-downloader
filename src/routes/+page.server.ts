@@ -1,5 +1,5 @@
 import { getSearchResultFromSongsterrUrl } from '$lib/server/songsterrService';
-import { downloadLinkRepository } from '$lib/server/repositories/downloadLink.repository';
+import { DownloadLinkRepository } from '$lib/server/repositories/downloadLink.repository';
 
 import type { Actions } from './$types';
 import { logger } from '$lib/utils/logger';
@@ -8,17 +8,19 @@ import { createGetMockSearchResultResponse } from '$lib/mocks';
 
 export const actions = {
   getSelectedSongFromUrl: async ({
-    request,
-    fetch
+    request
   }): Promise<GetSelectedSongFromUrlResponse> => {
     const url = await getUrlParam(request);
+    const downloadLinkRepository = new DownloadLinkRepository();
     try {
       if (!isUrlValid(url)) {
         throw `${url} is not a valid songsterr link.`;
       }
 
       const existingDownloadLink =
-        await downloadLinkRepository.findBySongsterrSongId(getIdFromUrl(url!)!);
+        await downloadLinkRepository.getS3DownloadLinkSongsterrSongId(
+          getIdFromUrl(url!)!
+        );
 
       if (existingDownloadLink) {
         logger.log('retrieved existing download link', existingDownloadLink);
@@ -26,7 +28,7 @@ export const actions = {
 
       return {
         searchResult: await getSearchResultFromSongsterrUrl(url!),
-        existingDownloadLink: existingDownloadLink?.downloadLink
+        existingDownloadLink
       };
     } catch (error) {
       logger.error('#getSelectedSongFromUrl failed', error);

@@ -11,7 +11,7 @@
     type ITabMenuIndex
   } from '../stores/activeTabMenu';
 
-  import { createClassNames } from '$lib/utils/cssUtils';
+  import { createClassNames } from '$lib/utils/css';
   import ByLink from './ByLink/Form.svelte';
   import BySearch from './BySearch/Form.svelte';
   import { selectedSongToDownload } from '../stores/selectedSong';

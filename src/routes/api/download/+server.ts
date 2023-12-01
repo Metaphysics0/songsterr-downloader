@@ -7,7 +7,6 @@ import {
 import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
 import { BulkDownloadService } from '$lib/server/bulkDownloadService';
 import { normalize } from '$lib/utils/string';
-import { downloadLinkRepository } from '$lib/server/repositories/downloadLink.repository';
 
 export const GET = (async ({ url }): Promise<Response> => {
   const songId = url.searchParams.get('songId');
@@ -15,10 +14,7 @@ export const GET = (async ({ url }): Promise<Response> => {
   const byLinkUrl = url.searchParams.get('byLinkUrl');
   if (!songId) throw 'Unable to find the song id from the URL';
 
-  const link = await downloadLinkRepository.createOrRetrieveBySongsterrId(
-    songId,
-    { byLinkUrl }
-  );
+  const link = await getDownloadLinkFromSongId(songId, { byLinkUrl });
 
   if (!link) throw 'Unable to find download link';
 

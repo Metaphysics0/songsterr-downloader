@@ -44,7 +44,7 @@ interface IPartialSearchResult {
 
 interface GetSelectedSongFromUrlResponse {
   searchResult: IPartialSearchResult;
-  existingDownloadLink?: string;
+  existingDownloadLink?: string | null | undefined;
   error?: any;
 }
 

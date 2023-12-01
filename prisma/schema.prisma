@@ -8,10 +8,11 @@ datasource db {
 }
 
 model GuitarProTabDownloadLinks {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt       DateTime @default(now())
-  songsterrSongId String
-  songsterrUrlId  String?
-  downloadLink    String
-  metadata        Json?
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt             DateTime @default(now())
+  songsterrSongId       String
+  songsterrDownloadLink String   @unique
+  s3DownloadLink        String?  @unique
+  songsterrUrlId        String?
+  metadata              Json?
 }
