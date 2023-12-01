@@ -1,6 +1,6 @@
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
-import { scraper } from './scraper';
+import { scraper } from '../scraper';
 
 export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
@@ -61,9 +61,6 @@ export function buildFileNameFromSongName(
   songName: string,
   downloadUrl: string
 ): string {
-  console.log('SONG NAME', songName);
-  console.log('DOWNLOAD URL', downloadUrl);
-
   try {
     const normalizedSongName = normalize(songName);
     const fileType = getGuitarProFileTypeFromUrl(downloadUrl);

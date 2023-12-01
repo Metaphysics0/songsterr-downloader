@@ -1,4 +1,4 @@
-import { getSearchResultFromSongsterrUrl } from '$lib/server/songsterrService';
+import { getSearchResultFromSongsterrUrl } from '$lib/server/services/songsterr.service';
 import { DownloadLinkRepository } from '$lib/server/repositories/downloadLink.repository';
 
 import type { Actions } from './$types';
