@@ -4,7 +4,7 @@ import {
   type PutObjectCommandInput,
   HeadObjectCommand
 } from '@aws-sdk/client-s3';
-import { isEmpty } from 'lodash';
+import _ from 'lodash';
 import { logger } from '$lib/utils/logger';
 import { env } from '$env/dynamic/private';
 
@@ -113,7 +113,7 @@ function ensureAllEnvironmentVariablesAreLoaded() {
       AWS_ACCESS_KEY_ID,
       AWS_ACCESS_KEY_SECRET,
       AWS_S3_BUCKET_NAME
-    ].some(isEmpty)
+    ].some(_.isEmpty)
   ) {
     throw new Error('Unable to initialize S3 Client. Missing Env variables');
   }
