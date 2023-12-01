@@ -15,8 +15,6 @@ interface ISelectedSongTitle {
   songName: string;
 }
 
-type IBadge = 'new' | 'pro';
-
 interface ISearchResultResponse {
   searchResults: ISearchResult[];
 }
@@ -40,6 +38,12 @@ interface IPartialSearchResult {
   artist: string;
   source?: string;
   byLinkUrl?: string;
+}
+
+interface GetSelectedSongFromUrlResponse {
+  searchResult: IPartialSearchResult;
+  existingDownloadLink?: string | null | undefined;
+  error?: any;
 }
 
 interface IArtistTrack {

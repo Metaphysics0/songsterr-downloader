@@ -14,7 +14,7 @@ class Scraper {
       const request = await new Fetcher().fetch(url);
       return request.text();
     } catch (error) {
-      console.error('Error fetching url from the scraper', error);
+      console.error(`Error fetching url: ${url} from the scraper`, error);
       return '';
     }
   }

@@ -34,9 +34,19 @@
       const byLinkUrl = data.get('url');
 
       return async ({ result, update }) => {
-        selectedSongToDownload.set({
+        const {
+          error,
+          searchResult,
+          existingDownloadLink
           // @ts-ignore
-          ...result.data,
+        } = result?.data || {};
+
+        if (error) {
+          console.error('result error', error);
+        }
+
+        selectedSongToDownload.set({
+          ...searchResult,
           byLinkUrl
         });
         update({ reset: false });

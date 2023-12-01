@@ -1,3 +1,4 @@
+import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from './scraper';
 
@@ -5,6 +6,10 @@ export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
 ): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
+  if (!doc) {
+    throw new Error('Unable to get page data from songsterr');
+  }
+
   const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
 
   return {
@@ -56,10 +61,17 @@ export function buildFileNameFromSongName(
   songName: string,
   downloadUrl: string
 ): string {
-  const normalizedSongName = normalize(songName);
-  const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
+  console.log('SONG NAME', songName);
+  console.log('DOWNLOAD URL', downloadUrl);
 
-  return normalizedSongName + fileType;
+  try {
+    const normalizedSongName = normalize(songName);
+    const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
+    return normalizedSongName + fileType;
+  } catch (error) {
+    logger.error('error creating filename from song name', error);
+    return `downloaded-tab_${Date.now()}.gp5`;
+  }
 }
 
 export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
