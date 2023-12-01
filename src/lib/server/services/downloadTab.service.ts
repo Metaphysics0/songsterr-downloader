@@ -32,6 +32,7 @@ export class DownloadTabService {
     if (this.downloadTabType === 'bulk') {
       return this.bulk(request);
     }
+
     throw new Error(`Unsupported download type: ${this.downloadTabType}`);
   }
 
@@ -75,7 +76,7 @@ export class DownloadTabService {
     };
   }
 
-  async bySearchResult(request: Request): Promise<DownloadResponse> {
+  private async bySearchResult(request: Request): Promise<DownloadResponse> {
     const { songId, songTitle, byLinkUrl, artist } = await request.json();
     if (!songId) throw 'Unable to find the song id from the params';
 
@@ -120,7 +121,7 @@ export class DownloadTabService {
     };
   }
 
-  async bulk(request: Request): Promise<DownloadResponse> {
+  private async bulk(request: Request): Promise<DownloadResponse> {
     const { artistId, secretAccessCode, artistName } = await request.json();
     if (!artistId) throw new Error('missing artistId');
 

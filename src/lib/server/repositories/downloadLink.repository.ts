@@ -1,24 +1,29 @@
 import prisma from '../prisma';
 import type { Prisma } from '@prisma/client';
+import { S3Repository } from './s3.repository';
 
 export class DownloadLinkRepository {
+  constructor(private s3Repository = new S3Repository()) {}
+
   async create(params: Prisma.GuitarProTabDownloadLinksCreateArgs) {
     return this.baseQuery.create(params);
   }
 
-  async upsertByS3DownloadLink(
-    s3DownloadLink: string,
+  async upsertBySongsterrSongId(
+    songsterrSongId: string,
     params: Prisma.GuitarProTabDownloadLinksCreateInput
   ) {
     return this.baseQuery.upsert({
       where: {
-        s3DownloadLink
+        songsterrSongId
       },
       create: {
         ...params,
-        s3DownloadLink
+        songsterrSongId
       },
-      update: {}
+      update: {
+        ...params
+      }
     });
   }
 
@@ -34,7 +39,9 @@ export class DownloadLinkRepository {
         ...params,
         songsterrDownloadLink
       },
-      update: {}
+      update: {
+        songsterrDownloadLink
+      }
     });
   }
 
@@ -47,7 +54,10 @@ export class DownloadLinkRepository {
         s3DownloadLink: true
       }
     });
-    return response?.s3DownloadLink;
+
+    return this.s3Repository.ensureCloudfrontDomain(
+      response?.s3DownloadLink || ''
+    );
   }
 
   private get baseQuery() {

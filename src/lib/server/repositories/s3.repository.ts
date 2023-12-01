@@ -7,6 +7,7 @@ import {
 import { isEmpty } from 'lodash-es';
 import { logger } from '$lib/utils/logger';
 import { env } from '$env/dynamic/private';
+import { CLOUDFRONT_S3_BASE_URL } from '$lib/constants';
 
 const {
   AWS_REGION,
@@ -87,14 +88,32 @@ export class S3Repository {
     return this.write({ fileName, artist, data });
   }
 
+  ensureCloudfrontDomain(url?: string) {
+    if (!url) return;
+
+    const publicS3BucketRegex =
+      /^https:\/\/songsterr-tabs\.s3\.amazonaws\.com\/(.+)$/;
+    const match = url.match(publicS3BucketRegex);
+
+    if (match) {
+      const path = match[1];
+      return `${CLOUDFRONT_S3_BASE_URL}/${path}`;
+    }
+
+    return url;
+  }
+
   getPublicS3UrlFromFileNameAndArtist = (fileName: string, artist: string) =>
-    [this.S3_BASE_URL, artist, fileName].join('/');
+    [this.CLOUDFRONT_BASE_URL, artist, fileName].join('/');
 
   getKeyFromFileNameAndArtist = (fileName: string, artist: string) =>
     [this.UPLOAD_TABS_DIRECTORY, artist, fileName].join('/');
 
   private UPLOAD_TABS_DIRECTORY = 'tabs';
+
   private S3_BASE_URL = `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${this.UPLOAD_TABS_DIRECTORY}`;
+  private CLOUDFRONT_BASE_URL = `${CLOUDFRONT_S3_BASE_URL}/${this.UPLOAD_TABS_DIRECTORY}`;
+
   private OBJECT_NOT_FOUND_ERROR_NAME = 'NotFound';
 }
 function ensureAllEnvironmentVariablesAreLoaded() {
