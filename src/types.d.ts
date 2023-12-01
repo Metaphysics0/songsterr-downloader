@@ -15,8 +15,6 @@ interface ISelectedSongTitle {
   songName: string;
 }
 
-type IBadge = 'new' | 'pro';
-
 interface ISearchResultResponse {
   searchResults: ISearchResult[];
 }

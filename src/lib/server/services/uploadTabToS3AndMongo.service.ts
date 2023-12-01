@@ -1,7 +1,11 @@
 import type { PutObjectCommandInput } from '@aws-sdk/client-s3';
 import { DownloadLinkRepository } from '../repositories/downloadLink.repository';
-import { S3Repository } from '../repositories/s3.repository';
+import {
+  S3Repository,
+  type WriteToS3Args
+} from '../repositories/s3.repository';
 import { logger } from '$lib/utils/logger';
+import type { Prisma } from '@prisma/client';
 
 export default class UploadTabToS3AndMongoService {
   constructor(
@@ -10,32 +14,20 @@ export default class UploadTabToS3AndMongoService {
   ) {}
 
   async call({
-    fileName,
-    artist,
-    data,
-    songsterrSongId,
-    songsterrDownloadLink
+    s3Data,
+    mongoData
   }: {
-    artist: string;
-    fileName: string;
-    data: PutObjectCommandInput['Body'];
-    songsterrSongId: string;
-    songsterrDownloadLink: string;
-  }): Promise<string | null> {
+    s3Data: WriteToS3Args;
+    mongoData: Prisma.GuitarProTabDownloadLinksCreateInput;
+  }) {
     try {
-      const s3DownloadLink = await this.s3Repository.writeIfNotExists({
-        fileName,
-        artist,
-        data
-      });
-      console.log('S3 DOWNLOAD LINK', s3DownloadLink);
+      const s3DownloadLink = await this.s3Repository.writeIfNotExists(s3Data);
 
       const uploadResponse =
-        await this.downloadLinkRepository.upsertByS3DownloadLink({
+        await this.downloadLinkRepository.upsertByS3DownloadLink(
           s3DownloadLink,
-          songsterrSongId,
-          songsterrDownloadLink
-        });
+          mongoData
+        );
 
       return uploadResponse.s3DownloadLink;
     } catch (error) {

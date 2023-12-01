@@ -12,6 +12,9 @@ model GuitarProTabDownloadLinks {
   createdAt             DateTime @default(now())
   songsterrSongId       String
   songsterrDownloadLink String   @unique
+  songsterrOriginUrl    String?
+  artist                String?
+  songTitle             String?
   s3DownloadLink        String?  @unique
   songsterrUrlId        String?
   metadata              Json?

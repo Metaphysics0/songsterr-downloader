@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const apiService = {
   search: {
     bySongOrArtist: async (
@@ -16,11 +18,12 @@ export const apiService = {
     ): Promise<SongsterrDownloadResponse> => {
       return fetchAndReturnJson({
         endpoint: 'download',
-        method: 'GET',
+        method: 'PUT',
         params: {
           songId: searchResult.songId,
           songTitle: searchResult.title,
-          byLinkUrl: searchResult?.byLinkUrl
+          byLinkUrl: searchResult?.byLinkUrl,
+          artist: searchResult?.artist
         }
       });
     },
@@ -48,10 +51,8 @@ export const apiService = {
         endpoint: 'download/by_source',
         method: 'POST',
         params: {
-          source: searchResult.source,
           songTitle: searchResult.title,
-          songId: searchResult.songId,
-          artist: searchResult.artist
+          ..._.pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
         }
       });
     }

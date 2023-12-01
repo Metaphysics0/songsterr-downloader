@@ -6,39 +6,33 @@ export class DownloadLinkRepository {
     return this.baseQuery.create(params);
   }
 
-  async upsertByS3DownloadLink({
-    s3DownloadLink,
-    songsterrDownloadLink,
-    songsterrSongId
-  }: {
-    s3DownloadLink: string;
-    songsterrDownloadLink: string;
-    songsterrSongId: string;
-  }) {
+  async upsertByS3DownloadLink(
+    s3DownloadLink: string,
+    params: Prisma.GuitarProTabDownloadLinksCreateInput
+  ) {
     return this.baseQuery.upsert({
       where: {
         s3DownloadLink
       },
       create: {
-        s3DownloadLink,
-        songsterrDownloadLink,
-        songsterrSongId
+        ...params,
+        s3DownloadLink
       },
       update: {}
     });
   }
 
-  async upsertByDownloadLink(
+  async upsertBySongsterrDownloadLink(
     songsterrDownloadLink: string,
-    songsterrSongId: string
+    params: Prisma.GuitarProTabDownloadLinksCreateInput
   ) {
     return this.baseQuery.upsert({
       where: {
         songsterrDownloadLink
       },
       create: {
-        songsterrDownloadLink,
-        songsterrSongId
+        ...params,
+        songsterrDownloadLink
       },
       update: {}
     });

@@ -3,25 +3,34 @@ import { json, type HttpError } from '@sveltejs/kit';
 import { GUITAR_PRO_CONTENT_TYPE } from '../../../../consts.js';
 import { convertArrayBufferToArray } from '$lib/utils/array.js';
 import UploadTabToS3AndMongoService from '$lib/server/services/uploadTabToS3AndMongo.service.js';
-import { DownloadLinkRepository } from '$lib/server/repositories/downloadLink.repository.js';
 
 export const POST = async ({ request }): Promise<Response | HttpError> => {
   const uploadService = new UploadTabToS3AndMongoService();
-  const { source, songTitle, songId, artist } = await request.json();
+  const { source, songTitle, songId, artist, byLinkUrl } = await request.json();
   const existingDownloadLink =
     await uploadService.getS3DownloadLinkBySongsterrSongId(songId);
 
   const { buffer, contentType } = await downloadAndGetArrayBuffer(
     existingDownloadLink || source
   );
-  const fileName = buildFileNameFromSongName(songTitle, source);
+  const fileName = buildFileNameFromSongName(
+    songTitle,
+    existingDownloadLink || source
+  );
 
   await uploadService.call({
-    artist,
-    data: Buffer.from(buffer),
-    fileName,
-    songsterrSongId: String(songId),
-    songsterrDownloadLink: source
+    s3Data: {
+      fileName,
+      data: Buffer.from(buffer),
+      artist
+    },
+    mongoData: {
+      songTitle,
+      artist,
+      songsterrSongId: String(songId),
+      songsterrOriginUrl: byLinkUrl,
+      songsterrDownloadLink: source
+    }
   });
 
   return json({

@@ -30,15 +30,7 @@ export class S3Repository {
     });
   }
 
-  async write({
-    fileName,
-    artist,
-    data
-  }: {
-    artist: string;
-    fileName: string;
-    data: PutObjectCommandInput['Body'];
-  }): Promise<string> {
+  async write({ fileName, artist, data }: WriteToS3Args): Promise<string> {
     const uploadCommand = new PutObjectCommand({
       Bucket: AWS_S3_BUCKET_NAME,
       Key: this.getKeyFromFileNameAndArtist(fileName, artist),
@@ -105,7 +97,6 @@ export class S3Repository {
   private S3_BASE_URL = `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${this.UPLOAD_TABS_DIRECTORY}`;
   private OBJECT_NOT_FOUND_ERROR_NAME = 'NotFound';
 }
-
 function ensureAllEnvironmentVariablesAreLoaded() {
   if (
     [
@@ -117,4 +108,10 @@ function ensureAllEnvironmentVariablesAreLoaded() {
   ) {
     throw new Error('Unable to initialize S3 Client. Missing Env variables');
   }
+}
+
+export interface WriteToS3Args {
+  artist: string;
+  fileName: string;
+  data: PutObjectCommandInput['Body'];
 }
