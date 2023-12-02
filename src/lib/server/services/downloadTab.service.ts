@@ -1,5 +1,4 @@
 import Fetcher from '$lib/utils/fetch';
-import { json } from '@sveltejs/kit';
 import {
   buildFileNameFromSongName,
   getDownloadLinkFromSongId
@@ -42,11 +41,9 @@ export class DownloadTabService {
 
     const existingDownloadLink =
       await this.uploadService.getS3DownloadLinkBySongsterrSongId(songId);
-    console.log('existing download link', existingDownloadLink);
 
     const { buffer, downloadResponse } =
       await this.fetcher.fetchAndReturnArrayBuffer(
-        // to save on the AWS bill
         existingDownloadLink || source
       );
 
@@ -99,20 +96,22 @@ export class DownloadTabService {
       existingDownloadLink || link
     );
 
-    await this.uploadService.call({
-      s3Data: {
-        fileName,
-        data: Buffer.from(buffer),
-        artist
-      },
-      mongoData: {
-        songTitle,
-        artist,
-        songsterrSongId: String(songId),
-        songsterrOriginUrl: byLinkUrl,
-        songsterrDownloadLink: link
-      }
-    });
+    if (!existingDownloadLink) {
+      await this.uploadService.call({
+        s3Data: {
+          fileName,
+          data: Buffer.from(buffer),
+          artist
+        },
+        mongoData: {
+          songTitle,
+          artist,
+          songsterrSongId: String(songId),
+          songsterrOriginUrl: byLinkUrl,
+          songsterrDownloadLink: link
+        }
+      });
+    }
 
     return {
       file: convertArrayBufferToArray(buffer),
