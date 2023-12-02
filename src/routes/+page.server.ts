@@ -1,7 +1,11 @@
 import { getSearchResultFromSongsterrUrl } from '$lib/server/services/songsterr.service';
 import { DownloadLinkRepository } from '$lib/server/repositories/downloadLink.repository';
 import { logger } from '$lib/utils/logger';
-import { isUrlFromSongsterr, getIdFromUrl } from '$lib/utils/url';
+import {
+  isUrlFromSongsterr,
+  getIdFromUrl,
+  isUrlFromUltimateGuitar
+} from '$lib/utils/url';
 import { createGetMockSearchResultResponse } from '$lib/mocks';
 import type { Actions } from './$types';
 import { UltimateGuitarService } from '$lib/server/services/ultimateGuitar.service';
@@ -14,7 +18,7 @@ export const actions = {
     const url = await getUrlParam(request);
 
     if (isUrlFromUltimateGuitar(url)) {
-      const { songMetadataFromUrl } = new UltimateGuitarService(url);
+      const { songMetadataFromUrl } = new UltimateGuitarService(url!);
       return {
         // @ts-ignore
         searchResult: {
@@ -62,6 +66,3 @@ async function getUrlParam(request: Request): Promise<string | undefined> {
   const data = await request.formData();
   return data.get('url')?.toString();
 }
-
-const isUrlFromUltimateGuitar = (url: unknown): url is string =>
-  typeof url === 'string' && url.includes('tabs.ultimate-guitar.com');

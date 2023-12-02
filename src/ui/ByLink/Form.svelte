@@ -7,8 +7,8 @@
     clearValidationMessage
   } from '../../lib/utils/html-input';
   import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
-  import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
-  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
+  import { SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN } from '$lib/constants';
+  import { isUrlFromSongsterr, isUrlFromUltimateGuitar } from '$lib/utils/url';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -17,7 +17,7 @@
 
   function checkIfInputIsValid(event: Event): void {
     const { value } = event.target as HTMLInputElement;
-    isValid = SONGSTERR_URL_REGEX_PATTERN.test(value);
+    isValid = isUrlFromSongsterr(value) || isUrlFromUltimateGuitar(value);
 
     clearValidationMessage(event);
   }
@@ -64,11 +64,11 @@
     }}
   >
     <label for="url" class="w-full">
-      Enter in a Songsterr tab url:
+      Enter in a Songsterr or Ultimate Guitar tab url:
       <input
         type="url"
         name="url"
-        pattern={SONGSTERR_URL_REGEX_PATTERN.source}
+        pattern={SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN.source}
         required
         on:invalid={setValidationMessage}
         on:input={checkIfInputIsValid}
@@ -85,9 +85,11 @@
 {/if}
 
 <style>
-  @media only screen and (max-width: 600px) {
-    input {
-      width: calc(100% - 3rem);
+  @media only screen and (max-width: 500px) {
+    label {
+      text-align: center;
+      width: calc(100% - 1rem);
+      margin: auto;
     }
   }
 </style>
