@@ -1,5 +1,4 @@
 import Fetcher from '$lib/utils/fetch';
-import { json } from '@sveltejs/kit';
 import {
   buildFileNameFromSongName,
   getDownloadLinkFromSongId
@@ -10,6 +9,8 @@ import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
 import { BulkDownloadService } from './bulkDownload.service';
 import { normalize } from '$lib/utils/string';
 import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
+import type { DownloadTabType } from '$lib/types/downloadType';
+import { UltimateGuitarService } from './ultimateGuitar.service';
 
 export class DownloadTabService {
   readonly downloadTabType: DownloadTabType;
@@ -32,21 +33,22 @@ export class DownloadTabService {
     if (this.downloadTabType === 'bulk') {
       return this.bulk(request);
     }
+    if (this.downloadTabType === 'ultimate-guitar') {
+      return this.fromUltimateGuitar(request);
+    }
 
     throw new Error(`Unsupported download type: ${this.downloadTabType}`);
   }
 
-  private async bySource(request: Request): Promise<DownloadResponse> {
+  private async bySource(request: Request) {
     const { source, songTitle, songId, artist, byLinkUrl } =
       await request.json();
 
     const existingDownloadLink =
       await this.uploadService.getS3DownloadLinkBySongsterrSongId(songId);
-    console.log('existing download link', existingDownloadLink);
 
     const { buffer, downloadResponse } =
       await this.fetcher.fetchAndReturnArrayBuffer(
-        // to save on the AWS bill
         existingDownloadLink || source
       );
 
@@ -77,7 +79,7 @@ export class DownloadTabService {
     };
   }
 
-  private async bySearchResult(request: Request): Promise<DownloadResponse> {
+  private async bySearchResult(request: Request) {
     const { songId, songTitle, byLinkUrl, artist } = await request.json();
     if (!songId) throw 'Unable to find the song id from the params';
 
@@ -99,20 +101,22 @@ export class DownloadTabService {
       existingDownloadLink || link
     );
 
-    await this.uploadService.call({
-      s3Data: {
-        fileName,
-        data: Buffer.from(buffer),
-        artist
-      },
-      mongoData: {
-        songTitle,
-        artist,
-        songsterrSongId: String(songId),
-        songsterrOriginUrl: byLinkUrl,
-        songsterrDownloadLink: link
-      }
-    });
+    if (!existingDownloadLink) {
+      await this.uploadService.call({
+        s3Data: {
+          fileName,
+          data: Buffer.from(buffer),
+          artist
+        },
+        mongoData: {
+          songTitle,
+          artist,
+          songsterrSongId: String(songId),
+          songsterrOriginUrl: byLinkUrl,
+          songsterrDownloadLink: link
+        }
+      });
+    }
 
     return {
       file: convertArrayBufferToArray(buffer),
@@ -122,7 +126,7 @@ export class DownloadTabService {
     };
   }
 
-  private async bulk(request: Request): Promise<DownloadResponse> {
+  private async bulk(request: Request) {
     const { artistId, secretAccessCode, artistName } = await request.json();
     if (!artistId) throw new Error('missing artistId');
 
@@ -143,6 +147,24 @@ export class DownloadTabService {
         "Bulk upload failed, contact me and I'll resolve it immediately"
       );
     }
+  }
+
+  private async fromUltimateGuitar(request: Request) {
+    const { byLinkUrl } = await request.json();
+
+    if (!byLinkUrl) {
+      throw new Error('required param byLinkUrl not present');
+    }
+
+    const service = new UltimateGuitarService(byLinkUrl);
+    const { buffer } = await service.download();
+
+    return {
+      fromUltimateGuitar: true,
+      file: convertArrayBufferToArray(buffer),
+      fileName: service.fileNameFromUrl,
+      contentType: 'application/gp'
+    };
   }
 }
 

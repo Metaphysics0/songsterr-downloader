@@ -26,7 +26,7 @@
   }
 </script>
 
-<section class="flex items-center mx-auto w-fit h-7">
+<section class="flex items-center mx-auto w-fit h-max">
   {#each LINKS as link}
     <a
       href={link.href}

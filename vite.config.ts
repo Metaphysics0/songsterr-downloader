@@ -7,6 +7,20 @@ import presetAutoprefixer from 'unocss-preset-autoprefixer';
 export default defineConfig({
   plugins: [
     UnoCss({
+      theme: {
+        extend: {
+          // use by adding the 'animate-fade' class
+          animation: {
+            fade: 'fadeOut 5s ease-in-out'
+          },
+          keyframes: (theme: any) => ({
+            fadeOut: {
+              '0%': { backgroundColor: theme('colors.red.300') },
+              '100%': { backgroundColor: theme('colors.transparent') }
+            }
+          })
+        }
+      },
       extractors: [extractorSvelte],
       shortcuts: [
         {

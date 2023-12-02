@@ -1,7 +1,7 @@
 export function setValidationMessage(event: Event): void {
   const input = event.target as HTMLInputElement;
   if (input.value === '') {
-    input.setCustomValidity('Please enter a Songsterr URL.');
+    input.setCustomValidity('Please enter a valid tab URL.');
   } else {
     input.setCustomValidity('Please enter a valid Songsterr URL.');
   }

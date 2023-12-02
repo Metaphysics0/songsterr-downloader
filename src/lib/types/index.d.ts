@@ -29,12 +29,14 @@ interface ISearchResult {
   hasChords: boolean;
   defaultTrack: number;
   source?: string;
+  fromUltimateGuitar?: boolean;
 }
 
 interface IPartialSearchResult {
   title: string;
   songId: number;
   artistId: number;
+  fromUltimateGuitar?: boolean;
   artist: string;
   source?: string;
   byLinkUrl?: string;
@@ -54,5 +56,3 @@ interface IArtistTrack {
   views: number;
   difficulty?: string;
 }
-
-type DownloadTabType = 'bySource' | 'bySearchResult' | 'bulk';

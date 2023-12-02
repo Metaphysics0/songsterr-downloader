@@ -25,7 +25,7 @@ export default class Fetcher {
     };
   }
 
-  private get headers() {
+  get headers() {
     const headerObject: Record<string, any> = {};
     if (this.withRotatingUserAgent) {
       headerObject['User-Agent'] = this.randomUserAgent;
