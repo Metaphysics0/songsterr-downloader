@@ -75,7 +75,7 @@ const fetchAndReturnJson = async (args: IMakeApiArgs) =>
   (await make(args)).json();
 
 function make({ endpoint, method, params }: IMakeApiArgs): Promise<Response> {
-  let baseUrl = `/api/${endpoint}`;
+  let baseUrl = `/api/v1/${endpoint}`;
   if (method === 'GET' && params) {
     // TS-Ignoring here because params are optional for GET routes
     //

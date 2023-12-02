@@ -47,7 +47,7 @@ export class DownloadTabService {
     const existingDownloadLink =
       await this.uploadService.getS3DownloadLinkBySongsterrSongId(songId);
 
-    const { buffer, downloadResponse } =
+    const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(
         existingDownloadLink || source
       );
@@ -74,8 +74,7 @@ export class DownloadTabService {
     return {
       file: convertArrayBufferToArray(buffer),
       fileName,
-      contentType:
-        downloadResponse.headers.get('Content-Type') || GUITAR_PRO_CONTENT_TYPE
+      contentType: contentType || GUITAR_PRO_CONTENT_TYPE
     };
   }
 
@@ -92,7 +91,7 @@ export class DownloadTabService {
 
     if (!link && !existingDownloadLink) throw 'Unable to find download link';
 
-    const { downloadResponse, buffer } =
+    const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(
         existingDownloadLink || link
       );
@@ -121,8 +120,7 @@ export class DownloadTabService {
     return {
       file: convertArrayBufferToArray(buffer),
       fileName,
-      contentType:
-        downloadResponse.headers.get('Content-Type') || 'application/gp'
+      contentType: contentType || GUITAR_PRO_CONTENT_TYPE
     };
   }
 
@@ -137,7 +135,7 @@ export class DownloadTabService {
       const zip = await new BulkDownloadService(artistId).getZipFileOfAllTabs();
 
       return {
-        file: Array.from(new Uint8Array(zip.toBuffer())),
+        file: convertArrayBufferToArray(zip.toBuffer()),
         fileName: `${normalize(artistName)}-tabs`,
         contentType: 'application/zip'
       };
@@ -157,13 +155,13 @@ export class DownloadTabService {
     }
 
     const service = new UltimateGuitarService(byLinkUrl);
-    const { buffer } = await service.download();
+    const { buffer, contentType } = await service.download();
 
     return {
       fromUltimateGuitar: true,
       file: convertArrayBufferToArray(buffer),
       fileName: service.fileNameFromUrl,
-      contentType: 'application/gp'
+      contentType: contentType || GUITAR_PRO_CONTENT_TYPE
     };
   }
 }

@@ -15,7 +15,8 @@ export default class Fetcher {
     const buffer = await downloadResponse.arrayBuffer();
     return {
       downloadResponse,
-      buffer
+      buffer,
+      contentType: downloadResponse.headers.get('Content-Type')
     };
   }
 
@@ -53,4 +54,8 @@ export default class Fetcher {
 
 interface FetcherOptions {
   withRotatingUserAgent?: boolean;
+}
+
+interface FetchAndReturnBufferOptions {
+  defaultContentType?: string;
 }
