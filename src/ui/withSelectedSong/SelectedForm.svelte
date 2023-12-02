@@ -11,13 +11,19 @@
 
   async function downloadTab(): Promise<void> {
     try {
-      const downloadApiMethod = (
-        selectedSong.source ? 'bySource' : 'bySearchResult'
-      ) as keyof typeof apiService.download;
+      if (selectedSong.fromUltimateGuitar) {
+        const resp = await apiService.download.fromUltimateGuitar(selectedSong);
+        triggerFileDownloadFromSongsterrResponse(resp);
+        return;
+      }
 
-      // ts-ignoring because there's one download method that requires more params.
-      // @ts-ignore
-      const resp = await apiService.download[downloadApiMethod](selectedSong);
+      if (selectedSong.source) {
+        const resp = await apiService.download.bySource(selectedSong);
+        triggerFileDownloadFromSongsterrResponse(resp);
+        return;
+      }
+
+      const resp = await apiService.download.bySearchResult(selectedSong);
       triggerFileDownloadFromSongsterrResponse(resp);
     } catch (error) {
       toast.push('Error downloading tab 😭');

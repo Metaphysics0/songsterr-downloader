@@ -4,6 +4,6 @@ export function getIdFromUrl(url: string) {
   return url.split('-').at(-1);
 }
 
-export function isUrlValid(url: any) {
+export function isUrlFromSongsterr(url: any) {
   return SONGSTERR_URL_REGEX_PATTERN.test(String(url));
 }

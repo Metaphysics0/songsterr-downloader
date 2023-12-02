@@ -5,9 +5,10 @@
   import {
     setValidationMessage,
     clearValidationMessage
-  } from '../../utils/inputUtils';
+  } from '../../lib/utils/html-input';
   import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
-    import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
+  import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
+  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -46,7 +47,6 @@
           toast.push('Error finding song data from URL 😭', {
             theme: {
               '--toastBarHeight': 0,
-              '--toastColor': '#ef4444',
               '--toastBackground': '#ef4444',
               '--toastBarBackground': '#7f1d1d'
             }

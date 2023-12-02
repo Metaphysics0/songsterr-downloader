@@ -28,8 +28,7 @@ function getMetadataFromDoc(doc: Document) {
     return JSON.parse(metadataScript).meta.current;
   } catch (error) {
     console.error('error parsing metadata', error);
-
-    return {};
+    throw new Error('Error reading tab data');
   }
 }
 

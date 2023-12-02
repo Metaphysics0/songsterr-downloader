@@ -1,19 +1,35 @@
 import { getSearchResultFromSongsterrUrl } from '$lib/server/services/songsterr.service';
 import { DownloadLinkRepository } from '$lib/server/repositories/downloadLink.repository';
-
-import type { Actions } from './$types';
 import { logger } from '$lib/utils/logger';
-import { isUrlValid, getIdFromUrl } from '$lib/utils/url';
+import { isUrlFromSongsterr, getIdFromUrl } from '$lib/utils/url';
 import { createGetMockSearchResultResponse } from '$lib/mocks';
+import type { Actions } from './$types';
+import { UltimateGuitarService } from '$lib/server/services/ultimateGuitar.service';
+import { startCase } from 'lodash-es';
 
 export const actions = {
   getSelectedSongFromUrl: async ({
     request
   }): Promise<GetSelectedSongFromUrlResponse> => {
     const url = await getUrlParam(request);
-    const downloadLinkRepository = new DownloadLinkRepository();
+
+    if (isUrlFromUltimateGuitar(url)) {
+      const { songMetadataFromUrl } = new UltimateGuitarService(url);
+      return {
+        // @ts-ignore
+        searchResult: {
+          title: startCase(songMetadataFromUrl.songName!),
+          artist: startCase(songMetadataFromUrl.artist!),
+          // @ts-ignore
+          fromUltimateGuitar: true
+        }
+      };
+    }
+
     try {
-      if (!isUrlValid(url)) {
+      const downloadLinkRepository = new DownloadLinkRepository();
+
+      if (!isUrlFromSongsterr(url)) {
         throw `${url} is not a valid songsterr link.`;
       }
 
@@ -26,8 +42,9 @@ export const actions = {
         logger.log('retrieved existing download link', existingDownloadLink);
       }
 
+      const searchResult = await getSearchResultFromSongsterrUrl(url!);
       return {
-        searchResult: await getSearchResultFromSongsterrUrl(url!),
+        searchResult,
         existingDownloadLink
       };
     } catch (error) {
@@ -45,3 +62,6 @@ async function getUrlParam(request: Request): Promise<string | undefined> {
   const data = await request.formData();
   return data.get('url')?.toString();
 }
+
+const isUrlFromUltimateGuitar = (url: unknown): url is string =>
+  typeof url === 'string' && url.includes('tabs.ultimate-guitar.com');
