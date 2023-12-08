@@ -28,6 +28,9 @@ export class DownloadLinkRepository {
   }
 
   async getS3DownloadLinkSongsterrSongId(id: string) {
+    /* Maybe To-do:
+     * update this method to findOneAndUpdate({..}), and add an increment downloadCount field
+     */
     const response = await this.baseQuery.findFirst({
       where: {
         songsterrSongId: String(id)
