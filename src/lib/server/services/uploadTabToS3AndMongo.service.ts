@@ -1,4 +1,3 @@
-import type { PutObjectCommandInput } from '@aws-sdk/client-s3';
 import { DownloadLinkRepository } from '../repositories/downloadLink.repository';
 import {
   S3Repository,
@@ -41,7 +40,7 @@ export default class UploadTabToS3AndMongoService {
           songsterrSongId
         );
       if (link) {
-        logger.log('retrieved existing s3 download link from mongo');
+        logger.log('retrieved existing s3 download link from mongo', link);
         return link;
       }
     } catch (error) {

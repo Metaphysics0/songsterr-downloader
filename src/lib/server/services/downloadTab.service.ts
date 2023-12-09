@@ -11,6 +11,7 @@ import { normalize } from '$lib/utils/string';
 import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
 import type { DownloadTabType } from '$lib/types/downloadType';
 import { UltimateGuitarService } from './ultimateGuitar.service';
+import { ByDownloadLinkService } from './byDownloadLink.service';
 
 export class DownloadTabService {
   readonly downloadTabType: DownloadTabType;
@@ -35,6 +36,9 @@ export class DownloadTabService {
     }
     if (this.downloadTabType === 'ultimate-guitar') {
       return this.fromUltimateGuitar(request);
+    }
+    if (this.downloadTabType === 'byDownloadLink') {
+      return this.byDownloadLink(request);
     }
 
     throw new Error(`Unsupported download type: ${this.downloadTabType}`);
@@ -164,6 +168,19 @@ export class DownloadTabService {
       file: convertArrayBufferToArray(buffer),
       fileName: service.fileNameFromUrl,
       contentType: 'application/gp'
+    };
+  }
+
+  private async byDownloadLink(request: Request) {
+    const { songTitle, originUrl } = await request.json();
+    const service = new ByDownloadLinkService({ downloadLink: originUrl });
+    const { buffer, downloadResponse } = await service.download();
+
+    return {
+      file: convertArrayBufferToArray(buffer),
+      fileName: normalize(songTitle),
+      contentType:
+        downloadResponse.headers.get('Content-Type') || 'application/gp'
     };
   }
 }

@@ -2,6 +2,7 @@ import AdmZip from 'adm-zip';
 import { MAX_SONGS_TO_BULK_DOWNLOAD } from '$env/static/private';
 import { getDownloadLinkFromSongId } from './songsterr.service';
 import { logger } from '$lib/utils/logger';
+import Fetcher from '$lib/utils/fetch';
 
 export class BulkDownloadService {
   artistId: string;
@@ -66,8 +67,9 @@ export class BulkDownloadService {
     ISongIdAndSongTitle[]
   > {
     const url = `https://www.songsterr.com/api/artist/${this.artistId}/songs?size=${MAX_SONGS_TO_BULK_DOWNLOAD}`;
-    const response = await fetch(url);
-    const results = (await response.json()) as ISearchResultByArtist[];
+    const results = (await new Fetcher().fetchAndReturnJson(
+      url
+    )) as ISearchResultByArtist[];
 
     return results.map((result) => ({
       songId: result.songId,
