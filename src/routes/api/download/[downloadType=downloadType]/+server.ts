@@ -9,5 +9,5 @@ export const POST = (async ({ request, params }) => {
   );
   const response = await service.download(request);
 
-  return jsonWithCors(response);
+  return jsonWithCors(request, response);
 }) satisfies RequestHandler;
