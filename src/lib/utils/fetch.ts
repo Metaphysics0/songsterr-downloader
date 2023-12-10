@@ -15,7 +15,8 @@ export default class Fetcher {
     const buffer = await downloadResponse.arrayBuffer();
     return {
       downloadResponse,
-      buffer
+      buffer,
+      contentType: downloadResponse.headers.get('Content-Type') || ''
     };
   }
 

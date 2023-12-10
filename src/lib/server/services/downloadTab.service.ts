@@ -11,6 +11,7 @@ import { normalize } from '$lib/utils/string';
 import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
 import type { DownloadTabType } from '$lib/types/downloadType';
 import { UltimateGuitarService } from './ultimateGuitar.service';
+import { ParamsHelper } from '../utils/params';
 
 export class DownloadTabService {
   readonly downloadTabType: DownloadTabType;
@@ -18,7 +19,8 @@ export class DownloadTabService {
   constructor(
     downloadTabType: DownloadTabType,
     private uploadService = new UploadTabToS3AndMongoService(),
-    private fetcher = new Fetcher()
+    private fetcher = new Fetcher(),
+    private paramsHelper = new ParamsHelper()
   ) {
     this.downloadTabType = downloadTabType;
   }
@@ -80,67 +82,45 @@ export class DownloadTabService {
   }
 
   private async bySearchResult(request: Request) {
-    const { songId, songTitle, byLinkUrl, artist } = await request.json();
+    const { songId, songTitle } = await request.json();
+
     if (!songId) throw 'Unable to find the song id from the params';
 
-    const existingDownloadLink =
-      await this.uploadService.getS3DownloadLinkBySongsterrSongId(songId);
+    const link = await getDownloadLinkFromSongId(songId);
 
-    const link =
-      existingDownloadLink ||
-      (await getDownloadLinkFromSongId(songId, { byLinkUrl }));
+    if (!link) throw 'Unable to find download link';
 
-    if (!link && !existingDownloadLink) throw 'Unable to find download link';
+    const { buffer, contentType } =
+      await this.fetcher.fetchAndReturnArrayBuffer(link);
 
-    const { downloadResponse, buffer } =
-      await this.fetcher.fetchAndReturnArrayBuffer(
-        existingDownloadLink || link
-      );
-    const fileName = buildFileNameFromSongName(
-      songTitle,
-      existingDownloadLink || link
-    );
+    const fileName = buildFileNameFromSongName(songTitle, link);
 
-    if (!existingDownloadLink) {
-      await this.uploadService.call({
-        s3Data: {
-          fileName,
-          data: Buffer.from(buffer),
-          artist
-        },
-        mongoData: {
-          songTitle,
-          artist,
-          songsterrSongId: String(songId),
-          songsterrOriginUrl: byLinkUrl,
-          songsterrDownloadLink: link
-        }
-      });
-    }
-
-    return {
-      file: convertArrayBufferToArray(buffer),
-      fileName,
-      contentType:
-        downloadResponse.headers.get('Content-Type') || 'application/gp'
-    };
+    return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
   private async bulk(request: Request) {
-    const { artistId, secretAccessCode, artistName } = await request.json();
-    if (!artistId) throw new Error('missing artistId');
+    const { artistId, secretAccessCode, artistName } =
+      await this.paramsHelper.getRequiredParams<{
+        artistId: string;
+        secretAccessCode: string;
+        artistName: string;
+      }>({
+        request,
+        params: ['artistId', 'secretAccessCode', 'artistName']
+      });
 
-    if (secretAccessCode !== BULK_DOWNLOAD_SECRET)
+    if (secretAccessCode !== BULK_DOWNLOAD_SECRET) {
       throw new Error('Invalid bulk download code');
+    }
 
     try {
       const zip = await new BulkDownloadService(artistId).getZipFileOfAllTabs();
 
-      return {
-        file: Array.from(new Uint8Array(zip.toBuffer())),
+      return this.createDownloadResponse({
+        buffer: zip.toBuffer(),
         fileName: `${normalize(artistName)}-tabs`,
         contentType: 'application/zip'
-      };
+      });
     } catch (e) {
       console.error('BULK UPLOAD FAILURE:', e);
       throw new Error(
@@ -164,6 +144,22 @@ export class DownloadTabService {
       file: convertArrayBufferToArray(buffer),
       fileName: service.fileNameFromUrl,
       contentType: 'application/gp'
+    };
+  }
+
+  private createDownloadResponse({
+    buffer,
+    fileName,
+    contentType = 'application/gp'
+  }: {
+    buffer: ArrayBuffer;
+    fileName: string;
+    contentType?: string;
+  }): DownloadResponse {
+    return {
+      file: convertArrayBufferToArray(buffer),
+      fileName,
+      contentType
     };
   }
 }
