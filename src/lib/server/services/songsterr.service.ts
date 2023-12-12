@@ -1,6 +1,7 @@
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from '../scraper';
+import { BulkDownloadService } from './bulkDownload.service';
 
 export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
@@ -11,6 +12,8 @@ export async function getSearchResultFromSongsterrUrl(
   }
 
   const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
+  const bulkSongsToDownload = await getSongsToBulkDownload(artistId);
+  console.log('BULK SONGS', bulkSongsToDownload);
 
   return {
     songId,
@@ -18,16 +21,17 @@ export async function getSearchResultFromSongsterrUrl(
     title,
     artist,
     source
+    // bulkSongsToDownload
   };
 }
 
 function getMetadataFromDoc(doc: Document) {
-  const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
   try {
+    const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
     // @ts-ignore
     return JSON.parse(metadataScript).meta.current;
   } catch (error) {
-    console.error('error parsing metadata', error);
+    logger.error('error parsing metadata', error);
     throw new Error('Error reading tab data');
   }
 }
@@ -100,6 +104,22 @@ function findGuitarProTabLinkFromXml(xml: Document) {
   return xml
     .getElementsByTagName('guitarProTab')[0]
     .getElementsByTagName('attachmentUrl')[0].firstChild?.nodeValue;
+}
+
+async function getSongsToBulkDownload(artistId: string): Promise<any[]> {
+  if (!artistId) return [];
+
+  try {
+    return new BulkDownloadService(
+      artistId
+    ).getSongIdsAndSongTitlesFromArtist();
+  } catch (error) {
+    logger.error(
+      `Error getting bulk songs to download from artist id: ${artistId}`,
+      error
+    );
+    return [];
+  }
 }
 
 export interface IDownloadLinkResponse {

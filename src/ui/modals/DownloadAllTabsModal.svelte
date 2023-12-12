@@ -8,6 +8,7 @@
   import { cssClasses } from '$lib/sharedCssClasses';
   import CurrencyInput from '../common/inputs/CurrencyInput.svelte';
   import { mockSongsYouWillReceive } from '$lib/mocks';
+  import { selectedSongToDownload } from '../../stores/selectedSong';
 
   export let modalProps: {
     overlay?: any;
@@ -65,10 +66,10 @@
   </p>
   <p class="mb-5 mt-2 leading-normal text-zinc-600">
     Tabs you will receive upon purchase:
-    {#each mockSongsYouWillReceive as mockSong}
+    {#each selectedSong?.bulkSongsToDownload || [] as bulkSongToDownload}
       <div class="flex items-center">
         <Icon icon="material-symbols:check" />
-        {mockSong}
+        {bulkSongToDownload}
       </div>
     {/each}
   </p>

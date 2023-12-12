@@ -30,6 +30,8 @@ interface ISearchResult {
   defaultTrack: number;
   source?: string;
   fromUltimateGuitar?: boolean;
+
+  bulkSongsToDownload?: { songTitle: string }[];
 }
 
 interface IPartialSearchResult {
@@ -40,6 +42,7 @@ interface IPartialSearchResult {
   artist: string;
   source?: string;
   byLinkUrl?: string;
+  bulkSongsToDownload?: { songTitle: string }[];
 }
 
 interface GetSelectedSongFromUrlResponse {
