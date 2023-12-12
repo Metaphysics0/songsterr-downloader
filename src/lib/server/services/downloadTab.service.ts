@@ -3,12 +3,10 @@ import {
   buildFileNameFromSongName,
   getDownloadLinkFromSongId
 } from './songsterr.service';
-import UploadTabToS3AndMongoService from './uploadTabToS3AndMongo.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
 import { BulkDownloadService } from './bulkDownload.service';
 import { normalize } from '$lib/utils/string';
-import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
 import type { DownloadTabType } from '$lib/types/downloadType';
 import { UltimateGuitarService } from './ultimateGuitar.service';
 import { ParamsHelper } from '../utils/params';
@@ -18,7 +16,6 @@ export class DownloadTabService {
 
   constructor(
     downloadTabType: DownloadTabType,
-    private uploadService = new UploadTabToS3AndMongoService(),
     private fetcher = new Fetcher(),
     private paramsHelper = new ParamsHelper()
   ) {
@@ -43,58 +40,24 @@ export class DownloadTabService {
   }
 
   private async bySource(request: Request) {
-    const { source, songTitle, songId, artist, byLinkUrl } =
-      await request.json();
-
-    const existingDownloadLink =
-      await this.uploadService.getS3DownloadLinkBySongsterrSongId(songId);
-
-    const { buffer, downloadResponse } =
-      await this.fetcher.fetchAndReturnArrayBuffer(
-        existingDownloadLink || source
-      );
+    const { source, songTitle } = await request.json();
+    const { buffer, contentType } =
+      await this.fetcher.fetchAndReturnArrayBuffer(source);
 
     const fileName = buildFileNameFromSongName(songTitle, source);
-
-    if (!existingDownloadLink) {
-      await this.uploadService.call({
-        s3Data: {
-          fileName,
-          data: Buffer.from(buffer),
-          artist
-        },
-        mongoData: {
-          songTitle,
-          artist,
-          songsterrSongId: String(songId),
-          songsterrOriginUrl: byLinkUrl,
-          songsterrDownloadLink: source
-        }
-      });
-    }
-
-    return {
-      file: convertArrayBufferToArray(buffer),
-      fileName,
-      contentType:
-        downloadResponse.headers.get('Content-Type') || GUITAR_PRO_CONTENT_TYPE
-    };
+    return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
   private async bySearchResult(request: Request) {
     const { songId, songTitle } = await request.json();
-
-    if (!songId) throw 'Unable to find the song id from the params';
-
     const link = await getDownloadLinkFromSongId(songId);
-
-    if (!link) throw 'Unable to find download link';
+    if (!link)
+      throw new Error(`Unable to find download link from song: ${songTitle}`);
 
     const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(link);
 
     const fileName = buildFileNameFromSongName(songTitle, link);
-
     return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 

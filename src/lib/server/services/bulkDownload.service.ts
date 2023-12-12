@@ -46,9 +46,7 @@ export class BulkDownloadService {
     return downloadResponse.arrayBuffer();
   }
 
-  private async getDownloadLinksFromSongIds(): Promise<
-    IDownloadLinkAndSongTitle[]
-  > {
+  async getDownloadLinksFromSongIds(): Promise<IDownloadLinkAndSongTitle[]> {
     const songIdsAndSongTitles = await this.getSongIdsAndSongTitlesFromArtist();
 
     return Promise.all(
