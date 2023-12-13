@@ -49,14 +49,14 @@
 <div
   use:melt={modalProps.overlay}
   class="fixed inset-0 z-50 bg-black/50"
-  transition:fade={{ duration: 150 }}
+  transition:fade|global={{ duration: 150 }}
 />
 <div
   class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
             max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
             p-6 shadow-lg overflow-scroll"
   use:melt={modalProps.content}
-  transition:flyAndScale={{
+  transition:flyAndScale|global={{
     duration: 150,
     y: 8,
     start: 0.96
