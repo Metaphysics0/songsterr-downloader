@@ -18,7 +18,7 @@ export class BulkDownloadService {
     const arrayBuffers = await Promise.all(
       downloadLinksAndSongTitles
         .filter(this.withCompleteDownloadLink)
-        .map((obj) => this.downloadLinkAndReturnArrayBuffer(obj.downloadLink))
+        .map((obj) => new Fetcher().fetchAndReturnArrayBuffer(obj.downloadLink))
     );
 
     /*
@@ -39,13 +39,6 @@ export class BulkDownloadService {
 
     return zip;
   };
-
-  private async downloadLinkAndReturnArrayBuffer(
-    link: string
-  ): Promise<ArrayBuffer> {
-    const downloadResponse = await fetch(link);
-    return downloadResponse.arrayBuffer();
-  }
 
   async getDownloadLinksFromSongIds(): Promise<IDownloadLinkAndSongTitle[]> {
     const songIdsAndSongTitles = await this.getSongIdsAndSongTitlesFromArtist();

@@ -31,7 +31,7 @@ interface ISearchResult {
   source?: string;
   fromUltimateGuitar?: boolean;
 
-  bulkSongsToDownload?: { songTitle: string }[];
+  bulkSongsToDownload?: { title: string }[];
 }
 
 interface IPartialSearchResult {
@@ -42,7 +42,7 @@ interface IPartialSearchResult {
   artist: string;
   source?: string;
   byLinkUrl?: string;
-  bulkSongsToDownload?: { songTitle: string }[];
+  bulkSongsToDownload?: { title: string }[];
 }
 
 interface GetSelectedSongFromUrlResponse {

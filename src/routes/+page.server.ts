@@ -22,7 +22,9 @@ export const actions = {
         throw `${url} is not a valid songsterr link.`;
 
       return {
-        searchResult: await getSearchResultFromSongsterrUrl(url!)
+        searchResult: await getSearchResultFromSongsterrUrl(url!, {
+          withBulkSongsToDownload: true
+        })
       };
     } catch (error) {
       logger.error('#getSelectedSongFromUrl failed', error);

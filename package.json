@@ -50,6 +50,7 @@
     "@aws-sdk/signature-v4-crt": "^3.461.0",
     "@prisma/client": "^5.6.0",
     "@vercel/analytics": "^1.0.2",
+    "@vercel/kv": "^1.0.1",
     "@xmldom/xmldom": "^0.8.10",
     "adm-zip": "^0.5.10",
     "aws-sdk": "^2.1508.0",

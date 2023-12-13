@@ -9,6 +9,7 @@
   import CurrencyInput from '../common/inputs/CurrencyInput.svelte';
   import { mockSongsYouWillReceive } from '$lib/mocks';
   import { selectedSongToDownload } from '../../stores/selectedSong';
+  import { MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD } from '$lib/constants';
 
   export let modalProps: {
     overlay?: any;
@@ -19,6 +20,12 @@
   };
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
+
+  const previewSongsToDownload =
+    selectedSong?.bulkSongsToDownload?.slice(0, 30) || [];
+
+  const remainingSongsToDownload =
+    selectedSong?.bulkSongsToDownload?.slice(30) || [];
 
   async function downloadAllTabsFromArtist(): Promise<void> {
     const secretAccessCode = prompt(
@@ -46,8 +53,8 @@
 />
 <div
   class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
-            max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
-            p-6 shadow-lg"
+            max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
+            p-6 shadow-lg overflow-scroll"
   use:melt={modalProps.content}
   transition:flyAndScale={{
     duration: 150,
@@ -62,17 +69,27 @@
     use:melt={modalProps.description}
     class="mb-5 mt-2 leading-normal text-zinc-600"
   >
-    A minimum donation of $5.00 is required in order to receive the tabs.
+    A minimum donation of ${MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD.toFixed(
+      2
+    )} is required in order to receive the tabs.
   </p>
-  <p class="mb-5 mt-2 leading-normal text-zinc-600">
-    Tabs you will receive upon purchase:
-    {#each selectedSong?.bulkSongsToDownload || [] as bulkSongToDownload}
-      <div class="flex items-center">
-        <Icon icon="material-symbols:check" />
-        {bulkSongToDownload}
-      </div>
-    {/each}
-  </p>
+  <div class="mb-5 mt-2 leading-normal text-zinc-600">
+    <p class="mb-2">Tabs you will receive upon purchase:</p>
+    <ul class="columns-2">
+      {#each previewSongsToDownload as bulkSongToDownload}
+        <li class="flex items-center">
+          <Icon icon="material-symbols:check" class="text-green-500 mr-1" />
+          {bulkSongToDownload.title}
+        </li>
+      {/each}
+      {#if remainingSongsToDownload.length > 0}
+        <li class="font-bold flex items-center">
+          ... And {remainingSongsToDownload.length} more!
+          <Icon icon="material-symbols:info" class="text-slate-500 ml-1" />
+        </li>
+      {/if}
+    </ul>
+  </div>
 
   <fieldset class="mb-4 flex items-center gap-5">
     <label class="w-[90px] text-right text-black" for="email"> Email: </label>
