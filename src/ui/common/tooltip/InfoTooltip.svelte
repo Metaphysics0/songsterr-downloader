@@ -1,42 +1,49 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte';
   import { createTooltip, melt } from '@melt-ui/svelte';
   import { fade } from 'svelte/transition';
+
+  let customClasses = '';
+  export { customClasses as class };
+
+  export let wrapperClass = '';
+  export let placement = 'top';
+  export let openDelay = 0;
+  export let closeDelay = 0;
+  export let closeOnPointerDown = false;
+  export let forceVisible = true;
+  export let ariaLabel: any = undefined;
+  export let text: string;
 
   const {
     elements: { trigger, content, arrow },
     states: { open }
   } = createTooltip({
     positioning: {
-      placement: 'top'
+      // @ts-ignore
+      placement
     },
-    openDelay: 0,
-    closeDelay: 0,
-    closeOnPointerDown: false,
-    forceVisible: true
+    openDelay,
+    closeDelay,
+    closeOnPointerDown,
+    forceVisible
   });
 </script>
 
-<button type="button" class="trigger" use:melt={$trigger} aria-label="Add">
-  <Icon icon="material-symbols:info" />
-</button>
+<div
+  class="{wrapperClass} inline-block focus-visible:ring focus-visible:ring-slate-600 focus-visible:ring-offset-2"
+  use:melt={$trigger}
+  aria-label={ariaLabel}
+>
+  <slot trigger={$trigger} />
+</div>
 
 {#if $open}
   <div
     use:melt={$content}
-    transition:fade|global={{ duration: 100 }}
-    class="z-10 rounded-lg bg-white shadow"
+    transition:fade={{ duration: 75 }}
+    class="{customClasses} z-50 rounded-sm bg-white shadow-md dark:bg-gray-700 dark:text-gray-50"
   >
     <div use:melt={$arrow} />
-    <p class="px-4 py-1 text-magnum-700">Add item to library</p>
+    <p class="px-4 py-1">{text}</p>
   </div>
 {/if}
-
-<style lang="postcss">
-  .trigger {
-    @apply inline-flex h-9 w-9 items-center justify-center rounded-full bg-white;
-    @apply text-magnum-900 transition-colors hover:bg-white/90;
-    @apply focus-visible:ring focus-visible:ring-magnum-400 focus-visible:ring-offset-2;
-    @apply p-0 text-sm font-medium;
-  }
-</style>

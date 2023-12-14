@@ -5,12 +5,11 @@
   import { melt } from '@melt-ui/svelte';
   import { fade } from 'svelte/transition';
   import { flyAndScale } from '$lib/transitions';
-  import { cssClasses } from '$lib/sharedCssClasses';
-  import CurrencyInput from '../common/inputs/CurrencyInput.svelte';
-  import { mockSongsYouWillReceive } from '$lib/mocks';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
   import { MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD } from '$lib/constants';
+  import CurrencyInput from '../common/inputs/CurrencyInput.svelte';
+  import { cssClasses } from '$lib/sharedCssClasses';
 
+  export let selectedSong: ISearchResult | IPartialSearchResult;
   export let modalProps: {
     overlay?: any;
     content?: any;
@@ -19,10 +18,10 @@
     close?: any;
   };
 
-  export let selectedSong: ISearchResult | IPartialSearchResult;
+  let shouldShowAllPreviewSongs: boolean = false;
 
-  const previewSongsToDownload =
-    selectedSong?.bulkSongsToDownload?.slice(0, 30) || [];
+  let previewSongsToDownload =
+    selectedSong.bulkSongsToDownload?.slice(0, 30) || [];
 
   const remainingSongsToDownload =
     selectedSong?.bulkSongsToDownload?.slice(30) || [];
@@ -43,6 +42,16 @@
     });
 
     triggerFileDownloadFromSongsterrResponse(resp);
+  }
+
+  function toggleShowAllTabs() {
+    shouldShowAllPreviewSongs = !shouldShowAllPreviewSongs;
+    if (shouldShowAllPreviewSongs) {
+      previewSongsToDownload = selectedSong?.bulkSongsToDownload || [];
+    } else {
+      previewSongsToDownload =
+        selectedSong.bulkSongsToDownload?.slice(0, 30) || [];
+    }
   }
 </script>
 
@@ -69,11 +78,12 @@
     use:melt={modalProps.description}
     class="mb-5 mt-2 leading-normal text-zinc-600"
   >
-    A minimum donation of ${MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD.toFixed(
-      2
-    )} is required in order to receive the tabs.
+    A minimum donation of <strong>
+      ${MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD.toFixed(2)}</strong
+    >
+    is required in order to receive the tabs.
   </p>
-  <div class="mb-5 mt-2 leading-normal text-zinc-600">
+  <div class="mb-5 mt-2 leading-normal text-zinc-600 ">
     <p class="mb-2">Tabs you will receive upon purchase:</p>
     <ul class="columns-2">
       {#each previewSongsToDownload as bulkSongToDownload}
@@ -84,41 +94,61 @@
       {/each}
       {#if remainingSongsToDownload.length > 0}
         <li class="font-bold flex items-center">
-          ... And {remainingSongsToDownload.length} more!
-          <Icon icon="material-symbols:info" class="text-slate-500 ml-1" />
+          <span class="mr-2 mt-1">
+            {#if shouldShowAllPreviewSongs}
+              ... {previewSongsToDownload.length} tabs total!
+            {:else}
+              ... And {remainingSongsToDownload.length} more!
+            {/if}
+          </span>
+          <button
+            on:click={toggleShowAllTabs}
+            class="font-light underline cursor-pointer flex items-center hover:opacity-70 transition ease outline-none"
+            >Show {shouldShowAllPreviewSongs ? 'less' : 'all'}
+
+            <Icon
+              icon="mynaui:chevron-{shouldShowAllPreviewSongs ? 'up' : 'down'}"
+              class="text-slate-500 ml-1"
+            />
+          </button>
         </li>
       {/if}
     </ul>
   </div>
 
-  <fieldset class="mb-4 flex items-center gap-5">
-    <label class="w-[90px] text-right text-black" for="email"> Email: </label>
+  <fieldset class="mb-4 flex items-center justify-between gap-5">
+    <label class="text-right text-black" for="email"> Email: </label>
     <input
       type="email"
-      class="inline-flex h-8 w-full flex-1 items-center justify-center
-                    rounded-sm border border-solid px-3 leading-none text-black"
+      class="{cssClasses.textInput} w-min"
       id="email"
       placeholder="email@address.com"
     />
   </fieldset>
-  <fieldset class="mb-4 flex items-center gap-5">
-    <label class="w-[90px] text-right text-black" for="donationAmount">
+  <fieldset class="mb-4 flex items-center justify-between gap-5">
+    <label class="text-right text-black" for="donationAmount">
       Donation Amount:
     </label>
     <CurrencyInput />
   </fieldset>
-  <div class="mt-6 flex justify-end gap-4">
-    <button
-      use:melt={modalProps.close}
-      class="inline-flex h-8 items-center justify-center rounded-sm px-4 font-medium leading-none"
-    >
-      Cancel
-    </button>
-    <button
-      use:melt={modalProps.close}
-      class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-amber! hover:bg-amber-300! mb-4 flex items-center"
-      >Purchase 🚀</button
-    >
+
+  <div class="flex justify-end">
+    <div class="mt-6">
+      <a href="/">Payment FAQ's</a>
+    </div>
+    <div class="flex justify-end gap-4">
+      <button
+        use:melt={modalProps.close}
+        class="inline-flex h-8 items-center justify-center rounded-sm px-4 font-medium leading-none"
+      >
+        Cancel
+      </button>
+      <button
+        use:melt={modalProps.close}
+        class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-amber! hover:bg-amber-300! mb-4 flex items-center"
+        >Purchase 🚀</button
+      >
+    </div>
   </div>
   <button
     use:melt={modalProps.close}
@@ -130,3 +160,17 @@
     <Icon icon="maki:cross" />
   </button>
 </div>
+
+<style>
+  .gradient-row {
+    width: 300px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #777;
+    max-height: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    content: '';
+    position: relative;
+  }
+</style>
