@@ -8,6 +8,7 @@
   import { MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD } from '$lib/constants';
   import CurrencyInput from '../common/inputs/CurrencyInput.svelte';
   import { cssClasses } from '$lib/sharedCssClasses';
+  import EmailInput from '../common/inputs/EmailInput.svelte';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
   export let modalProps: {
@@ -79,7 +80,7 @@
     class="mb-5 mt-2 leading-normal text-zinc-600"
   >
     A minimum donation of <strong>
-      ${MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD.toFixed(2)}</strong
+      ${MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD}</strong
     >
     is required in order to receive the tabs.
   </p>
@@ -116,49 +117,54 @@
     </ul>
   </div>
 
-  <fieldset class="mb-4 flex items-center justify-between gap-5">
-    <label class="text-right text-black" for="email"> Email: </label>
-    <input
-      type="email"
-      class="{cssClasses.textInput} w-min"
-      id="email"
-      placeholder="email@address.com"
-    />
-  </fieldset>
-  <fieldset class="mb-4 flex items-center justify-between gap-5">
-    <label class="text-right text-black" for="donationAmount">
-      Donation Amount:
-    </label>
-    <CurrencyInput />
-  </fieldset>
+  <form action="">
+    <div class="w-3/4">
+      <fieldset class="mb-4 flex items-center gap-5">
+        <label class="text-black w-1/3" for="email"> Email: </label>
+        <EmailInput wrapperClass={'w-2/3!'} />
+      </fieldset>
+      <fieldset class="mb-4 flex items-center gap-5">
+        <label class="text-black w-1/3" for="donationAmount">
+          Donation Amount:
+        </label>
+        <CurrencyInput wrapperClass={'w-2/3'} />
+      </fieldset>
+    </div>
 
-  <div class="flex justify-end">
-    <div class="mt-6">
-      <a href="/">Payment FAQ's</a>
+    <div class="flex justify-between items-center mt-7">
+      <div>
+        <a
+          class="opacity-70 underline flex items-center hover:no-underline hover:opacity-50 transition ease"
+          href="/payment-faq"
+          target="_blank"
+          >Payment FAQ's
+          <Icon icon="material-symbols:info" class="ml-1" />
+        </a>
+      </div>
+      <div class="flex justify-end gap-4">
+        <button
+          use:melt={modalProps.close}
+          class="inline-flex h-8 items-center justify-center rounded-sm px-4 font-medium leading-none"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-amber! hover:bg-amber-300! flex items-center"
+          >Purchase 🚀</button
+        >
+      </div>
     </div>
-    <div class="flex justify-end gap-4">
-      <button
-        use:melt={modalProps.close}
-        class="inline-flex h-8 items-center justify-center rounded-sm px-4 font-medium leading-none"
-      >
-        Cancel
-      </button>
-      <button
-        use:melt={modalProps.close}
-        class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-amber! hover:bg-amber-300! mb-4 flex items-center"
-        >Purchase 🚀</button
-      >
-    </div>
-  </div>
-  <button
-    use:melt={modalProps.close}
-    aria-label="close"
-    class="absolute right-4 top-4 inline-flex h-6 w-6 appearance-none
-                items-center justify-center rounded-full p-1 text-magnum-800
-                hover:bg-magnum-100 focus:shadow-magnum-400"
-  >
-    <Icon icon="maki:cross" />
-  </button>
+    <button
+      use:melt={modalProps.close}
+      aria-label="close"
+      class="absolute right-4 top-4 inline-flex h-6 w-6 appearance-none
+                  items-center justify-center rounded-full p-1 text-magnum-800
+                  hover:bg-magnum-100 focus:shadow-magnum-400"
+    >
+      <Icon icon="maki:cross" />
+    </button>
+  </form>
 </div>
 
 <style>

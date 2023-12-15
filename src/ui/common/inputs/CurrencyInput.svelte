@@ -1,13 +1,12 @@
 <script lang="ts">
-  let value: string = '';
+  import { MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD } from '$lib/constants';
+
+  export let value: string = MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD;
+
+  export let wrapperClass: string = '';
 </script>
 
-<div class="w-max mx-auto flex">
-  <label
-    for="currency-input"
-    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-    >Your Email</label
-  >
+<div class="flex {wrapperClass}">
   <div class="relative w-full">
     <div
       class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none"
@@ -30,16 +29,20 @@
     </div>
     <input
       type="number"
+      name="paymentAmount"
       id="currency-input"
       class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-s-lg border-e-gray-50 border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
       placeholder="Enter amount"
+      step="0.01"
+      min={MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD}
+      {value}
       required
     />
   </div>
   <button
     id="dropdown-currency-button"
     data-dropdown-toggle="dropdown-currency"
-    class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-e-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 transition ease cursor-not-allowed"
+    class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-e-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 transition ease cursor-not-allowed opacity-70"
     type="button"
   >
     <svg fill="none" aria-hidden="true" class="h-4 w-4 me-2" viewBox="0 0 20 15"
