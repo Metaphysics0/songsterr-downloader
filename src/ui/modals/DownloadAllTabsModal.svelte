@@ -5,10 +5,10 @@
   import { melt } from '@melt-ui/svelte';
   import { fade } from 'svelte/transition';
   import { flyAndScale } from '$lib/transitions';
-  import { MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD } from '$lib/constants';
+  import { AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW, MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD } from '$lib/constants';
   import CurrencyInput from '../common/inputs/CurrencyInput.svelte';
-  import { cssClasses } from '$lib/sharedCssClasses';
   import EmailInput from '../common/inputs/EmailInput.svelte';
+  import GooglePayButton from '../common/buttons/GooglePayButton.svelte';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
   export let modalProps: {
@@ -22,10 +22,10 @@
   let shouldShowAllPreviewSongs: boolean = false;
 
   let previewSongsToDownload =
-    selectedSong.bulkSongsToDownload?.slice(0, 30) || [];
+    selectedSong.bulkSongsToDownload?.slice(0, AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW) || [];
 
   const remainingSongsToDownload =
-    selectedSong?.bulkSongsToDownload?.slice(30) || [];
+    selectedSong?.bulkSongsToDownload?.slice(AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW) || [];
 
   async function downloadAllTabsFromArtist(): Promise<void> {
     const secretAccessCode = prompt(
@@ -51,7 +51,7 @@
       previewSongsToDownload = selectedSong?.bulkSongsToDownload || [];
     } else {
       previewSongsToDownload =
-        selectedSong.bulkSongsToDownload?.slice(0, 30) || [];
+        selectedSong.bulkSongsToDownload?.slice(0, AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW) || [];
     }
   }
 </script>
@@ -148,11 +148,12 @@
         >
           Cancel
         </button>
-        <button
+        <GooglePayButton />
+        <!-- <button
           type="submit"
           class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-amber! hover:bg-amber-300! flex items-center"
           >Purchase 🚀</button
-        >
+        > -->
       </div>
     </div>
     <button
