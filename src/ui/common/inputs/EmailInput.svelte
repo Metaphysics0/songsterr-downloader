@@ -3,6 +3,11 @@
 
   export let value: string = '';
   export let wrapperClass: string = '';
+  export let id: string = '';
+
+  function onInput(e: any) {
+    value = e.target.value;
+  }
 </script>
 
 <div class="w-max flex {wrapperClass}">
@@ -15,10 +20,10 @@
     <input
       type="email"
       name="email"
-      id="email"
-      class="block p-2.5 w-full z-20 ps-10 pe-5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+      {id}
+      class="block p-2.5 w-full z-20 ps-10 pe-5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500 font-bold"
       placeholder="email@address.com"
-      {value}
+      on:input={onInput}
       required
     />
   </div>

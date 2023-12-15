@@ -122,12 +122,10 @@
     console.error('error', event.error);
   }
 
-  function onPaymentDataAuthorized(paymentData: any) {
-    console.log('payment authorized', paymentData);
-
+  function onPaymentDataAuthorized(paymentData: google.payments.api.PaymentAuthorizationResult) {
     return {
-      transactionState: 'SUCCESS',
-    };
+      transactionState: 'success'
+    }
   }
 
   function onReadyToPayChange(event: { detail: any; }) {

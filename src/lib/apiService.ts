@@ -68,6 +68,27 @@ export const apiService = {
         }
       });
     }
+  },
+  purchase: {
+    post({
+      paymentData,
+      donationAmount,
+      purchaserEmail
+    }: {
+      paymentData: any;
+      donationAmount: string;
+      purchaserEmail: string;
+    }) {
+      return fetchAndReturnJson({
+        endpoint: 'purchase',
+        method: 'POST',
+        params: {
+          paymentData,
+          purchaserEmail,
+          donationAmount
+        }
+      });
+    }
   }
 };
 

@@ -49,6 +49,7 @@
     "@aws-sdk/s3-presigned-post": "^3.462.0",
     "@aws-sdk/signature-v4-crt": "^3.461.0",
     "@google-pay/button-element": "^3.0.10",
+    "@paypal/paypal-js": "^7.1.1",
     "@prisma/client": "^5.6.0",
     "@vercel/analytics": "^1.0.2",
     "@vercel/kv": "^1.0.1",

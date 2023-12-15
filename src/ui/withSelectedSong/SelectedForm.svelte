@@ -2,7 +2,6 @@
   import { apiService } from '$lib/apiService';
   import { cssClasses } from '$lib/sharedCssClasses';
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
-  import Icon from '@iconify/svelte';
   import SelectedSong from './SelectedSong.svelte';
   import { toast } from '@zerodevx/svelte-toast';
   import { selectedSongToDownload } from '../../stores/selectedSong';
