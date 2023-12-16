@@ -20,7 +20,7 @@ export class KvService {
         this.getCacheKey.forBulkSongs(artistId)
       )) as any[];
 
-      if (result) {
+      if (result?.length) {
         logger.log('Cache HIT for artist id:', artistId);
         return result;
       }

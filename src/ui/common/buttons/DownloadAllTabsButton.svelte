@@ -19,13 +19,17 @@
   });
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
+
+  let shouldDisable =
+    selectedSong?.fromUltimateGuitar ||
+    !selectedSong?.bulkSongsToDownload?.length;
 </script>
 
 <button
   class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-amber! hover:bg-amber-300! mb-4 flex items-center"
   class:disabled={selectedSong?.fromUltimateGuitar}
   use:melt={$trigger}
-  disabled={selectedSong?.fromUltimateGuitar}
+  disabled={shouldDisable}
   >Download All Tabs from {selectedSong.artist}
   <span class="block ml-2">
     <Icon icon="fa-solid:lock" />

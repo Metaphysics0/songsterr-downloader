@@ -19,7 +19,7 @@ export const actions = {
 
     try {
       if (!isUrlFromSongsterr(url))
-        throw `${url} is not a valid songsterr link.`;
+        throw new Error(`${url} is not a valid songsterr link.`);
 
       return {
         searchResult: await getSearchResultFromSongsterrUrl(url!, {

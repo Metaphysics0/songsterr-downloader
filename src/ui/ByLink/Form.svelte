@@ -38,8 +38,7 @@
       return async ({ result, update }) => {
         const {
           error,
-          searchResult,
-          existingDownloadLink
+          searchResult
           // @ts-ignore
         } = result?.data || {};
 

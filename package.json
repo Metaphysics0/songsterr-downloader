@@ -57,6 +57,7 @@
     "@paypal/paypal-js": "^7.1.1",
     "@prisma/client": "^5.6.0",
     "@sendgrid/mail": "^8.1.0",
+    "@upstash/qstash": "^2.3.0",
     "@vercel/analytics": "^1.0.2",
     "@vercel/kv": "^1.0.1",
     "@xmldom/xmldom": "^0.8.10",

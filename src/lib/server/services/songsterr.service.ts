@@ -15,7 +15,7 @@ export async function getSearchResultFromSongsterrUrl(
 
   const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
   const bulkSongsToDownload = options?.withBulkSongsToDownload
-    ? await getSongsToBulkDownload(artistId)
+    ? await getSongsToBulkDownloadFromArtistId(artistId)
     : [];
 
   return {
@@ -109,7 +109,9 @@ function findGuitarProTabLinkFromXml(xml: Document) {
     .getElementsByTagName('attachmentUrl')[0].firstChild?.nodeValue;
 }
 
-async function getSongsToBulkDownload(artistId: string): Promise<any[]> {
+export async function getSongsToBulkDownloadFromArtistId(
+  artistId: string
+): Promise<any[]> {
   if (!artistId) return [];
 
   const kvService = new KvService();

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { apiService } from '$lib/apiService';
-  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
   import Icon from '@iconify/svelte';
   import { melt } from '@melt-ui/svelte';
   import { fade } from 'svelte/transition';
