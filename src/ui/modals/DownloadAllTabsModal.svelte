@@ -41,24 +41,6 @@
       AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW
     ) || [];
 
-  async function downloadAllTabsFromArtist(): Promise<void> {
-    const secretAccessCode = prompt(
-      'This is currently an experimental feature. Please enter in the secret in order to try it. 👀'
-    );
-
-    if (!secretAccessCode) {
-      alert('Invalid input, sorry 🤷‍♂️');
-      return;
-    }
-
-    const resp = await apiService.download.bulkDownload({
-      selectedSong,
-      secretAccessCode
-    });
-
-    triggerFileDownloadFromSongsterrResponse(resp);
-  }
-
   function toggleShowAllTabs() {
     shouldShowAllPreviewSongs = !shouldShowAllPreviewSongs;
     if (shouldShowAllPreviewSongs) {
@@ -69,6 +51,21 @@
           0,
           AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW
         ) || [];
+    }
+  }
+
+  async function purchaseAndSend() {
+    try {
+      const response = await apiService.purchase.post({
+        purchaserEmail: formParams.purchaserEmail,
+        totalBilledAmount: formParams.donationAmount,
+        paymentData: {},
+        artistId: selectedSong.artistId
+      });
+
+      console.log('SUCCESS', response);
+    } catch (error) {
+      console.error('ERROR PURCHASING', error);
     }
   }
 </script>
@@ -169,6 +166,7 @@
         </a>
       </div>
       <div class="flex justify-end gap-4">
+        <button on:click={purchaseAndSend}>Test send</button>
         <!-- <GooglePayButton /> -->
         <PayPalButton
           purchaserEmail={formParams.purchaserEmail}

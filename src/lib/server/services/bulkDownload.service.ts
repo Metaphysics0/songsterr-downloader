@@ -10,7 +10,7 @@ export class BulkDownloadService {
     this.artistId = artistId;
   }
 
-  public getZipFileOfAllTabs = async (): Promise<any> => {
+  public getZipFileOfAllTabs = async (): Promise<AdmZip> => {
     const zip = new AdmZip();
 
     const downloadLinksAndSongTitles = await this.getDownloadLinksFromSongIds();

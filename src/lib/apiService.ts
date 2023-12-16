@@ -72,12 +72,14 @@ export const apiService = {
   purchase: {
     post({
       paymentData,
-      donationAmount,
-      purchaserEmail
+      totalBilledAmount,
+      purchaserEmail,
+      artistId
     }: {
       paymentData: any;
-      donationAmount: string;
+      totalBilledAmount: string;
       purchaserEmail: string;
+      artistId: number | string;
     }) {
       return fetchAndReturnJson({
         endpoint: 'purchase',
@@ -85,7 +87,8 @@ export const apiService = {
         params: {
           paymentData,
           purchaserEmail,
-          donationAmount
+          totalBilledAmount,
+          artistId
         }
       });
     }
