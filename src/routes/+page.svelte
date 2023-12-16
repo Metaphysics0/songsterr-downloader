@@ -3,12 +3,9 @@
   import SocialLinks from '../ui/SocialLinks.svelte';
   import TabMenu from '../ui/TabMenu.svelte';
   import NewFeatureBadge from '../ui/common/badges/NewFeatureBadge.svelte';
-  import TemporarilyDown from '../ui/modals/TemporarilyDown.svelte';
 </script>
 
-<TemporarilyDown />
 <main class="mb-4">
-  <Header />
   <TabMenu />
 </main>
 
