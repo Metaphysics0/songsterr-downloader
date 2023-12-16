@@ -21,7 +21,7 @@ export default class UploadTabToS3AndMongoService {
     mongoData: Prisma.GuitarProTabDownloadLinksCreateInput;
   }) {
     try {
-      const s3DownloadLink = await this.s3Repository.writeIfNotExists(s3Data);
+      const s3DownloadLink = await this.s3Repository.upsert(s3Data);
       await this.downloadLinkRepository.upsertBySongsterrSongId(
         mongoData.songsterrSongId,
         { ...mongoData, s3DownloadLink }

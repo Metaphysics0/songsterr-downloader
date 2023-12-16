@@ -19,7 +19,7 @@
     "@iconify/svelte": "^3.1.4",
     "@melt-ui/pp": "^0.1.4",
     "@melt-ui/svelte": "^0.65.1",
-    "@rgossiaux/svelte-headlessui": "^1.0.2",
+    "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.20.4",
     "@types/adm-zip": "^0.5.0",
@@ -43,6 +43,11 @@
     "vite": "^4.0.0",
     "vitest": "^0.25.3"
   },
+  "overrides": {
+    "@rgossiaux/svelte-headlessui": {
+      "svelte": "$svelte"
+    }
+  },
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.462.0",
@@ -51,6 +56,7 @@
     "@google-pay/button-element": "^3.0.10",
     "@paypal/paypal-js": "^7.1.1",
     "@prisma/client": "^5.6.0",
+    "@sendgrid/mail": "^8.1.0",
     "@vercel/analytics": "^1.0.2",
     "@vercel/kv": "^1.0.1",
     "@xmldom/xmldom": "^0.8.10",

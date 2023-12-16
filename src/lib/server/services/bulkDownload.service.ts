@@ -40,6 +40,10 @@ export class BulkDownloadService {
     return zip;
   };
 
+  public uploadBulkTabsToS3() {
+    throw new Error('not implemented');
+  }
+
   async getDownloadLinksFromSongIds(): Promise<IDownloadLinkAndSongTitle[]> {
     const songIdsAndSongTitles = await this.getSongIdsAndSongTitlesFromArtist();
 
