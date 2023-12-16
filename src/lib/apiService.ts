@@ -74,21 +74,25 @@ export const apiService = {
       paymentData,
       totalBilledAmount,
       purchaserEmail,
-      artistId
+      artistId,
+      artistName
     }: {
       paymentData: any;
       totalBilledAmount: string;
       purchaserEmail: string;
       artistId: number | string;
+      artistName: string;
     }) {
       return fetchAndReturnJson({
         endpoint: 'purchase',
-        method: 'POST',
+        method: 'PUT',
         params: {
           paymentData,
           purchaserEmail,
           totalBilledAmount,
-          artistId
+          artistId,
+          artistName,
+          paymentMethod: 'paypal'
         }
       });
     }

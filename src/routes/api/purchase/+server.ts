@@ -1,9 +1,25 @@
 import { BulkDownloadService } from '$lib/server/services/bulkDownload.service';
+import { QStashService } from '$lib/server/services/qStash.service';
 import { SendGridService } from '$lib/server/services/sendgrid.service';
 import { ParamsHelper } from '$lib/server/utils/params';
 import { normalize } from '$lib/utils/string';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
+// the message broker
+export const PUT = (async ({ request }) => {
+  try {
+    const { sendPurchaseEvent } = new QStashService();
+    const messageResponse = await sendPurchaseEvent(request);
+    console.log('MESSAGE RESPONSE', messageResponse);
+
+    return json(messageResponse);
+  } catch (error) {
+    console.error('error sending params', error);
+    return json({ error });
+  }
+}) satisfies RequestHandler;
+
+// the message itself
 export const POST = (async ({ request }) => {
   try {
     const params = await getRequiredParams(request);
@@ -41,10 +57,10 @@ async function getRequiredParams(request: Request) {
   return getRequiredParams<Record<string, string>>({
     request,
     params: [
-      'artistName',
       'purchaserEmail',
       'totalBilledAmount',
       'artistName',
+      'artistId',
       'paymentMethod'
     ]
   });

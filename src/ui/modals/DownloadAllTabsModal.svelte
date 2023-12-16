@@ -59,7 +59,8 @@
         purchaserEmail: formParams.purchaserEmail,
         totalBilledAmount: formParams.donationAmount,
         paymentData: {},
-        artistId: selectedSong.artistId
+        artistId: selectedSong.artistId,
+        artistName: selectedSong.artist
       });
 
       console.log('SUCCESS', response);
@@ -133,56 +134,51 @@
     </ul>
   </div>
 
-  <form action="">
-    <div class="w-3/4">
-      <fieldset class="mb-4 flex items-center gap-5">
-        <label class="text-black w-1/3" for="email"> Email: </label>
-        <EmailInput
-          wrapperClass={'w-2/3!'}
-          id={PURCHASER_EMAIL_INPUT_ID}
-          bind:value={formParams.purchaserEmail}
-        />
-      </fieldset>
-      <fieldset class="mb-4 flex items-center gap-5">
-        <label class="text-black w-1/3" for="donationAmount">
-          Donation Amount:
-        </label>
-        <CurrencyInput
-          wrapperClass={'w-2/3'}
-          value={formParams.donationAmount}
-        />
-      </fieldset>
-    </div>
+  <div class="w-3/4">
+    <fieldset class="mb-4 flex items-center gap-5">
+      <label class="text-black w-1/3" for="email"> Email: </label>
+      <EmailInput
+        wrapperClass={'w-2/3!'}
+        id={PURCHASER_EMAIL_INPUT_ID}
+        bind:value={formParams.purchaserEmail}
+      />
+    </fieldset>
+    <fieldset class="mb-4 flex items-center gap-5">
+      <label class="text-black w-1/3" for="donationAmount">
+        Donation Amount:
+      </label>
+      <CurrencyInput wrapperClass={'w-2/3'} value={formParams.donationAmount} />
+    </fieldset>
+  </div>
 
-    <div class="flex justify-between items-center mt-7">
-      <div>
-        <a
-          class="opacity-50 font-light underline flex items-center hover:no-underline hover:opacity-50 transition ease"
-          href="/payment-faq"
-          target="_blank"
-          >Payment FAQ's
-          <Icon icon="material-symbols:info" class="ml-1" />
-        </a>
-      </div>
-      <div class="flex justify-end gap-4">
-        <button on:click={purchaseAndSend}>Test send</button>
-        <!-- <GooglePayButton /> -->
-        <PayPalButton
-          purchaserEmail={formParams.purchaserEmail}
-          donationAmount={formParams.donationAmount}
-        />
-      </div>
+  <div class="flex justify-between items-center mt-7">
+    <div>
+      <a
+        class="opacity-50 font-light underline flex items-center hover:no-underline hover:opacity-50 transition ease"
+        href="/payment-faq"
+        target="_blank"
+        >Payment FAQ's
+        <Icon icon="material-symbols:info" class="ml-1" />
+      </a>
     </div>
-    <button
-      use:melt={modalProps.close}
-      aria-label="close"
-      class="absolute right-4 top-4 inline-flex h-6 w-6 appearance-none
+    <div class="flex justify-end gap-4">
+      <button on:click={purchaseAndSend}>Test send</button>
+      <!-- <GooglePayButton /> -->
+      <PayPalButton
+        purchaserEmail={formParams.purchaserEmail}
+        donationAmount={formParams.donationAmount}
+      />
+    </div>
+  </div>
+  <button
+    use:melt={modalProps.close}
+    aria-label="close"
+    class="absolute right-4 top-4 inline-flex h-6 w-6 appearance-none
                   items-center justify-center rounded-full p-1 text-magnum-800
                   hover:bg-magnum-100 focus:shadow-magnum-400"
-    >
-      <Icon icon="maki:cross" />
-    </button>
-  </form>
+  >
+    <Icon icon="maki:cross" />
+  </button>
 </div>
 
 <style>
