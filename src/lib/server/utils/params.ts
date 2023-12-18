@@ -17,4 +17,28 @@ export class ParamsHelper {
 
     return permittedParams as T;
   }
+
+  getParamsFromUrl<T>({
+    url,
+    params
+  }: {
+    url: URL;
+    params: PermittedSpecification[];
+  }): T {
+    const permittedParams = params.map((param) => {
+      const value = url.searchParams.get(param.key);
+      if (param.required && !value)
+        throw new Error(`missing param: ${param.key}`);
+
+      return [param.key, value];
+    });
+
+    return Object.fromEntries(permittedParams) as T;
+  }
+}
+
+interface PermittedSpecification {
+  key: string;
+  required?: boolean;
+  type?: string;
 }

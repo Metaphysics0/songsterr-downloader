@@ -5,7 +5,7 @@ import { ParamsHelper } from '$lib/server/utils/params';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
 // the message broker
-export const PUT = (async ({ request, fetch }) => {
+export const PUT = (async ({ request }) => {
   try {
     const { sendPurchaseEvent } = new QStashService();
     const messageResponse = await sendPurchaseEvent(request);
