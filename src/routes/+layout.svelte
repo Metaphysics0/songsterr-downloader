@@ -5,7 +5,7 @@
   import '@unocss/reset/tailwind.css';
 
   import { SvelteToast } from '@zerodevx/svelte-toast';
-  import Header from '../ui/Header.svelte';
+  import Header from '../ui/general/Header.svelte';
 
   inject({ mode: dev ? 'development' : 'production' });
 </script>

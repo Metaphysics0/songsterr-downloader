@@ -15,12 +15,14 @@ export class BulkDownloadService {
   public getZipFileOfAllTabs = async (): Promise<AdmZip> => {
     const zip = new AdmZip();
 
-    const downloadLinksAndSongTitles = await this.getDownloadLinksFromSongIds();
+    const downloadLinksAndSongTitles = (
+      await this.getDownloadLinksFromSongIds()
+    ).filter(this.withCompleteDownloadLink);
 
     const arrayBuffers = await Promise.all(
-      downloadLinksAndSongTitles
-        .filter(this.withCompleteDownloadLink)
-        .map((obj) => new Fetcher().fetchAndReturnArrayBuffer(obj.downloadLink))
+      downloadLinksAndSongTitles.map((obj) =>
+        new Fetcher().fetchAndReturnArrayBuffer(obj.downloadLink)
+      )
     );
 
     /*
@@ -33,8 +35,7 @@ export class BulkDownloadService {
 
       zip.addFile(
         `${songTitle}.gpx`,
-        // @ts-ignore
-        new Uint8Array(buf),
+        Buffer.from(buf.buffer),
         `storing ${songTitle} in the zip`
       );
     });

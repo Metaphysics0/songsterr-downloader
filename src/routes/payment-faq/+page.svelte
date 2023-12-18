@@ -2,7 +2,6 @@
   import { createClassNames } from '$lib/utils/css';
   import { createAccordion, melt } from '@melt-ui/svelte';
   import { slide } from 'svelte/transition';
-  import Header from '../../ui/Header.svelte';
   import Link from '../../ui/common/Link.svelte';
 
   const {

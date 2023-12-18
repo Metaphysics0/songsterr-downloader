@@ -2,11 +2,9 @@
   import {
     activeTabMenuIndex,
     type ITabMenuIndex
-  } from '../stores/activeTabMenu';
+  } from '../../stores/activeTabMenu';
   import { page } from '$app/stores';
-  import Link from './common/Link.svelte';
-
-  export let shouldHideSubHeader: boolean = false;
+  import Link from '../common/Link.svelte';
 
   const headerTextMap: Record<ITabMenuIndex, string> = {
     0: 'Enter in a link',
