@@ -33,11 +33,11 @@ export class SendGridRepository {
         return sgMail.send(payload);
       });
 
-      await Promise.all(emailsToSend);
+      return Promise.all(emailsToSend);
     } catch (error) {
       logger.error('error sending email: ', error);
     }
   }
 
-  static FROM_EMAIL = 'ryan@songsterr-downloader.com';
+  static FROM_EMAIL = 'ryan@fullstackservices.io';
 }

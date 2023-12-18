@@ -16,6 +16,7 @@ export class QStashService {
     const domain = dev ? PUBLIC_DEVELOPMENT_URL : PUBLIC_WEBSITE_URL;
 
     // replace with ngrok during local development
-    return protocol + domain + '/api';
+    return 'https://11cc-212-59-70-23.ngrok-free.app/api';
+    // return protocol + domain + '/api';
   }
 }

@@ -15,12 +15,12 @@ export class SendGridService {
 
     return this.repository.sendEmail({
       recipients: [params.recipient],
-      templateId: 'd-656ddd08e7ce41b08d141294f271e360',
+      templateId: 'd-494c1c0c93e64d8f9953b3e04793a610',
       dynamicTemplateData: {
         artistName: params.artistName,
         paymentMethod: params.paymentMethod,
         totalBilledAmount: params.totalBilledAmount,
-        purchaseDate: params.purchaseDate
+        purchaseDate: params.purchaseDate.toLocaleDateString()
       },
       attachments: params.bulkTabsZipAttachments
     });

@@ -2,7 +2,6 @@ import { BulkDownloadService } from '$lib/server/services/bulkDownload.service';
 import { QStashService } from '$lib/server/services/qStash.service';
 import { SendGridService } from '$lib/server/services/sendgrid.service';
 import { ParamsHelper } from '$lib/server/utils/params';
-import { normalize } from '$lib/utils/string';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
 // the message broker
@@ -10,12 +9,10 @@ export const PUT = (async ({ request }) => {
   try {
     const { sendPurchaseEvent } = new QStashService();
     const messageResponse = await sendPurchaseEvent(request);
-    console.log('MESSAGE RESPONSE', messageResponse);
-
     return json(messageResponse);
   } catch (error) {
-    console.error('error sending params', error);
-    return json({ error });
+    console.error('Error sending message', error);
+    return json({ error: 'error sending message' });
   }
 }) satisfies RequestHandler;
 
@@ -24,11 +21,9 @@ export const POST = (async ({ request }) => {
   try {
     const params = await getRequiredParams(request);
 
-    const bulkTabsData = await new BulkDownloadService(
+    const bulkTabsZipAttachments = await new BulkDownloadService(
       params.artistId
-    ).getZipFileOfAllTabs();
-
-    const attachment = await bulkTabsData.toBufferPromise();
+    ).getZipFileAndAttachmentForEmail(params.artistName);
 
     await new SendGridService().sendBulkTabs({
       artistName: params.artistName,
@@ -36,19 +31,15 @@ export const POST = (async ({ request }) => {
       totalBilledAmount: params.totalBilledAmount,
       paymentMethod: params.paymentMethod,
       purchaseDate: new Date(),
-      bulkTabsZipAttachments: [
-        {
-          content: Buffer.from(attachment).toString('base64'),
-          filename: `${normalize(params.artistName)}-tabs.zip`,
-          type: 'application/zip'
-        }
-      ]
+      bulkTabsZipAttachments
     });
+
+    return json({ purchased: 'true' });
   } catch (error) {
     console.error('error sending params', error);
-  }
 
-  return json({ purchased: 'true' });
+    return json({ error: 'error sending email' });
+  }
 }) satisfies RequestHandler;
 
 async function getRequiredParams(request: Request) {

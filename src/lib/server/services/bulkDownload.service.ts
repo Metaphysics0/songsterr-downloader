@@ -3,6 +3,8 @@ import { MAX_SONGS_TO_BULK_DOWNLOAD } from '$env/static/private';
 import { getDownloadLinkFromSongId } from './songsterr.service';
 import { logger } from '$lib/utils/logger';
 import Fetcher from '$lib/utils/fetch';
+import { normalize } from '$lib/utils/string';
+import type { MailDataRequired } from '@sendgrid/mail';
 
 export class BulkDownloadService {
   artistId: string;
@@ -38,6 +40,21 @@ export class BulkDownloadService {
     });
 
     return zip;
+  };
+
+  public getZipFileAndAttachmentForEmail = async (
+    artistName: string
+  ): Promise<MailDataRequired['attachments']> => {
+    const zip = await this.getZipFileOfAllTabs();
+    const attachment = await zip.toBufferPromise();
+
+    return [
+      {
+        content: Buffer.from(attachment).toString('base64'),
+        filename: `${normalize(artistName)}-tabs.zip`,
+        type: 'application/zip'
+      }
+    ];
   };
 
   public uploadBulkTabsToS3() {
