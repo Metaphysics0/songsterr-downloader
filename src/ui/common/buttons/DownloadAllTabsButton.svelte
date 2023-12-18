@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
   import { createDialog, melt } from '@melt-ui/svelte';
-  import DownloadAllTabsModal from '../../modals/DownloadAllTabsModal.svelte';
+  import DownloadAllTabsModal from '../../modals/download-all-tabs/Modal.svelte';
 
   const {
     elements: {

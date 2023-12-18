@@ -1,4 +1,3 @@
-// to do
 import { SENDGRID_API_KEY } from '$env/static/private';
 import { logger } from '$lib/utils/logger';
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
@@ -10,13 +9,7 @@ export class SendGridRepository {
     subject = '',
     dynamicTemplateData = {},
     attachments = []
-  }: {
-    recipients: string[];
-    templateId: any;
-    subject?: string;
-    dynamicTemplateData?: Record<string, any>;
-    attachments?: MailDataRequired['attachments'];
-  }) {
+  }: SendEmailParams) {
     try {
       sgMail.setApiKey(SENDGRID_API_KEY);
 
@@ -39,5 +32,13 @@ export class SendGridRepository {
     }
   }
 
-  static FROM_EMAIL = 'ryan@fullstackservices.io';
+  static readonly FROM_EMAIL = 'ryan@fullstackservices.io';
+}
+
+interface SendEmailParams {
+  recipients: string[];
+  templateId: any;
+  subject?: string;
+  dynamicTemplateData?: Record<string, any>;
+  attachments?: MailDataRequired['attachments'];
 }

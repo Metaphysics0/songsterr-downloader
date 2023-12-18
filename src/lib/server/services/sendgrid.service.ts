@@ -2,6 +2,7 @@ import { logger } from '$lib/utils/logger';
 import type { MailDataRequired } from '@sendgrid/mail';
 import { SendGridRepository } from '../repositories/sendgrid.repository';
 import { omit } from 'lodash-es';
+import { BULK_TABS_EMAIL_TEMPLATE_ID } from '$env/static/private';
 
 export class SendGridService {
   constructor(private repository = new SendGridRepository()) {}
@@ -15,12 +16,12 @@ export class SendGridService {
 
     return this.repository.sendEmail({
       recipients: [params.recipient],
-      templateId: 'd-494c1c0c93e64d8f9953b3e04793a610',
+      templateId: BULK_TABS_EMAIL_TEMPLATE_ID,
       dynamicTemplateData: {
         artistName: params.artistName,
         paymentMethod: params.paymentMethod,
         totalBilledAmount: params.totalBilledAmount,
-        purchaseDate: params.purchaseDate.toLocaleDateString()
+        purchaseDate: params.purchaseDate.toUTCString()
       },
       attachments: params.bulkTabsZipAttachments
     });
