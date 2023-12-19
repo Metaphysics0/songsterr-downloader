@@ -13,8 +13,8 @@
     <p>Song - {selectedSong.title}</p>
     <p class="font-light">Artist - {selectedSong.artist}</p>
   </div>
-
   <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <p class="h-4 cursor-pointer" on:click={deselectSong}>
     <Icon icon="fa-solid:times" />
   </p>

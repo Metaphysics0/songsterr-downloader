@@ -9,6 +9,7 @@
   import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
   import { SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN } from '$lib/constants';
   import { isUrlFromSongsterr, isUrlFromUltimateGuitar } from '$lib/utils/url';
+  import SelectedSongSkeleton from '../common/skeletons/SelectedSongSkeleton.svelte';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -23,19 +24,25 @@
   }
 
   let isValid: boolean = false;
+
+  let isLoading: boolean = false;
 </script>
 
-{#if selectedSong}
+{#if isLoading && !selectedSong}
+  <SelectedSongSkeleton />
+{:else if selectedSong}
   <SelectedForm {selectedSong} />
 {:else}
   <form
     class="flex flex-col items-center"
     method="POST"
     action="?/getSelectedSongFromUrl"
-    use:enhance={({ data }) => {
-      const byLinkUrl = data.get('url');
+    use:enhance={({ formData }) => {
+      const byLinkUrl = formData.get('url');
 
+      isLoading = true;
       return async ({ result, update }) => {
+        isLoading = false;
         const {
           error,
           searchResult
