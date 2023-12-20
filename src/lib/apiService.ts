@@ -1,10 +1,12 @@
 import { pick } from 'lodash-es';
+import type {
+  PayPalCreatePurchaseParams,
+  PurchaseBulkTabsParams
+} from './types/payments';
 
 export const apiService = {
   search: {
-    bySongOrArtist: async (
-      searchText: string
-    ): Promise<ISearchResultResponse> => {
+    bySongOrArtist(searchText: string): Promise<ISearchResultResponse> {
       return fetchAndReturnJson({
         endpoint: 'search',
         method: 'POST',
@@ -13,9 +15,9 @@ export const apiService = {
     }
   },
   download: {
-    bySearchResult: async (
+    bySearchResult(
       searchResult: ISearchResult | IPartialSearchResult
-    ): Promise<SongsterrDownloadResponse> => {
+    ): Promise<SongsterrDownloadResponse> {
       return fetchAndReturnJson({
         endpoint: 'download/bySearchResult',
         method: 'POST',
@@ -27,13 +29,13 @@ export const apiService = {
         }
       });
     },
-    bulkDownload: async ({
+    bulkDownload({
       selectedSong,
       secretAccessCode
     }: {
       selectedSong: ISearchResult | IPartialSearchResult;
       secretAccessCode: string;
-    }): Promise<SongsterrDownloadResponse> => {
+    }): Promise<SongsterrDownloadResponse> {
       return fetchAndReturnJson({
         endpoint: 'download/bulk',
         method: 'POST',
@@ -44,9 +46,9 @@ export const apiService = {
         }
       });
     },
-    bySource: async (
+    bySource(
       searchResult: ISearchResult | IPartialSearchResult
-    ): Promise<SongsterrDownloadResponse> => {
+    ): Promise<SongsterrDownloadResponse> {
       return fetchAndReturnJson({
         endpoint: 'download/bySource',
         method: 'POST',
@@ -56,9 +58,9 @@ export const apiService = {
         }
       });
     },
-    fromUltimateGuitar: async (
+    fromUltimateGuitar(
       searchResult: ISearchResult | IPartialSearchResult
-    ): Promise<SongsterrDownloadResponse> => {
+    ): Promise<SongsterrDownloadResponse> {
       return fetchAndReturnJson({
         endpoint: 'download/ultimate-guitar',
         method: 'POST',
@@ -66,6 +68,50 @@ export const apiService = {
           songTitle: searchResult.title,
           ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
         }
+      });
+    }
+  },
+  purchase: {
+    put(params: PurchaseBulkTabsParams) {
+      return fetchAndReturnJson({
+        endpoint: 'purchase',
+        method: 'PUT',
+        params
+      });
+    }
+  },
+  orders: {
+    create(params: PayPalCreatePurchaseParams) {
+      return fetchAndReturnJson({
+        endpoint: 'orders',
+        method: 'POST',
+        params
+      });
+    },
+    ':order_id': {
+      capture({
+        orderId,
+        selectedSong,
+        purchaserEmail
+      }: {
+        orderId: string;
+        selectedSong: ISearchResult | IPartialSearchResult;
+        purchaserEmail: string;
+      }) {
+        return fetchAndReturnJson({
+          endpoint: `orders/${orderId}/capture`,
+          method: 'POST',
+          params: { selectedSong, purchaserEmail }
+        });
+      }
+    }
+  },
+  song_info: {
+    get(params: GetSongInfoParams) {
+      return fetchAndReturnJson({
+        endpoint: 'song_info',
+        method: 'GET',
+        params
       });
     }
   }

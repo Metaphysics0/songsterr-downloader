@@ -31,61 +31,58 @@ export class S3Repository {
     });
   }
 
-  async write({ fileName, artist, data }: WriteToS3Args): Promise<string> {
+  async write({ fileName, artist, data, key }: WriteToS3Args): Promise<string> {
     const uploadCommand = new PutObjectCommand({
       Bucket: AWS_S3_BUCKET_NAME,
-      Key: this.getKeyFromFileNameAndArtist(fileName, artist),
+      Key: key,
       Body: data,
       ACL: 'public-read'
     });
     try {
       await this.client.send(uploadCommand);
-      return this.getPublicS3UrlFromFileNameAndArtist(fileName, artist);
+      return this.getCloudfrontUrl.forTab(fileName, artist);
     } catch (error) {
       logger.error('error uploading to s3', error);
       return '';
     }
   }
 
-  async head(fileName: string, artist: string): Promise<string> {
+  async head(key: string): Promise<string> {
     const headObjectCommand = new HeadObjectCommand({
       Bucket: AWS_S3_BUCKET_NAME,
-      Key: this.getKeyFromFileNameAndArtist(fileName, artist)
+      Key: key
     });
     try {
       const response = await this.client.send(headObjectCommand);
-      if (response) {
-        return this.getPublicS3UrlFromFileNameAndArtist(fileName, artist);
-      }
+      if (response) return key;
 
       return '';
     } catch (error: any) {
       if (error.name === this.OBJECT_NOT_FOUND_ERROR_NAME) {
-        logger.error(
-          'S3 HeadObjectCommand miss',
-          `for ${artist} - ${fileName}`
-        );
+        logger.error('S3 HeadObjectCommand miss', `for key: ${key}`);
       }
 
       return '';
     }
   }
 
-  async writeIfNotExists({
+  async upsert({
     fileName,
     artist,
-    data
+    data,
+    key
   }: {
     artist: string;
     fileName: string;
     data: PutObjectCommandInput['Body'];
+    key: string;
   }): Promise<string> {
-    const existingLink = await this.head(fileName, artist);
+    const existingLink = await this.head(key);
     if (existingLink) {
       logger.log(`already stored in S3`);
       return existingLink;
     }
-    return this.write({ fileName, artist, data });
+    return this.write({ fileName, artist, data, key });
   }
 
   ensureCloudfrontDomain(url?: string) {
@@ -103,26 +100,35 @@ export class S3Repository {
     return url;
   }
 
-  getPublicS3UrlFromFileNameAndArtist = (fileName: string, artist: string) =>
-    [this.CLOUDFRONT_BASE_URL, artist, fileName].join('/');
+  public getCloudfrontUrl = {
+    forTab: (fileName: string, artist: string): string => {
+      return [
+        CLOUDFRONT_S3_BASE_URL,
+        this.UPLOAD_TABS_DIRECTORY,
+        artist,
+        fileName
+      ].join('/');
+    }
+  };
 
-  getKeyFromFileNameAndArtist = (fileName: string, artist: string) =>
-    [this.UPLOAD_TABS_DIRECTORY, artist, fileName].join('/');
+  public getS3Key = {
+    forTab: (fileName: string, artist: string): string => {
+      return [this.UPLOAD_TABS_DIRECTORY, artist, fileName].join('/');
+    }
+  };
 
   private UPLOAD_TABS_DIRECTORY = 'tabs';
-
-  private S3_BASE_URL = `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${this.UPLOAD_TABS_DIRECTORY}`;
-  private CLOUDFRONT_BASE_URL = `${CLOUDFRONT_S3_BASE_URL}/${this.UPLOAD_TABS_DIRECTORY}`;
-
   private OBJECT_NOT_FOUND_ERROR_NAME = 'NotFound';
 }
+
 function ensureAllEnvironmentVariablesAreLoaded() {
   if (
     [
       AWS_REGION,
       AWS_ACCESS_KEY_ID,
       AWS_ACCESS_KEY_SECRET,
-      AWS_S3_BUCKET_NAME
+      AWS_S3_BUCKET_NAME,
+      CLOUDFRONT_S3_BASE_URL
     ].some(isEmpty)
   ) {
     throw new Error('Unable to initialize S3 Client. Missing Env variables');
@@ -133,4 +139,5 @@ export interface WriteToS3Args {
   artist: string;
   fileName: string;
   data: PutObjectCommandInput['Body'];
+  key: string;
 }

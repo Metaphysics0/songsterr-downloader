@@ -9,12 +9,12 @@
   import {
     activeTabMenuIndex,
     type ITabMenuIndex
-  } from '../stores/activeTabMenu';
+  } from '../../stores/activeTabMenu';
 
   import { createClassNames } from '$lib/utils/css';
-  import ByLink from './ByLink/Form.svelte';
-  import BySearch from './BySearch/Form.svelte';
-  import { selectedSongToDownload } from '../stores/selectedSong';
+  import ByLink from '../ByLink/Form.svelte';
+  import BySearch from '../BySearch/Form.svelte';
+  import { selectedSongToDownload } from '../../stores/selectedSong';
 
   function setActiveTabIndex(idx: ITabMenuIndex): void {
     activeTabMenuIndex.set(idx);

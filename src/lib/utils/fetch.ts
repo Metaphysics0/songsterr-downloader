@@ -16,8 +16,13 @@ export default class Fetcher {
     return {
       downloadResponse,
       buffer,
-      contentType: downloadResponse.headers.get('Content-Type') || ''
+      contentType: downloadResponse?.headers?.get('Content-Type') || ''
     };
+  }
+
+  async fetchAndReturnJson(url: string) {
+    const response = await this.fetch(url);
+    return response.json();
   }
 
   get options() {

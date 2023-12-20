@@ -3,6 +3,9 @@
   export let href: string;
 
   export let linkColor: 'primary' | 'secondary' = 'primary';
+  export let target = '_blank';
+
+  export let cssClass = '';
 
   const linkColorClass = {
     primary: 'text-blue-400 hover:text-blue-500 ease',
@@ -10,5 +13,6 @@
   }[linkColor];
 </script>
 
-<a {href} target="_blank" rel="noreferrer" class={linkColorClass}>{innerText}</a
+<a {href} {target} rel="noreferrer" class={linkColorClass + ' ' + cssClass}
+  >{innerText}</a
 >

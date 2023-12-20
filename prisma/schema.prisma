@@ -19,3 +19,10 @@ model GuitarProTabDownloadLinks {
   songsterrUrlId        String?
   metadata              Json?
 }
+
+model Orders {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt      DateTime @default(now())
+  paymentType    String
+  rawPaymentData Json
+}

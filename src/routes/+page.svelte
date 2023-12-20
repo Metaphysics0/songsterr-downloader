@@ -1,14 +1,10 @@
 <script>
-  import Header from '../ui/Header.svelte';
-  import SocialLinks from '../ui/SocialLinks.svelte';
-  import TabMenu from '../ui/TabMenu.svelte';
+  import SocialLinks from '../ui/general/SocialLinks.svelte';
+  import TabMenu from '../ui/general/TabMenu.svelte';
   import NewFeatureBadge from '../ui/common/badges/NewFeatureBadge.svelte';
-  import TemporarilyDown from '../ui/modals/TemporarilyDown.svelte';
 </script>
 
-<TemporarilyDown />
 <main class="mb-4">
-  <Header />
   <TabMenu />
 </main>
 

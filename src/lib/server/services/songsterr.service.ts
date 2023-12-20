@@ -1,9 +1,12 @@
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
+import { KvService } from '../cache/kv';
 import { scraper } from '../scraper';
+import { BulkDownloadService } from './bulkDownload.service';
 
 export async function getSearchResultFromSongsterrUrl(
-  songsterrUrl: string
+  songsterrUrl: string,
+  options?: GetSearchResultOptions
 ): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
   if (!doc) {
@@ -11,23 +14,27 @@ export async function getSearchResultFromSongsterrUrl(
   }
 
   const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
+  const bulkSongsToDownload = options?.withBulkSongsToDownload
+    ? await getSongsToBulkDownloadFromArtistId(artistId)
+    : [];
 
   return {
     songId,
     artistId,
     title,
     artist,
-    source
+    source,
+    bulkSongsToDownload
   };
 }
 
 function getMetadataFromDoc(doc: Document) {
-  const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
   try {
+    const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
     // @ts-ignore
     return JSON.parse(metadataScript).meta.current;
   } catch (error) {
-    console.error('error parsing metadata', error);
+    logger.error('error parsing metadata', error);
     throw new Error('Error reading tab data');
   }
 }
@@ -102,7 +109,40 @@ function findGuitarProTabLinkFromXml(xml: Document) {
     .getElementsByTagName('attachmentUrl')[0].firstChild?.nodeValue;
 }
 
+export async function getSongsToBulkDownloadFromArtistId(
+  artistId: string
+): Promise<any[]> {
+  if (!artistId) return [];
+
+  const kvService = new KvService();
+
+  const cachedResults = await kvService.getBulkSongsToDownload(artistId);
+  if (cachedResults?.length) {
+    return cachedResults;
+  }
+
+  try {
+    const results = await new BulkDownloadService(
+      artistId
+    ).getSongIdsAndSongTitlesFromArtist();
+
+    await kvService.setBulkSongsToDownload(artistId, results);
+
+    return results;
+  } catch (error) {
+    logger.error(
+      `Error getting bulk songs to download from artist id: ${artistId}`,
+      error
+    );
+    return [];
+  }
+}
+
 export interface IDownloadLinkResponse {
   downloadLink: string;
   songTitle: ISelectedSongTitle;
+}
+
+export interface GetSearchResultOptions {
+  withBulkSongsToDownload?: boolean;
 }

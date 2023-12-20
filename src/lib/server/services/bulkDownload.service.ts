@@ -2,6 +2,9 @@ import AdmZip from 'adm-zip';
 import { MAX_SONGS_TO_BULK_DOWNLOAD } from '$env/static/private';
 import { getDownloadLinkFromSongId } from './songsterr.service';
 import { logger } from '$lib/utils/logger';
+import Fetcher from '$lib/utils/fetch';
+import { normalize } from '$lib/utils/string';
+import type { MailDataRequired } from '@sendgrid/mail';
 
 export class BulkDownloadService {
   artistId: string;
@@ -9,15 +12,17 @@ export class BulkDownloadService {
     this.artistId = artistId;
   }
 
-  public getZipFileOfAllTabs = async (): Promise<any> => {
+  public getZipFileOfAllTabs = async (): Promise<AdmZip> => {
     const zip = new AdmZip();
 
-    const downloadLinksAndSongTitles = await this.getDownloadLinksFromSongIds();
+    const downloadLinksAndSongTitles = (
+      await this.getDownloadLinksFromSongIds()
+    ).filter(this.withCompleteDownloadLink);
 
     const arrayBuffers = await Promise.all(
-      downloadLinksAndSongTitles
-        .filter(this.withCompleteDownloadLink)
-        .map((obj) => this.downloadLinkAndReturnArrayBuffer(obj.downloadLink))
+      downloadLinksAndSongTitles.map((obj) =>
+        new Fetcher().fetchAndReturnArrayBuffer(obj.downloadLink)
+      )
     );
 
     /*
@@ -30,8 +35,7 @@ export class BulkDownloadService {
 
       zip.addFile(
         `${songTitle}.gpx`,
-        // @ts-ignore
-        new Uint8Array(buf),
+        Buffer.from(buf.buffer),
         `storing ${songTitle} in the zip`
       );
     });
@@ -39,16 +43,26 @@ export class BulkDownloadService {
     return zip;
   };
 
-  private async downloadLinkAndReturnArrayBuffer(
-    link: string
-  ): Promise<ArrayBuffer> {
-    const downloadResponse = await fetch(link);
-    return downloadResponse.arrayBuffer();
+  public getZipFileAndAttachmentForEmail = async (
+    artistName: string
+  ): Promise<MailDataRequired['attachments']> => {
+    const zip = await this.getZipFileOfAllTabs();
+    const attachment = await zip.toBufferPromise();
+
+    return [
+      {
+        content: Buffer.from(attachment).toString('base64'),
+        filename: `${normalize(artistName)}-tabs.zip`,
+        type: 'application/zip'
+      }
+    ];
+  };
+
+  public uploadBulkTabsToS3() {
+    throw new Error('not implemented');
   }
 
-  private async getDownloadLinksFromSongIds(): Promise<
-    IDownloadLinkAndSongTitle[]
-  > {
+  async getDownloadLinksFromSongIds(): Promise<IDownloadLinkAndSongTitle[]> {
     const songIdsAndSongTitles = await this.getSongIdsAndSongTitlesFromArtist();
 
     return Promise.all(
@@ -62,12 +76,11 @@ export class BulkDownloadService {
     );
   }
 
-  private async getSongIdsAndSongTitlesFromArtist(): Promise<
-    ISongIdAndSongTitle[]
-  > {
+  async getSongIdsAndSongTitlesFromArtist(): Promise<BulkSongToDownload[]> {
     const url = `https://www.songsterr.com/api/artist/${this.artistId}/songs?size=${MAX_SONGS_TO_BULK_DOWNLOAD}`;
-    const response = await fetch(url);
-    const results = (await response.json()) as ISearchResultByArtist[];
+    const results = (await new Fetcher().fetchAndReturnJson(
+      url
+    )) as ISearchResultByArtist[];
 
     return results.map((result) => ({
       songId: result.songId,
@@ -107,7 +120,7 @@ interface IDownloadLinkAndSongTitle {
   songTitle: string;
 }
 
-interface ISongIdAndSongTitle {
+export interface BulkSongToDownload {
   songId: number;
   title: string;
 }
