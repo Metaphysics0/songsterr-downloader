@@ -19,6 +19,7 @@
     title?: any;
     description?: any;
     close?: any;
+    closeModal: () => void;
   };
 
   let formParams = {
@@ -35,7 +36,7 @@
 <div
   class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
             max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
-            p-6 shadow-lg overflow-scroll"
+            p-6 pb-3 shadow-lg overflow-scroll"
   use:melt={modalProps.content}
   transition:flyAndScale|global={{
     duration: 150,
@@ -67,16 +68,15 @@
     <fieldset class="flex items-center gap-5">
       <label class="text-black w-1/3" for="email"> Email: </label>
       <EmailInput
-        wrapperClass={'w-2/3!'}
+        wrapperClass={'md:w-2/3 lg:w-2/3'}
         id={PURCHASER_EMAIL_INPUT_ID}
         bind:value={formParams.purchaserEmail}
       />
     </fieldset>
   </div>
 
-  <div class="flex justify-between items-center mt-4">
+  <div class="flex justify-between items-center mt-2">
     <div>
-      <!-- class="opacity-50 font-light underline flex items-center hover:no-underline hover:opacity-50 transition ease" -->
       <a
         class="font-light underline cursor-pointer flex items-center hover:opacity-70 transition ease outline-none"
         href="/payment-faq"
@@ -86,8 +86,11 @@
       </a>
     </div>
     <div class="flex justify-end gap-4">
-      <!-- <GooglePayButton /> -->
-      <PayPalButton purchaserEmail={formParams.purchaserEmail} {selectedSong} />
+      <PayPalButton
+        purchaserEmail={formParams.purchaserEmail}
+        {selectedSong}
+        closeModal={modalProps.closeModal}
+      />
     </div>
   </div>
   <button

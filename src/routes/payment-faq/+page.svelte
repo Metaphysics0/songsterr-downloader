@@ -35,7 +35,7 @@
       id: 'item-4',
       title: 'Can I receive a refund for any reason?',
       description:
-        "Contact me at ryan@songsterr-downloader.com, and I'll do what I can to assist you."
+        "Contact me at ryan@fullstackservices.io, and I'll do what I can to assist you."
     },
     {
       id: 'item-5',

@@ -10,6 +10,8 @@
 
   export let purchaserEmail: string = '';
 
+  export let closeModal: () => void;
+
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   loadScript({
@@ -46,6 +48,16 @@
               actions.enable();
             }
           });
+        },
+        onClick(data, actions) {
+          const emailElement = document.getElementById(
+            PURCHASER_EMAIL_INPUT_ID
+          ) as HTMLInputElement;
+          if (emailElement.value === '') {
+            toast.push('Please enter an email!');
+            return;
+          }
+          return;
         },
         async createOrder() {
           try {
@@ -106,8 +118,16 @@
               const transaction =
                 orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
                 orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
-              logger.log('transaction succcess', transaction);
-              toast.push('success!');
+              toast.push('Success! Check your email for the tabs.', {
+                theme: {
+                  '--toastColor': 'mintcream',
+                  '--toastBackground': 'rgba(72,187,120,0.9)',
+                  '--toastBarBackground': '#2F855A'
+                },
+                duration: 10000
+              });
+
+              closeModal();
             }
           } catch (error) {
             console.error(error);

@@ -10,6 +10,8 @@
   import { SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN } from '$lib/constants';
   import { isUrlFromSongsterr, isUrlFromUltimateGuitar } from '$lib/utils/url';
   import SelectedSongSkeleton from '../common/skeletons/SelectedSongSkeleton.svelte';
+  import { sample } from 'lodash-es';
+  import { placeholderSongUrls } from '$lib/constants/placeholderSongUrls';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -78,7 +80,7 @@
         required
         on:invalid={setValidationMessage}
         on:input={checkIfInputIsValid}
-        placeholder="https://www.songsterr.com/a/wsa/structures-hydroplaning-tab-s88503"
+        placeholder={sample(placeholderSongUrls)}
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2 text-center"
       />
     </label>
