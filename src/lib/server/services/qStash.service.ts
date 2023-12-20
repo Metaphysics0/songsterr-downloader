@@ -1,4 +1,4 @@
-import { PUBLIC_DEVELOPMENT_URL, PUBLIC_WEBSITE_URL } from '$env/static/public';
+import { PUBLIC_WEBSITE_URL } from '$env/static/public';
 import client from '../qstash/client';
 
 export class QStashService {
@@ -11,7 +11,6 @@ export class QStashService {
   };
 
   private get apiUrlPrefix() {
-    // return 'https://' + PUBLIC_WEBSITE_URL + '/api';
-    return 'https://1a4b-212-59-70-23.ngrok-free.app/api';
+    return 'https://' + PUBLIC_WEBSITE_URL + '/api';
   }
 }

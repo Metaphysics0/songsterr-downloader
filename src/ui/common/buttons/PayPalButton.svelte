@@ -1,6 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  import { PUBLIC_PAYPAL_SANDBOX_CLIENT_ID } from '$env/static/public';
+  import { PUBLIC_PAYPAL_CLIENT_ID } from '$env/static/public';
   import { apiService } from '$lib/apiService';
   import { PURCHASER_EMAIL_INPUT_ID } from '$lib/constants';
   import { logger } from '$lib/utils/logger';
@@ -15,7 +15,7 @@
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   loadScript({
-    clientId: PUBLIC_PAYPAL_SANDBOX_CLIENT_ID,
+    clientId: PUBLIC_PAYPAL_CLIENT_ID,
     disableFunding: ['credit', 'card']
   }).then((paypal) => {
     if (!paypal) return;

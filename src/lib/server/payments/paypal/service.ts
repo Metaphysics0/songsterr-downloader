@@ -1,16 +1,12 @@
-import {
-  PAYPAL_CLIENT_ID,
-  PAYPAL_CLIENT_SECRET,
-  PAYPAL_SANDBOX_CLIENT_ID,
-  PAYPAL_SANDBOX_CLIENT_SECRET
-} from '$env/static/private';
+import { PAYPAL_CLIENT_SECRET } from '$env/static/private';
+import { PUBLIC_PAYPAL_CLIENT_ID } from '$env/static/public';
 import type { PayPalCreatePurchaseParams } from '$lib/types/payments';
 import { logger } from '$lib/utils/logger';
 import { PaymentsBase } from '../base';
 
 export class PayPalService extends PaymentsBase {
   constructor() {
-    if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
+    if (!PUBLIC_PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
       throw new Error(
         'Paypal client failed to initialize. Missing credentials'
       );
@@ -95,7 +91,7 @@ export class PayPalService extends PaymentsBase {
 
   private get accessTokenHeaders() {
     const auth = Buffer.from(
-      PAYPAL_SANDBOX_CLIENT_ID + ':' + PAYPAL_SANDBOX_CLIENT_SECRET
+      PUBLIC_PAYPAL_CLIENT_ID + ':' + PAYPAL_CLIENT_SECRET
     ).toString('base64');
 
     return {
@@ -104,5 +100,5 @@ export class PayPalService extends PaymentsBase {
     };
   }
 
-  private readonly baseUrl = 'https://api-m.sandbox.paypal.com';
+  private readonly baseUrl = 'https://api-m.paypal.com';
 }
