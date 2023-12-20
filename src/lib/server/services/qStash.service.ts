@@ -11,6 +11,7 @@ export class QStashService {
   };
 
   private get apiUrlPrefix() {
-    return 'https://' + PUBLIC_WEBSITE_URL + '/api';
+    // return 'https://' + PUBLIC_WEBSITE_URL + '/api';
+    return 'https://1a4b-212-59-70-23.ngrok-free.app/api';
   }
 }

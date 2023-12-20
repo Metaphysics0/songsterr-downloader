@@ -2,21 +2,15 @@
   import { browser } from '$app/environment';
   import { PUBLIC_PAYPAL_SANDBOX_CLIENT_ID } from '$env/static/public';
   import { apiService } from '$lib/apiService';
-  import {
-    MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD,
-    PURCHASER_EMAIL_INPUT_ID
-  } from '$lib/constants';
+  import { PURCHASER_EMAIL_INPUT_ID } from '$lib/constants';
   import { logger } from '$lib/utils/logger';
   import { loadScript } from '@paypal/paypal-js';
-  import { isEmpty, sum } from 'lodash-es';
+  import { toast } from '@zerodevx/svelte-toast';
+  import { isEmpty } from 'lodash-es';
 
-  export let donationAmount = MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD;
   export let purchaserEmail: string = '';
 
-  export let artistData: {
-    artistId: number;
-    artistName: string;
-  };
+  export let selectedSong: ISearchResult | IPartialSearchResult;
 
   loadScript({
     clientId: PUBLIC_PAYPAL_SANDBOX_CLIENT_ID,
@@ -27,6 +21,11 @@
     // @ts-ignore
     paypal!
       .Buttons({
+        style: {
+          color: 'gold',
+          shape: 'rect',
+          label: 'pay'
+        },
         onInit: (data, actions) => {
           if (!browser || !document) return;
           actions.disable();
@@ -48,41 +47,74 @@
             }
           });
         },
-        style: {
-          color: 'gold',
-          shape: 'rect',
-          label: 'pay'
-        },
-        async createOrder(data, actions) {
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  value: String(donationAmount)
+        async createOrder() {
+          try {
+            const orderData = await apiService.orders.create({
+              cart: [
+                {
+                  selectedSong
                 }
-              }
-            ]
-          });
+              ]
+            });
+
+            if (orderData.id) {
+              return orderData.id;
+            } else {
+              const errorDetail = orderData?.details?.[0];
+              const errorMessage = errorDetail
+                ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                : JSON.stringify(orderData);
+
+              throw new Error(errorMessage);
+            }
+          } catch (error) {
+            throw new Error(String(error));
+          }
         },
         async onApprove(data, actions) {
-          if (!actions?.order) {
-            throw new Error('unable to complete payment');
-          }
+          if (!actions?.order) throw new Error('unable to complete payment');
 
-          const paymentData = await actions.order.capture();
-          const purchaseResponse = await apiService.purchase.post({
-            paymentData,
-            purchaserEmail,
-            totalBilledAmount: String(
-              sum(paymentData.purchase_units.map((unit) => unit.amount))
-            ),
-            artistId: artistData.artistId,
-            artistName: artistData.artistName
-          });
-        },
-        onError(err) {
-          alert('Something went wrong');
-          logger.error('Something went wrong', err);
+          try {
+            const orderData = await apiService.orders[':order_id'].capture({
+              orderId: data.orderID,
+              selectedSong,
+              purchaserEmail
+            });
+            // Three cases to handle:
+            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+            //   (2) Other non-recoverable errors -> Show a failure message
+            //   (3) Successful transaction -> Show confirmation or thank you message
+
+            const errorDetail = orderData?.details?.[0];
+
+            if (errorDetail?.issue === 'INSTRUMENT_DECLINED') {
+              logger.warn('instrument declined, restarting transaction');
+              // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+              // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+              return actions.restart();
+            } else if (errorDetail) {
+              // (2) Other non-recoverable errors -> Show a failure message
+              toast.push(`${errorDetail.description} (${orderData.debug_id})`);
+            } else if (!orderData.purchase_units) {
+              logger.error('no purchase units in response', orderData);
+              toast.push(
+                'Unable to complete transaction, no order units are present.'
+              );
+            } else {
+              // (3) Successful transaction -> Show confirmation or thank you message
+              // Or go to another URL:  actions.redirect('thank_you.html');
+              const transaction =
+                orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
+                orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
+              logger.log('transaction succcess', transaction);
+              toast.push('success!');
+            }
+          } catch (error) {
+            console.error(error);
+            toast.push(
+              `Sorry, your transaction could not be processed...<br><br>${error}`
+            );
+          }
         }
       })
       .render('#paypal-button-container');

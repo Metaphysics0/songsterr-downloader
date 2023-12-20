@@ -10,6 +10,7 @@
   import EmailInput from '../../common/inputs/EmailInput.svelte';
   import PayPalButton from '../../common/buttons/PayPalButton.svelte';
   import PreviewSongsToDownload from './PreviewSongsToDownload.svelte';
+  import { getRequiredPaymentAmountForBulkTabs } from '$lib/utils/getRequiredPaymentAmountForBulkTabs';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
   export let modalProps: {
@@ -52,7 +53,9 @@
     use:melt={modalProps.description}
     class="mb-2 leading-normal text-zinc-600"
   >
-    A payment of <strong> ${MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD}</strong>
+    A payment of <strong>
+      ${getRequiredPaymentAmountForBulkTabs(selectedSong).toFixed(2)}</strong
+    >
     is required in order to receive the tabs.
   </p>
   <div class="mb-5 mt-2 leading-normal text-zinc-600">
@@ -60,7 +63,7 @@
     <PreviewSongsToDownload {selectedSong} />
   </div>
 
-  <div class="w-3/4">
+  <div class="w-3/4 mt-10">
     <fieldset class="flex items-center gap-5">
       <label class="text-black w-1/3" for="email"> Email: </label>
       <EmailInput
@@ -73,8 +76,9 @@
 
   <div class="flex justify-between items-center mt-4">
     <div>
+      <!-- class="opacity-50 font-light underline flex items-center hover:no-underline hover:opacity-50 transition ease" -->
       <a
-        class="opacity-50 font-light underline flex items-center hover:no-underline hover:opacity-50 transition ease"
+        class="font-light underline cursor-pointer flex items-center hover:opacity-70 transition ease outline-none"
         href="/payment-faq"
         target="_blank"
         >Payment FAQ's
@@ -83,14 +87,7 @@
     </div>
     <div class="flex justify-end gap-4">
       <!-- <GooglePayButton /> -->
-      <PayPalButton
-        purchaserEmail={formParams.purchaserEmail}
-        artistData={{
-          artistId: selectedSong.artistId,
-          artistName: selectedSong.artist
-        }}
-        donationAmount={formParams.donationAmount}
-      />
+      <PayPalButton purchaserEmail={formParams.purchaserEmail} {selectedSong} />
     </div>
   </div>
   <button
