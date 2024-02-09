@@ -8,12 +8,11 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 // the message broker
 export const PUT = (async ({ request }) => {
   try {
-    logger.log('sending purchase event');
     const { sendPurchaseEvent } = new QStashService();
     const messageResponse = await sendPurchaseEvent(request);
     return json(messageResponse);
   } catch (error) {
-    console.error('Error sending purchase event', error);
+    logger.error('Error sending purchase event', error);
     return json({ error: 'error sending purchase event' });
   }
 }) satisfies RequestHandler;
@@ -22,7 +21,9 @@ export const PUT = (async ({ request }) => {
 export const POST = (async ({ request }) => {
   try {
     const params = await getRequiredParamsForPurchase(request);
-    logger.log('consuming purchase event with params:', params);
+    logger.log(
+      `consuming purchase event with params: ${JSON.stringify(params)}`
+    );
 
     const bulkTabsZipAttachments = await new BulkDownloadService(
       params.artistId
