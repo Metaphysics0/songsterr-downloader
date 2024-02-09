@@ -31,6 +31,9 @@ async function triggerPurchaseEvent(fetchImpl: typeof fetch, request: Request) {
     })
   });
 
-  logger.log(`triggering purchase event for artist`, selectedSong.artistId);
+  logger.log(
+    `triggering purchase event for artist id: `,
+    selectedSong.artistId
+  );
   return eventResponse.json();
 }
