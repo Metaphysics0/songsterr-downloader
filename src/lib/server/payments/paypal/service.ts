@@ -38,6 +38,7 @@ export class PayPalService extends PaymentsBase {
         intent: 'CAPTURE',
         purchase_units: [
           {
+            description: `Bulk Guitar Pro Tabs for ${selectedSong.artist}`,
             amount: {
               currency_code: 'USD',
               value: paymentAmount.toFixed(2).toString()

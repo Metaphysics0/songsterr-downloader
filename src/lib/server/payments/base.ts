@@ -6,7 +6,7 @@ export abstract class PaymentsBase {
     try {
       return response.json();
     } catch (err) {
-      logger.log('Payment service method failed: ', err);
+      logger.log(`Payment service method failed: ${JSON.stringify(err)}`);
       const errorMessage = await response.text();
       throw new Error(errorMessage);
     }
