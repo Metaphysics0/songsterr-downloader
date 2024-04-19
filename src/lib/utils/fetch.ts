@@ -20,7 +20,7 @@ export default class Fetcher {
     };
   }
 
-  async fetchAndReturnJson(url: string) {
+  async fetchAndReturnJson<T = unknown>(url: string): Promise<T> {
     const response = await this.fetch(url);
     return response.json();
   }
