@@ -78,9 +78,9 @@ export class BulkDownloadService {
 
   async getSongIdsAndSongTitlesFromArtist(): Promise<BulkSongToDownload[]> {
     const url = `https://www.songsterr.com/api/artist/${this.artistId}/songs?size=${MAX_SONGS_TO_BULK_DOWNLOAD}`;
-    const results = (await new Fetcher().fetchAndReturnJson(
-      url
-    )) as ISearchResultByArtist[];
+    const results = await new Fetcher().fetchAndReturnJson<
+      ISearchResultByArtist[]
+    >(url);
 
     return results.map((result) => ({
       songId: result.songId,

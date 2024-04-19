@@ -117,9 +117,7 @@ export async function getSongsToBulkDownloadFromArtistId(
   const kvService = new KvService();
 
   const cachedResults = await kvService.getBulkSongsToDownload(artistId);
-  if (cachedResults?.length) {
-    return cachedResults;
-  }
+  if (cachedResults?.length) return cachedResults;
 
   try {
     const results = await new BulkDownloadService(
