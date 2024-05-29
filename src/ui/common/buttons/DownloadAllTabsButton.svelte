@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createDialog, melt } from '@melt-ui/svelte';
   import DownloadAllTabsModal from '../../modals/download-all-tabs/Modal.svelte';
+  import Icon from '@iconify/svelte';
 
   const {
     elements: {
@@ -19,9 +20,9 @@
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
-  let shouldDisable =
-    selectedSong?.fromUltimateGuitar ||
-    !selectedSong?.bulkSongsToDownload?.length;
+  let shouldDisable = true;
+  // selectedSong?.fromUltimateGuitar ||
+  // !selectedSong?.bulkSongsToDownload?.length;
 
   function closeModal(): void {
     open.set(false);
@@ -34,6 +35,7 @@
   use:melt={$trigger}
   disabled={shouldDisable}
   >Download All Tabs from {selectedSong.artist}
+  <Icon icon="material-symbols:lock" class="ml-1" />
 </button>
 
 <div class="" use:melt={$portalled}>
