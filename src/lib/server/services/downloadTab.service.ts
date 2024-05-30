@@ -12,15 +12,9 @@ import { UltimateGuitarService } from './ultimateGuitar.service';
 import { ParamsHelper } from '../utils/params';
 
 export class DownloadTabService {
-  readonly downloadTabType: DownloadTabType;
-
-  constructor(
-    downloadTabType: DownloadTabType,
-    private fetcher = new Fetcher(),
-    private paramsHelper = new ParamsHelper()
-  ) {
-    this.downloadTabType = downloadTabType;
-  }
+  private readonly fetcher = new Fetcher();
+  private readonly paramsHelper = new ParamsHelper();
+  constructor(private readonly downloadTabType: DownloadTabType) {}
 
   async download(request: Request): Promise<DownloadResponse> {
     if (this.downloadTabType === 'bySearchResult') {
