@@ -1,7 +1,8 @@
 import Fetcher from '$lib/utils/fetch';
 import {
   buildFileNameFromSongName,
-  getDownloadLinkFromSongId
+  getDownloadLinkFromSongId,
+  getSearchResultFromSongsterrUrl
 } from './songsterr.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
@@ -10,6 +11,7 @@ import { normalize } from '$lib/utils/string';
 import type { DownloadTabType } from '$lib/types/downloadType';
 import { UltimateGuitarService } from './ultimateGuitar.service';
 import { ParamsHelper } from '../utils/params';
+import { logger } from '$lib/utils/logger';
 
 export class DownloadTabService {
   private readonly fetcher = new Fetcher();
@@ -33,8 +35,9 @@ export class DownloadTabService {
     throw new Error(`Unsupported download type: ${this.downloadTabType}`);
   }
 
-  private async bySource(request: Request) {
-    const { source, songTitle } = await request.json();
+  private async bySource(request: Request, options: BySourceOptions = {}) {
+    const { source, songTitle } =
+      options.requestParams || (await request.json());
     const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(source);
 
@@ -43,10 +46,24 @@ export class DownloadTabService {
   }
 
   private async bySearchResult(request: Request) {
-    const { songId, songTitle } = await request.json();
+    const { songId, songTitle, byLinkUrl } = await request.json();
+    if (byLinkUrl) {
+      logger.log(
+        `downloadTabService - bySearchResult - Getting tab from url: ${byLinkUrl}`
+      );
+      const { source } = await getSearchResultFromSongsterrUrl(byLinkUrl, {
+        withBulkSongsToDownload: true
+      });
+      if (source) {
+        return this.bySource({} as Request, {
+          requestParams: { songTitle, source }
+        });
+      }
+    }
     const link = await getDownloadLinkFromSongId(songId);
-    if (!link)
+    if (!link) {
       throw new Error(`Unable to find download link from song: ${songTitle}`);
+    }
 
     const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(link);
@@ -125,4 +142,11 @@ interface DownloadResponse {
   file: number[];
   fileName: string;
   contentType: string;
+}
+
+interface BySourceOptions {
+  requestParams?: {
+    source: string;
+    songTitle: string;
+  };
 }
