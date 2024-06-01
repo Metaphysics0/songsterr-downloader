@@ -31,24 +31,6 @@
     }
   }
 
-  async function downloadAllTabsFromArtist(): Promise<void> {
-    const secretAccessCode = prompt(
-      'This is currently an experimental feature. Please enter in the secret in order to try it. 👀'
-    );
-
-    if (!secretAccessCode) {
-      alert('Invalid input, sorry 🤷‍♂️');
-      return;
-    }
-
-    const resp = await apiService.download.bulkDownload({
-      selectedSong,
-      secretAccessCode
-    });
-
-    triggerFileDownloadFromSongsterrResponse(resp);
-  }
-
   function deselectSong(): void {
     selectedSongToDownload.set(undefined);
   }

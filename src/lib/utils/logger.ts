@@ -1,17 +1,17 @@
-function log(prefix: string, ...msgs: any) {
-  console.log(`[${prefix}]`, ...msgs);
+function log(...msgs: any) {
+  console.log(`[LOG]`, ...msgs);
 }
 
-function error(prefix: string, ...msgs: any) {
-  console.error(`[${prefix}]`, ...msgs);
+function error(...msgs: any) {
+  console.error(`[ERROR]`, ...msgs);
 }
 
-function info(prefix: string, ...msgs: any) {
-  console.info(`[${prefix}]`, ...msgs);
+function info(...msgs: any) {
+  console.info(`[INFO]`, ...msgs);
 }
 
-function warn(prefix: string, ...msgs: any) {
-  console.warn(`[${prefix}]`, ...msgs);
+function warn(...msgs: any) {
+  console.warn(`[WARN]`, ...msgs);
 }
 
 function logJson(obj: any, ...msgs: any) {
