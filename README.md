@@ -1,4 +1,4 @@
-# Songsterr / Ultimate Guitar to Guitar Pro Downloader 🎸
+# Songsterr to Guitar Pro Downloader 🎸
 
 <img src="https://d234wyh4hwmj0y.cloudfront.net/2023/songsterr-downloader/demo.gif">
 
