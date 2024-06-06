@@ -20,9 +20,9 @@
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
-  let shouldDisable = true;
-  // selectedSong?.fromUltimateGuitar ||
-  // !selectedSong?.bulkSongsToDownload?.length;
+  let shouldDisable =
+    selectedSong?.fromUltimateGuitar ||
+    !selectedSong?.bulkSongsToDownload?.length;
 
   function closeModal(): void {
     open.set(false);
@@ -34,8 +34,10 @@
   class:disabled={selectedSong?.fromUltimateGuitar}
   use:melt={$trigger}
   disabled={shouldDisable}
-  >Download All Tabs from {selectedSong.artist}
-  <Icon icon="material-symbols:lock" class="ml-1" />
+  >Download All Tabs from {selectedSong.artist} 🚀
+  {#if shouldDisable}
+    <Icon icon="material-symbols:lock" class="ml-1" />
+  {/if}
 </button>
 
 <div class="" use:melt={$portalled}>

@@ -72,7 +72,7 @@
     }}
   >
     <label for="url" class="w-full">
-      Enter in a Songsterr or Ultimate Guitar tab url:
+      Enter in a Songsterr tab url:
       <input
         type="url"
         name="url"

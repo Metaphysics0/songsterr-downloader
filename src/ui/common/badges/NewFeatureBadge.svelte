@@ -13,7 +13,7 @@
     isSearchFormEnabled = idx === 1;
   });
 
-  $: shouldHide = hasSelectedSong || isSearchFormEnabled;
+  $: shouldHide = true;
 </script>
 
 {#if !shouldHide}
