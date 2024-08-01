@@ -20,9 +20,9 @@
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
-  let shouldDisable =
-    selectedSong?.fromUltimateGuitar ||
-    !selectedSong?.bulkSongsToDownload?.length;
+  let shouldDisable = true
+    // selectedSong?.fromUltimateGuitar ||
+    // !selectedSong?.bulkSongsToDownload?.length;
 
   function closeModal(): void {
     open.set(false);
