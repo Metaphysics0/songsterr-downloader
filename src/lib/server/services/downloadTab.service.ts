@@ -6,12 +6,12 @@ import {
 } from './songsterr.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
-import { BulkDownloadService } from './bulkDownload.service';
 import { normalize } from '$lib/utils/string';
-import type { DownloadTabType } from '$lib/types/downloadType';
 import { UltimateGuitarService } from './ultimateGuitar.service';
 import { ParamsHelper } from '../utils/params';
 import { logger } from '$lib/utils/logger';
+import { DownloadTabType } from '$lib/types/downloadType';
+import { BulkDownloadService } from './bulk-download/service';
 
 export class DownloadTabService {
   private readonly fetcher = new Fetcher();
@@ -19,20 +19,7 @@ export class DownloadTabService {
   constructor(private readonly downloadTabType: DownloadTabType) {}
 
   async download(request: Request): Promise<DownloadResponse> {
-    if (this.downloadTabType === 'bySearchResult') {
-      return this.bySearchResult(request);
-    }
-    if (this.downloadTabType === 'bySource') {
-      return this.bySource(request);
-    }
-    if (this.downloadTabType === 'bulk') {
-      return this.bulk(request);
-    }
-    if (this.downloadTabType === 'ultimate-guitar') {
-      return this.fromUltimateGuitar(request);
-    }
-
-    throw new Error(`Unsupported download type: ${this.downloadTabType}`);
+    return this.downloadMethod(request);
   }
 
   private async bySource(request: Request, options: BySourceOptions = {}) {
@@ -136,6 +123,24 @@ export class DownloadTabService {
       contentType
     };
   }
+
+  private get downloadMethod() {
+    if (!(this.downloadTabType in this.downloadTypeToDownloadMethodMap)) {
+      throw new Error(`Unknown download type: ${this.downloadTabType}`);
+    }
+
+    return this.downloadTypeToDownloadMethodMap[this.downloadTabType];
+  }
+
+  private readonly downloadTypeToDownloadMethodMap: Record<
+    DownloadTabType,
+    (req: Request) => Promise<any>
+  > = {
+    [DownloadTabType.bySearchResult]: this.bySearchResult,
+    [DownloadTabType.bySource]: this.bySource,
+    [DownloadTabType.bulk]: this.bulk,
+    [DownloadTabType['ultimate-guitar']]: this.fromUltimateGuitar
+  };
 }
 
 interface DownloadResponse {

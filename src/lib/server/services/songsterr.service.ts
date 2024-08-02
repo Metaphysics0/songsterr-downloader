@@ -1,8 +1,7 @@
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
-import { KvService } from '../cache/kv';
 import { scraper } from '../scraper';
-import { BulkDownloadService } from './bulkDownload.service';
+import { BulkDownloadService } from './bulk-download/service';
 
 export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string,
@@ -112,21 +111,11 @@ function findGuitarProTabLinkFromXml(xml: Document) {
 export async function getSongsToBulkDownloadFromArtistId(
   artistId: string
 ): Promise<any[]> {
-  if (!artistId) return [];
-
-  const kvService = new KvService();
-
-  const cachedResults = await kvService.getBulkSongsToDownload(artistId);
-  if (cachedResults?.length) return cachedResults;
-
   try {
-    const results = await new BulkDownloadService(
+    if (!artistId) return [];
+    return new BulkDownloadService(
       artistId
     ).getSongIdsAndSongTitlesFromArtist();
-
-    await kvService.setBulkSongsToDownload(artistId, results);
-
-    return results;
   } catch (error) {
     logger.error(
       `Error getting bulk songs to download from artist id: ${artistId}`,
