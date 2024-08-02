@@ -5,7 +5,6 @@ import {
   getSearchResultFromSongsterrUrl
 } from './songsterr.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
-import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
 import { normalize } from '$lib/utils/string';
 import { UltimateGuitarService } from './ultimateGuitar.service';
 import { ParamsHelper } from '../utils/params';
@@ -19,7 +18,18 @@ export class DownloadTabService {
   constructor(private readonly downloadTabType: DownloadTabType) {}
 
   async download(request: Request): Promise<DownloadResponse> {
-    return this.downloadMethod(request);
+    switch (this.downloadTabType) {
+      case DownloadTabType.BY_SEARCH_RESULT:
+        return this.bySearchResult(request);
+      case DownloadTabType.BY_SOURCE:
+        return this.bySource(request);
+      case DownloadTabType.BULK:
+        return this.bulk(request);
+      case DownloadTabType.ULTIMATE_GUITAR:
+        return this.fromUltimateGuitar(request);
+      default:
+        throw new Error(`Unknown download tab type: ${this.downloadTabType}`);
+    }
   }
 
   private async bySource(request: Request, options: BySourceOptions = {}) {
@@ -60,19 +70,13 @@ export class DownloadTabService {
   }
 
   private async bulk(request: Request) {
-    const { artistId, secretAccessCode, artistName } =
-      await this.paramsHelper.getRequiredParams<{
-        artistId: string;
-        secretAccessCode: string;
-        artistName: string;
-      }>({
-        request,
-        params: ['artistId', 'secretAccessCode', 'artistName']
-      });
-
-    if (secretAccessCode !== BULK_DOWNLOAD_SECRET) {
-      throw new Error('Invalid bulk download code');
-    }
+    const { artistId, artistName } = await this.paramsHelper.getRequiredParams<{
+      artistId: string;
+      artistName: string;
+    }>({
+      request,
+      params: ['artistId', 'artistName']
+    });
 
     try {
       const zip = await new BulkDownloadService(artistId).getZipFileOfAllTabs();
@@ -123,24 +127,6 @@ export class DownloadTabService {
       contentType
     };
   }
-
-  private get downloadMethod() {
-    if (!(this.downloadTabType in this.downloadTypeToDownloadMethodMap)) {
-      throw new Error(`Unknown download type: ${this.downloadTabType}`);
-    }
-
-    return this.downloadTypeToDownloadMethodMap[this.downloadTabType];
-  }
-
-  private readonly downloadTypeToDownloadMethodMap: Record<
-    DownloadTabType,
-    (req: Request) => Promise<any>
-  > = {
-    [DownloadTabType.bySearchResult]: this.bySearchResult,
-    [DownloadTabType.bySource]: this.bySource,
-    [DownloadTabType.bulk]: this.bulk,
-    [DownloadTabType['ultimate-guitar']]: this.fromUltimateGuitar
-  };
 }
 
 interface DownloadResponse {
