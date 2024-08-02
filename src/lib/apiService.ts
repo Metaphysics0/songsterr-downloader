@@ -29,23 +29,6 @@ export const apiService = {
         }
       });
     },
-    bulkDownload({
-      selectedSong,
-      secretAccessCode
-    }: {
-      selectedSong: ISearchResult | IPartialSearchResult;
-      secretAccessCode: string;
-    }): Promise<SongsterrDownloadResponse> {
-      return fetchAndReturnJson({
-        endpoint: 'download/bulk',
-        method: 'POST',
-        params: {
-          artistId: selectedSong.artistId,
-          artistName: selectedSong.artist,
-          secretAccessCode
-        }
-      });
-    },
     bySource(
       searchResult: ISearchResult | IPartialSearchResult
     ): Promise<SongsterrDownloadResponse> {

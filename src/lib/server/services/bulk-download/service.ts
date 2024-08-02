@@ -1,10 +1,15 @@
-import AdmZip from 'adm-zip';
 import { MAX_SONGS_TO_BULK_DOWNLOAD } from '$env/static/private';
-import { getDownloadLinkFromSongId } from './songsterr.service';
-import { logger } from '$lib/utils/logger';
 import Fetcher from '$lib/utils/fetch';
+import { logger } from '$lib/utils/logger';
 import { normalize } from '$lib/utils/string';
-import type { MailDataRequired } from '@sendgrid/mail';
+import { MailDataRequired } from '@sendgrid/mail';
+import AdmZip from 'adm-zip';
+import { getDownloadLinkFromSongId } from '../songsterr.service';
+import {
+  BulkSongToDownload,
+  IDownloadLinkAndSongTitle,
+  ISearchResultByArtist
+} from './types';
 
 export class BulkDownloadService {
   artistId: string;
@@ -102,25 +107,4 @@ export class BulkDownloadService {
 
     return true;
   }
-}
-
-interface ISearchResultByArtist {
-  hasPlayer: boolean;
-  artist: string;
-  artistId: number;
-  title: string;
-  songId: number;
-  tracks: any[];
-  hasChords: false;
-  defaultTrack: number;
-}
-
-interface IDownloadLinkAndSongTitle {
-  downloadLink: string;
-  songTitle: string;
-}
-
-export interface BulkSongToDownload {
-  songId: number;
-  title: string;
 }
