@@ -12,44 +12,59 @@ export async function storeDownloadedSongToUser({
   songsterrSongId: number;
 }): Promise<void> {
   try {
-    // Upsert the User and update the downloadedSongs in one operation
-    const user = await prisma.user.upsert({
-      where: { ipAddress },
-      create: {
-        ipAddress,
-        downloadedSongs: [{ songsterrSongId, amount: 1 }]
-      },
-      update: {
-        downloadedSongs: {
-          push: { songsterrSongId, amount: 1 }
-        }
-      }
+    // First, try to find the user
+    let user = await prisma.user.findUnique({
+      where: { ipAddress }
     });
 
-    // Check if the song already exists and update its amount if it does
-    const existingSongIndex = user.downloadedSongs.findIndex(
-      (song) => song.songsterrSongId === songsterrSongId
-    );
-
-    if (existingSongIndex !== -1) {
-      await prisma.user.update({
-        where: { id: user.id },
+    if (!user) {
+      // If user doesn't exist, create a new one with the downloaded song
+      user = await prisma.user.create({
         data: {
-          downloadedSongs: {
-            updateMany: {
-              where: { songsterrSongId },
-              data: { amount: { increment: 1 } }
-            }
-          }
+          ipAddress,
+          downloadedSongs: [{ songsterrSongId, amount: 1 }]
         }
       });
+    } else {
+      // If user exists, check if the song is already in their downloadedSongs
+      const existingSongIndex = user.downloadedSongs.findIndex(
+        (song) => song.songsterrSongId === songsterrSongId
+      );
+
+      if (existingSongIndex !== -1) {
+        // If the song exists, increment its amount
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            downloadedSongs: {
+              updateMany: {
+                where: { songsterrSongId },
+                data: { amount: { increment: 1 } }
+              }
+            }
+          }
+        });
+      } else {
+        // If the song doesn't exist, add it to the downloadedSongs array
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            downloadedSongs: {
+              push: { songsterrSongId, amount: 1 }
+            }
+          }
+        });
+      }
+
+      // Fetch the updated user data
+      user = await prisma.user.findUnique({ where: { id: user.id } });
     }
 
     // Check download limits
-    const uniqueDownloads = user.downloadedSongs.length;
+    const uniqueDownloads = user!.downloadedSongs.length;
 
     if (
-      !user.email &&
+      !user!.email &&
       uniqueDownloads > MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
     ) {
       throw new Error(
@@ -58,7 +73,7 @@ export async function storeDownloadedSongToUser({
     }
 
     if (
-      user.email &&
+      user!.email &&
       uniqueDownloads > MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER
     ) {
       throw new Error('Logged in user has exceeded download limit.');
