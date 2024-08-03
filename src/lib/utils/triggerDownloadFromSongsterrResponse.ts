@@ -4,6 +4,11 @@ export function triggerFileDownloadFromSongsterrResponse(
   res: SongsterrDownloadResponse
 ): void {
   if (!browser) return;
+  if (res.errors?.length) {
+    // handle error here with a toast or something
+    // toast
+  }
+
   try {
     const uint8Array = new Uint8Array(res.file);
     const blob = new Blob([uint8Array], { type: res.contentType });

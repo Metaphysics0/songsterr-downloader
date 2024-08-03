@@ -2,6 +2,7 @@ interface SongsterrDownloadResponse {
   file: number[];
   fileName: string;
   contentType: string;
+  errors?: any[];
 }
 
 interface ISelectedSongResponse {
