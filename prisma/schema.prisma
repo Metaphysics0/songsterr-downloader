@@ -26,3 +26,28 @@ model Orders {
   paymentType    String
   rawPaymentData Json
 }
+
+// IP ADDRESS TABLES -- START --
+model IPAddress {
+  id        String           @id @default(auto()) @map("_id") @db.ObjectId
+  ipAddress String           @unique
+  downloads IPSongDownload[] // add an afterUpdate hook to add the 'amount' field to each Download
+}
+
+model Song {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  songsterrSongId Int              @unique
+  IPSongDownload  IPSongDownload[]
+}
+
+model IPSongDownload {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  ipAddress   IPAddress @relation(fields: [ipAddressId], references: [id])
+  ipAddressId String    @db.ObjectId
+  song        Song      @relation(fields: [songId], references: [id])
+  songId      String    @db.ObjectId
+
+  @@unique([ipAddressId, songId])
+}
+
+// IP ADDRESS TABLES -- END --
