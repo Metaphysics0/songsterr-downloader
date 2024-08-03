@@ -1,84 +1,103 @@
+import prisma from '$lib/server/prisma';
+import { User } from '@prisma/client';
 import {
   MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER,
   MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
 } from '$lib/constants/maximum-amount-of-downloads.constants';
-import prisma from '$lib/server/prisma';
+import { logger } from '$lib/utils/logger';
 
 export async function storeDownloadedSongToUser({
   ipAddress,
   songsterrSongId
-}: {
-  ipAddress: string;
-  songsterrSongId: number;
-}): Promise<void> {
+}: StoreDownloadedSongToUserParams): Promise<void> {
   try {
-    // First, try to find the user
-    let user = await prisma.user.findUnique({
-      where: { ipAddress }
-    });
+    logger.info(
+      `POST api/download - Storing downloaded song to user with ip address: ${ipAddress}`
+    );
+    const user = await prisma.user.findUnique({ where: { ipAddress } });
 
     if (!user) {
-      // If user doesn't exist, create a new one with the downloaded song
-      user = await prisma.user.create({
-        data: {
-          ipAddress,
-          downloadedSongs: [{ songsterrSongId, amount: 1 }]
-        }
-      });
+      await createUserFromIpAddress({ ipAddress, songsterrSongId });
+      return;
+    }
+
+    const hasUserAlreadyDownloadedSong = user.downloadedSongs.find(
+      (song) => song.songsterrSongId === songsterrSongId
+    );
+
+    if (hasUserAlreadyDownloadedSong) {
+      await incrementDownloadedSongAmount({ userId: user.id, songsterrSongId });
     } else {
-      // If user exists, check if the song is already in their downloadedSongs
-      const existingSongIndex = user.downloadedSongs.findIndex(
-        (song) => song.songsterrSongId === songsterrSongId
-      );
-
-      if (existingSongIndex !== -1) {
-        // If the song exists, increment its amount
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            downloadedSongs: {
-              updateMany: {
-                where: { songsterrSongId },
-                data: { amount: { increment: 1 } }
-              }
-            }
-          }
-        });
-      } else {
-        // If the song doesn't exist, add it to the downloadedSongs array
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            downloadedSongs: {
-              push: { songsterrSongId, amount: 1 }
-            }
-          }
-        });
-      }
-
-      // Fetch the updated user data
-      user = await prisma.user.findUnique({ where: { id: user.id } });
-    }
-
-    // Check download limits
-    const uniqueDownloads = user!.downloadedSongs.length;
-
-    if (
-      !user!.email &&
-      uniqueDownloads > MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
-    ) {
-      throw new Error(
-        'Non-logged in user has exceeded download limit. Please create an account.'
-      );
-    }
-
-    if (
-      user!.email &&
-      uniqueDownloads > MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER
-    ) {
-      throw new Error('Logged in user has exceeded download limit.');
+      ensureUserHasNotExceededMaximumAmountOfDownloads(user);
+      await pushDownloadedSong({ userId: user.id, songsterrSongId });
     }
   } catch (error) {
     console.error('Error in storeDownloadedSongToUser:', error);
   }
+}
+
+async function pushDownloadedSong({
+  userId,
+  songsterrSongId
+}: {
+  userId: string;
+  songsterrSongId: number;
+}) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { downloadedSongs: { push: { songsterrSongId, amount: 1 } } }
+  });
+}
+
+async function incrementDownloadedSongAmount({
+  userId,
+  songsterrSongId
+}: {
+  userId: string;
+  songsterrSongId: number;
+}) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      downloadedSongs: {
+        updateMany: {
+          where: { songsterrSongId },
+          data: { amount: { increment: 1 } }
+        }
+      }
+    }
+  });
+}
+
+async function createUserFromIpAddress({
+  ipAddress,
+  songsterrSongId
+}: StoreDownloadedSongToUserParams) {
+  return prisma.user.create({
+    data: {
+      ipAddress,
+      downloadedSongs: [{ songsterrSongId, amount: 1 }]
+    }
+  });
+}
+
+function ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
+  const uniqueDownloads = user.downloadedSongs.length;
+  if (
+    !user.email &&
+    uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+  ) {
+    throw new Error(
+      'Non-logged in user has exceeded download limit. Please create an account.'
+    );
+  }
+
+  if (uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER) {
+    throw new Error('Logged in user has exceeded download limit.');
+  }
+}
+
+interface StoreDownloadedSongToUserParams {
+  ipAddress: string;
+  songsterrSongId: number;
 }
