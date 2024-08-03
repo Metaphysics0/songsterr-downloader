@@ -6,12 +6,10 @@ import {
 } from './songsterr.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import { normalize } from '$lib/utils/string';
-import { UltimateGuitarService } from './ultimateGuitar.service';
 import { ParamsHelper } from '../utils/params';
 import { logger } from '$lib/utils/logger';
 import { DownloadTabType } from '$lib/types/downloadType';
 import { BulkDownloadService } from './bulk-download/service';
-import prisma from '../prisma';
 
 export class DownloadTabService {
   private readonly fetcher = new Fetcher();
@@ -26,21 +24,24 @@ export class DownloadTabService {
         return this.bySource(request);
       case DownloadTabType.BULK:
         return this.bulk(request);
-      case DownloadTabType.ULTIMATE_GUITAR:
-        return this.fromUltimateGuitar(request);
       default:
-        throw new Error(`Unknown download tab type: ${this.downloadTabType}`);
+        throw new Error(`Unsupported download type: ${this.downloadTabType}`);
     }
   }
 
   private async bySource(request: Request, options: BySourceOptions = {}) {
-    const { source, songTitle } =
+    const { source, songTitle, songId } =
       options.requestParams || (await request.json());
     const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(source);
 
     const fileName = buildFileNameFromSongName(songTitle, source);
-    return this.createDownloadResponse({ buffer, fileName, contentType });
+    return this.createDownloadResponse({
+      buffer,
+      fileName,
+      contentType,
+      songId
+    });
   }
 
   private async bySearchResult(request: Request) {
@@ -95,37 +96,22 @@ export class DownloadTabService {
     }
   }
 
-  private async fromUltimateGuitar(request: Request) {
-    const { byLinkUrl } = await request.json();
-
-    if (!byLinkUrl) {
-      throw new Error('required param byLinkUrl not present');
-    }
-
-    const service = new UltimateGuitarService(byLinkUrl);
-    const { buffer } = await service.download();
-
-    return {
-      fromUltimateGuitar: true,
-      file: convertArrayBufferToArray(buffer),
-      fileName: service.fileNameFromUrl,
-      contentType: 'application/gp'
-    };
-  }
-
   private createDownloadResponse({
     buffer,
     fileName,
+    songId,
     contentType = 'application/gp'
   }: {
     buffer: ArrayBuffer;
     fileName: string;
     contentType?: string;
+    songId?: number;
   }): DownloadResponse {
     return {
       file: convertArrayBufferToArray(buffer),
       fileName,
-      contentType
+      contentType,
+      songId
     };
   }
 }
@@ -134,6 +120,7 @@ interface DownloadResponse {
   file: number[];
   fileName: string;
   contentType: string;
+  songId?: number;
 }
 
 interface BySourceOptions {
