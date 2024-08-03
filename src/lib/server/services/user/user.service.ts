@@ -5,6 +5,7 @@ import {
   MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
 } from '$lib/constants/maximum-amount-of-downloads.constants';
 import { logger } from '$lib/utils/logger';
+import { MaximumAmountOfDownloadsExceededError } from '$lib/server/utils/errors/errors.util';
 
 export async function storeDownloadedSongToUser({
   ipAddress,
@@ -87,13 +88,17 @@ function ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
     !user.email &&
     uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
   ) {
-    throw new Error(
-      'Non-logged in user has exceeded download limit. Please create an account.'
-    );
+    throw new MaximumAmountOfDownloadsExceededError({
+      message: 'You have exceeded download limit. Please create an account.',
+      isUserLoggedIn: false
+    });
   }
 
   if (uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER) {
-    throw new Error('Logged in user has exceeded download limit.');
+    throw new MaximumAmountOfDownloadsExceededError({
+      message: 'Logged in user has exceeded download limit.',
+      isUserLoggedIn: true
+    });
   }
 }
 
