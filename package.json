@@ -63,6 +63,7 @@
     "@xmldom/xmldom": "^0.8.10",
     "adm-zip": "^0.5.10",
     "aws-sdk": "^2.1508.0",
+    "clerk-sveltekit": "^0.4.2",
     "lodash-es": "^4.17.21",
     "mongodb": "^6.3.0",
     "uuid": "^9.0.1"
