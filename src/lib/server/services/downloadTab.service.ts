@@ -11,6 +11,7 @@ import { ParamsHelper } from '../utils/params';
 import { logger } from '$lib/utils/logger';
 import { DownloadTabType } from '$lib/types/downloadType';
 import { BulkDownloadService } from './bulk-download/service';
+import prisma from '../prisma';
 
 export class DownloadTabService {
   private readonly fetcher = new Fetcher();
