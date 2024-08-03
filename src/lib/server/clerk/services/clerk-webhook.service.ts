@@ -1,15 +1,23 @@
 import { CLERK_USER_WEBHOOK_SECRET } from '$env/static/private';
 import { Webhook } from 'svix';
-import { WebhookEvent } from '../types/clerk.types';
+import { UserWebhookEvent, WebhookEvent } from '../types/clerk.types';
 import { ClerkUserWebhookHandler } from '../utils/user-webhook-handler.util';
 
 export class ClerkWebhookService {
-  async handleUserWebhook(request: Request): Promise<any> {
+  async handleUserWebhook({
+    request,
+    clientIpAddress
+  }: HandleUserWebhookParams): Promise<any> {
     const webhookEvent = await this.getAndVerifyWebhookEvent({
       request,
       webhookSecret: CLERK_USER_WEBHOOK_SECRET
     });
-    const handler = new ClerkUserWebhookHandler(webhookEvent);
+
+    const handler = new ClerkUserWebhookHandler({
+      webhookEvent: webhookEvent as UserWebhookEvent,
+      clientIpAddress
+    });
+
     await handler.handleWebhook();
   }
 
@@ -53,4 +61,9 @@ export class ClerkWebhookService {
 
     return evt;
   }
+}
+
+interface HandleUserWebhookParams {
+  request: Request;
+  clientIpAddress: string;
 }
