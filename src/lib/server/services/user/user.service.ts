@@ -7,33 +7,59 @@ import {
 import { logger } from '$lib/utils/logger';
 import { MaximumAmountOfDownloadsExceededError } from '$lib/server/utils/errors/errors.util';
 
-export async function storeDownloadedSongToUser({
-  ipAddress,
-  songsterrSongId
-}: StoreDownloadedSongToUserParams): Promise<void> {
-  try {
-    logger.info(
-      `POST api/download - Storing downloaded song to user with ip address: ${ipAddress}`
-    );
-    const user = await prisma.user.findUnique({ where: { ipAddress } });
+export class NonLoggedInUserService {
+  async storeDownloadedSongToUserIpAddress({
+    ipAddress,
+    songsterrSongId
+  }: StoreDownloadedSongToUserParams): Promise<void> {
+    try {
+      logger.info(
+        `POST api/download - Storing downloaded song to user with ip address: ${ipAddress}`
+      );
+      const user = await prisma.user.findUnique({ where: { ipAddress } });
 
-    if (!user) {
-      await createUserFromIpAddress({ ipAddress, songsterrSongId });
-      return;
+      if (!user) {
+        await createUserFromIpAddress({ ipAddress, songsterrSongId });
+        return;
+      }
+
+      const hasUserAlreadyDownloadedSong = user.downloadedSongs.find(
+        (song) => song.songsterrSongId === songsterrSongId
+      );
+
+      if (hasUserAlreadyDownloadedSong) {
+        await incrementDownloadedSongAmount({
+          userId: user.id,
+          songsterrSongId
+        });
+      } else {
+        ensureUserHasNotExceededMaximumAmountOfDownloads(user);
+        await pushDownloadedSong({ userId: user.id, songsterrSongId });
+      }
+    } catch (error) {
+      console.error('Error in storeDownloadedSongToUser:', error);
     }
+  }
 
-    const hasUserAlreadyDownloadedSong = user.downloadedSongs.find(
-      (song) => song.songsterrSongId === songsterrSongId
-    );
+  async getAmountOfDownloadsAvaialbleFromIpAddress({
+    ipAddress
+  }: {
+    ipAddress: string;
+  }): Promise<number> {
+    try {
+      const user = await prisma.user.findUnique({ where: { ipAddress } });
+      if (!user) return MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
 
-    if (hasUserAlreadyDownloadedSong) {
-      await incrementDownloadedSongAmount({ userId: user.id, songsterrSongId });
-    } else {
-      ensureUserHasNotExceededMaximumAmountOfDownloads(user);
-      await pushDownloadedSong({ userId: user.id, songsterrSongId });
+      return (
+        MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER -
+        user?.downloadedSongs.length
+      );
+    } catch (error) {
+      logger.warn(
+        `UserService - getAmountOfDownloadsAvaialbleFromIpAddress failed, ${error}`
+      );
+      return MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
     }
-  } catch (error) {
-    console.error('Error in storeDownloadedSongToUser:', error);
   }
 }
 

@@ -1,6 +1,5 @@
-export const createClassNames = (
-  ...classes: (string | false | null | undefined)[]
-) => classes.filter(Boolean).join(' ');
+export const cn = (...classes: (string | false | null | undefined)[]) =>
+  classes.filter(Boolean).join(' ');
 
 export function styleToString(
   style: Record<string, number | string | undefined>

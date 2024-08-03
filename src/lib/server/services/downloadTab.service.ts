@@ -68,7 +68,12 @@ export class DownloadTabService {
       await this.fetcher.fetchAndReturnArrayBuffer(link);
 
     const fileName = buildFileNameFromSongName(songTitle, link);
-    return this.createDownloadResponse({ buffer, fileName, contentType });
+    return this.createDownloadResponse({
+      buffer,
+      fileName,
+      contentType,
+      songId
+    });
   }
 
   private async bulk(request: Request) {
@@ -86,7 +91,8 @@ export class DownloadTabService {
       return this.createDownloadResponse({
         buffer: zip.toBuffer(),
         fileName: `${normalize(artistName)}-tabs`,
-        contentType: 'application/zip'
+        contentType: 'application/zip',
+        songId: 0
       });
     } catch (e) {
       console.error('BULK UPLOAD FAILURE:', e);
@@ -104,14 +110,14 @@ export class DownloadTabService {
   }: {
     buffer: ArrayBuffer;
     fileName: string;
+    songId: number;
     contentType?: string;
-    songId?: number;
   }): DownloadResponse {
     return {
       file: convertArrayBufferToArray(buffer),
       fileName,
-      contentType,
-      songId
+      songId,
+      contentType
     };
   }
 }
@@ -120,7 +126,7 @@ interface DownloadResponse {
   file: number[];
   fileName: string;
   contentType: string;
-  songId?: number;
+  songId: number;
 }
 
 interface BySourceOptions {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createClassNames } from '$lib/utils/css';
+  import { cn } from '$lib/utils/css';
   import { createAccordion, melt } from '@melt-ui/svelte';
   import { slide } from 'svelte/transition';
   import Link from '../../ui/common/Link.svelte';
@@ -54,7 +54,7 @@
 </div>
 <main class="font-sans mb-10">
   <div
-    class={createClassNames(
+    class={cn(
       'mx-auto w-[18rem] max-w-full rounded-xl bg-white shadow-lg sm:w-[25rem]',
       className
     )}
@@ -69,7 +69,7 @@
         <h2 class="flex">
           <button
             use:melt={$trigger(id)}
-            class={createClassNames(
+            class={cn(
               'flex flex-1 cursor-pointer items-center justify-between ',
               'bg-white px-5 py-5 text-base font-medium leading-none',
               'text-black transition-colors hover:bg-neutral-100 focus:!ring-0',
@@ -82,7 +82,7 @@
         </h2>
         {#if $isSelected(id)}
           <div
-            class={createClassNames(
+            class={cn(
               'content',
               'overflow-hidden bg-neutral-100 text-sm text-neutral-600'
             )}

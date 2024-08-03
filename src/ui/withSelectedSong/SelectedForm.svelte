@@ -5,26 +5,22 @@
   import SelectedSong from './SelectedSong.svelte';
   import { toast } from '@zerodevx/svelte-toast';
   import { selectedSongToDownload } from '../../stores/selectedSong';
-  import DownloadAllTabsButton from '../common/buttons/DownloadAllTabsButton.svelte';
+  import { amountOfDownloadsAvailable } from '../../stores/amountOfDownloadsAvailable.store';
+  import { cn } from '$lib/utils/css';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   async function downloadTab(): Promise<void> {
     try {
-      if (selectedSong.fromUltimateGuitar) {
-        const resp = await apiService.download.fromUltimateGuitar(selectedSong);
-        triggerFileDownloadFromSongsterrResponse(resp);
-        return;
-      }
-
+      let response: SongsterrDownloadResponse;
       if (selectedSong.source) {
-        const resp = await apiService.download.bySource(selectedSong);
-        triggerFileDownloadFromSongsterrResponse(resp);
-        return;
+        response = await apiService.download.bySource(selectedSong);
+      } else {
+        response = await apiService.download.bySearchResult(selectedSong);
       }
 
-      const resp = await apiService.download.bySearchResult(selectedSong);
-      triggerFileDownloadFromSongsterrResponse(resp);
+      triggerFileDownloadFromSongsterrResponse(response);
+      amountOfDownloadsAvailable.set(response.amountOfDownloadsAvailable);
     } catch (error) {
       toast.push('Error downloading tab 😭');
       console.error('error', error);
@@ -40,11 +36,17 @@
   <div class="mb-8 w-full">
     <SelectedSong {selectedSong} />
   </div>
-  <button class={cssClasses.downloadBtn} on:click={downloadTab}
-    >Download {selectedSong.title} Tab</button
-  >
-  <strong class="my-2">Or</strong>
-  <DownloadAllTabsButton {selectedSong} />
+  <div class="flex flex-col items-center mb-5">
+    <button class={cn(cssClasses.downloadBtn, 'mb-1.5')} on:click={downloadTab}
+      >Download {selectedSong.title} Tab
+    </button>
+    <span class="font-light font-italic opacity-60">
+      {$amountOfDownloadsAvailable} free download{$amountOfDownloadsAvailable >
+      1
+        ? 's'
+        : ''} remaining!
+    </span>
+  </div>
 
   <button
     class="text-slate-400 font-light underline hover:text-slate-500 bg-transparent"

@@ -3,6 +3,7 @@ interface SongsterrDownloadResponse {
   fileName: string;
   contentType: string;
   errors?: any[];
+  amountOfDownloadsAvailable: number;
 }
 
 interface ISelectedSongResponse {
