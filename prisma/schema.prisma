@@ -20,34 +20,28 @@ model GuitarProTabDownloadLinks {
   metadata              Json?
 }
 
-model Orders {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt      DateTime @default(now())
-  paymentType    String
-  rawPaymentData Json
-}
-
-// IP ADDRESS TABLES -- START --
-model IPAddress {
-  id        String           @id @default(auto()) @map("_id") @db.ObjectId
-  ipAddress String           @unique
-  downloads IPSongDownload[] // add an afterUpdate hook to add the 'amount' field to each Download
+model User {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  ipAddress       String           @unique
+  email           String?
+  downloadedSongs DownloadedSong[]
 }
 
 model Song {
   id              String           @id @default(auto()) @map("_id") @db.ObjectId
   songsterrSongId Int              @unique
-  IPSongDownload  IPSongDownload[]
+  downloadedSongs DownloadedSong[]
 }
 
-model IPSongDownload {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  ipAddress   IPAddress @relation(fields: [ipAddressId], references: [id])
-  ipAddressId String    @db.ObjectId
-  song        Song      @relation(fields: [songId], references: [id])
-  songId      String    @db.ObjectId
+model DownloadedSong {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+  song   Song   @relation(fields: [songId], references: [id])
+  songId String @db.ObjectId
+  amount Int
 
-  @@unique([ipAddressId, songId])
+  @@unique([userId, songId])
 }
 
 // IP ADDRESS TABLES -- END --
