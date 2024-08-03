@@ -1,4 +1,4 @@
-import { BulkDownloadService } from '$lib/server/services/bulkDownload.service';
+import { BulkDownloadService } from '$lib/server/services/bulk-download/service';
 import { QStashService } from '$lib/server/services/qStash.service';
 import { SendGridService } from '$lib/server/services/sendgrid.service';
 import { ParamsHelper } from '$lib/server/utils/params';
