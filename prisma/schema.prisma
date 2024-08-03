@@ -28,8 +28,7 @@ model User {
 }
 
 type DownloadedSong {
+  createdAt       DateTime @default(now())
   songsterrSongId Int
   amount          Int
 }
-
-// IP ADDRESS TABLES -- END --

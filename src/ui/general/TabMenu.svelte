@@ -11,7 +11,7 @@
     type ITabMenuIndex
   } from '../../stores/activeTabMenu';
 
-  import { createClassNames } from '$lib/utils/css';
+  import { cn } from '$lib/utils/css';
   import ByLink from '../ByLink/Form.svelte';
   import BySearch from '../BySearch/Form.svelte';
   import { selectedSongToDownload } from '../../stores/selectedSong';
@@ -44,7 +44,7 @@
       <Tab
         disabled={shouldDisableTabMenu}
         class={({ selected }) =>
-          createClassNames(
+          cn(
             selected ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700',
             tabIdx === 0 ? 'rounded-l-lg' : '',
             tabIdx === tabs.length - 1 ? 'rounded-r-lg' : '',
@@ -58,7 +58,7 @@
         </span>
         <span
           aria-hidden="true"
-          class={createClassNames(
+          class={cn(
             selected ? 'bg-slate-500' : 'bg-transparent',
             'absolute inset-x-0 bottom-0 h-0.5'
           )}
