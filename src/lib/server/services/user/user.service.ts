@@ -12,42 +12,41 @@ export async function storeDownloadedSongToUser({
   songsterrSongId: number;
 }): Promise<void> {
   try {
-    // First, upsert the User
+    // Upsert the User and update the downloadedSongs in one operation
     const user = await prisma.user.upsert({
       where: { ipAddress },
-      create: { ipAddress },
-      update: {}
-    });
-
-    // Then, upsert the Song
-    const song = await prisma.song.upsert({
-      where: { songsterrSongId },
-      create: { songsterrSongId },
-      update: {}
-    });
-
-    // Finally, upsert the DownloadedSong
-    await prisma.downloadedSong.upsert({
-      where: {
-        userId_songId: {
-          userId: user.id,
-          songId: song.id
-        }
-      },
       create: {
-        userId: user.id,
-        songId: song.id,
-        amount: 1
+        ipAddress,
+        downloadedSongs: [{ songsterrSongId, amount: 1 }]
       },
       update: {
-        amount: { increment: 1 }
+        downloadedSongs: {
+          push: { songsterrSongId, amount: 1 }
+        }
       }
     });
 
+    // Check if the song already exists and update its amount if it does
+    const existingSongIndex = user.downloadedSongs.findIndex(
+      (song) => song.songsterrSongId === songsterrSongId
+    );
+
+    if (existingSongIndex !== -1) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          downloadedSongs: {
+            updateMany: {
+              where: { songsterrSongId },
+              data: { amount: { increment: 1 } }
+            }
+          }
+        }
+      });
+    }
+
     // Check download limits
-    const uniqueDownloads = await prisma.downloadedSong.count({
-      where: { userId: user.id }
-    });
+    const uniqueDownloads = user.downloadedSongs.length;
 
     if (
       !user.email &&
