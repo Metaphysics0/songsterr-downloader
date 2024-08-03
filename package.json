@@ -66,6 +66,7 @@
     "clerk-sveltekit": "^0.4.2",
     "lodash-es": "^4.17.21",
     "mongodb": "^6.3.0",
+    "svix": "^1.28.0",
     "uuid": "^9.0.1"
   }
 }
