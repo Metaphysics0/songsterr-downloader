@@ -12,6 +12,8 @@
   import SelectedSongSkeleton from '../common/skeletons/SelectedSongSkeleton.svelte';
   import { sample } from 'lodash-es';
   import { placeholderSongUrls } from '$lib/constants/placeholderSongUrls';
+  import { Turnstile } from 'svelte-turnstile';
+  import { PUBLIC_CF_TURNSTILE_SITE_KEY } from '$env/static/public';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -84,11 +86,13 @@
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2 text-center"
       />
     </label>
-    <button
-      disabled={!isValid}
-      class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-red-500 hover:bg-red-400 text-white disabled:bg-slate-5 disabled:hover:bg-slate-6 disabled:hover:cursor-not-allowed"
-      >Get Tab!</button
-    >
+    <Turnstile siteKey={PUBLIC_CF_TURNSTILE_SITE_KEY} theme="dark">
+      <button
+        disabled={!isValid}
+        class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-red-500 hover:bg-red-400 text-white disabled:bg-slate-5 disabled:hover:bg-slate-6 disabled:hover:cursor-not-allowed"
+        >Get Tab!</button
+      >
+    </Turnstile>
   </form>
 {/if}
 

@@ -36,6 +36,7 @@
     "svelte": "^4.0.0",
     "svelte-check": "^3.4.3",
     "svelte-sequential-preprocessor": "^2.0.1",
+    "svelte-turnstile": "^0.7.1",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
     "unocss": "^0.49.5",
