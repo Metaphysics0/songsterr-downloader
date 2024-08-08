@@ -25,7 +25,7 @@ model User {
   ipAddress       String           @unique
   downloadedSongs DownloadedSong[]
   email           String?
-  userMetadata    Json?
+  userMetadata    String? // loose json
 }
 
 type DownloadedSong {
