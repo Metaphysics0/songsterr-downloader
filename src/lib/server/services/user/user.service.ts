@@ -8,6 +8,8 @@ import { logger } from '$lib/utils/logger';
 import { MaximumAmountOfDownloadsExceededError } from '$lib/server/utils/errors/errors.util';
 import { isValidIpAddress } from '$lib/server/utils/is-valid-ip-address.util';
 import { isToday } from '$lib/utils/date';
+import _ from 'lodash';
+import { IP_ADDRESS_MAPPING } from '$lib/constants/ip-address-mapping.const';
 
 export class UserService {
   async findOrCreateUserFromIpAddress({
@@ -17,16 +19,18 @@ export class UserService {
       logger.info(
         `UserService - findOrCreateUserFromIpAddress - finding or creating user from ip address: ${ipAddress}`
       );
-      if (!isValidIpAddress(ipAddress)) {
+
+      const mappedIpAddress = _.get(IP_ADDRESS_MAPPING, ipAddress, ipAddress);
+      if (!isValidIpAddress(mappedIpAddress)) {
         throw new Error(
           'UserService - findOrCreateUserFromIpAddress - invalid ip address provided'
         );
       }
 
       return prisma.user.upsert({
-        where: { ipAddress },
+        where: { ipAddress: mappedIpAddress },
         update: {},
-        create: { ipAddress }
+        create: { ipAddress: mappedIpAddress }
       });
     } catch (error) {
       logger.error(
@@ -50,6 +54,8 @@ export class UserService {
         );
       }
 
+      this.ensureUserHasNotExceededMaximumAmountOfDownloads(user);
+
       const hasUserAlreadyDownloadedSong = user.downloadedSongs.find(
         (song) => song.songsterrSongId === songsterrSongId
       );
@@ -60,7 +66,6 @@ export class UserService {
           songsterrSongId
         });
       } else {
-        ensureUserHasNotExceededMaximumAmountOfDownloads(user);
         await pushDownloadedSong({ userId: user.id, songsterrSongId });
       }
     } catch (error) {
@@ -106,6 +111,27 @@ export class UserService {
       return MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
     }
   }
+
+  ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
+    const uniqueDownloads = user.downloadedSongs.length;
+    if (
+      !user.email &&
+      uniqueDownloads >=
+        MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+    ) {
+      throw new MaximumAmountOfDownloadsExceededError({
+        message: 'You have exceeded download limit. Please create an account.',
+        isUserLoggedIn: false
+      });
+    }
+
+    if (uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER) {
+      throw new MaximumAmountOfDownloadsExceededError({
+        message: 'Logged in user has exceeded download limit.',
+        isUserLoggedIn: true
+      });
+    }
+  }
 }
 
 async function pushDownloadedSong({
@@ -139,26 +165,6 @@ async function incrementDownloadedSongAmount({
       }
     }
   });
-}
-
-function ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
-  const uniqueDownloads = user.downloadedSongs.length;
-  if (
-    !user.email &&
-    uniqueDownloads >= MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
-  ) {
-    throw new MaximumAmountOfDownloadsExceededError({
-      message: 'You have exceeded download limit. Please create an account.',
-      isUserLoggedIn: false
-    });
-  }
-
-  if (uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER) {
-    throw new MaximumAmountOfDownloadsExceededError({
-      message: 'Logged in user has exceeded download limit.',
-      isUserLoggedIn: true
-    });
-  }
 }
 
 interface StoreDownloadedSongToUserParams {

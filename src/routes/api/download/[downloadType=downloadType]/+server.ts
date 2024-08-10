@@ -26,10 +26,7 @@ export const POST = (async ({ request, params, ...event }) => {
         ipAddress
       });
 
-    return jsonWithCors(request, {
-      ...response,
-      amountOfDownloadsAvailable
-    });
+    return jsonWithCors(request, { ...response, amountOfDownloadsAvailable });
   } catch (error) {
     if (error instanceof MaximumAmountOfDownloadsExceededError) {
       return json({ errors: [error.message] });
