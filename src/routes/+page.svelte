@@ -1,7 +1,7 @@
 <script>
-  import SocialLinks from '../ui/general/SocialLinks.svelte';
-  import TabMenu from '../ui/general/TabMenu.svelte';
-  import NewFeatureBadge from '../ui/common/badges/NewFeatureBadge.svelte';
+  import NewFeatureBadge from '$lib/ui/common/badges/NewFeatureBadge.svelte';
+  import SocialLinks from '$lib/ui/general/SocialLinks.svelte';
+  import TabMenu from '$lib/ui/general/TabMenu.svelte';
 </script>
 
 <main class="mb-4">

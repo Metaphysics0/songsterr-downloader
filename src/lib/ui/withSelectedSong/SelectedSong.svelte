@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
+  import { selectedSongToDownload } from '../../../stores/selectedSong';
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   function deselectSong(): void {

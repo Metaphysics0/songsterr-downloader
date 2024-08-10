@@ -1,6 +1,6 @@
 <script>
   import Icon from '@iconify/svelte';
-  import { amountOfDownloadsAvailable } from '../../stores/amountOfDownloadsAvailable.store';
+  import { amountOfDownloadsAvailable } from '../../../stores/amountOfDownloadsAvailable.store';
   import InfoTooltip from '../common/tooltip/InfoTooltip.svelte';
 </script>
 

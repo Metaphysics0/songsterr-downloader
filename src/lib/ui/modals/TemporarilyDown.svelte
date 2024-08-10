@@ -6,7 +6,7 @@
     Transition,
     TransitionChild
   } from '@rgossiaux/svelte-headlessui';
-  import { isDialogueOpenStore } from '../../stores/isDialogueOpen';
+  import { isDialogueOpenStore } from '../../../stores/isDialogueOpen';
 
   let isOpen: boolean;
 

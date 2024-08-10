@@ -7,10 +7,10 @@
     MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD,
     PURCHASER_EMAIL_INPUT_ID
   } from '$lib/constants';
-  import EmailInput from '../../common/inputs/EmailInput.svelte';
-  import PayPalButton from '../../common/buttons/PayPalButton.svelte';
   import PreviewSongsToDownload from './PreviewSongsToDownload.svelte';
   import { getRequiredPaymentAmountForBulkTabs } from '$lib/utils/getRequiredPaymentAmountForBulkTabs';
+  import EmailInput from '$lib/ui/common/inputs/EmailInput.svelte';
+  import PayPalButton from '$lib/ui/common/buttons/PayPalButton.svelte';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
   export let modalProps: {

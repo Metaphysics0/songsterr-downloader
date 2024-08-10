@@ -3,12 +3,12 @@
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
   import SelectedSong from './SelectedSong.svelte';
   import { toast } from '@zerodevx/svelte-toast';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
-  import { amountOfDownloadsAvailable } from '../../stores/amountOfDownloadsAvailable.store';
   import { cn } from '$lib/utils/css';
   import { openSignInModal } from '$lib/utils/open-sign-in-modal.utill';
   import { cssClasses } from '$lib/constants/css-classes.const';
-  import { userStore } from '../../stores/user.store';
+  import { amountOfDownloadsAvailable } from '../../../stores/amountOfDownloadsAvailable.store';
+  import { selectedSongToDownload } from '../../../stores/selectedSong';
+  import { userStore } from '../../../stores/user.store';
   import FreeDownloadsRemainingText from '../payments/FreeDownloadsRemainingText.svelte';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;

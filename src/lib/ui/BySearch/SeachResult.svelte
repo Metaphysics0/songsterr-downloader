@@ -1,6 +1,6 @@
 <script lang="ts">
   import { apiService } from '$lib/utils/api-service.util';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
+  import { selectedSongToDownload } from '../../../stores/selectedSong';
 
   export let searchResult: ISearchResult;
   export let index: number = 0;

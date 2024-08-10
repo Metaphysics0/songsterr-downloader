@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { activeTabMenuIndex } from '../../../stores/activeTabMenu';
-  import { selectedSongToDownload } from '../../../stores/selectedSong';
+  import { activeTabMenuIndex } from '../../../../stores/activeTabMenu';
+  import { selectedSongToDownload } from '../../../../stores/selectedSong';
 
   let isSearchFormEnabled: boolean;
   let hasSelectedSong: boolean;

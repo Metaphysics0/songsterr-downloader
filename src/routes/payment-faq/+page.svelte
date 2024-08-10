@@ -2,7 +2,7 @@
   import { cn } from '$lib/utils/css';
   import { createAccordion, melt } from '@melt-ui/svelte';
   import { slide } from 'svelte/transition';
-  import Link from '../../ui/common/Link.svelte';
+  import Link from '../../../ui/common/Link.svelte';
 
   const {
     elements: { content, item, trigger, root },

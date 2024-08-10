@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createDialog, melt } from '@melt-ui/svelte';
-  import DownloadAllTabsModal from '../../modals/download-all-tabs/Modal.svelte';
   import Icon from '@iconify/svelte';
+  import DownloadAllTabsModal from '../../modals/download-all-tabs/Modal.svelte';
 
   const {
     elements: {
@@ -20,9 +20,9 @@
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
-  let shouldDisable = true
-    // selectedSong?.fromUltimateGuitar ||
-    // !selectedSong?.bulkSongsToDownload?.length;
+  let shouldDisable = true;
+  // selectedSong?.fromUltimateGuitar ||
+  // !selectedSong?.bulkSongsToDownload?.length;
 
   function closeModal(): void {
     open.set(false);

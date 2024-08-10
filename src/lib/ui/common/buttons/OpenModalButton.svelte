@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isDialogueOpenStore } from '../../../stores/isDialogueOpen';
+  import { isDialogueOpenStore } from '../../../../stores/isDialogueOpen';
 
   let isOpen: boolean;
 
