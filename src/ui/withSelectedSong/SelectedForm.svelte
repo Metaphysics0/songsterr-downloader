@@ -7,10 +7,9 @@
   import { amountOfDownloadsAvailable } from '../../stores/amountOfDownloadsAvailable.store';
   import { cn } from '$lib/utils/css';
   import { openSignInModal } from '$lib/utils/open-sign-in-modal.utill';
-  import InfoTooltip from '../common/tooltip/InfoTooltip.svelte';
-  import Icon from '@iconify/svelte';
   import { cssClasses } from '$lib/constants/css-classes.const';
   import { userStore } from '../../stores/user.store';
+  import FreeDownloadsRemainingText from '../payments/FreeDownloadsRemainingText.svelte';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
@@ -58,15 +57,7 @@
       on:click={downloadTab}
       >Download {selectedSong.title} Tab
     </button>
-    <span class="font-light font-italic opacity-60 flex items-center">
-      {$amountOfDownloadsAvailable} free daily download{$amountOfDownloadsAvailable >
-        1 || $amountOfDownloadsAvailable === 0
-        ? 's'
-        : ''} remaining
-      <InfoTooltip text="test" wrapperClass="ml-2" placement="right">
-        <Icon icon="material-symbols:info" />
-      </InfoTooltip>
-    </span>
+    <FreeDownloadsRemainingText />
   </div>
 
   <button

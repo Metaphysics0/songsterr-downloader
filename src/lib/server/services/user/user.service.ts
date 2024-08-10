@@ -1,15 +1,16 @@
 import prisma from '$lib/server/prisma';
 import { User } from '@prisma/client';
 import {
-  MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_LOGGED_IN_USER,
-  MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+  MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER,
+  MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
 } from '$lib/constants/maximum-amount-of-downloads.constants';
 import { logger } from '$lib/utils/logger';
 import { MaximumAmountOfDownloadsExceededError } from '$lib/server/utils/errors/errors.util';
 import { isValidIpAddress } from '$lib/server/utils/is-valid-ip-address.util';
 import { getMappedIpAddress } from '$lib/constants/ip-address-mapping.const';
-import { sumAllDownloadsFromToday } from './user.service.utils';
+import { sumAllUniqueDownloads } from './user.service.utils';
 import { ClerkService } from '$lib/server/clerk/services/clerk.service';
+import { makeZeroIfLessThanZero } from '$lib/utils/number';
 
 export class UserService {
   async findOrCreateUserFromIpAddress({
@@ -43,6 +44,17 @@ export class UserService {
     return prisma.user.findFirst({ where: { email } });
   }
 
+  async findUserFromEmailOrThrow({ email }: { email: string }): Promise<User> {
+    const user = await this.findUserFromEmail({ email });
+    if (!user) {
+      throw new Error(
+        `UserService - findUserFromEmailOrThrow - Unable to find user from email: ${email}`
+      );
+    }
+
+    return user;
+  }
+
   async storeDownloadedSongToUserIpAddress({
     ipAddress,
     songsterrSongId
@@ -57,8 +69,6 @@ export class UserService {
           'UserService - storeDownloadedSongToUserIpAddress - user is undefined, unable to store song'
         );
       }
-
-      this.ensureUserHasNotExceededMaximumAmountOfDownloads(user);
 
       const hasUserAlreadyDownloadedSong = user.downloadedSongs.find(
         (song) => song.songsterrSongId === songsterrSongId
@@ -86,10 +96,10 @@ export class UserService {
         logger.info(
           `No user found for ip address: ${ipAddress}. Returning default amount of downloads`
         );
-        return MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
+        return MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
       }
 
-      return this.getRemainingDailyDownloadsForUser({
+      return this.getRemainingDownloadsForUser({
         user,
         isLoggedIn: false
       });
@@ -97,45 +107,46 @@ export class UserService {
       logger.warn(
         `UserService - getAmountOfDownloadsAvaialbleFromIpAddress failed, ${error}`
       );
-      return MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
+      return MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
     }
   }
 
-  async getAmountOfDownloadsFromClerkUserId(
-    userId: string
-  ): Promise<{ amountOfDownloadsAvailable: number; user?: User }> {
-    const clerkService = new ClerkService();
-    const clerkUser = await clerkService.getUserFromId(userId);
-    const clerkUserEmail =
-      clerkUser.primaryEmailAddress?.emailAddress ||
-      clerkUser.emailAddresses[0].emailAddress;
+  async getUserFromClerkUserId(clerkUserId: string) {
+    try {
+      logger.info(
+        `UserService - getUserFromClerkUserId - getting user from clerk user id: ${clerkUserId}`
+      );
+      const clerkUser = await this.clerkService.getUserFromId(clerkUserId);
+      const clerkUserEmail =
+        clerkUser.primaryEmailAddress?.emailAddress ||
+        clerkUser.emailAddresses[0].emailAddress;
 
-    const user = await this.findUserFromEmail({ email: clerkUserEmail });
+      return this.findUserFromEmailOrThrow({ email: clerkUserEmail });
+    } catch (error) {
+      logger.error(
+        `UserService - getUserFromClerkUserId - error getting user from clerk user id: ${clerkUserId}, ${error}`
+      );
+      throw new Error('Error getting user from clerk user id');
+    }
+  }
+
+  async getAmountOfDownloadsFromClerkUserId(userId: string): Promise<number> {
+    const user = await this.getUserFromClerkUserId(userId);
     if (!user) {
       logger.warn(
         `UserService - getAmountOfDownloadsFromClerkUserId - Unable to find user in DB from email. Maybe the webhook has failed`
       );
-      return {
-        amountOfDownloadsAvailable:
-          MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
-      };
+      return MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
     }
 
-    return {
-      amountOfDownloadsAvailable: this.getRemainingDailyDownloadsForUser({
-        user,
-        isLoggedIn: true
-      }),
-      user
-    };
+    return this.getRemainingDownloadsForUser({ user, isLoggedIn: true });
   }
 
-  private ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
+  ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
     const uniqueDownloads = user.downloadedSongs.length;
     if (
       !user.email &&
-      uniqueDownloads >=
-        MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+      uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
     ) {
       throw new MaximumAmountOfDownloadsExceededError({
         message: 'You have exceeded download limit. Please create an account.',
@@ -143,9 +154,7 @@ export class UserService {
       });
     }
 
-    if (
-      uniqueDownloads >= MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_LOGGED_IN_USER
-    ) {
+    if (uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER) {
       throw new MaximumAmountOfDownloadsExceededError({
         message: 'Logged in user has exceeded download limit.',
         isUserLoggedIn: true
@@ -153,26 +162,22 @@ export class UserService {
     }
   }
 
-  private getRemainingDailyDownloadsForUser({
+  getRemainingDownloadsForUser({
     user,
     isLoggedIn = false
   }: {
     user: User;
     isLoggedIn?: boolean;
   }) {
-    const amountOfAllSongsDownloadedToday = sumAllDownloadsFromToday(user);
-
     const limit = isLoggedIn
-      ? MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_LOGGED_IN_USER
-      : MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
+      ? MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER
+      : MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
 
-    const amountOfDailyDownloadsAvailable =
-      limit - amountOfAllSongsDownloadedToday;
-
-    return amountOfDailyDownloadsAvailable <= 0
-      ? 0
-      : amountOfDailyDownloadsAvailable;
+    const amountOfDailyDownloadsAvailable = limit - sumAllUniqueDownloads(user);
+    return makeZeroIfLessThanZero(amountOfDailyDownloadsAvailable);
   }
+
+  private readonly clerkService = new ClerkService();
 }
 
 async function pushDownloadedSong({

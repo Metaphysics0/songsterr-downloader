@@ -15,8 +15,13 @@
 
   export let data: LayoutData;
 
-  amountOfDownloadsAvailable.set(data.amountOfDownloadsAvailable);
-  userStore.set(data.user);
+  if (data.amountOfDownloadsAvailable) {
+    amountOfDownloadsAvailable.set(data.amountOfDownloadsAvailable);
+  }
+
+  if (data.user) {
+    userStore.set(data.user);
+  }
 </script>
 
 <SvelteToast />

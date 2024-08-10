@@ -15,6 +15,7 @@
   import ByLink from '../ByLink/Form.svelte';
   import BySearch from '../BySearch/Form.svelte';
   import { selectedSongToDownload } from '../../stores/selectedSong';
+  import FreeDownloadsRemainingText from '../payments/FreeDownloadsRemainingText.svelte';
 
   function setActiveTabIndex(idx: ITabMenuIndex): void {
     selectedSongToDownload.set(undefined);

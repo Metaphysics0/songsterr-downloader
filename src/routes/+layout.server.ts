@@ -6,8 +6,11 @@ export const load: LayoutServerLoad = async ({ locals, ...event }) => {
   const service = new UserService();
 
   if (session?.userId) {
-    const { amountOfDownloadsAvailable, user } =
-      await service.getAmountOfDownloadsFromClerkUserId(session.userId);
+    const user = await service.getUserFromClerkUserId(session.userId);
+    const amountOfDownloadsAvailable = service.getRemainingDownloadsForUser({
+      user,
+      isLoggedIn: true
+    });
 
     return { amountOfDownloadsAvailable, user };
   }

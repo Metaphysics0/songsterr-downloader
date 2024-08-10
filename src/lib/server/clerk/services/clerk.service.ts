@@ -1,4 +1,4 @@
-import { createClerkClient } from '@clerk/backend';
+import { createClerkClient, Session } from '@clerk/backend';
 import {
   ClerkWebhookService,
   HandleUserWebhookParams
@@ -6,6 +6,11 @@ import {
 import { CLERK_SECRET_KEY } from '$env/static/private';
 
 export class ClerkService {
+  async getUserFromSession(session: Session) {
+    if (!session.userId) return;
+    return this.getUserFromId(session.userId);
+  }
+
   async getUserFromId(clerkUserId: string) {
     return this.client.users.getUser(clerkUserId);
   }
