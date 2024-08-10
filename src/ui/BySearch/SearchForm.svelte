@@ -1,13 +1,7 @@
 <script lang="ts">
-  import { apiService } from '$lib/apiService';
-  import { cssClasses } from '$lib/sharedCssClasses';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
+  import { cssClasses } from '$lib/constants/css-classes.const';
+  import { apiService } from '$lib/utils/api-service.util';
   import SearchResults from './SearchResults.svelte';
-
-  let selectedSong: ISearchResult | IPartialSearchResult | undefined;
-  selectedSongToDownload.subscribe((value) => {
-    selectedSong = value;
-  });
 
   let searchResults: ISearchResult[] = [];
   async function search(inputText: string): Promise<void> {

@@ -1,7 +1,7 @@
 import { getSearchResultFromSongsterrUrl } from '$lib/server/services/songsterr.service';
 import { logger } from '$lib/utils/logger';
 import { isUrlFromSongsterr, isUrlFromUltimateGuitar } from '$lib/utils/url';
-import { createGetMockSearchResultResponse } from '$lib/mocks';
+import { createGetMockSearchResultResponse } from '$lib/utils/mocks';
 import type { Actions } from './$types';
 import { UltimateGuitarService } from '$lib/server/services/ultimateGuitar.service';
 import { startCase } from 'lodash-es';

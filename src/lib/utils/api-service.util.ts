@@ -2,7 +2,7 @@ import { pick } from 'lodash-es';
 import type {
   PayPalCreatePurchaseParams,
   PurchaseBulkTabsParams
-} from './types/payments';
+} from '../types/payments';
 
 export const apiService = {
   search: {

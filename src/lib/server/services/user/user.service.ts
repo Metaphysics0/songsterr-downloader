@@ -89,7 +89,10 @@ export class UserService {
         return MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
       }
 
-      return this.getRemainingDailyDownloadsForUser(user);
+      return this.getRemainingDailyDownloadsForUser({
+        user,
+        isLoggedIn: false
+      });
     } catch (error) {
       logger.warn(
         `UserService - getAmountOfDownloadsAvaialbleFromIpAddress failed, ${error}`
@@ -98,7 +101,9 @@ export class UserService {
     }
   }
 
-  async getAmountOfDownloadsFromClerkUserId(userId: string): Promise<number> {
+  async getAmountOfDownloadsFromClerkUserId(
+    userId: string
+  ): Promise<{ amountOfDownloadsAvailable: number; user?: User }> {
     const clerkService = new ClerkService();
     const clerkUser = await clerkService.getUserFromId(userId);
     const clerkUserEmail =
@@ -110,10 +115,19 @@ export class UserService {
       logger.warn(
         `UserService - getAmountOfDownloadsFromClerkUserId - Unable to find user in DB from email. Maybe the webhook has failed`
       );
-      return MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
+      return {
+        amountOfDownloadsAvailable:
+          MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+      };
     }
 
-    return this.getRemainingDailyDownloadsForUser(user);
+    return {
+      amountOfDownloadsAvailable: this.getRemainingDailyDownloadsForUser({
+        user,
+        isLoggedIn: true
+      }),
+      user
+    };
   }
 
   private ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
@@ -139,14 +153,25 @@ export class UserService {
     }
   }
 
-  private getRemainingDailyDownloadsForUser(user: User) {
+  private getRemainingDailyDownloadsForUser({
+    user,
+    isLoggedIn = false
+  }: {
+    user: User;
+    isLoggedIn?: boolean;
+  }) {
     const amountOfAllSongsDownloadedToday = sumAllDownloadsFromToday(user);
 
-    const amountOfDailyDownloadsAvailable =
-      MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_LOGGED_IN_USER -
-      amountOfAllSongsDownloadedToday;
+    const limit = isLoggedIn
+      ? MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_LOGGED_IN_USER
+      : MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
 
-    return amountOfDailyDownloadsAvailable || 0;
+    const amountOfDailyDownloadsAvailable =
+      limit - amountOfAllSongsDownloadedToday;
+
+    return amountOfDailyDownloadsAvailable <= 0
+      ? 0
+      : amountOfDailyDownloadsAvailable;
   }
 }
 

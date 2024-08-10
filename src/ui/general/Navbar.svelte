@@ -4,9 +4,10 @@
   import SignedOut from 'clerk-sveltekit/client/SignedOut.svelte';
   import SignInButton from 'clerk-sveltekit/client/SignInButton.svelte';
   import Icon from '@iconify/svelte';
+  import { GLOBAL_NAV_ID } from '$lib/constants/dom-element-ids.const';
 </script>
 
-<nav class="p-2 flex items-end justify-end">
+<nav class="p-2 flex items-end justify-end" id={GLOBAL_NAV_ID}>
   <SignedIn>
     <UserButton afterSignOutUrl="/" />
   </SignedIn>

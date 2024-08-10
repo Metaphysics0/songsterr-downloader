@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import { PUBLIC_PAYPAL_CLIENT_ID } from '$env/static/public';
-  import { apiService } from '$lib/apiService';
+  import { apiService } from '$lib/utils/api-service.util';
   import { PURCHASER_EMAIL_INPUT_ID } from '$lib/constants';
   import { logger } from '$lib/utils/logger';
   import { loadScript } from '@paypal/paypal-js';

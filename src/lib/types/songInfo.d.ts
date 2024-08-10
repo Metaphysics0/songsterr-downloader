@@ -1,4 +1,4 @@
 interface GetSongInfoParams {
-  artistId: string;
+  artistId: string | number;
   withBulkSongsToDownload?: boolean;
 }
