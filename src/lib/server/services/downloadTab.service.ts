@@ -55,7 +55,7 @@ export class DownloadTabService {
       });
       if (source) {
         return this.bySource({} as Request, {
-          requestParams: { songTitle, source }
+          requestParams: { songTitle, source, songId }
         });
       }
     }
@@ -132,6 +132,7 @@ interface DownloadResponse {
 interface BySourceOptions {
   requestParams?: {
     source: string;
+    songId: number;
     songTitle: string;
   };
 }

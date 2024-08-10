@@ -20,6 +20,8 @@
       }
 
       triggerFileDownloadFromSongsterrResponse(response);
+      console.log('RESPONSE', response);
+
       amountOfDownloadsAvailable.set(response.amountOfDownloadsAvailable);
     } catch (error) {
       toast.push('Error downloading tab 😭');
@@ -41,7 +43,7 @@
       >Download {selectedSong.title} Tab
     </button>
     <span class="font-light font-italic opacity-60">
-      {$amountOfDownloadsAvailable} free download{$amountOfDownloadsAvailable >
+      {$amountOfDownloadsAvailable} free daily download{$amountOfDownloadsAvailable >
       1
         ? 's'
         : ''} remaining!

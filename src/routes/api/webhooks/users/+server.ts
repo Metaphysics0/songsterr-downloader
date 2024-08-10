@@ -1,11 +1,11 @@
-import { ClerkWebhookService } from '$lib/server/clerk/services/clerk-webhook.service';
+import { ClerkService } from '$lib/server/clerk/services/clerk.service';
 import { logger } from '$lib/utils/logger';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const POST = (async ({ request, ...event }) => {
   try {
     logger.info('POST api/webhooks/users - Incoming webhook request');
-    const service = new ClerkWebhookService();
+    const service = new ClerkService();
     await service.handleUserWebhook({
       request,
       clientIpAddress: event.getClientAddress()

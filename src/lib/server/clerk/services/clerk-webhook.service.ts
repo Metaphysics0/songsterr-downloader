@@ -64,7 +64,7 @@ export class ClerkWebhookService {
   }
 }
 
-interface HandleUserWebhookParams {
+export interface HandleUserWebhookParams {
   request: Request;
   clientIpAddress: string;
 }

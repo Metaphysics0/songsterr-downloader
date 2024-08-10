@@ -22,9 +22,7 @@ export const POST = (async ({ request, params, ...event }) => {
     });
 
     const amountOfDownloadsAvailable =
-      await userService.getAmountOfDownloadsAvaialbleFromIpAddress({
-        ipAddress
-      });
+      await userService.getAmountOfDownloadsAvaialbleFromIpAddress(ipAddress);
 
     return jsonWithCors(request, { ...response, amountOfDownloadsAvailable });
   } catch (error) {

@@ -3,10 +3,10 @@ import { initializeClerkClient } from 'clerk-sveltekit/client';
 import { PUBLIC_CLERK_PUBLISHABLE_KEY } from '$env/static/public';
 
 initializeClerkClient(PUBLIC_CLERK_PUBLISHABLE_KEY, {
-  afterSignInUrl: '/admin/',
-  afterSignUpUrl: '/admin/',
-  signInUrl: '/sign-in',
-  signUpUrl: '/sign-up'
+  afterSignInUrl: '/',
+  afterSignUpUrl: '/',
+  signInUrl: '/',
+  signUpUrl: '/'
 });
 
 export const handleError: HandleClientError = async ({ error, event }) => {
