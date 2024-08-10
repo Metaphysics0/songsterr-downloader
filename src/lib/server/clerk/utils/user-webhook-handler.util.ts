@@ -33,10 +33,11 @@ export class ClerkUserWebhookHandler {
   }
 
   private async upsertUser(): Promise<void> {
+    logger.info(
+      `Clerk UserWebhookHandler - upserting user from ip address with params: ipAddress: ${this.clientIpAddress}, email: ${this.userPrimaryEmailAddress}`
+    );
     await prisma.user.upsert({
-      where: {
-        ipAddress: this.clientIpAddress
-      },
+      where: { ipAddress: this.clientIpAddress },
       update: {
         email: this.userPrimaryEmailAddress,
         userMetadata: JSON.stringify(this.webhookEvent.data)

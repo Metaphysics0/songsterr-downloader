@@ -2,6 +2,7 @@ import { CLERK_USER_WEBHOOK_SECRET } from '$env/static/private';
 import { Webhook } from 'svix';
 import { UserWebhookEvent, WebhookEvent } from '../types/clerk.types';
 import { ClerkUserWebhookHandler } from '../utils/user-webhook-handler.util';
+import { getMappedIpAddress } from '$lib/constants/ip-address-mapping.const';
 
 export class ClerkWebhookService {
   async handleUserWebhook({
@@ -15,7 +16,7 @@ export class ClerkWebhookService {
 
     const handler = new ClerkUserWebhookHandler({
       webhookEvent: webhookEvent as UserWebhookEvent,
-      clientIpAddress
+      clientIpAddress: getMappedIpAddress(clientIpAddress)
     });
 
     await handler.handleWebhook();

@@ -8,8 +8,7 @@ import { logger } from '$lib/utils/logger';
 import { MaximumAmountOfDownloadsExceededError } from '$lib/server/utils/errors/errors.util';
 import { isValidIpAddress } from '$lib/server/utils/is-valid-ip-address.util';
 import { isToday } from '$lib/utils/date';
-import _ from 'lodash';
-import { IP_ADDRESS_MAPPING } from '$lib/constants/ip-address-mapping.const';
+import { getMappedIpAddress } from '$lib/constants/ip-address-mapping.const';
 
 export class UserService {
   async findOrCreateUserFromIpAddress({
@@ -20,7 +19,7 @@ export class UserService {
         `UserService - findOrCreateUserFromIpAddress - finding or creating user from ip address: ${ipAddress}`
       );
 
-      const mappedIpAddress = _.get(IP_ADDRESS_MAPPING, ipAddress, ipAddress);
+      const mappedIpAddress = getMappedIpAddress(ipAddress);
       if (!isValidIpAddress(mappedIpAddress)) {
         throw new Error(
           'UserService - findOrCreateUserFromIpAddress - invalid ip address provided'
