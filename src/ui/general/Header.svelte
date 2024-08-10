@@ -27,12 +27,6 @@
     <p>
       {headerText} from
       <Link href="https://songsterr.com" innerText="Songsterr" />
-      <!-- {#if selectedTabMenuIndex === 0}
-        or <Link
-          href="https://www.ultimate-guitar.com/"
-          innerText="Ultimate Guitar"
-        />
-      {/if} -->
       and click the button to get a
       <Link href="https://www.guitar-pro.com/" innerText="Guitar Pro" />
       file!

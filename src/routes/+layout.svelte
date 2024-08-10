@@ -13,6 +13,7 @@
   import SignedOut from 'clerk-sveltekit/client/SignedOut.svelte';
   import SignInButton from 'clerk-sveltekit/client/SignInButton.svelte';
   import Icon from '@iconify/svelte';
+  import Navbar from '../ui/general/Navbar.svelte';
 
   inject({ mode: dev ? 'development' : 'production' });
 
@@ -22,19 +23,6 @@
 </script>
 
 <SvelteToast />
-
-<nav class="p-2 flex items-end justify-end">
-  <SignedIn>
-    <UserButton afterSignOutUrl="/" />
-  </SignedIn>
-  <SignedOut>
-    <SignInButton redirectUrl="/" mode="modal" class="p-3">
-      <Icon
-        icon="fa6-solid:circle-user"
-        class="text-3xl cursor-pointer opacity-70 hover:opacity-100"
-      />
-    </SignInButton>
-  </SignedOut>
-</nav>
+<Navbar />
 <Header />
 <slot />
