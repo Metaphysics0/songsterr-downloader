@@ -1,6 +1,6 @@
 import { jsonWithCors } from '$lib/server/cors';
 import { DownloadTabService } from '$lib/server/services/downloadTab.service';
-import { NonLoggedInUserService } from '$lib/server/services/user/user.service';
+import { UserService } from '$lib/server/services/user/user.service';
 import { MaximumAmountOfDownloadsExceededError } from '$lib/server/utils/errors/errors.util';
 import { DownloadTabType } from '$lib/types/downloadType';
 import { logger } from '$lib/utils/logger';
@@ -14,15 +14,15 @@ export const POST = (async ({ request, params, ...event }) => {
 
     const { songId, ...response } = await downloadTabService.download(request);
     const ipAddress = event.getClientAddress();
-    const nonLoggedInUserService = new NonLoggedInUserService();
+    const userService = new UserService();
 
-    await nonLoggedInUserService.storeDownloadedSongToUserIpAddress({
+    await userService.storeDownloadedSongToUserIpAddress({
       ipAddress,
       songsterrSongId: songId!
     });
 
     const amountOfDownloadsAvailable =
-      await nonLoggedInUserService.getAmountOfDownloadsAvaialbleFromIpAddress({
+      await userService.getAmountOfDownloadsAvaialbleFromIpAddress({
         ipAddress
       });
 

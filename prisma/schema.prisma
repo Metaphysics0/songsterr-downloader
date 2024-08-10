@@ -22,6 +22,8 @@ model GuitarProTabDownloadLinks {
 
 model User {
   id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
   ipAddress       String           @unique
   downloadedSongs DownloadedSong[]
   email           String?

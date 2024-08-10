@@ -2,12 +2,39 @@ import prisma from '$lib/server/prisma';
 import { User } from '@prisma/client';
 import {
   MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_LOGGED_IN_USER,
-  MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+  MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
 } from '$lib/constants/maximum-amount-of-downloads.constants';
 import { logger } from '$lib/utils/logger';
 import { MaximumAmountOfDownloadsExceededError } from '$lib/server/utils/errors/errors.util';
+import { isValidIpAddress } from '$lib/server/utils/is-valid-ip-address.util';
+import { isToday } from '$lib/utils/date';
 
-export class NonLoggedInUserService {
+export class UserService {
+  async findOrCreateUserFromIpAddress({
+    ipAddress
+  }: FindOrCreateUserFromIpAddressParams) {
+    try {
+      logger.info(
+        `UserService - findOrCreateUserFromIpAddress - finding or creating user from ip address: ${ipAddress}`
+      );
+      if (!isValidIpAddress(ipAddress)) {
+        throw new Error(
+          'UserService - findOrCreateUserFromIpAddress - invalid ip address provided'
+        );
+      }
+
+      return prisma.user.upsert({
+        where: { ipAddress },
+        update: {},
+        create: { ipAddress }
+      });
+    } catch (error) {
+      logger.error(
+        `UserService - findOrcreateUserFromIpAddress - Error finding or creating user from ip address: ${ipAddress}: ${error}`
+      );
+    }
+  }
+
   async storeDownloadedSongToUserIpAddress({
     ipAddress,
     songsterrSongId
@@ -16,11 +43,11 @@ export class NonLoggedInUserService {
       logger.info(
         `POST api/download - Storing downloaded song to user with ip address: ${ipAddress}`
       );
-      const user = await prisma.user.findUnique({ where: { ipAddress } });
-
+      const user = await this.findOrCreateUserFromIpAddress({ ipAddress });
       if (!user) {
-        await createUserFromIpAddress({ ipAddress, songsterrSongId });
-        return;
+        throw new Error(
+          'UserService - storeDownloadedSongToUserIpAddress - user is undefined, unable to store song'
+        );
       }
 
       const hasUserAlreadyDownloadedSong = user.downloadedSongs.find(
@@ -47,18 +74,36 @@ export class NonLoggedInUserService {
     ipAddress: string;
   }): Promise<number> {
     try {
-      const user = await prisma.user.findUnique({ where: { ipAddress } });
-      if (!user) return MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
+      const user = await this.findOrCreateUserFromIpAddress({ ipAddress });
+      if (!user) {
+        logger.info(
+          `No user found for ip address: ${ipAddress}. Returning default amount of downloads`
+        );
+        return MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
+      }
+
+      const today = new Date();
+
+      const allSongsDownloadedToday = user.downloadedSongs.filter(
+        (downloadedSong) => isToday(downloadedSong.createdAt, today)
+      );
+
+      if (
+        allSongsDownloadedToday.length >=
+        MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+      ) {
+        return 0;
+      }
 
       return (
-        MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER -
-        user?.downloadedSongs.length
+        MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER -
+        allSongsDownloadedToday.length
       );
     } catch (error) {
       logger.warn(
         `UserService - getAmountOfDownloadsAvaialbleFromIpAddress failed, ${error}`
       );
-      return MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
+      return MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER;
     }
   }
 }
@@ -96,23 +141,11 @@ async function incrementDownloadedSongAmount({
   });
 }
 
-async function createUserFromIpAddress({
-  ipAddress,
-  songsterrSongId
-}: StoreDownloadedSongToUserParams) {
-  return prisma.user.create({
-    data: {
-      ipAddress,
-      downloadedSongs: [{ songsterrSongId, amount: 1 }]
-    }
-  });
-}
-
 function ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
   const uniqueDownloads = user.downloadedSongs.length;
   if (
     !user.email &&
-    uniqueDownloads >= MAXIMUM_AMOUNT_OF_DOWNLOADS_FOR_NON_LOGGED_IN_USER
+    uniqueDownloads >= MAXIMUM_AMOUNT_OF_DAILY_DOWNLOADS_FOR_NON_LOGGED_IN_USER
   ) {
     throw new MaximumAmountOfDownloadsExceededError({
       message: 'You have exceeded download limit. Please create an account.',
@@ -131,4 +164,8 @@ function ensureUserHasNotExceededMaximumAmountOfDownloads(user: User): void {
 interface StoreDownloadedSongToUserParams {
   ipAddress: string;
   songsterrSongId: number;
+}
+
+interface FindOrCreateUserFromIpAddressParams {
+  ipAddress: string;
 }
