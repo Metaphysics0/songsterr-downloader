@@ -11,14 +11,10 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
     "lint": "prettier --plugin-search-dir . --check .",
-    "format": "prettier --plugin-search-dir . --write .",
-    "prisma-push": "npx prisma db push",
-    "postinstall": "prisma generate"
+    "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
     "@iconify/svelte": "^3.1.4",
-    "@melt-ui/pp": "^0.1.4",
-    "@melt-ui/svelte": "^0.65.1",
     "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.20.4",
@@ -32,7 +28,6 @@
     "lightningcss": "^1.21.5",
     "prettier": "^2.8.0",
     "prettier-plugin-svelte": "^2.10.1",
-    "prisma": "^5.6.0",
     "svelte": "^4.0.0",
     "svelte-check": "^3.4.3",
     "svelte-sequential-preprocessor": "^2.0.1",
@@ -50,21 +45,12 @@
   },
   "type": "module",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.462.0",
-    "@aws-sdk/s3-presigned-post": "^3.462.0",
-    "@aws-sdk/signature-v4-crt": "^3.461.0",
-    "@google-pay/button-element": "^3.0.10",
-    "@paypal/paypal-js": "^7.1.1",
-    "@prisma/client": "^5.6.0",
-    "@sendgrid/mail": "^8.1.0",
     "@upstash/qstash": "^2.3.0",
     "@vercel/analytics": "^1.0.2",
     "@vercel/kv": "^1.0.1",
     "@xmldom/xmldom": "^0.8.10",
     "adm-zip": "^0.5.10",
-    "aws-sdk": "^2.1508.0",
     "lodash-es": "^4.17.21",
-    "mongodb": "^6.3.0",
     "uuid": "^9.0.1"
   }
 }
