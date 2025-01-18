@@ -5,7 +5,6 @@
   import SelectedSong from './SelectedSong.svelte';
   import { toast } from '@zerodevx/svelte-toast';
   import { selectedSongToDownload } from '../../stores/selectedSong';
-  import DownloadAllTabsButton from '../common/buttons/DownloadAllTabsButton.svelte';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
@@ -43,11 +42,10 @@
   <button class={cssClasses.downloadBtn} on:click={downloadTab}
     >Download {selectedSong.title} Tab</button
   >
-  <strong class="my-2">Or</strong>
-  <DownloadAllTabsButton {selectedSong} />
+  <div class="my-2" />
 
   <button
-    class="text-slate-400 font-light underline hover:text-slate-500 bg-transparent"
+    class="text-slate-400 font-light underline hover:text-slate-500 bg-transparent mb-1"
     on:click={deselectSong}>Select another?</button
   >
 </div>

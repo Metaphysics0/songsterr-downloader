@@ -5,8 +5,6 @@ export const SUPPORTED_DOWNLOAD_TAB_TYPES = [
   'ultimate-guitar'
 ] as const;
 
-export const CLOUDFRONT_S3_BASE_URL = 'https://d2ekxcn5z5vr8x.cloudfront.net';
-
 export const SONGSTERR_BASE_URL = 'https://www.songsterr.com';
 
 export const SONGSTERR_URL_REGEX_PATTERN =
@@ -20,8 +18,4 @@ export const SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN =
 
 export const GUITAR_PRO_CONTENT_TYPE = 'application/gp';
 
-export const MINIMUM_DONATION_AMOUNT_FOR_BULK_DOWNLOAD = (5).toFixed(2);
-
 export const AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW = 20;
-
-export const PURCHASER_EMAIL_INPUT_ID = 'purchaserEmail';

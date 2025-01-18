@@ -1,8 +1,4 @@
 import { pick } from 'lodash-es';
-import type {
-  PayPalCreatePurchaseParams,
-  PurchaseBulkTabsParams
-} from './types/payments';
 
 export const apiService = {
   search: {
@@ -29,23 +25,6 @@ export const apiService = {
         }
       });
     },
-    bulkDownload({
-      selectedSong,
-      secretAccessCode
-    }: {
-      selectedSong: ISearchResult | IPartialSearchResult;
-      secretAccessCode: string;
-    }): Promise<SongsterrDownloadResponse> {
-      return fetchAndReturnJson({
-        endpoint: 'download/bulk',
-        method: 'POST',
-        params: {
-          artistId: selectedSong.artistId,
-          artistName: selectedSong.artist,
-          secretAccessCode
-        }
-      });
-    },
     bySource(
       searchResult: ISearchResult | IPartialSearchResult
     ): Promise<SongsterrDownloadResponse> {
@@ -69,41 +48,6 @@ export const apiService = {
           ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
         }
       });
-    }
-  },
-  purchase: {
-    put(params: PurchaseBulkTabsParams) {
-      return fetchAndReturnJson({
-        endpoint: 'purchase',
-        method: 'PUT',
-        params
-      });
-    }
-  },
-  orders: {
-    create(params: PayPalCreatePurchaseParams) {
-      return fetchAndReturnJson({
-        endpoint: 'orders',
-        method: 'POST',
-        params
-      });
-    },
-    ':order_id': {
-      capture({
-        orderId,
-        selectedSong,
-        purchaserEmail
-      }: {
-        orderId: string;
-        selectedSong: ISearchResult | IPartialSearchResult;
-        purchaserEmail: string;
-      }) {
-        return fetchAndReturnJson({
-          endpoint: `orders/${orderId}/capture`,
-          method: 'POST',
-          params: { selectedSong, purchaserEmail }
-        });
-      }
     }
   },
   song_info: {
