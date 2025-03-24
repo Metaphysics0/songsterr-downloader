@@ -1,7 +1,6 @@
 export const SUPPORTED_DOWNLOAD_TAB_TYPES = [
   'bySource',
   'bySearchResult',
-  'bulk',
   'ultimate-guitar'
 ] as const;
 
@@ -17,5 +16,3 @@ export const SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN =
   /^https:\/\/(www\.)?(songsterr\.com|tabs\.ultimate-guitar\.com)\/.*/i;
 
 export const GUITAR_PRO_CONTENT_TYPE = 'application/gp';
-
-export const AMOUNT_OF_BULK_DOWNLOAD_SONGS_TO_PREVIEW = 20;
