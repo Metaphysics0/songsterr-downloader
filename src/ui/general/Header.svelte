@@ -2,9 +2,9 @@
   import {
     activeTabMenuIndex,
     type ITabMenuIndex
-  } from '../../stores/activeTabMenu';
+  } from '../../stores/tab-menu.store';
   import { page } from '$app/stores';
-  import Link from '../common/Link.svelte';
+  import Link from './Link.svelte';
 
   const headerTextMap: Record<ITabMenuIndex, string> = {
     0: 'Enter in a link',
@@ -27,12 +27,6 @@
     <p>
       {headerText} from
       <Link href="https://songsterr.com" innerText="Songsterr" />
-      <!-- {#if selectedTabMenuIndex === 0}
-        or <Link
-          href="https://www.ultimate-guitar.com/"
-          innerText="Ultimate Guitar"
-        />
-      {/if} -->
       and click the button to get a
       <Link href="https://www.guitar-pro.com/" innerText="Guitar Pro" />
       file!

@@ -37,15 +37,6 @@ export const apiService = {
         }
       });
     }
-  },
-  song_info: {
-    get(params: GetSongInfoParams) {
-      return fetchAndReturnJson({
-        endpoint: 'song_info',
-        method: 'GET',
-        params
-      });
-    }
   }
 };
 

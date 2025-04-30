@@ -1,8 +1,8 @@
 import { getSearchResultFromSongsterrUrl } from '$lib/server/services/songsterr.service';
 import { logger } from '$lib/utils/logger';
 import { isUrlFromSongsterr } from '$lib/utils/url';
-import { createGetMockSearchResultResponse } from '$lib/mocks';
 import type { Actions } from './$types';
+import { mockSearchResult } from '$lib/mocks/search-result.mock';
 
 export const actions = {
   getSelectedSongFromUrl: async ({
@@ -21,7 +21,7 @@ export const actions = {
       logger.error('#getSelectedSongFromUrl failed', error);
 
       return {
-        searchResult: createGetMockSearchResultResponse(),
+        searchResult: mockSearchResult,
         error: 'failed getting download link'
       };
     }

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { apiService } from '$lib/apiService';
-  import { cssClasses } from '$lib/sharedCssClasses';
-  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/triggerDownloadFromSongsterrResponse';
+  import { apiService } from '$lib/utils/api';
+  import { commonCssClasses } from '$lib/utils/css';
+  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
   import SelectedSong from './SelectedSong.svelte';
   import { toast } from '@zerodevx/svelte-toast';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
+  import { selectedSongToDownload } from '../../stores/selected-song.store';
 
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
@@ -33,7 +33,7 @@
   <div class="mb-8 w-full">
     <SelectedSong {selectedSong} />
   </div>
-  <button class={cssClasses.downloadBtn} on:click={downloadTab}
+  <button class={commonCssClasses.downloadBtn} on:click={downloadTab}
     >Download {selectedSong.title} Tab</button
   >
   <div class="my-2" />
