@@ -1,5 +1,4 @@
 import { getRandomElementFromArray } from './array';
-import { tempSongsterrTCookie } from './songsterr-cookie';
 
 export default class Fetcher {
   withRotatingUserAgent: boolean;
@@ -59,8 +58,8 @@ export default class Fetcher {
       `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`,
       {
         headers: {
-          ...this.browserLikeHeaders,
-          Cookie: `SongsterrT=${tempSongsterrTCookie}`
+          ...this.browserLikeHeaders
+          // Cookie: `SongsterrT=${tempSongsterrTCookie}`
         }
       }
     );

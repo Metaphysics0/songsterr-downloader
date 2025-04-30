@@ -1,6 +1,6 @@
 import { SONGSTERR_BASE_URL } from '$lib/constants';
 import Fetcher from '$lib/utils/fetch';
-import _ from 'lodash-es';
+import { kebabCase } from 'lodash-es';
 
 export class SearchSongsterrService {
   async search(searchText: string): Promise<ISearchResult[]> {
@@ -23,7 +23,7 @@ export class SearchSongsterrService {
     const urlPrefix = SONGSTERR_BASE_URL + '/a/wsa/';
     const urlSuffixParts = [searchResult.artist, searchResult.title, 'tab'];
 
-    const urlSuffix = _.kebabCase(urlSuffixParts.join(' '));
+    const urlSuffix = kebabCase(urlSuffixParts.join(' '));
 
     return urlPrefix + urlSuffix + `-s${searchResult.songId}`;
   }
