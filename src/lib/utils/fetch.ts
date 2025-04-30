@@ -26,45 +26,12 @@ export default class Fetcher {
     };
   }
 
-  async fetchAndReturnJson<T = unknown>(url: string): Promise<T> {
-    const response = await this.fetch(url);
+  async fetchAndReturnJson<T = unknown>(
+    url: string,
+    options?: any
+  ): Promise<T> {
+    const response = await this.fetch(url, options);
     return response.json();
-  }
-
-  async fetchAndReturnJsonWithCors(url: string) {
-    const response = await this.fetch(url, {
-      headers: this.withBrowserLikeHeaders
-        ? this.browserLikeHeaders
-        : this.headers,
-      referrer: url,
-      referrerPolicy: 'strict-origin-when-cross-origin',
-      body: null,
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'omit'
-    });
-    return response.json();
-  }
-
-  async getRevisionsWithCookies(songId: string) {
-    // First get cookies from main site
-    const mainResponse = await fetch('https://www.songsterr.com/');
-    const cookies = mainResponse.headers.get('set-cookie');
-    console.log('COOKIES', cookies);
-
-    // const songsterrT = cookies?.find((cookie) => cookie.includes('SongsterrT'))?.split(';')[0].split('=')[1] || tempSongsterrTCookie;
-    // Then use those cookies in your API request
-    const apiResponse = await fetch(
-      `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`,
-      {
-        headers: {
-          ...this.browserLikeHeaders
-          // Cookie: `SongsterrT=${tempSongsterrTCookie}`
-        }
-      }
-    );
-
-    return apiResponse.json();
   }
 
   get options() {

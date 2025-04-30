@@ -2,7 +2,7 @@ import Fetcher from '$lib/utils/fetch';
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from '../scraper';
-
+import { env } from '$env/dynamic/private';
 export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
 ): Promise<IPartialSearchResult> {
@@ -49,23 +49,24 @@ export async function getDownloadLinkFromSongId(
   return '';
 }
 
-export async function getDownloadLinksFromRevisions(
+export async function getDownloadLinkFromRevisions(
   songId: string | number
 ): Promise<string> {
-  const revisionsResponse = await new Fetcher({
-    withBrowserLikeHeaders: true
-  }).getRevisionsWithCookies(songId.toString());
-  console.log('RESPONSE', revisionsResponse[0]);
+  const fetcher = new Fetcher({ withBrowserLikeHeaders: true });
+  const url = urlBuilder.bySongIdWithRevisions(songId);
+  const revisions =
+    await fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
+      headers: {
+        ...fetcher.browserLikeHeaders,
+        Cookie: `SongsterrT=${env.TEMP_SONGSTERR_T_COOKIE}`
+      }
+    });
 
-  return getFirstDownloadLinkFromRevisions(
-    revisionsResponse as SongsterrRevisionsResponse
+  const firstRevisionWithSource = revisions.find(
+    (revision: any) => revision.source
   );
-}
 
-export function getFirstDownloadLinkFromRevisions(
-  revisions: SongsterrRevisionsResponse
-) {
-  return revisions[0].source;
+  return firstRevisionWithSource?.source || '';
 }
 
 async function attemptToGrabDownloadLinkFromSource(
@@ -75,7 +76,6 @@ async function attemptToGrabDownloadLinkFromSource(
   return source || '';
 }
 
-// helpers
 export function buildFileNameFromSongName(
   songName: string,
   downloadUrl: string
@@ -92,7 +92,6 @@ export function buildFileNameFromSongName(
 
 export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
   const title = doc.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-  // return '';
   if (!title) {
     return {
       artist: 'Unknown',

@@ -1,7 +1,7 @@
 import Fetcher from '$lib/utils/fetch';
 import {
   buildFileNameFromSongName,
-  getDownloadLinksFromRevisions,
+  getDownloadLinkFromRevisions,
   getSearchResultFromSongsterrUrl
 } from './songsterr.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
@@ -47,8 +47,7 @@ export class DownloadTabService {
       }
     }
 
-    // const link = await getDownloadLinkFromSongId(songId);
-    const link = await getDownloadLinksFromRevisions(songId);
+    const link = await getDownloadLinkFromRevisions(songId);
     if (!link) {
       throw new Error(`Unable to find download link from song: ${songTitle}`);
     }
