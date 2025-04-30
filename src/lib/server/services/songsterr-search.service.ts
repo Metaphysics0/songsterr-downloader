@@ -2,7 +2,7 @@ import { SONGSTERR_BASE_URL } from '$lib/constants';
 import Fetcher from '$lib/utils/fetch';
 import { kebabCase } from 'lodash-es';
 
-export class SearchSongsterrService {
+export class SongsterrSearchService {
   async search(searchText: string): Promise<ISearchResult[]> {
     const url = this.createSongsterrSearchUrl(searchText);
     const searchResponse = await new Fetcher().fetch(url);

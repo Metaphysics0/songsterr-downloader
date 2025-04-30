@@ -1,5 +1,5 @@
 import { jsonWithCors } from '$lib/server/cors';
-import { DownloadTabService } from '$lib/server/services/downloadTab.service';
+import { DownloadTabService } from '$lib/server/services/download-tab.service';
 import type { DownloadTabType } from '$lib/types/downloadType';
 import { logger } from '$lib/utils/logger';
 import type { RequestHandler } from '@sveltejs/kit';
