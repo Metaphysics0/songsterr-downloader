@@ -1,68 +1,64 @@
-import Fetcher from '$lib/utils/fetch';
+import Fetcher from '$lib/server/utils/fetcher.util';
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from '../utils/scraper.util';
 import { env } from '$env/dynamic/private';
 
-export async function getSongsterrMetadataFromSongsterrUrl(
-  songsterrUrl: string
-): Promise<IPartialSearchResult> {
-  const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
-  if (!doc) throw new Error('Unable to get page data from songsterr');
+export class SongsterrService {
+  async getMetadataFromTabUrl(tabUrl: string): Promise<IPartialSearchResult> {
+    const doc = await scraper.getDocumentFromUrl(tabUrl, 'html');
+    if (!doc) throw new Error('Unable to get page data from songsterr');
 
-  return getSongsterrMetadataFromDocument(doc);
-}
-
-export async function getGuitarProDownloadLinkFromSongId(
-  songId: string | number
-): Promise<string> {
-  const fetcher = new Fetcher({ withBrowserLikeHeaders: true });
-  const url = urlBuilder.bySongIdWithRevisions(songId);
-  const revisions =
-    await fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
-      headers: {
-        ...fetcher.browserLikeHeaders,
-        Cookie: `SongsterrT=${env.TEMP_SONGSTERR_COOKIE}`
-      }
-    });
-
-  const firstRevisionWithSource = revisions.find(
-    (revision: any) => revision.source
-  );
-
-  return firstRevisionWithSource?.source || '';
-}
-
-export function buildFileNameFromSongName(
-  songName: string,
-  downloadUrl: string
-): string {
-  try {
-    const normalizedSongName = normalize(songName);
-    const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
-    return normalizedSongName + fileType;
-  } catch (error) {
-    logger.error('error creating filename from song name', error);
-    return `downloaded-tab_${Date.now()}.gp5`;
+    return this.getMetadataFromTabUrlDocument(doc);
   }
-}
 
-const urlBuilder = {
-  bySongId(songId: string | number) {
-    return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
-  },
-  bySongIdWithRevisions(songId: string | number) {
-    return `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`;
-  }
-};
+  async getGuitarProDownloadLinkFromSongId(
+    songId: string | number
+  ): Promise<string> {
+    const fetcher = new Fetcher({ withBrowserLikeHeaders: true });
+    const url = this.urlBuilder.bySongIdWithRevisions(songId);
 
-function getSongsterrMetadataFromDocument(doc: Document) {
-  try {
-    const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
-    // @ts-ignore
-    return JSON.parse(metadataScript).meta.current;
-  } catch (error) {
-    logger.error('error parsing metadata', error);
-    throw new Error('Error reading tab data');
+    const revisions =
+      await fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
+        headers: {
+          ...fetcher.browserLikeHeaders,
+          Cookie: `SongsterrT=${env.TEMP_SONGSTERR_COOKIE}`
+        }
+      });
+
+    // Grab the first revision with a source
+    return revisions.find((revision) => revision.source)?.source || '';
   }
+
+  buildFileNameFromSongName(songName: string, downloadUrl: string): string {
+    try {
+      const normalizedSongName = normalize(songName);
+      const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
+      return normalizedSongName + fileType;
+    } catch (error) {
+      logger.error('error creating filename from song name', error);
+      return `downloaded-tab_${Date.now()}.gp5`;
+    }
+  }
+
+  private getMetadataFromTabUrlDocument(doc: Document) {
+    try {
+      const metadataScript =
+        doc.getElementById('state')?.childNodes[0].nodeValue;
+      // @ts-ignore
+      return JSON.parse(metadataScript).meta.current;
+    } catch (error) {
+      logger.error('error parsing metadata', error);
+      throw new Error('Error reading tab data');
+    }
+  }
+
+  private readonly urlBuilder = {
+    bySongId(songId: string | number) {
+      return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
+    },
+    bySongIdWithRevisions(songId: string | number) {
+      return `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`;
+    }
+  };
 }

@@ -1,6 +1,6 @@
 <script>
-  import SocialLinks from '../ui/general/SocialLinks.svelte';
-  import TabMenu from '../ui/general/TabMenu.svelte';
+  import SocialLinks from '../ui/common/SocialLinks.svelte';
+  import TabMenu from '../ui/common/TabMenu.svelte';
 </script>
 
 <main class="mb-4">

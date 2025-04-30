@@ -1,10 +1,7 @@
-import Fetcher from '$lib/utils/fetch';
-import {
-  buildFileNameFromSongName,
-  getGuitarProDownloadLinkFromSongId
-} from './songsterr.service';
+import Fetcher from '$lib/server/utils/fetcher.util';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import type { DownloadTabType } from '$lib/types/downloadType';
+import { SongsterrService } from './songsterr.service';
 
 export class DownloadTabService {
   constructor(private readonly downloadTabType: DownloadTabType) {}
@@ -26,14 +23,18 @@ export class DownloadTabService {
     const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(source);
 
-    const fileName = buildFileNameFromSongName(songTitle, source);
+    const fileName = this.songsterrService.buildFileNameFromSongName(
+      songTitle,
+      source
+    );
     return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
   private async bySearchResult(request: Request) {
     const { songId, songTitle } = await request.json();
 
-    const guitarProLink = await getGuitarProDownloadLinkFromSongId(songId);
+    const guitarProLink =
+      await this.songsterrService.getGuitarProDownloadLinkFromSongId(songId);
     if (!guitarProLink) {
       throw new Error(`Unable to find download link from song: ${songTitle}`);
     }
@@ -41,7 +42,10 @@ export class DownloadTabService {
     const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(guitarProLink);
 
-    const fileName = buildFileNameFromSongName(songTitle, guitarProLink);
+    const fileName = this.songsterrService.buildFileNameFromSongName(
+      songTitle,
+      guitarProLink
+    );
     return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
@@ -62,6 +66,7 @@ export class DownloadTabService {
   }
 
   private readonly fetcher = new Fetcher();
+  private readonly songsterrService = new SongsterrService();
 }
 
 interface DownloadResponse {

@@ -1,4 +1,4 @@
-import { getRandomElementFromArray } from './array';
+import { getRandomElementFromArray } from '../../utils/array';
 
 export default class Fetcher {
   withRotatingUserAgent: boolean;

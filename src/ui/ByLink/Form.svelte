@@ -8,7 +8,7 @@
   import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
   import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
   import { isUrlFromSongsterr } from '$lib/utils/url';
-  import SelectedSongSkeleton from '../general/SelectedSongSkeleton.svelte';
+  import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
   import { sample } from 'lodash-es';
   import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url.constant';
   import { toastError } from '$lib/utils/toast.util';
@@ -39,7 +39,7 @@
   <form
     class="flex flex-col items-center"
     method="POST"
-    action="?/getSongsterrMetadataFromSongsterrUrl"
+    action="?/getMetadataFromTabUrl"
     use:enhance={({ formData }) => {
       const byLinkUrl = formData.get('url');
 

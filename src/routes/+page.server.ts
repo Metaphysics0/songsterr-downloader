@@ -1,10 +1,10 @@
-import { getSongsterrMetadataFromSongsterrUrl } from '$lib/server/services/songsterr.service';
 import { logger } from '$lib/utils/logger';
 import { isUrlFromSongsterr } from '$lib/utils/url';
 import type { Actions } from './$types';
+import { SongsterrService } from '$lib/server/services/songsterr.service';
 
 export const actions = {
-  getSongsterrMetadataFromSongsterrUrl: async ({
+  getMetadataFromTabUrl: async ({
     request
   }): Promise<IPartialSearchResult | undefined> => {
     try {
@@ -13,9 +13,9 @@ export const actions = {
         throw new Error(`${url} is not a valid songsterr link.`);
       }
 
-      return getSongsterrMetadataFromSongsterrUrl(url!);
+      return new SongsterrService().getMetadataFromTabUrl(url!);
     } catch (error) {
-      logger.error('#getSongsterrMetadataFromSongsterrUrl failed', error);
+      logger.error('#getMetadataFromTabUrl failed', error);
       return undefined;
     }
   }

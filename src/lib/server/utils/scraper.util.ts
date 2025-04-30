@@ -1,4 +1,4 @@
-import Fetcher from '$lib/utils/fetch';
+import Fetcher from '$lib/server/utils/fetcher.util';
 import { DOMParser } from '@xmldom/xmldom';
 
 class Scraper {

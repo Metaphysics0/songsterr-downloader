@@ -1,5 +1,5 @@
 import { SONGSTERR_BASE_URL } from '$lib/constants';
-import Fetcher from '$lib/utils/fetch';
+import Fetcher from '$lib/server/utils/fetcher.util';
 import { kebabCase } from 'lodash-es';
 
 export class SongsterrSearchService {
@@ -15,7 +15,7 @@ export class SongsterrSearchService {
   }
 
   private createSongsterrSearchUrl(searchText: string) {
-    const baseUrl = `${SONGSTERR_BASE_URL}/api/songs?size=${this.MAX_SEARCH_RESULTS}&pattern=`;
+    const baseUrl = `${SONGSTERR_BASE_URL}/api/songs?size=${this.MAX_SEARCH_RESULTS_LIMIT}&pattern=`;
     return baseUrl + searchText;
   }
 
@@ -28,5 +28,5 @@ export class SongsterrSearchService {
     return urlPrefix + urlSuffix + `-s${searchResult.songId}`;
   }
 
-  private MAX_SEARCH_RESULTS = 50;
+  private readonly MAX_SEARCH_RESULTS_LIMIT = 50;
 }
