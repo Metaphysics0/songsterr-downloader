@@ -3,6 +3,7 @@ import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from '../scraper';
 import { env } from '$env/dynamic/private';
+
 export async function getSearchResultFromSongsterrUrl(
   songsterrUrl: string
 ): Promise<IPartialSearchResult> {
