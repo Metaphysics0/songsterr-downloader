@@ -10,7 +10,7 @@
   import { isUrlFromSongsterr } from '$lib/utils/url';
   import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
   import { sample } from 'lodash-es';
-  import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url.constant';
+  import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url';
   import { toastError } from '$lib/utils/toast.util';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
@@ -19,11 +19,15 @@
     selectedSong = value;
   });
 
-  function checkIfInputIsValid(event: Event): void {
+  function setInputValidity(event: Event): void {
     const { value } = event.target as HTMLInputElement;
     isValid = isUrlFromSongsterr(value);
 
-    clearValidationMessage(event);
+    if (!isValid) {
+      setValidationMessage(event);
+    } else {
+      clearValidationMessage(event);
+    }
   }
 
   let isValid: boolean = false;
@@ -68,7 +72,7 @@
         pattern={SONGSTERR_URL_REGEX_PATTERN.source}
         required
         on:invalid={setValidationMessage}
-        on:input={checkIfInputIsValid}
+        on:input={setInputValidity}
         placeholder={sample(placeholderSongUrls)}
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2 text-center"
       />
