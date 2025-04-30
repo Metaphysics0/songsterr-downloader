@@ -36,18 +36,6 @@ export const apiService = {
           ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
         }
       });
-    },
-    fromUltimateGuitar(
-      searchResult: ISearchResult | IPartialSearchResult
-    ): Promise<SongsterrDownloadResponse> {
-      return fetchAndReturnJson({
-        endpoint: 'download/ultimate-guitar',
-        method: 'POST',
-        params: {
-          songTitle: searchResult.title,
-          ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
-        }
-      });
     }
   },
   song_info: {

@@ -10,12 +10,6 @@
 
   async function downloadTab(): Promise<void> {
     try {
-      if (selectedSong.fromUltimateGuitar) {
-        const resp = await apiService.download.fromUltimateGuitar(selectedSong);
-        triggerFileDownloadFromSongsterrResponse(resp);
-        return;
-      }
-
       if (selectedSong.source) {
         const resp = await apiService.download.bySource(selectedSong);
         triggerFileDownloadFromSongsterrResponse(resp);

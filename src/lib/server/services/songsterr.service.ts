@@ -1,3 +1,4 @@
+import Fetcher from '$lib/utils/fetch';
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { KvService } from '../cache/kv';
@@ -55,6 +56,25 @@ export async function getDownloadLinkFromSongId(
   return '';
 }
 
+export async function getDownloadLinksFromRevisions(
+  songId: string | number
+): Promise<string> {
+  const revisionsResponse = await new Fetcher({
+    withBrowserLikeHeaders: true
+  }).getRevisionsWithCookies(songId.toString());
+  console.log('RESPONSE', revisionsResponse[0]);
+
+  return getFirstDownloadLinkFromRevisions(
+    revisionsResponse as SongsterrRevisionsResponse
+  );
+}
+
+export function getFirstDownloadLinkFromRevisions(
+  revisions: SongsterrRevisionsResponse
+) {
+  return revisions[0].source;
+}
+
 async function attemptToGrabDownloadLinkFromSource(
   url: string
 ): Promise<string> {
@@ -100,6 +120,9 @@ export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
 const urlBuilder = {
   bySongId(songId: string | number) {
     return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
+  },
+  bySongIdWithRevisions(songId: string | number) {
+    return `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`;
   }
 };
 

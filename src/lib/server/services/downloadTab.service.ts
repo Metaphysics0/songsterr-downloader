@@ -1,7 +1,7 @@
 import Fetcher from '$lib/utils/fetch';
 import {
   buildFileNameFromSongName,
-  getDownloadLinkFromSongId,
+  getDownloadLinksFromRevisions,
   getSearchResultFromSongsterrUrl
 } from './songsterr.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
@@ -9,7 +9,6 @@ import { BULK_DOWNLOAD_SECRET } from '$env/static/private';
 import { BulkDownloadService } from './bulkDownload.service';
 import { normalize } from '$lib/utils/string';
 import type { DownloadTabType } from '$lib/types/downloadType';
-import { UltimateGuitarService } from './ultimateGuitar.service';
 import { ParamsHelper } from '../utils/params';
 import { logger } from '$lib/utils/logger';
 
@@ -27,9 +26,6 @@ export class DownloadTabService {
     }
     if (this.downloadTabType === 'bulk') {
       return this.bulk(request);
-    }
-    if (this.downloadTabType === 'ultimate-guitar') {
-      return this.fromUltimateGuitar(request);
     }
 
     throw new Error(`Unsupported download type: ${this.downloadTabType}`);
@@ -60,7 +56,9 @@ export class DownloadTabService {
         });
       }
     }
-    const link = await getDownloadLinkFromSongId(songId);
+
+    // const link = await getDownloadLinkFromSongId(songId);
+    const link = await getDownloadLinksFromRevisions(songId);
     if (!link) {
       throw new Error(`Unable to find download link from song: ${songTitle}`);
     }
@@ -91,6 +89,8 @@ export class DownloadTabService {
       const zip = await new BulkDownloadService(artistId).getZipFileOfAllTabs();
 
       return this.createDownloadResponse({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         buffer: zip.toBuffer(),
         fileName: `${normalize(artistName)}-tabs`,
         contentType: 'application/zip'
@@ -101,24 +101,6 @@ export class DownloadTabService {
         "Bulk upload failed, contact me and I'll resolve it immediately"
       );
     }
-  }
-
-  private async fromUltimateGuitar(request: Request) {
-    const { byLinkUrl } = await request.json();
-
-    if (!byLinkUrl) {
-      throw new Error('required param byLinkUrl not present');
-    }
-
-    const service = new UltimateGuitarService(byLinkUrl);
-    const { buffer } = await service.download();
-
-    return {
-      fromUltimateGuitar: true,
-      file: convertArrayBufferToArray(buffer),
-      fileName: service.fileNameFromUrl,
-      contentType: 'application/gp'
-    };
   }
 
   private createDownloadResponse({
