@@ -34,6 +34,11 @@ export default class Fetcher {
     return response.json();
   }
 
+  async fetchAndReturnText(url: string) {
+    const response = await this.fetch(url);
+    return response.text();
+  }
+
   get options() {
     return {
       headers: this.headers

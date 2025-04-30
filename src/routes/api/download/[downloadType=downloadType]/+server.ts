@@ -1,8 +1,7 @@
-import { jsonWithCors } from '$lib/server/cors';
 import { DownloadTabService } from '$lib/server/services/download-tab.service';
 import type { DownloadTabType } from '$lib/types/downloadType';
 import { logger } from '$lib/utils/logger';
-import type { RequestHandler } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const POST = (async ({ request, params }) => {
   const service = new DownloadTabService(
@@ -13,5 +12,5 @@ export const POST = (async ({ request, params }) => {
 
   const response = await service.download(request);
 
-  return jsonWithCors(request, response);
+  return json(response);
 }) satisfies RequestHandler;
