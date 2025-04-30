@@ -59,7 +59,7 @@ export async function getDownloadLinkFromRevisions(
     await fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
       headers: {
         ...fetcher.browserLikeHeaders,
-        Cookie: `SongsterrT=${env.TEMP_SONGSTERR_T_COOKIE}`
+        Cookie: `SongsterrT=${env.TEMP_SONGSTERR_COOKIE}`
       }
     });
 
