@@ -1,6 +1,5 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { toast } from '@zerodevx/svelte-toast';
   import { selectedSongToDownload } from '../../stores/selected-song.store';
   import {
     setValidationMessage,
@@ -12,8 +11,10 @@
   import SelectedSongSkeleton from '../general/SelectedSongSkeleton.svelte';
   import { sample } from 'lodash-es';
   import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url.constant';
+  import { toastError } from '$lib/utils/toast.util';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
+
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;
   });
@@ -38,35 +39,23 @@
   <form
     class="flex flex-col items-center"
     method="POST"
-    action="?/getSelectedSongFromUrl"
+    action="?/getSongsterrMetadataFromSongsterrUrl"
     use:enhance={({ formData }) => {
       const byLinkUrl = formData.get('url');
 
       isLoading = true;
       return async ({ result, update }) => {
         isLoading = false;
-        const {
-          error,
-          searchResult
-          // @ts-ignore
-        } = result?.data || {};
+        // @ts-ignore
+        const songMetadata = result?.data || {};
 
-        if (error) {
-          toast.push('Error finding song data from URL 😭', {
-            theme: {
-              '--toastBarHeight': 0,
-              '--toastBackground': '#ef4444',
-              '--toastBarBackground': '#7f1d1d'
-            }
-          });
-          console.error('result error', error);
+        if (!songMetadata) {
+          toastError('Error finding song data from URL 😭');
+          console.error('result error', result);
           return;
         }
 
-        selectedSongToDownload.set({
-          ...searchResult,
-          byLinkUrl
-        });
+        selectedSongToDownload.set({ ...songMetadata, byLinkUrl });
         update({ reset: false });
       };
     }}

@@ -3,23 +3,17 @@
   import { commonCssClasses } from '$lib/utils/css';
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
   import SelectedSong from './SelectedSong.svelte';
-  import { toast } from '@zerodevx/svelte-toast';
   import { selectedSongToDownload } from '../../stores/selected-song.store';
-
+  import { toastError } from '$lib/utils/toast.util';
   export let selectedSong: ISearchResult | IPartialSearchResult;
 
   async function downloadTab(): Promise<void> {
     try {
-      if (selectedSong.source) {
-        const resp = await apiService.download.bySource(selectedSong);
-        triggerFileDownloadFromSongsterrResponse(resp);
-        return;
-      }
-
-      const resp = await apiService.download.bySearchResult(selectedSong);
+      const apiMethod = selectedSong.source ? 'bySource' : 'bySearchResult';
+      const resp = await apiService.download[apiMethod](selectedSong);
       triggerFileDownloadFromSongsterrResponse(resp);
     } catch (error) {
-      toast.push('Error downloading tab 😭');
+      toastError('Error downloading tab 😭');
       console.error('error', error);
     }
   }

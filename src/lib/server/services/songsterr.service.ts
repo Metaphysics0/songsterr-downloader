@@ -4,7 +4,7 @@ import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from '../utils/scraper.util';
 import { env } from '$env/dynamic/private';
 
-export async function getSearchResultFromSongsterrUrl(
+export async function getSongsterrMetadataFromSongsterrUrl(
   songsterrUrl: string
 ): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
@@ -13,18 +13,7 @@ export async function getSearchResultFromSongsterrUrl(
   return getSongsterrMetadataFromDocument(doc);
 }
 
-function getSongsterrMetadataFromDocument(doc: Document) {
-  try {
-    const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
-    // @ts-ignore
-    return JSON.parse(metadataScript).meta.current;
-  } catch (error) {
-    logger.error('error parsing metadata', error);
-    throw new Error('Error reading tab data');
-  }
-}
-
-export async function getDownloadLinkFromRevisions(
+export async function getGuitarProDownloadLinkFromSongId(
   songId: string | number
 ): Promise<string> {
   const fetcher = new Fetcher({ withBrowserLikeHeaders: true });
@@ -66,3 +55,14 @@ const urlBuilder = {
     return `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`;
   }
 };
+
+function getSongsterrMetadataFromDocument(doc: Document) {
+  try {
+    const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
+    // @ts-ignore
+    return JSON.parse(metadataScript).meta.current;
+  } catch (error) {
+    logger.error('error parsing metadata', error);
+    throw new Error('Error reading tab data');
+  }
+}

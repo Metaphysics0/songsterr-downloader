@@ -1,15 +1,12 @@
 import Fetcher from '$lib/utils/fetch';
 import {
   buildFileNameFromSongName,
-  getDownloadLinkFromRevisions,
-  getSearchResultFromSongsterrUrl
+  getGuitarProDownloadLinkFromSongId
 } from './songsterr.service';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import type { DownloadTabType } from '$lib/types/downloadType';
-import { logger } from '$lib/utils/logger';
 
 export class DownloadTabService {
-  private readonly fetcher = new Fetcher();
   constructor(private readonly downloadTabType: DownloadTabType) {}
 
   async download(request: Request): Promise<DownloadResponse> {
@@ -34,28 +31,17 @@ export class DownloadTabService {
   }
 
   private async bySearchResult(request: Request) {
-    const { songId, songTitle, byLinkUrl } = await request.json();
-    if (byLinkUrl) {
-      logger.log(
-        `downloadTabService - bySearchResult - Getting tab from url: ${byLinkUrl}`
-      );
-      const { source } = await getSearchResultFromSongsterrUrl(byLinkUrl);
-      if (source) {
-        return this.bySource({} as Request, {
-          requestParams: { songTitle, source }
-        });
-      }
-    }
+    const { songId, songTitle } = await request.json();
 
-    const link = await getDownloadLinkFromRevisions(songId);
-    if (!link) {
+    const guitarProLink = await getGuitarProDownloadLinkFromSongId(songId);
+    if (!guitarProLink) {
       throw new Error(`Unable to find download link from song: ${songTitle}`);
     }
 
     const { buffer, contentType } =
-      await this.fetcher.fetchAndReturnArrayBuffer(link);
+      await this.fetcher.fetchAndReturnArrayBuffer(guitarProLink);
 
-    const fileName = buildFileNameFromSongName(songTitle, link);
+    const fileName = buildFileNameFromSongName(songTitle, guitarProLink);
     return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
@@ -74,6 +60,8 @@ export class DownloadTabService {
       contentType
     };
   }
+
+  private readonly fetcher = new Fetcher();
 }
 
 interface DownloadResponse {
