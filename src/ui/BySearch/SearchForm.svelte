@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { apiService } from '$lib/apiService';
-  import { cssClasses } from '$lib/sharedCssClasses';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
+  import { apiService } from '$lib/utils/api';
+  import { commonCssClasses } from '$lib/utils/css';
+  import { selectedSongToDownload } from '../../stores/selected-song.store';
   import SearchResults from './SearchResults.svelte';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
@@ -51,7 +51,7 @@
     on:keyup={debounceThenSearch}
     placeholder="Metallica"
     id="artistNameSearch"
-    class={cssClasses.textInput}
+    class={commonCssClasses.textInput}
   />
 </label>
 <SearchResults {searchResults} isLoading={isPromiseInProgress} />

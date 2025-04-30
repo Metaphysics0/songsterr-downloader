@@ -1,17 +1,17 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import { toast } from '@zerodevx/svelte-toast';
-  import { selectedSongToDownload } from '../../stores/selectedSong';
+  import { selectedSongToDownload } from '../../stores/selected-song.store';
   import {
     setValidationMessage,
     clearValidationMessage
   } from '../../lib/utils/html-input';
   import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
-  import { SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN } from '$lib/constants';
-  import { isUrlFromSongsterr, isUrlFromUltimateGuitar } from '$lib/utils/url';
-  import SelectedSongSkeleton from '../common/skeletons/SelectedSongSkeleton.svelte';
+  import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
+  import { isUrlFromSongsterr } from '$lib/utils/url';
+  import SelectedSongSkeleton from '../general/SelectedSongSkeleton.svelte';
   import { sample } from 'lodash-es';
-  import { placeholderSongUrls } from '$lib/constants/placeholderSongUrls';
+  import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url.constant';
 
   let selectedSong: ISearchResult | IPartialSearchResult | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -20,7 +20,7 @@
 
   function checkIfInputIsValid(event: Event): void {
     const { value } = event.target as HTMLInputElement;
-    isValid = isUrlFromSongsterr(value) || isUrlFromUltimateGuitar(value);
+    isValid = isUrlFromSongsterr(value);
 
     clearValidationMessage(event);
   }
@@ -76,7 +76,7 @@
       <input
         type="url"
         name="url"
-        pattern={SONGSTERR_OR_ULTIMATE_GUITAR_URL_REGEX_PATTERN.source}
+        pattern={SONGSTERR_URL_REGEX_PATTERN.source}
         required
         on:invalid={setValidationMessage}
         on:input={checkIfInputIsValid}

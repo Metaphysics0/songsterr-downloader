@@ -1,21 +1,14 @@
 import { getSearchResultFromSongsterrUrl } from '$lib/server/services/songsterr.service';
 import { logger } from '$lib/utils/logger';
-import { isUrlFromSongsterr, isUrlFromUltimateGuitar } from '$lib/utils/url';
-import { createGetMockSearchResultResponse } from '$lib/mocks';
+import { isUrlFromSongsterr } from '$lib/utils/url';
 import type { Actions } from './$types';
-import { UltimateGuitarService } from '$lib/server/services/ultimateGuitar.service';
-import { startCase } from 'lodash-es';
+import { mockSearchResult } from '$lib/mocks/search-result.mock';
 
 export const actions = {
   getSelectedSongFromUrl: async ({
     request
   }): Promise<GetSelectedSongFromUrlResponse> => {
     const url = await getUrlParam(request);
-
-    if (isUrlFromUltimateGuitar(url)) {
-      // @ts-ignore
-      return searchResultFromUltimateGuitar(url!);
-    }
 
     try {
       if (!isUrlFromSongsterr(url))
@@ -28,7 +21,7 @@ export const actions = {
       logger.error('#getSelectedSongFromUrl failed', error);
 
       return {
-        searchResult: createGetMockSearchResultResponse(),
+        searchResult: mockSearchResult,
         error: 'failed getting download link'
       };
     }
@@ -38,15 +31,4 @@ export const actions = {
 async function getUrlParam(request: Request): Promise<string | undefined> {
   const data = await request.formData();
   return data.get('url')?.toString();
-}
-
-function searchResultFromUltimateGuitar(url: string) {
-  const { songMetadataFromUrl } = new UltimateGuitarService(url!);
-  return {
-    searchResult: {
-      title: startCase(songMetadataFromUrl.songName!),
-      artist: startCase(songMetadataFromUrl.artist!),
-      fromUltimateGuitar: true
-    }
-  };
 }

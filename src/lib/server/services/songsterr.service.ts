@@ -1,12 +1,11 @@
+import Fetcher from '$lib/utils/fetch';
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
-import { KvService } from '../cache/kv';
 import { scraper } from '../scraper';
-import { BulkDownloadService } from './bulkDownload.service';
+import { env } from '$env/dynamic/private';
 
 export async function getSearchResultFromSongsterrUrl(
-  songsterrUrl: string,
-  options?: GetSearchResultOptions
+  songsterrUrl: string
 ): Promise<IPartialSearchResult> {
   const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
   if (!doc) {
@@ -14,17 +13,13 @@ export async function getSearchResultFromSongsterrUrl(
   }
 
   const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
-  const bulkSongsToDownload = options?.withBulkSongsToDownload
-    ? await getSongsToBulkDownloadFromArtistId(artistId)
-    : [];
 
   return {
     songId,
     artistId,
     title,
     artist,
-    source,
-    bulkSongsToDownload
+    source
   };
 }
 
@@ -55,6 +50,26 @@ export async function getDownloadLinkFromSongId(
   return '';
 }
 
+export async function getDownloadLinkFromRevisions(
+  songId: string | number
+): Promise<string> {
+  const fetcher = new Fetcher({ withBrowserLikeHeaders: true });
+  const url = urlBuilder.bySongIdWithRevisions(songId);
+  const revisions =
+    await fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
+      headers: {
+        ...fetcher.browserLikeHeaders,
+        Cookie: `SongsterrT=${env.TEMP_SONGSTERR_COOKIE}`
+      }
+    });
+
+  const firstRevisionWithSource = revisions.find(
+    (revision: any) => revision.source
+  );
+
+  return firstRevisionWithSource?.source || '';
+}
+
 async function attemptToGrabDownloadLinkFromSource(
   url: string
 ): Promise<string> {
@@ -62,7 +77,6 @@ async function attemptToGrabDownloadLinkFromSource(
   return source || '';
 }
 
-// helpers
 export function buildFileNameFromSongName(
   songName: string,
   downloadUrl: string
@@ -79,7 +93,6 @@ export function buildFileNameFromSongName(
 
 export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
   const title = doc.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-  // return '';
   if (!title) {
     return {
       artist: 'Unknown',
@@ -100,6 +113,9 @@ export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
 const urlBuilder = {
   bySongId(songId: string | number) {
     return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
+  },
+  bySongIdWithRevisions(songId: string | number) {
+    return `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`;
   }
 };
 
@@ -107,40 +123,4 @@ function findGuitarProTabLinkFromXml(xml: Document) {
   return xml
     .getElementsByTagName('guitarProTab')[0]
     .getElementsByTagName('attachmentUrl')[0].firstChild?.nodeValue;
-}
-
-export async function getSongsToBulkDownloadFromArtistId(
-  artistId: string
-): Promise<any[]> {
-  if (!artistId) return [];
-
-  const kvService = new KvService();
-
-  const cachedResults = await kvService.getBulkSongsToDownload(artistId);
-  if (cachedResults?.length) return cachedResults;
-
-  try {
-    const results = await new BulkDownloadService(
-      artistId
-    ).getSongIdsAndSongTitlesFromArtist();
-
-    await kvService.setBulkSongsToDownload(artistId, results);
-
-    return results;
-  } catch (error) {
-    logger.error(
-      `Error getting bulk songs to download from artist id: ${artistId}`,
-      error
-    );
-    return [];
-  }
-}
-
-export interface IDownloadLinkResponse {
-  downloadLink: string;
-  songTitle: ISelectedSongTitle;
-}
-
-export interface GetSearchResultOptions {
-  withBulkSongsToDownload?: boolean;
 }

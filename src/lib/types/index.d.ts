@@ -29,7 +29,6 @@ interface ISearchResult {
   hasChords: boolean;
   defaultTrack: number;
   source?: string;
-  fromUltimateGuitar?: boolean;
 
   bulkSongsToDownload?: { title: string }[];
 }
@@ -38,7 +37,6 @@ interface IPartialSearchResult {
   title: string;
   songId: number;
   artistId: number;
-  fromUltimateGuitar?: boolean;
   artist: string;
   source?: string;
   byLinkUrl?: string;
@@ -58,4 +56,43 @@ interface IArtistTrack {
   dailyViews: number;
   views: number;
   difficulty?: string;
+}
+
+type SongsterrRevisionsResponse = SongsterrRevisionsItem[];
+
+interface SongsterrRevisionsItem {
+  songId: number;
+  revisionId: number;
+  createdAt: string;
+  artist: string;
+  title: string;
+  author: Author;
+  description: string;
+  tracksCount: number;
+  commentsCount: number;
+  isDeleted: boolean;
+  isBlocked: boolean;
+  isOnModeration: boolean;
+  reports: any[];
+  gpImport: boolean;
+  aiGenerated: boolean;
+  createdVia: string;
+  person: string;
+  personId: number;
+  descriptionLang: string;
+  source: string;
+  moderationType: string;
+  reviewed: Reviewed;
+}
+
+interface Reviewed {
+  person: string;
+  conclusion: string;
+  createdAt: string;
+}
+
+interface Author {
+  personId: number;
+  name: string;
+  isModerator: boolean;
 }
