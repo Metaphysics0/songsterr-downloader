@@ -1,20 +1,25 @@
 import Fetcher from '$lib/server/utils/fetcher.util';
 import { convertArrayBufferToArray } from '$lib/utils/array';
-import type { DownloadTabType } from '$lib/types/downloadType';
+import type { SupportedTabDownloadType } from '$lib/types/supported-tab-download-type';
 import { SongsterrService } from './songsterr.service';
+import { SongsterrDownloadResponse } from '$lib/types';
 
 export class DownloadTabService {
-  constructor(private readonly downloadTabType: DownloadTabType) {}
+  constructor(
+    private readonly SupportedTabDownloadType: SupportedTabDownloadType
+  ) {}
 
-  async download(request: Request): Promise<DownloadResponse> {
-    if (this.downloadTabType === 'bySearchResult') {
+  async download(request: Request): Promise<SongsterrDownloadResponse> {
+    if (this.SupportedTabDownloadType === 'bySearchResult') {
       return this.bySearchResult(request);
     }
-    if (this.downloadTabType === 'bySource') {
+    if (this.SupportedTabDownloadType === 'bySource') {
       return this.bySource(request);
     }
 
-    throw new Error(`Unsupported download type: ${this.downloadTabType}`);
+    throw new Error(
+      `Unsupported download type: ${this.SupportedTabDownloadType}`
+    );
   }
 
   private async bySource(request: Request, options: BySourceOptions = {}) {
@@ -57,7 +62,7 @@ export class DownloadTabService {
     buffer: ArrayBuffer;
     fileName: string;
     contentType?: string;
-  }): DownloadResponse {
+  }): SongsterrDownloadResponse {
     return {
       file: convertArrayBufferToArray(buffer),
       fileName,
@@ -67,12 +72,6 @@ export class DownloadTabService {
 
   private readonly fetcher = new Fetcher();
   private readonly songsterrService = new SongsterrService();
-}
-
-interface DownloadResponse {
-  file: number[];
-  fileName: string;
-  contentType: string;
 }
 
 interface BySourceOptions {

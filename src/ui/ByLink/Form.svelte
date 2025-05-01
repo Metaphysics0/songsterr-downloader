@@ -12,8 +12,9 @@
   import { sample } from 'lodash-es';
   import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url';
   import { toastError } from '$lib/utils/toast.util';
+  import { SongsterrPartialMetadata } from '$lib/types';
 
-  let selectedSong: ISearchResult | IPartialSearchResult | undefined;
+  let selectedSong: SongsterrPartialMetadata | undefined;
 
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;

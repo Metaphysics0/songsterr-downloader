@@ -1,7 +1,8 @@
 <script lang="ts">
   import { selectedSongToDownload } from '../../stores/selected-song.store';
+  import { SongsterrPartialMetadata } from '$lib/types';
 
-  export let searchResult: ISearchResult;
+  export let searchResult: SongsterrPartialMetadata;
   export let index: number = 0;
 </script>
 

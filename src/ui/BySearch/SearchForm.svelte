@@ -3,13 +3,14 @@
   import { commonCssClasses } from '$lib/utils/css';
   import { selectedSongToDownload } from '../../stores/selected-song.store';
   import SearchResults from './SearchResults.svelte';
+  import { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
 
-  let selectedSong: ISearchResult | IPartialSearchResult | undefined;
+  let selectedSong: SongsterrPartialMetadata | undefined;
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;
   });
 
-  let searchResults: ISearchResult[] = [];
+  let searchResults: SongsterrMetadata[] = [];
   async function search(inputText: string): Promise<void> {
     try {
       const { searchResults: searchResultsFromResponse } =
@@ -23,7 +24,7 @@
     }
   }
 
-  const withGuitarProFile = (searchResult: ISearchResult) =>
+  const withGuitarProFile = (searchResult: SongsterrMetadata) =>
     searchResult.hasPlayer;
 
   const debounceDurationInMs = 150;

@@ -2,11 +2,12 @@ import { logger } from '$lib/utils/logger';
 import { isUrlFromSongsterr } from '$lib/utils/url';
 import type { Actions } from './$types';
 import { SongsterrService } from '$lib/server/services/songsterr.service';
+import { SongsterrPartialMetadata } from '$lib/types';
 
 export const actions = {
   getMetadataFromTabUrl: async ({
     request
-  }): Promise<IPartialSearchResult | undefined> => {
+  }): Promise<SongsterrPartialMetadata | undefined> => {
     try {
       const url = await getUrlParam(request);
       if (!isUrlFromSongsterr(url)) {

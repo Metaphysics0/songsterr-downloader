@@ -1,39 +1,39 @@
-interface SongsterrDownloadResponse {
+export interface SongsterrDownloadResponse {
   file: number[];
   fileName: string;
   contentType: string;
 }
 
-interface ISelectedSongResponse {
+export interface SongsterrSelectedResponse {
   downloadLink: string;
-  selectedSong: ISearchResult;
-  songTitle: ISelectedSongTitle;
+  selectedSong: SongsterrMetadata;
+  songTitle: SongsterrTitle;
 }
 
-interface ISelectedSongTitle {
+export interface SongsterrTitle {
   artist: string;
   songName: string;
 }
 
-interface ISearchResultResponse {
-  searchResults: ISearchResult[];
+export interface SongsterrMetadataResponse {
+  metadata: SongsterrMetadata[];
 }
-interface ISearchResult {
+
+export interface SongsterrMetadata {
   hasPlayer: boolean;
   artist: string;
   artistId: number;
   title: string;
   songId: number;
   byLinkUrl?: string;
-  tracks: IArtistTrack[];
+  tracks: SongsterrTrack[];
   hasChords: boolean;
   defaultTrack: number;
   source?: string;
-
   bulkSongsToDownload?: { title: string }[];
 }
 
-interface IPartialSearchResult {
+export interface SongsterrPartialMetadata {
   title: string;
   songId: number;
   artistId: number;
@@ -43,13 +43,13 @@ interface IPartialSearchResult {
   bulkSongsToDownload?: { title: string }[];
 }
 
-interface GetSelectedSongFromUrlResponse {
-  searchResult: IPartialSearchResult;
+export interface GetSongFromUrlResponse {
+  metadata: SongsterrPartialMetadata;
   existingDownloadLink?: string | null | undefined;
   error?: any;
 }
 
-interface IArtistTrack {
+export interface SongsterrTrack {
   tuning?: number[];
   tuningString?: string;
   instrumentId: number;
@@ -58,15 +58,15 @@ interface IArtistTrack {
   difficulty?: string;
 }
 
-type SongsterrRevisionsResponse = SongsterrRevisionsItem[];
+export type SongsterrRevisionsResponse = SongsterrRevisionsItem[];
 
-interface SongsterrRevisionsItem {
+export interface SongsterrRevisionsItem {
   songId: number;
   revisionId: number;
   createdAt: string;
   artist: string;
   title: string;
-  author: Author;
+  author: SongsterrAuthor;
   description: string;
   tracksCount: number;
   commentsCount: number;
@@ -82,16 +82,16 @@ interface SongsterrRevisionsItem {
   descriptionLang: string;
   source: string;
   moderationType: string;
-  reviewed: Reviewed;
+  reviewed: SongsterrReviewed;
 }
 
-interface Reviewed {
+export interface SongsterrReviewed {
   person: string;
   conclusion: string;
   createdAt: string;
 }
 
-interface Author {
+export interface SongsterrAuthor {
   personId: number;
   name: string;
   isModerator: boolean;

@@ -1,4 +1,6 @@
-function createGetMockSearchResultResponse(): IPartialSearchResult {
+import { SongsterrPartialMetadata } from '$lib/types';
+
+function createGetMockSearchResultResponse(): SongsterrPartialMetadata {
   return {
     songId: 0,
     artistId: 0,
