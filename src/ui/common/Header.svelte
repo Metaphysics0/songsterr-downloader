@@ -2,7 +2,7 @@
   import {
     activeTabMenuIndex,
     type ITabMenuIndex
-  } from '../../stores/tab-menu.store';
+  } from '../../lib/stores/tab-menu.store';
   import { page } from '$app/stores';
   import Link from './Link.svelte';
 

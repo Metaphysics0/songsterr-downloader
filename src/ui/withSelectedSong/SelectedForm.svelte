@@ -3,9 +3,11 @@
   import { commonCssClasses } from '$lib/utils/css';
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
   import SelectedSong from './SelectedSong.svelte';
-  import { selectedSongToDownload } from '../../stores/selected-song.store';
+  import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
   import { toastError } from '$lib/utils/toast.util';
-  export let selectedSong: ISearchResult | IPartialSearchResult;
+  import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
+
+  export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
 
   async function downloadTab(): Promise<void> {
     try {

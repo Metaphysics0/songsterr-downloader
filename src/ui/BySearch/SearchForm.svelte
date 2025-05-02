@@ -1,9 +1,9 @@
 <script lang="ts">
+  import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
   import { apiService } from '$lib/utils/api';
   import { commonCssClasses } from '$lib/utils/css';
-  import { selectedSongToDownload } from '../../stores/selected-song.store';
+  import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
   import SearchResults from './SearchResults.svelte';
-  import { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
 
   let selectedSong: SongsterrPartialMetadata | undefined;
   selectedSongToDownload.subscribe((value) => {
@@ -13,7 +13,7 @@
   let searchResults: SongsterrMetadata[] = [];
   async function search(inputText: string): Promise<void> {
     try {
-      const { searchResults: searchResultsFromResponse } =
+      const { metadata: searchResultsFromResponse } =
         await apiService.search.bySongOrArtist(inputText);
 
       searchResults = searchResultsFromResponse.filter(withGuitarProFile);

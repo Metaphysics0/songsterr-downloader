@@ -1,5 +1,5 @@
 import { pick } from 'lodash-es';
-import {
+import type {
   SongsterrMetadataResponse,
   SongsterrDownloadResponse,
   SongsterrPartialMetadata

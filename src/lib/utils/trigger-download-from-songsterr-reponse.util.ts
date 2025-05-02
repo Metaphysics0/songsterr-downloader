@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { SongsterrDownloadResponse } from '$lib/types';
+import type { SongsterrDownloadResponse } from '$lib/types';
 
 export function triggerFileDownloadFromSongsterrResponse(
   res: SongsterrDownloadResponse

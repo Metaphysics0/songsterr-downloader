@@ -1,7 +1,9 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { selectedSongToDownload } from '../../stores/selected-song.store';
-  export let selectedSong: ISearchResult | IPartialSearchResult;
+  import { selectedSongToDownload } from '$lib/stores/selected-song.store';
+  import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
+
+  export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
 
   function deselectSong(): void {
     selectedSongToDownload.set(undefined);
