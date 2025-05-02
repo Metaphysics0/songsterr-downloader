@@ -1,13 +1,15 @@
 import { pick } from 'lodash-es';
 import type {
-  SongsterrMetadataResponse,
+  SongsterrSearchMetadataResponse,
   SongsterrDownloadResponse,
   SongsterrPartialMetadata
 } from '$lib/types';
 
 export const apiService = {
   search: {
-    bySongOrArtist(searchText: string): Promise<SongsterrMetadataResponse> {
+    bySongOrArtist(
+      searchText: string
+    ): Promise<SongsterrSearchMetadataResponse> {
       return fetchAndReturnJson({
         endpoint: 'search',
         method: 'POST',

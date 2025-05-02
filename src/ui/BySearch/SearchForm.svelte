@@ -13,7 +13,7 @@
   let searchResults: SongsterrMetadata[] = [];
   async function search(inputText: string): Promise<void> {
     try {
-      const { metadata: searchResultsFromResponse } =
+      const { searchResults: searchResultsFromResponse } =
         await apiService.search.bySongOrArtist(inputText);
 
       searchResults = searchResultsFromResponse.filter(withGuitarProFile);

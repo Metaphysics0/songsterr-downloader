@@ -15,8 +15,8 @@ export interface SongsterrTitle {
   songName: string;
 }
 
-export interface SongsterrMetadataResponse {
-  metadata: SongsterrMetadata[];
+export interface SongsterrSearchMetadataResponse {
+  searchResults: SongsterrMetadata[];
 }
 
 export interface SongsterrMetadata {
