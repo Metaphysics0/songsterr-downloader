@@ -1,7 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { toast } from '@zerodevx/svelte-toast';
-  import { selectedSongToDownload } from '../../stores/selected-song.store';
+  import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
   import {
     setValidationMessage,
     clearValidationMessage
@@ -9,20 +8,27 @@
   import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
   import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
   import { isUrlFromSongsterr } from '$lib/utils/url';
-  import SelectedSongSkeleton from '../general/SelectedSongSkeleton.svelte';
+  import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
   import { sample } from 'lodash-es';
-  import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url.constant';
+  import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url';
+  import { toastError } from '$lib/utils/toast.util';
+  import type { SongsterrPartialMetadata } from '$lib/types';
 
-  let selectedSong: ISearchResult | IPartialSearchResult | undefined;
+  let selectedSong: SongsterrPartialMetadata | undefined;
+
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;
   });
 
-  function checkIfInputIsValid(event: Event): void {
+  function setInputValidity(event: Event): void {
     const { value } = event.target as HTMLInputElement;
     isValid = isUrlFromSongsterr(value);
 
-    clearValidationMessage(event);
+    if (!isValid) {
+      setValidationMessage(event);
+    } else {
+      clearValidationMessage(event);
+    }
   }
 
   let isValid: boolean = false;
@@ -38,35 +44,23 @@
   <form
     class="flex flex-col items-center"
     method="POST"
-    action="?/getSelectedSongFromUrl"
+    action="?/getMetadataFromTabUrl"
     use:enhance={({ formData }) => {
       const byLinkUrl = formData.get('url');
 
       isLoading = true;
       return async ({ result, update }) => {
         isLoading = false;
-        const {
-          error,
-          searchResult
-          // @ts-ignore
-        } = result?.data || {};
+        // @ts-ignore
+        const songMetadata = result?.data || {};
 
-        if (error) {
-          toast.push('Error finding song data from URL 😭', {
-            theme: {
-              '--toastBarHeight': 0,
-              '--toastBackground': '#ef4444',
-              '--toastBarBackground': '#7f1d1d'
-            }
-          });
-          console.error('result error', error);
+        if (!songMetadata) {
+          toastError('Error finding song data from URL 😭');
+          console.error('result error', result);
           return;
         }
 
-        selectedSongToDownload.set({
-          ...searchResult,
-          byLinkUrl
-        });
+        selectedSongToDownload.set({ ...songMetadata, byLinkUrl });
         update({ reset: false });
       };
     }}
@@ -79,7 +73,7 @@
         pattern={SONGSTERR_URL_REGEX_PATTERN.source}
         required
         on:invalid={setValidationMessage}
-        on:input={checkIfInputIsValid}
+        on:input={setInputValidity}
         placeholder={sample(placeholderSongUrls)}
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2 text-center"
       />

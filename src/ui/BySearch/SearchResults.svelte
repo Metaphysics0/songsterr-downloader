@@ -1,7 +1,8 @@
 <script lang="ts">
-  import SeachResult from './SeachResult.svelte';
+  import SearchResult from './SearchResult.svelte';
+  import type { SongsterrPartialMetadata } from '$lib/types';
 
-  export let searchResults: ISearchResult[] = [];
+  export let searchResults: SongsterrPartialMetadata[] = [];
   export let isLoading: boolean;
 
   let shouldShowLoadingIndicator = isLoading && searchResults.length === 0;
@@ -16,6 +17,6 @@
     <p>Loading...</p>
   {/if}
   {#each searchResults as searchResult, index}
-    <SeachResult {searchResult} index={index + 1} />
+    <SearchResult {searchResult} index={index + 1} />
   {/each}
 </dl>

@@ -1,126 +1,99 @@
-import Fetcher from '$lib/utils/fetch';
+import Fetcher from '$lib/server/utils/fetcher.util';
 import { logger } from '$lib/utils/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
-import { scraper } from '../scraper';
+import { scraper } from '../utils/scraper.util';
 import { env } from '$env/dynamic/private';
+import { SONGSTERR_BASE_URL } from '$lib/constants';
+import { kebabCase } from 'lodash-es';
+import {
+  SongsterrPartialMetadata,
+  SongsterrMetadata,
+  SongsterrRevisionsResponse
+} from '$lib/types';
 
-export async function getSearchResultFromSongsterrUrl(
-  songsterrUrl: string
-): Promise<IPartialSearchResult> {
-  const doc = await scraper.getDocumentFromUrl(songsterrUrl, 'html');
-  if (!doc) {
-    throw new Error('Unable to get page data from songsterr');
+export class SongsterrService {
+  async search(searchText: string): Promise<SongsterrMetadata[]> {
+    const url = this.createSearchUrl(searchText);
+    const searchResponse = await this.fetcher.fetchAndReturnJson<
+      SongsterrMetadata[]
+    >(url);
+
+    return searchResponse.map((metadata) => ({
+      ...metadata,
+      byLinkUrl: this.buildTabUrl(metadata)
+    }));
   }
 
-  const { songId, title, artist, source, artistId } = getMetadataFromDoc(doc);
+  async getMetadataFromTabUrl(
+    tabUrl: string
+  ): Promise<SongsterrPartialMetadata> {
+    const doc = await scraper.getDocumentFromUrl(tabUrl, 'html');
+    if (!doc) throw new Error('Unable to get page data from songsterr');
 
-  return {
-    songId,
-    artistId,
-    title,
-    artist,
-    source
-  };
-}
-
-function getMetadataFromDoc(doc: Document) {
-  try {
-    const metadataScript = doc.getElementById('state')?.childNodes[0].nodeValue;
-    // @ts-ignore
-    return JSON.parse(metadataScript).meta.current;
-  } catch (error) {
-    logger.error('error parsing metadata', error);
-    throw new Error('Error reading tab data');
+    return this.extractMetadataFromDocument(doc);
   }
-}
 
-export async function getDownloadLinkFromSongId(
-  songId: string | number,
-  fullUrl?: any
-): Promise<string> {
-  const url = urlBuilder.bySongId(songId);
-  try {
-    const xml = await scraper.getDocumentFromUrl(url, 'xml');
-    return findGuitarProTabLinkFromXml(xml) || '';
-  } catch (error) {
-    if (fullUrl) {
-      return attemptToGrabDownloadLinkFromSource(fullUrl.toString()) || '';
+  async getGuitarProDownloadLinkFromSongId(
+    songId: string | number
+  ): Promise<string> {
+    const url = this.urlBuilder.bySongIdWithRevisions(songId);
+
+    const revisions =
+      await this.fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
+        headers: {
+          ...this.fetcher.browserLikeHeaders,
+          Cookie: `SongsterrT=${env.TEMP_SONGSTERR_COOKIE}`
+        }
+      });
+
+    return revisions.find((revision) => revision.source)?.source || '';
+  }
+
+  buildFileNameFromSongName(songName: string, downloadUrl: string): string {
+    try {
+      const normalizedSongName = normalize(songName);
+      const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
+      return normalizedSongName + fileType;
+    } catch (error) {
+      logger.error('error creating filename from song name', error);
+      return `downloaded-tab_${Date.now()}.gp5`;
     }
   }
-  return '';
-}
 
-export async function getDownloadLinkFromRevisions(
-  songId: string | number
-): Promise<string> {
-  const fetcher = new Fetcher({ withBrowserLikeHeaders: true });
-  const url = urlBuilder.bySongIdWithRevisions(songId);
-  const revisions =
-    await fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
-      headers: {
-        ...fetcher.browserLikeHeaders,
-        Cookie: `SongsterrT=${env.TEMP_SONGSTERR_COOKIE}`
-      }
-    });
-
-  const firstRevisionWithSource = revisions.find(
-    (revision: any) => revision.source
-  );
-
-  return firstRevisionWithSource?.source || '';
-}
-
-async function attemptToGrabDownloadLinkFromSource(
-  url: string
-): Promise<string> {
-  const { source } = await getSearchResultFromSongsterrUrl(url);
-  return source || '';
-}
-
-export function buildFileNameFromSongName(
-  songName: string,
-  downloadUrl: string
-): string {
-  try {
-    const normalizedSongName = normalize(songName);
-    const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
-    return normalizedSongName + fileType;
-  } catch (error) {
-    logger.error('error creating filename from song name', error);
-    return `downloaded-tab_${Date.now()}.gp5`;
-  }
-}
-
-export function getSongTitleFromDocument(doc: Document): ISelectedSongTitle {
-  const title = doc.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-  if (!title) {
-    return {
-      artist: 'Unknown',
-      songName: ''
-    };
+  private extractMetadataFromDocument(doc: Document): SongsterrPartialMetadata {
+    try {
+      const metadataScript =
+        doc.getElementById('state')?.childNodes[0].nodeValue;
+      // @ts-ignore
+      return JSON.parse(metadataScript).meta.current;
+    } catch (error) {
+      logger.error('error parsing metadata', error);
+      throw new Error('Error reading tab data');
+    }
   }
 
-  /* Fluffy by Chon | Songsterr Tabs -> [Fluffy, Chon] */
-  const onlySongAndArtist = title.split('|')[0].trim();
-  const [songName, artist] = onlySongAndArtist.split('by');
+  private createSearchUrl(searchText: string): string {
+    return `${SONGSTERR_BASE_URL}/api/songs?size=${this.MAX_SEARCH_RESULTS}&pattern=${searchText}`;
+  }
 
-  return {
-    songName,
-    artist
+  private buildTabUrl(metadata: SongsterrMetadata): string {
+    const urlPrefix = `${SONGSTERR_BASE_URL}/a/wsa/`;
+    const urlSuffixParts = [metadata.artist, metadata.title, 'tab'];
+    const urlSuffix = kebabCase(urlSuffixParts.join(' '));
+
+    return urlPrefix + urlSuffix + `-s${metadata.songId}`;
+  }
+
+  private readonly MAX_SEARCH_RESULTS = 50;
+
+  private readonly urlBuilder = {
+    bySongId(songId: string | number) {
+      return `${SONGSTERR_BASE_URL}/a/ra/player/song/${songId}.xml`;
+    },
+    bySongIdWithRevisions(songId: string | number) {
+      return `${SONGSTERR_BASE_URL}/api/meta/${songId}/revisions?translateTo=en`;
+    }
   };
-}
 
-const urlBuilder = {
-  bySongId(songId: string | number) {
-    return `https://www.songsterr.com/a/ra/player/song/${songId}.xml`;
-  },
-  bySongIdWithRevisions(songId: string | number) {
-    return `https://www.songsterr.com/api/meta/${songId}/revisions?translateTo=en`;
-  }
-};
-
-function findGuitarProTabLinkFromXml(xml: Document) {
-  return xml
-    .getElementsByTagName('guitarProTab')[0]
-    .getElementsByTagName('attachmentUrl')[0].firstChild?.nodeValue;
+  private readonly fetcher = new Fetcher({ withBrowserLikeHeaders: true });
 }

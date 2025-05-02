@@ -1,4 +1,4 @@
-import { getRandomElementFromArray } from './array';
+import { getRandomElementFromArray } from '../../utils/array';
 
 export default class Fetcher {
   withRotatingUserAgent: boolean;
@@ -32,6 +32,11 @@ export default class Fetcher {
   ): Promise<T> {
     const response = await this.fetch(url, options);
     return response.json();
+  }
+
+  async fetchAndReturnText(url: string) {
+    const response = await this.fetch(url);
+    return response.text();
   }
 
   get options() {
