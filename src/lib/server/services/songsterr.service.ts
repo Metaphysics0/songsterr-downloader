@@ -38,6 +38,8 @@ export class SongsterrService {
   ): Promise<string> {
     const url = this.urlBuilder.bySongIdWithRevisions(songId);
 
+    console.log('fetching with cookie', env.TEMP_SONGSTERR_COOKIE);
+
     const revisions =
       await this.fetcher.fetchAndReturnJson<SongsterrRevisionsResponse>(url, {
         headers: {
