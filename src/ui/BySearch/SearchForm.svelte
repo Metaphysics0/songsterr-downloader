@@ -14,7 +14,7 @@
   async function search(inputText: string): Promise<void> {
     try {
       const { searchResults: searchResultsFromResponse } =
-        await apiService.search.bySongOrArtist(inputText);
+        await apiService.search(inputText);
 
       searchResults = searchResultsFromResponse.filter(withGuitarProFile);
     } catch (error) {

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev",
+    "start": "npm run dev",
     "build": "vite build",
     "prepare": "svelte-kit sync",
     "preview": "vite preview",

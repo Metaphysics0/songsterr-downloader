@@ -4,53 +4,53 @@ import type {
   SongsterrDownloadResponse,
   SongsterrPartialMetadata
 } from '$lib/types';
+import { toastError } from './toast.util';
+import { logger } from './logger';
+import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
 
 export const apiService = {
-  search: {
-    bySongOrArtist(
-      searchText: string
-    ): Promise<SongsterrSearchMetadataResponse> {
-      return fetchAndReturnJson({
-        endpoint: 'search',
-        method: 'POST',
-        params: { searchText }
-      });
-    }
+  search(searchText: string): Promise<SongsterrSearchMetadataResponse> {
+    return make({
+      endpoint: 'search',
+      method: 'POST',
+      params: { searchText }
+    });
   },
   download: {
     bySearchResult(
       searchResult: SongsterrPartialMetadata
     ): Promise<SongsterrDownloadResponse> {
-      return fetchAndReturnJson({
-        endpoint: 'download/bySearchResult',
-        method: 'POST',
-        params: {
-          songId: searchResult.songId,
-          songTitle: searchResult.title,
-          byLinkUrl: searchResult?.byLinkUrl,
-          artist: searchResult?.artist
-        }
-      });
+      return wrapWithErrorHandling(
+        make({
+          endpoint: 'download/bySearchResult',
+          method: 'POST',
+          params: {
+            songTitle: searchResult.title,
+            ...pick(searchResult, ['artist', 'songId', 'byLinkUrl'])
+          }
+        }),
+        ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
+      );
     },
     bySource(
       searchResult: SongsterrPartialMetadata
     ): Promise<SongsterrDownloadResponse> {
-      return fetchAndReturnJson({
-        endpoint: 'download/bySource',
-        method: 'POST',
-        params: {
-          songTitle: searchResult.title,
-          ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
-        }
-      });
+      return wrapWithErrorHandling(
+        make({
+          endpoint: 'download/bySource',
+          method: 'POST',
+          params: {
+            songTitle: searchResult.title,
+            ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
+          }
+        }),
+        ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
+      );
     }
   }
 };
 
-const fetchAndReturnJson = async (args: IMakeApiArgs) =>
-  (await make(args)).json();
-
-function make({ endpoint, method, params }: IMakeApiArgs): Promise<Response> {
+async function make<T>({ endpoint, method, params }: MakeApiArgs): Promise<T> {
   let baseUrl = `/api/${endpoint}`;
   if (method === 'GET' && params) {
     // TS-Ignoring here because params are optional for GET routes
@@ -67,10 +67,31 @@ function make({ endpoint, method, params }: IMakeApiArgs): Promise<Response> {
     }
   };
   const body = method !== 'GET' && params ? JSON.stringify(params) : null;
-  return fetch(baseUrl, body ? { ...options, body } : options);
+  const response = await fetch(baseUrl, body ? { ...options, body } : options);
+  if (!response.ok) {
+    logger.error('Error fetching', {
+      url: baseUrl,
+      status: response.status,
+      statusText: response.statusText
+    });
+    throw new Error();
+  }
+  return response.json() as Promise<T>;
 }
 
-interface IMakeApiArgs {
+async function wrapWithErrorHandling<T>(
+  promise: Promise<T>,
+  errorMessage: string = 'Something went wrong'
+): Promise<T> {
+  try {
+    return await promise;
+  } catch (error) {
+    toastError(errorMessage);
+    throw new Error(errorMessage);
+  }
+}
+
+interface MakeApiArgs {
   endpoint: string;
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS';
   params?: unknown;
