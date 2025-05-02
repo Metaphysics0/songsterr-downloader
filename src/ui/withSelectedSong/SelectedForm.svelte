@@ -15,7 +15,6 @@
       const resp = await apiService.download[apiMethod](selectedSong);
       triggerFileDownloadFromSongsterrResponse(resp);
     } catch (error) {
-      toastError('Error downloading tab 😭');
       console.error('error', error);
     }
   }

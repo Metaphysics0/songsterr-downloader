@@ -2,7 +2,7 @@ import Fetcher from '$lib/server/utils/fetcher.util';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import type { SupportedTabDownloadType } from '$lib/types/supported-tab-download-type';
 import { SongsterrService } from './songsterr.service';
-import { SongsterrDownloadResponse } from '$lib/types';
+import type { SongsterrDownloadResponse } from '$lib/types';
 
 export class DownloadTabService {
   constructor(
