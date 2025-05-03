@@ -1,13 +1,15 @@
-// export const handle: Handle = async ({ event, resolve }) => {
-//   if (shouldSupressChromeDevToolsWarningLog(event)) {
-//     return new Response(null, { status: 204 });
-//   }
+import { Handle, RequestEvent } from '@sveltejs/kit';
 
-//   return await resolve(event);
-// };
+export const handle: Handle = async ({ event, resolve }) => {
+  if (shouldSupressChromeDevToolsWarningLog(event)) {
+    return new Response(null, { status: 204 });
+  }
 
-// function shouldSupressChromeDevToolsWarningLog(event: RequestEvent) {
-//   return event.url.pathname.startsWith(
-//     '/.well-known/appspecific/com.chrome.devtools'
-//   );
-// }
+  return await resolve(event);
+};
+
+function shouldSupressChromeDevToolsWarningLog(event: RequestEvent) {
+  return event.url.pathname.startsWith(
+    '/.well-known/appspecific/com.chrome.devtools'
+  );
+}
