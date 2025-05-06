@@ -33,8 +33,25 @@
           If anyone has any ideas for future apps, or any useful software tools,
           please send me a message, and I will gladly develop it!
         </p>
-        <p>Take care, and stay safe!</p>
-        <p>- Ryan</p>
+        <p>
+          With over 100k daily active users, I never made a $ from this. If
+          anyone wants to buy me a coffee, I'd greatly appreciate it!
+        </p>
+
+        <a href="https://www.buymeacoffee.com/ryanroberts" target="_blank"
+          ><img
+            src="https://cdn.buymeacoffee.com/buttons/default-yellow.png"
+            alt="Buy Me A Coffee"
+            height="41"
+            width="174"
+          /></a
+        >
+
+        <p />
+        <p>
+          Take care, and stay safe!<br />
+          - Ryan
+        </p>
       </div>
       <div class="modal-footer">
         <button
