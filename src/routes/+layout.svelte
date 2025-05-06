@@ -6,11 +6,14 @@
 
   import { SvelteToast } from '@zerodevx/svelte-toast';
   import Header from '../ui/common/Header.svelte';
+  import TemporarilyDownModal from '../ui/modals/TemporarilyDownModal.svelte';
 
   inject({ mode: dev ? 'development' : 'production' });
 </script>
 
 <SvelteToast />
+
+<TemporarilyDownModal />
 
 <nav class="mb-8" />
 <Header />
