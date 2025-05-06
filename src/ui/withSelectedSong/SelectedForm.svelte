@@ -4,8 +4,8 @@
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
   import SelectedSong from './SelectedSong.svelte';
   import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
-  import { toastError } from '$lib/utils/toast.util';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
+  import { env } from '$env/dynamic/public';
 
   export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
 
@@ -28,7 +28,10 @@
   <div class="mb-8 w-full">
     <SelectedSong {selectedSong} />
   </div>
-  <button class={commonCssClasses.downloadBtn} on:click={downloadTab}
+  <button
+    class={commonCssClasses.getTabButton}
+    on:click={downloadTab}
+    disabled={env.PUBLIC_WEBSITE_IS_CURRENTLY_DOWN === 'true'}
     >Download {selectedSong.title} Tab</button
   >
   <div class="my-2" />
