@@ -28,10 +28,7 @@
   <div class="mb-8 w-full">
     <SelectedSong {selectedSong} />
   </div>
-  <button
-    class={commonCssClasses.getTabButton}
-    on:click={downloadTab}
-    disabled={env.PUBLIC_WEBSITE_IS_CURRENTLY_DOWN === 'true'}
+  <button class={commonCssClasses.getTabButton} on:click={downloadTab}
     >Download {selectedSong.title} Tab</button
   >
   <div class="my-2" />
