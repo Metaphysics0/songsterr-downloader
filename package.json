@@ -51,6 +51,7 @@
     "@xmldom/xmldom": "^0.8.10",
     "adm-zip": "^0.5.10",
     "lodash-es": "^4.17.21",
+    "puppeteer": "^24.9.0",
     "uuid": "^9.0.1"
   }
 }
