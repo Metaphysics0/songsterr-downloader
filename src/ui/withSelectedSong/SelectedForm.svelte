@@ -5,7 +5,7 @@
   import SelectedSong from './SelectedSong.svelte';
   import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
-  import { env } from '$env/dynamic/public';
+  import { temporarilyDownModalStore } from '$lib/stores/temporarily-down-modal.store';
 
   export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
 
@@ -31,7 +31,7 @@
   <button
     class={commonCssClasses.getTabButton}
     on:click={downloadTab}
-    disabled={env.PUBLIC_WEBSITE_IS_CURRENTLY_DOWN === 'true'}
+    disabled={$temporarilyDownModalStore}
     >Download {selectedSong.title} Tab</button
   >
   <div class="my-2" />
