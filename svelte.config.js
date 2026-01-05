@@ -8,7 +8,9 @@ const config = {
   preprocess: sequence([vitePreprocess()]),
 
   kit: {
-    adapter: adapter()
+    adapter: adapter({
+      runtime: 'nodejs18.x'
+    })
   }
 };
 

@@ -18,7 +18,7 @@
     "@iconify/svelte": "^3.1.4",
     "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
-    "@sveltejs/adapter-vercel": "^6.2.0",
+    "@sveltejs/adapter-vercel": "^3.0.0",
     "@sveltejs/kit": "^1.20.4",
     "@types/adm-zip": "^0.5.0",
     "@types/lodash": "^4.14.202",
