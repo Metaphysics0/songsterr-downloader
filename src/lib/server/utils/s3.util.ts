@@ -77,8 +77,12 @@ export const s3 = {
           title: response.Metadata?.title || ''
         }
       };
-    } catch (error) {
-      logger.error('S3 get failed', error);
+    } catch (error: any) {
+      if (error.Code === 'NoSuchKey' || error.name === 'NoSuchKey') {
+        logger.info(`S3 cache miss for songId ${songId}`);
+      } else {
+        logger.error('S3 get failed', error);
+      }
       return null;
     }
   },
