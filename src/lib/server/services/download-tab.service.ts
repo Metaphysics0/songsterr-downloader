@@ -3,6 +3,8 @@ import { convertArrayBufferToArray } from '$lib/utils/array';
 import type { SupportedTabDownloadType } from '$lib/types/supported-tab-download-type';
 import { SongsterrService } from './songsterr.service';
 import type { SongsterrDownloadResponse } from '$lib/types';
+import { s3 } from '$lib/server/utils/s3.util';
+import { logger } from '$lib/utils/logger';
 
 export class DownloadTabService {
   constructor(
@@ -23,8 +25,26 @@ export class DownloadTabService {
   }
 
   private async bySource(request: Request, options: BySourceOptions = {}) {
-    const { source, songTitle } =
+    const { source, songTitle, songId, artist } =
       options.requestParams || (await request.json());
+
+    // Check S3 cache first
+    if (songId) {
+      const cached = await s3.get(songId);
+      if (cached) {
+        logger.info(`Serving tab ${songId} from S3 cache`);
+        const fileName = this.songsterrService.buildFileNameFromSongName(
+          songTitle,
+          source
+        );
+        return this.createDownloadResponse({
+          buffer: cached.buffer,
+          fileName,
+          contentType: 'application/gp'
+        });
+      }
+    }
+
     const { buffer, contentType } =
       await this.fetcher.fetchAndReturnArrayBuffer(source);
 
@@ -32,11 +52,34 @@ export class DownloadTabService {
       songTitle,
       source
     );
+
+    // Store to S3 in background (don't block response)
+    if (songId) {
+      s3.put(songId, buffer, { artist: artist || '', title: songTitle || '' }).catch((err) =>
+        logger.error('Failed to store tab to S3', err)
+      );
+    }
+
     return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
   private async bySearchResult(request: Request) {
-    const { songId, songTitle } = await request.json();
+    const { songId, songTitle, artist } = await request.json();
+
+    // Check S3 cache first
+    const cached = await s3.get(songId);
+    if (cached) {
+      logger.info(`Serving tab ${songId} from S3 cache`);
+      const fileName = this.songsterrService.buildFileNameFromSongName(
+        songTitle,
+        `${songId}.gp`
+      );
+      return this.createDownloadResponse({
+        buffer: cached.buffer,
+        fileName,
+        contentType: 'application/gp'
+      });
+    }
 
     const guitarProLink =
       await this.songsterrService.getGuitarProDownloadLinkFromSongId(songId);
@@ -51,6 +94,12 @@ export class DownloadTabService {
       songTitle,
       guitarProLink
     );
+
+    // Store to S3 in background (don't block response)
+    s3.put(songId, buffer, { artist: artist || '', title: songTitle || '' }).catch((err) =>
+      logger.error('Failed to store tab to S3', err)
+    );
+
     return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
