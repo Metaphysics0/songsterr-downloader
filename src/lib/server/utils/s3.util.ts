@@ -19,7 +19,7 @@ interface S3TabResult {
 
 const getS3Client = () => {
   return new S3Client({
-    region: env.AWS_REGION || 'us-east-1',
+    region: env.AWS_REGION || 'us-east-2',
     credentials: {
       accessKeyId: env.AWS_ACCESS_KEY_ID || '',
       secretAccessKey: env.AWS_SECRET_ACCESS_KEY || ''
@@ -30,6 +30,10 @@ const getS3Client = () => {
 const getBucketName = () => env.S3_BUCKET_NAME || '';
 
 const buildKey = (songId: string | number): string => `tabs-v2/${songId}.gp`;
+
+// S3 metadata headers must be ASCII-safe (printable chars 0x20-0x7E)
+const sanitizeMetadata = (value: string): string =>
+  value.replace(/[^\x20-\x7E]/g, '');
 
 export const s3 = {
   async exists(songId: string | number): Promise<boolean> {
@@ -101,8 +105,8 @@ export const s3 = {
           Body: Buffer.from(buffer),
           ContentType: 'application/gp',
           Metadata: {
-            artist: metadata.artist,
-            title: metadata.title
+            artist: sanitizeMetadata(metadata.artist),
+            title: sanitizeMetadata(metadata.title)
           }
         })
       );
