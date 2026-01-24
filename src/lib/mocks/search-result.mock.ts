@@ -7,6 +7,7 @@ function createGetMockSearchResultResponse(): SongsterrPartialMetadata {
     title: 'You are the best',
     artist: 'Thanks for using this app',
     source: ''
+    videos: []
   };
 }
 

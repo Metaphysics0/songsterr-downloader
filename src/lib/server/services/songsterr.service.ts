@@ -29,7 +29,6 @@ export class SongsterrService {
   ): Promise<SongsterrPartialMetadata> {
     const doc = await scraper.getDocumentFromUrl(tabUrl, 'html');
     if (!doc) throw new Error('Unable to get page data from songsterr');
-
     return this.extractMetadataFromDocument(doc);
   }
 

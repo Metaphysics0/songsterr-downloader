@@ -7,6 +7,7 @@ import type {
 import { toastError } from './toast.util';
 import { logger } from './logger';
 import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
+import { extractYoutubeVideoUrlFromMetadata } from './extract-youtube-video-from-metadata.util';
 
 export const apiService = {
   search(searchText: string): Promise<SongsterrSearchMetadataResponse> {
@@ -20,12 +21,14 @@ export const apiService = {
     bySearchResult(
       searchResult: SongsterrPartialMetadata
     ): Promise<SongsterrDownloadResponse> {
+      const youtubeVideoUrl = extractYoutubeVideoUrlFromMetadata(searchResult);
       return wrapWithErrorHandling(
         make({
           endpoint: 'download/bySearchResult',
           method: 'POST',
           params: {
             songTitle: searchResult.title,
+            youtubeVideoUrl,
             ...pick(searchResult, ['artist', 'songId', 'byLinkUrl'])
           }
         }),
@@ -35,11 +38,14 @@ export const apiService = {
     bySource(
       searchResult: SongsterrPartialMetadata
     ): Promise<SongsterrDownloadResponse> {
+      const youtubeVideoUrl = extractYoutubeVideoUrlFromMetadata(searchResult);
+
       return wrapWithErrorHandling(
         make({
           endpoint: 'download/bySource',
           method: 'POST',
           params: {
+            youtubeVideoUrl,
             songTitle: searchResult.title,
             ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
           }

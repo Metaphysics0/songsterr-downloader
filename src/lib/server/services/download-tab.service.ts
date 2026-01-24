@@ -25,7 +25,7 @@ export class DownloadTabService {
   }
 
   private async bySource(request: Request, options: BySourceOptions = {}) {
-    const { source, songTitle, songId, artist } =
+    const { source, songTitle, songId, artist, youtubeVideoUrl } =
       options.requestParams || (await request.json());
 
     // Check S3 cache first
@@ -55,16 +55,22 @@ export class DownloadTabService {
 
     // Store to S3 in background (don't block response)
     if (songId) {
-      s3.put(songId, buffer, { artist: artist || '', title: songTitle || '' }).catch((err) =>
-        logger.error('Failed to store tab to S3', err)
-      );
+      s3.put(songId, buffer, {
+        artist: artist || '',
+        title: songTitle || ''
+      }).catch((err) => logger.error('Failed to store tab to S3', err));
     }
 
-    return this.createDownloadResponse({ buffer, fileName, contentType });
+    return this.createDownloadResponse({
+      buffer,
+      fileName,
+      contentType,
+      youtubeVideoUrl
+    });
   }
 
   private async bySearchResult(request: Request) {
-    const { songId, songTitle, artist } = await request.json();
+    const { songId, songTitle, artist, youtubeVideoUrl } = await request.json();
 
     // Check S3 cache first
     const cached = await s3.get(songId);
@@ -96,24 +102,33 @@ export class DownloadTabService {
     );
 
     // Store to S3 in background (don't block response)
-    s3.put(songId, buffer, { artist: artist || '', title: songTitle || '' }).catch((err) =>
-      logger.error('Failed to store tab to S3', err)
-    );
+    s3.put(songId, buffer, {
+      artist: artist || '',
+      title: songTitle || ''
+    }).catch((err) => logger.error('Failed to store tab to S3', err));
 
-    return this.createDownloadResponse({ buffer, fileName, contentType });
+    return this.createDownloadResponse({
+      buffer,
+      fileName,
+      contentType,
+      youtubeVideoUrl
+    });
   }
 
   private createDownloadResponse({
     buffer,
     fileName,
+    youtubeVideoUrl,
     contentType = 'application/gp'
   }: {
     buffer: ArrayBuffer;
     fileName: string;
     contentType?: string;
+    youtubeVideoUrl?: string;
   }): SongsterrDownloadResponse {
     return {
       file: convertArrayBufferToArray(buffer),
+      youtubeVideoUrl,
       fileName,
       contentType
     };

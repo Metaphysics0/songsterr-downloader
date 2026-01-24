@@ -2,6 +2,7 @@ export interface SongsterrDownloadResponse {
   file: number[];
   fileName: string;
   contentType: string;
+  youtubeVideoUrl?: string;
 }
 
 export interface SongsterrSelectedResponse {
@@ -19,6 +20,13 @@ export interface SongsterrSearchMetadataResponse {
   searchResults: SongsterrMetadata[];
 }
 
+export interface SongsterrVideo {
+  feature: string | null;
+  id: number;
+  status: string;
+  videoId: string;
+}
+
 export interface SongsterrMetadata {
   hasPlayer: boolean;
   artist: string;
@@ -31,6 +39,7 @@ export interface SongsterrMetadata {
   defaultTrack: number;
   source?: string;
   bulkSongsToDownload?: { title: string }[];
+  videos: SongsterrVideo[];
 }
 
 export interface SongsterrPartialMetadata {
@@ -41,6 +50,7 @@ export interface SongsterrPartialMetadata {
   source?: string;
   byLinkUrl?: string;
   bulkSongsToDownload?: { title: string }[];
+  videos: SongsterrVideo[];
 }
 
 export interface GetSongFromUrlResponse {
