@@ -35,12 +35,14 @@
     display: block;
     background: white;
     border-radius: 12px;
+    border-left: 4px solid transparent;
+    border-image: linear-gradient(180deg, #dc2626, #f97316) 1;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
-    padding: 1.25rem 1.75rem;
+    padding: 1.5rem 2rem;
     text-decoration: none;
     transition: all 0.2s ease;
-    max-width: 375px;
+    max-width: 500px;
     width: 100%;
   }
 
@@ -70,11 +72,11 @@
   .text-content {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.35rem;
   }
 
   .headline {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #374151;
     margin: 0;
@@ -82,9 +84,9 @@
   }
 
   .brand {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -103,11 +105,11 @@
 
   @media (max-width: 400px) {
     .ad-card {
-      padding: 1rem 1.25rem;
+      padding: 1.25rem 1.5rem;
     }
 
     .headline {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
 
     .icon-container {
