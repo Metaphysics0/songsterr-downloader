@@ -1,5 +1,5 @@
 <script>
-  import SocialLinks from '../ui/common/SocialLinks.svelte';
+  import FretwiseAd from '../ui/common/FretwiseAd.svelte';
   import TabMenu from '../ui/common/TabMenu.svelte';
 </script>
 
@@ -8,5 +8,5 @@
 </main>
 
 <footer class="flex flex-col items-center justify-center h-max">
-  <SocialLinks />
+  <FretwiseAd />
 </footer>
