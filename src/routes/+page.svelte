@@ -1,10 +1,10 @@
 <script>
   import FretwiseAd from '../ui/common/FretwiseAd.svelte';
-  import TabMenu from '../ui/common/TabMenu.svelte';
+  import Form from '../ui/ByLink/Form.svelte';
 </script>
 
-<main class="mb-4">
-  <TabMenu />
+<main class="mb-4 max-w-md mx-auto">
+  <Form />
 </main>
 
 <footer class="flex flex-col items-center justify-center h-max">

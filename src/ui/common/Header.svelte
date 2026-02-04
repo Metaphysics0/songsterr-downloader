@@ -1,24 +1,8 @@
 <script lang="ts">
-  import {
-    activeTabMenuIndex,
-    type ITabMenuIndex
-  } from '../../lib/stores/tab-menu.store';
   import { page } from '$app/stores';
   import Link from './Link.svelte';
 
-  const headerTextMap: Record<ITabMenuIndex, string> = {
-    0: 'Enter in a link',
-    1: 'Search all available tabs'
-  };
-
-  let headerText = headerTextMap[0];
-
-  let selectedTabMenuIndex: ITabMenuIndex;
-
-  activeTabMenuIndex.subscribe((val) => {
-    selectedTabMenuIndex = val;
-    headerText = headerTextMap[val];
-  });
+  const headerText = 'Enter in a link';
 </script>
 
 <div class="flex flex-col items-center text-center mb-2.5 font-sans">

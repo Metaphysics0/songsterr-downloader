@@ -17,6 +17,7 @@
 <TemporarilyDownModal />
 <FretwisePromoModal />
 
-<nav class="mb-8" />
-<Header />
+<header class="my-8 mt-12">
+  <Header />
+</header>
 <slot />
