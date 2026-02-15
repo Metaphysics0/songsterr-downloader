@@ -34,20 +34,16 @@
           please send me a message, and I will gladly develop it!
         </p>
         <p>
-          With over 100k daily active users, I never made a $ from this. If
-          anyone wants to buy me a coffee, I'd greatly appreciate it!
+          I'm currently working on a platform for generating tabs from audio,
+          and it's live right now in beta
+          <a
+            href="https://fretwise.ai?ref=songsterr-downloader"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-500 hover:text-blue-600 ease">here.</a
+          >
         </p>
 
-        <a href="https://www.buymeacoffee.com/ryanroberts" target="_blank"
-          ><img
-            src="https://cdn.buymeacoffee.com/buttons/default-yellow.png"
-            alt="Buy Me A Coffee"
-            height="41"
-            width="174"
-          /></a
-        >
-
-        <p />
         <p>
           Take care, and stay safe!<br />
           - Ryan
