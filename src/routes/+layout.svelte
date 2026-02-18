@@ -8,12 +8,14 @@
   import Header from '../ui/common/Header.svelte';
   import TemporarilyDownModal from '../ui/modals/TemporarilyDownModal.svelte';
   import FretwisePromoModal from '../ui/modals/FretwisePromoModal.svelte';
+  import ExperimentalNoticeModal from '../ui/modals/ExperimentalNoticeModal.svelte';
 
   inject({ mode: dev ? 'development' : 'production' });
 </script>
 
 <SvelteToast />
 
+<ExperimentalNoticeModal />
 <TemporarilyDownModal />
 <FretwisePromoModal />
 
