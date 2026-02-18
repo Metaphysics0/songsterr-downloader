@@ -151,7 +151,12 @@ export interface SongsterrRevisionVoicePayload {
 export interface SongsterrRevisionMeasurePayload {
   voices?: SongsterrRevisionVoicePayload[];
   signature?: [number, number];
-  marker?: string;
+  marker?:
+    | string
+    | {
+        text?: string;
+        [key: string]: unknown;
+      };
   repeatStart?: boolean;
   repeatCount?: number;
   alternateEnding?: number;

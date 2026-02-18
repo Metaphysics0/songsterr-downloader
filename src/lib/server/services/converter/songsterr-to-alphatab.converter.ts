@@ -102,10 +102,11 @@ export class SongsterrToAlphaTabConverter {
       masterBar.timeSignatureNumerator = timeSignatureNumerator;
       masterBar.timeSignatureDenominator = timeSignatureDenominator;
 
-      if (measure?.marker) {
+      const markerText = this.getMarkerText(measure?.marker);
+      if (markerText) {
         const section = new alphaTab.model.Section();
-        section.marker = measure.marker;
-        section.text = measure.marker;
+        section.marker = markerText;
+        section.text = markerText;
         masterBar.section = section;
       }
 
@@ -144,49 +145,61 @@ export class SongsterrToAlphaTabConverter {
   }): void {
     const { trackMeta, revision } = entry;
     const playbackMapping = mapSongsterrInstrumentToPlayback(
-      trackMeta.instrumentId ?? revision.instrumentId
+      revision.instrumentId ?? trackMeta.instrumentId
+    );
+    const trackStringCount =
+      revision.tuning?.length ||
+      trackMeta.tuning?.length ||
+      revision.strings ||
+      6;
+    const maxVoicesInTrack = Math.max(
+      1,
+      ...revision.measures.map((measure) => measure.voices?.length || 0)
     );
 
     const track = new alphaTab.model.Track();
     track.name = trackMeta.title || trackMeta.name || revision.name || 'Track';
     track.shortName = track.name.slice(0, 20);
     track.playbackInfo.program = playbackMapping.program;
-    if (typeof playbackMapping.primaryChannel === 'number') {
-      track.playbackInfo.primaryChannel = playbackMapping.primaryChannel;
-    }
-    if (typeof playbackMapping.secondaryChannel === 'number') {
-      track.playbackInfo.secondaryChannel = playbackMapping.secondaryChannel;
-    }
+    const channels = this.getTrackChannels(
+      score.tracks.length,
+      staffIsPercussion(trackMeta, playbackMapping)
+    );
+    track.playbackInfo.primaryChannel = channels.primaryChannel;
+    track.playbackInfo.secondaryChannel = channels.secondaryChannel;
 
     const staff = new alphaTab.model.Staff();
     const tuning = revision.tuning || trackMeta.tuning;
     if (Array.isArray(tuning) && tuning.length > 0) {
       staff.stringTuning = new alphaTab.model.Tuning('Custom', tuning, false);
     }
-    staff.isPercussion = playbackMapping.isPercussion || !!trackMeta.isDrums;
+    staff.isPercussion = staffIsPercussion(trackMeta, playbackMapping);
+    if (!staff.isPercussion) {
+      staff.showTablature = true;
+      staff.showStandardNotation = false;
+    }
 
     for (let measureIndex = 0; measureIndex < masterBarCount; measureIndex++) {
       const bar = new alphaTab.model.Bar();
-      const voice = new alphaTab.model.Voice();
       const measure = revision.measures?.[measureIndex];
-
-      if (measure?.voices && measure.voices.length > 1) {
-        this.pushWarning(warnings, {
-          code: 'additional_voices_skipped',
-          message: 'Only first voice is converted in v1',
-          location: `track:${trackMeta.partId}|measure:${measureIndex}`
-        });
+      if (staff.isPercussion) {
+        bar.clef = alphaTab.model.Clef.Neutral;
       }
 
-      this.fillVoice({
-        voice,
-        measure,
-        masterBar: score.masterBars[measureIndex],
-        warnings,
-        locationPrefix: `track:${trackMeta.partId}|measure:${measureIndex}`
-      });
+      for (let voiceIndex = 0; voiceIndex < maxVoicesInTrack; voiceIndex++) {
+        const voice = new alphaTab.model.Voice();
+        this.fillVoice({
+          voice,
+          sourceVoice: measure?.voices?.[voiceIndex],
+          masterBar: score.masterBars[measureIndex],
+          warnings,
+          locationPrefix: `track:${trackMeta.partId}|measure:${measureIndex}|voice:${voiceIndex}`,
+          trackStringCount,
+          isPercussion: staff.isPercussion
+        });
 
-      bar.addVoice(voice);
+        bar.addVoice(voice);
+      }
       staff.addBar(bar);
     }
 
@@ -196,19 +209,21 @@ export class SongsterrToAlphaTabConverter {
 
   private fillVoice({
     voice,
-    measure,
+    sourceVoice,
     masterBar,
     warnings,
-    locationPrefix
+    locationPrefix,
+    trackStringCount,
+    isPercussion
   }: {
     voice: alphaTab.model.Voice;
-    measure: SongsterrRevisionMeasurePayload | undefined;
+    sourceVoice: SongsterrRevisionVoicePayload | undefined;
     masterBar: alphaTab.model.MasterBar;
     warnings: ConversionWarning[];
     locationPrefix: string;
+    trackStringCount: number;
+    isPercussion: boolean;
   }): void {
-    const sourceVoice: SongsterrRevisionVoicePayload | undefined =
-      measure?.voices?.[0];
     const beats = sourceVoice?.beats || [];
 
     if (beats.length === 0) {
@@ -221,7 +236,9 @@ export class SongsterrToAlphaTabConverter {
       const beat = this.mapBeat(
         beatData,
         warnings,
-        `${locationPrefix}|beat:${beatIndex}`
+        `${locationPrefix}|beat:${beatIndex}`,
+        trackStringCount,
+        isPercussion
       );
       voice.addBeat(beat);
     }
@@ -234,7 +251,9 @@ export class SongsterrToAlphaTabConverter {
   private mapBeat(
     beatData: SongsterrRevisionBeatPayload,
     warnings: ConversionWarning[],
-    location: string
+    location: string,
+    trackStringCount: number,
+    isPercussion: boolean
   ): alphaTab.model.Beat {
     const beat = new alphaTab.model.Beat();
     const mappedDuration = mapSongsterrDuration(beatData.duration);
@@ -273,8 +292,23 @@ export class SongsterrToAlphaTabConverter {
         continue;
       }
       const note = new alphaTab.model.Note();
-      note.string = noteData.string || 1;
-      note.fret = noteData.fret || 0;
+
+      if (isPercussion) {
+        if (typeof noteData.fret === 'number') {
+          note.percussionArticulation = this.normalizePercussionArticulation(
+            Math.round(noteData.fret)
+          );
+        } else {
+          this.pushWarning(warnings, {
+            code: 'drum_note_missing_fret',
+            message: 'Drum note missing percussion articulation value',
+            location: `${location}|note:${noteIndex}`
+          });
+        }
+      } else {
+        note.string = this.mapStringIndex(noteData.string, trackStringCount);
+        note.fret = noteData.fret || 0;
+      }
 
       if (noteData.tie) {
         note.isTieDestination = true;
@@ -383,6 +417,21 @@ export class SongsterrToAlphaTabConverter {
     return [numerator, denominator];
   }
 
+  private getMarkerText(
+    marker: SongsterrRevisionMeasurePayload['marker']
+  ): string | null {
+    if (!marker) {
+      return null;
+    }
+    if (typeof marker === 'string') {
+      return marker;
+    }
+    if (typeof marker.text === 'string' && marker.text.length > 0) {
+      return marker.text;
+    }
+    return null;
+  }
+
   private findTempoPoints(
     masterTrack: SongsterrRevisionTrackPayload | null
   ): SongsterrRevisionAutomationTempoPoint[] {
@@ -407,20 +456,39 @@ export class SongsterrToAlphaTabConverter {
         continue;
       }
 
-      const beatReference = point.type || 4;
       const ratioPosition =
-        point.position > 0
-          ? Math.max(0, Math.min(1, point.position / beatReference))
-          : 0;
-      const tempoAutomation = alphaTab.model.Automation.buildTempoAutomation(
-        false,
-        ratioPosition,
-        point.bpm,
-        beatReference,
-        true
-      );
+        point.position > 0 ? Math.max(0, Math.min(1, point.position)) : 0;
+      const tempoAutomation = new alphaTab.model.Automation();
+      tempoAutomation.type = alphaTab.model.AutomationType.Tempo;
+      tempoAutomation.isLinear = false;
+      tempoAutomation.ratioPosition = ratioPosition;
+      tempoAutomation.value = point.bpm;
+      tempoAutomation.isVisible = true;
       masterBar.tempoAutomations.push(tempoAutomation);
     }
+  }
+
+  private mapStringIndex(
+    songsterrString: number | undefined,
+    stringCount: number
+  ): number {
+    if (
+      typeof songsterrString !== 'number' ||
+      !Number.isFinite(songsterrString)
+    ) {
+      return 1;
+    }
+
+    const rounded = Math.round(songsterrString);
+    if (rounded < 1) {
+      return 1;
+    }
+    if (rounded > stringCount) {
+      return stringCount;
+    }
+
+    // Songsterr indexes strings top-to-bottom; alphaTab expects bottom-to-top.
+    return stringCount - rounded + 1;
   }
 
   private pushWarning(
@@ -431,4 +499,45 @@ export class SongsterrToAlphaTabConverter {
       warnings.push(warning);
     }
   }
+
+  private getTrackChannels(
+    trackIndex: number,
+    isPercussion: boolean
+  ): { primaryChannel: number; secondaryChannel: number } {
+    if (isPercussion) {
+      return {
+        primaryChannel: 9,
+        secondaryChannel: 9
+      };
+    }
+
+    const melodicChannels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15];
+    const channel = melodicChannels[trackIndex % melodicChannels.length];
+    return {
+      primaryChannel: channel,
+      secondaryChannel: channel
+    };
+  }
+
+  private normalizePercussionArticulation(value: number): number {
+    // Songsterr occasionally uses e-drum note ids which are outside the common GP/GM drum set.
+    // Normalize those to stable GP-friendly drum sounds.
+    if (value === 32) {
+      return 38; // snare
+    }
+    if (value === 40) {
+      return 38; // electric snare -> acoustic snare for better compatibility
+    }
+    if (value === 35) {
+      return 36; // alternate kick
+    }
+    return value;
+  }
+}
+
+function staffIsPercussion(
+  trackMeta: SongsterrStateMetaCurrentTrack,
+  playbackMapping: { isPercussion: boolean }
+): boolean {
+  return playbackMapping.isPercussion || !!trackMeta.isDrums;
 }

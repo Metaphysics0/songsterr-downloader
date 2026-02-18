@@ -32,7 +32,7 @@ export class SongsterrRevisionJsonService {
     }
 
     const parsedState = JSON.parse(stateScript);
-    const current = parsedState?.meta?.current;
+    const current = parsedState?.meta?.current || parsedState;
 
     if (!current?.songId || !current?.revisionId || !current?.image) {
       throw new Error(
@@ -98,6 +98,24 @@ export class SongsterrRevisionJsonService {
 
           const revision =
             (await response.json()) as SongsterrRevisionTrackPayload;
+          if (
+            typeof revision.partId === 'number' &&
+            revision.partId !== track.partId
+          ) {
+            const matchedTrack = stateMeta.tracks.find(
+              (candidate) => candidate.partId === revision.partId
+            );
+            warnings.push({
+              code: 'revision_part_mismatch',
+              message: `Requested part ${track.partId} but payload reported part ${revision.partId}`,
+              location: `part:${track.partId}`
+            });
+            return {
+              trackMeta: matchedTrack || track,
+              revision
+            };
+          }
+
           return { trackMeta: track, revision };
         } catch (error) {
           warnings.push({
