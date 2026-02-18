@@ -1,6 +1,7 @@
 export const SUPPORTED_DOWNLOAD_TAB_TYPES = [
   'bySource',
-  'bySearchResult'
+  'bySearchResult',
+  'byRevisionJson'
 ] as const;
 
 export const SONGSTERR_BASE_URL = 'https://www.songsterr.com';

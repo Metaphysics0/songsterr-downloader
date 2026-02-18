@@ -5,6 +5,9 @@ import { SongsterrService } from './songsterr.service';
 import type { SongsterrDownloadResponse } from '$lib/types';
 import { s3 } from '$lib/server/utils/s3.util';
 import { logger } from '$lib/utils/logger';
+import { SongsterrRevisionJsonService } from './songsterr-revision-json.service';
+import { SongsterrToAlphaTabConverter } from './converter/songsterr-to-alphatab.converter';
+import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
 
 export class DownloadTabService {
   constructor(
@@ -17,6 +20,9 @@ export class DownloadTabService {
     }
     if (this.SupportedTabDownloadType === 'bySource') {
       return this.bySource(request);
+    }
+    if (this.SupportedTabDownloadType === 'byRevisionJson') {
+      return this.byRevisionJson(request);
     }
 
     throw new Error(
@@ -55,9 +61,10 @@ export class DownloadTabService {
 
     // Store to S3 in background (don't block response)
     if (songId) {
-      s3.put(songId, buffer, { artist: artist || '', title: songTitle || '' }).catch((err) =>
-        logger.error('Failed to store tab to S3', err)
-      );
+      s3.put(songId, buffer, {
+        artist: artist || '',
+        title: songTitle || ''
+      }).catch((err) => logger.error('Failed to store tab to S3', err));
     }
 
     return this.createDownloadResponse({ buffer, fileName, contentType });
@@ -96,11 +103,81 @@ export class DownloadTabService {
     );
 
     // Store to S3 in background (don't block response)
-    s3.put(songId, buffer, { artist: artist || '', title: songTitle || '' }).catch((err) =>
-      logger.error('Failed to store tab to S3', err)
-    );
+    s3.put(songId, buffer, {
+      artist: artist || '',
+      title: songTitle || ''
+    }).catch((err) => logger.error('Failed to store tab to S3', err));
 
     return this.createDownloadResponse({ buffer, fileName, contentType });
+  }
+
+  private async byRevisionJson(request: Request) {
+    const { byLinkUrl, songTitle } = await request.json();
+    if (!byLinkUrl) {
+      throw new Error('Missing byLinkUrl');
+    }
+
+    const stateMeta =
+      await this.songsterrRevisionJsonService.getStateMetaFromTabUrl(byLinkUrl);
+
+    const cached = await s3.get(stateMeta.songId);
+    if (cached) {
+      logger.info(`Serving converted tab ${stateMeta.songId} from S3 cache`);
+      const fileName = this.songsterrService.buildFileNameFromSongName(
+        songTitle || stateMeta.title,
+        `${stateMeta.songId}.gp`
+      );
+      return this.createDownloadResponse({
+        buffer: cached.buffer,
+        fileName,
+        contentType: GUITAR_PRO_CONTENT_TYPE
+      });
+    }
+
+    const { revisions, warnings: fetchWarnings } =
+      await this.songsterrRevisionJsonService.fetchAllPartRevisions(stateMeta);
+
+    if (revisions.length === 0) {
+      throw new Error(
+        `Unable to fetch any revision payloads for songId ${stateMeta.songId}`
+      );
+    }
+
+    const { data: gpData, warnings: convertWarnings } = this.converter.toGp7({
+      meta: stateMeta,
+      revisions
+    });
+    const allWarnings = [...fetchWarnings, ...convertWarnings];
+
+    if (allWarnings.length > 0) {
+      logger.warn('Songsterr to GP conversion warnings', {
+        songId: stateMeta.songId,
+        revisionId: stateMeta.revisionId,
+        warningCount: allWarnings.length,
+        warnings: allWarnings.slice(0, 20)
+      });
+    }
+
+    const buffer = gpData.buffer.slice(
+      gpData.byteOffset,
+      gpData.byteOffset + gpData.byteLength
+    ) as ArrayBuffer;
+
+    const fileName = this.songsterrService.buildFileNameFromSongName(
+      songTitle || stateMeta.title,
+      `${stateMeta.songId}.gp`
+    );
+
+    s3.put(stateMeta.songId, buffer, {
+      artist: stateMeta.artist || '',
+      title: stateMeta.title || ''
+    }).catch((err) => logger.error('Failed to store converted tab to S3', err));
+
+    return this.createDownloadResponse({
+      buffer,
+      fileName,
+      contentType: GUITAR_PRO_CONTENT_TYPE
+    });
   }
 
   private createDownloadResponse({
@@ -121,6 +198,9 @@ export class DownloadTabService {
 
   private readonly fetcher = new Fetcher();
   private readonly songsterrService = new SongsterrService();
+  private readonly songsterrRevisionJsonService =
+    new SongsterrRevisionJsonService();
+  private readonly converter = new SongsterrToAlphaTabConverter();
 }
 
 interface BySourceOptions {

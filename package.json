@@ -48,6 +48,7 @@
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.967.0",
+    "@coderline/alphatab": "^1.8.1",
     "@upstash/qstash": "^2.3.0",
     "@vercel/analytics": "^1.0.2",
     "@xmldom/xmldom": "^0.8.10",

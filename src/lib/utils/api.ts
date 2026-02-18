@@ -17,6 +17,21 @@ export const apiService = {
     });
   },
   download: {
+    byRevisionJson(
+      searchResult: SongsterrPartialMetadata
+    ): Promise<SongsterrDownloadResponse> {
+      return wrapWithErrorHandling(
+        make({
+          endpoint: 'download/byRevisionJson',
+          method: 'POST',
+          params: {
+            songTitle: searchResult.title,
+            ...pick(searchResult, ['byLinkUrl'])
+          }
+        }),
+        ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
+      );
+    },
     bySearchResult(
       searchResult: SongsterrPartialMetadata
     ): Promise<SongsterrDownloadResponse> {
