@@ -96,3 +96,82 @@ export interface SongsterrAuthor {
   name: string;
   isModerator: boolean;
 }
+
+export interface SongsterrStateMetaCurrentTrack {
+  partId: number;
+  instrumentId: number;
+  title?: string;
+  name?: string;
+  tuning?: number[];
+  isDrums?: boolean;
+}
+
+export interface SongsterrStateMetaCurrent {
+  songId: number;
+  revisionId: number;
+  image: string;
+  title: string;
+  artist: string;
+  tracks: SongsterrStateMetaCurrentTrack[];
+}
+
+export interface SongsterrRevisionAutomationTempoPoint {
+  measure: number;
+  position: number;
+  bpm: number;
+  type: number;
+}
+
+export interface SongsterrRevisionAutomations {
+  tempo?: SongsterrRevisionAutomationTempoPoint[];
+}
+
+export interface SongsterrRevisionNotePayload {
+  fret?: number;
+  string?: number;
+  tie?: boolean;
+  slide?: string;
+  rest?: boolean;
+}
+
+export interface SongsterrRevisionBeatPayload {
+  notes?: SongsterrRevisionNotePayload[];
+  duration?: [number, number];
+  dots?: number;
+  text?: string;
+  velocity?: string;
+  rest?: boolean;
+}
+
+export interface SongsterrRevisionVoicePayload {
+  beats?: SongsterrRevisionBeatPayload[];
+  rest?: boolean;
+}
+
+export interface SongsterrRevisionMeasurePayload {
+  voices?: SongsterrRevisionVoicePayload[];
+  signature?: [number, number];
+  marker?: string;
+  repeatStart?: boolean;
+  repeatCount?: number;
+  alternateEnding?: number;
+  rest?: boolean;
+}
+
+export interface SongsterrRevisionTrackPayload {
+  name?: string;
+  instrumentId?: number;
+  tuning?: number[];
+  strings?: number;
+  measures: SongsterrRevisionMeasurePayload[];
+  automations?: SongsterrRevisionAutomations;
+  songId?: number;
+  revisionId?: number;
+  partId?: number;
+}
+
+export interface ConversionWarning {
+  code: string;
+  message: string;
+  location?: string;
+}
