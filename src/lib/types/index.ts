@@ -126,21 +126,50 @@ export interface SongsterrRevisionAutomations {
   tempo?: SongsterrRevisionAutomationTempoPoint[];
 }
 
+export interface SongsterrRevisionBendPoint {
+  position: number;
+  tone: number;
+}
+
+export interface SongsterrRevisionBendPayload {
+  tone: number;
+  points: SongsterrRevisionBendPoint[];
+}
+
 export interface SongsterrRevisionNotePayload {
   fret?: number;
   string?: number;
   tie?: boolean;
   slide?: string;
   rest?: boolean;
+  dead?: boolean;
+  ghost?: boolean;
+  hp?: boolean;
+  staccato?: boolean;
+  accentuated?: boolean;
+  vibrato?: boolean;
+  wideVibrato?: boolean;
+  harmonic?: string;
+  harmonicFret?: number;
+  bend?: SongsterrRevisionBendPayload;
 }
 
 export interface SongsterrRevisionBeatPayload {
   notes?: SongsterrRevisionNotePayload[];
+  type?: number;
   duration?: [number, number];
   dots?: number;
   text?: string;
   velocity?: string;
   rest?: boolean;
+  palmMute?: boolean;
+  vibrato?: boolean;
+  wideVibrato?: boolean;
+  vibratoWithTremoloBar?: string;
+  pickStroke?: string;
+  tuplet?: number;
+  tupletStart?: boolean;
+  tupletStop?: boolean;
 }
 
 export interface SongsterrRevisionVoicePayload {
@@ -151,7 +180,7 @@ export interface SongsterrRevisionVoicePayload {
 export interface SongsterrRevisionMeasurePayload {
   voices?: SongsterrRevisionVoicePayload[];
   signature?: [number, number];
-  marker?: string;
+  marker?: string | { text: string; width?: number };
   repeatStart?: boolean;
   repeatCount?: number;
   alternateEnding?: number;

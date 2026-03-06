@@ -3,7 +3,7 @@ import type {
   ConversionWarning,
   SongsterrRevisionAutomationTempoPoint,
   SongsterrRevisionBeatPayload,
-  SongsterrRevisionMeasurePayload,
+  SongsterrRevisionNotePayload,
   SongsterrRevisionTrackPayload,
   SongsterrRevisionVoicePayload,
   SongsterrStateMetaCurrent,
@@ -39,6 +39,45 @@ const velocityToDynamicMap: Record<string, alphaTab.model.DynamicValue> = {
   ff: alphaTab.model.DynamicValue.FF,
   fff: alphaTab.model.DynamicValue.FFF
 };
+
+const harmonicTypeMap: Record<string, alphaTab.model.HarmonicType> = {
+  natural: alphaTab.model.HarmonicType.Natural,
+  artificial: alphaTab.model.HarmonicType.Artificial,
+  pinch: alphaTab.model.HarmonicType.Pinch,
+  tap: alphaTab.model.HarmonicType.Tap,
+  semi: alphaTab.model.HarmonicType.Semi,
+  feedback: alphaTab.model.HarmonicType.Feedback
+};
+
+/**
+ * Maps a Songsterr tuplet value to [numerator, denominator] for alphaTab.
+ * E.g. triplet (3) = play 3 notes in the space of 2.
+ */
+function getTupletRatio(tuplet: number): [number, number] {
+  switch (tuplet) {
+    case 3:
+      return [3, 2];
+    case 5:
+      return [5, 4];
+    case 6:
+      return [6, 4];
+    case 7:
+      return [7, 4];
+    case 9:
+      return [9, 8];
+    case 10:
+      return [10, 8];
+    case 12:
+      return [12, 8];
+    default:
+      // For uncommon tuplets, use n:(n-1) as a reasonable fallback
+      if (tuplet > 1) {
+        const denominator = Math.pow(2, Math.floor(Math.log2(tuplet)));
+        return [tuplet, denominator];
+      }
+      return [1, 1];
+  }
+}
 
 export class SongsterrToAlphaTabConverter {
   toGp7({ meta, revisions }: SongsterrToGpInput): SongsterrToGpOutput {
@@ -104,8 +143,9 @@ export class SongsterrToAlphaTabConverter {
 
       if (measure?.marker) {
         const section = new alphaTab.model.Section();
-        section.marker = measure.marker;
-        section.text = measure.marker;
+        const markerText = this.extractMarkerText(measure.marker);
+        section.marker = markerText;
+        section.text = markerText;
         masterBar.section = section;
       }
 
@@ -167,26 +207,32 @@ export class SongsterrToAlphaTabConverter {
 
     for (let measureIndex = 0; measureIndex < masterBarCount; measureIndex++) {
       const bar = new alphaTab.model.Bar();
-      const voice = new alphaTab.model.Voice();
       const measure = revision.measures?.[measureIndex];
+      const voiceCount = measure?.voices?.length || 0;
 
-      if (measure?.voices && measure.voices.length > 1) {
-        this.pushWarning(warnings, {
-          code: 'additional_voices_skipped',
-          message: 'Only first voice is converted in v1',
-          location: `track:${trackMeta.partId}|measure:${measureIndex}`
-        });
+      if (voiceCount === 0) {
+        // No voices at all — fill with a single rest voice
+        const voice = new alphaTab.model.Voice();
+        this.fillWithRestBeats(voice, score.masterBars[measureIndex]);
+        bar.addVoice(voice);
+      } else {
+        // Process all voices (not just the first one)
+        for (let voiceIndex = 0; voiceIndex < voiceCount; voiceIndex++) {
+          const voice = new alphaTab.model.Voice();
+          const sourceVoice = measure!.voices![voiceIndex];
+
+          this.fillVoice({
+            voice,
+            sourceVoice,
+            masterBar: score.masterBars[measureIndex],
+            warnings,
+            locationPrefix: `track:${trackMeta.partId}|measure:${measureIndex}|voice:${voiceIndex}`
+          });
+
+          bar.addVoice(voice);
+        }
       }
 
-      this.fillVoice({
-        voice,
-        measure,
-        masterBar: score.masterBars[measureIndex],
-        warnings,
-        locationPrefix: `track:${trackMeta.partId}|measure:${measureIndex}`
-      });
-
-      bar.addVoice(voice);
       staff.addBar(bar);
     }
 
@@ -196,22 +242,20 @@ export class SongsterrToAlphaTabConverter {
 
   private fillVoice({
     voice,
-    measure,
+    sourceVoice,
     masterBar,
     warnings,
     locationPrefix
   }: {
     voice: alphaTab.model.Voice;
-    measure: SongsterrRevisionMeasurePayload | undefined;
+    sourceVoice: SongsterrRevisionVoicePayload | undefined;
     masterBar: alphaTab.model.MasterBar;
     warnings: ConversionWarning[];
     locationPrefix: string;
   }): void {
-    const sourceVoice: SongsterrRevisionVoicePayload | undefined =
-      measure?.voices?.[0];
     const beats = sourceVoice?.beats || [];
 
-    if (beats.length === 0) {
+    if (beats.length === 0 || sourceVoice?.rest) {
       this.fillWithRestBeats(voice, masterBar);
       return;
     }
@@ -237,12 +281,19 @@ export class SongsterrToAlphaTabConverter {
     location: string
   ): alphaTab.model.Beat {
     const beat = new alphaTab.model.Beat();
+
+    // Handle rest beats
+    if (beatData.rest) {
+      beat.isEmpty = true;
+    }
+
+    // Duration mapping
     const mappedDuration = mapSongsterrDuration(beatData.duration);
     beat.duration = mappedDuration.duration;
     beat.dots = beatData.dots ?? mappedDuration.dots;
     beat.text = beatData.text || null;
 
-    if (mappedDuration.isApproximate) {
+    if (mappedDuration.isApproximate && !beatData.tuplet) {
       this.pushWarning(warnings, {
         code: 'duration_approximated',
         message: `Approximated unsupported duration ${JSON.stringify(
@@ -252,6 +303,22 @@ export class SongsterrToAlphaTabConverter {
       });
     }
 
+    // Tuplet support
+    if (typeof beatData.tuplet === 'number' && beatData.tuplet > 1) {
+      const [num, den] = getTupletRatio(beatData.tuplet);
+      beat.tupletNumerator = num;
+      beat.tupletDenominator = den;
+
+      // For tuplets, use the base duration from `type` field rather than the
+      // fractional `duration` field, since tuplets modify the base duration.
+      if (typeof beatData.type === 'number' && beatData.type > 0) {
+        const baseDuration = mapSongsterrDuration([1, beatData.type]);
+        beat.duration = baseDuration.duration;
+        beat.dots = beatData.dots ?? 0;
+      }
+    }
+
+    // Dynamics / velocity
     if (typeof beatData.velocity === 'string') {
       const mappedDynamic =
         velocityToDynamicMap[beatData.velocity.toLowerCase()];
@@ -266,33 +333,112 @@ export class SongsterrToAlphaTabConverter {
       }
     }
 
+    // Pick stroke
+    if (typeof beatData.pickStroke === 'string') {
+      const ps = beatData.pickStroke.toLowerCase();
+      if (ps === 'down') {
+        beat.pickStroke = alphaTab.model.PickStroke.Down;
+      } else if (ps === 'up') {
+        beat.pickStroke = alphaTab.model.PickStroke.Up;
+      }
+    }
+
+    // Beat-level vibrato
+    if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
+      beat.vibrato = alphaTab.model.VibratoType.Wide;
+    } else if (beatData.vibrato) {
+      beat.vibrato = alphaTab.model.VibratoType.Slight;
+    }
+
+    // Map notes
     const notes = beatData.notes || [];
     for (let noteIndex = 0; noteIndex < notes.length; noteIndex++) {
       const noteData = notes[noteIndex];
       if (noteData.rest) {
         continue;
       }
-      const note = new alphaTab.model.Note();
-      note.string = noteData.string || 1;
-      note.fret = noteData.fret || 0;
-
-      if (noteData.tie) {
-        note.isTieDestination = true;
-      }
-
-      if (typeof noteData.slide === 'string') {
-        this.mapSlide(
-          note,
-          noteData.slide,
-          warnings,
-          `${location}|note:${noteIndex}`
-        );
-      }
-
+      const note = this.mapNote(
+        noteData,
+        beatData,
+        warnings,
+        `${location}|note:${noteIndex}`
+      );
       beat.addNote(note);
     }
 
     return beat;
+  }
+
+  private mapNote(
+    noteData: SongsterrRevisionNotePayload,
+    beatData: SongsterrRevisionBeatPayload,
+    warnings: ConversionWarning[],
+    location: string
+  ): alphaTab.model.Note {
+    const note = new alphaTab.model.Note();
+
+    // Fix: Songsterr uses 0-based strings, alphaTab uses 1-based
+    note.string = (noteData.string ?? 0) + 1;
+    note.fret = noteData.fret ?? 0;
+
+    // Tie
+    if (noteData.tie) {
+      note.isTieDestination = true;
+    }
+
+    // Dead note
+    if (noteData.dead) {
+      note.isDead = true;
+    }
+
+    // Ghost note
+    if (noteData.ghost) {
+      note.isGhost = true;
+    }
+
+    // Hammer-on / pull-off
+    if (noteData.hp) {
+      note.isHammerPullOrigin = true;
+    }
+
+    // Staccato
+    if (noteData.staccato) {
+      note.isStaccato = true;
+    }
+
+    // Accentuated
+    if (noteData.accentuated) {
+      note.accentuated = alphaTab.model.AccentuationType.Normal;
+    }
+
+    // Palm mute (beat-level property propagated to each note)
+    if (beatData.palmMute) {
+      note.isPalmMute = true;
+    }
+
+    // Vibrato (note-level takes priority, falls back to beat-level)
+    if (noteData.wideVibrato) {
+      note.vibrato = alphaTab.model.VibratoType.Wide;
+    } else if (noteData.vibrato) {
+      note.vibrato = alphaTab.model.VibratoType.Slight;
+    }
+
+    // Slide
+    if (typeof noteData.slide === 'string') {
+      this.mapSlide(note, noteData.slide, warnings, location);
+    }
+
+    // Harmonics
+    if (typeof noteData.harmonic === 'string') {
+      this.mapHarmonic(note, noteData, warnings, location);
+    }
+
+    // Bend
+    if (noteData.bend && noteData.bend.points && noteData.bend.points.length > 0) {
+      this.mapBend(note, noteData.bend);
+    }
+
+    return note;
   }
 
   private mapSlide(
@@ -310,7 +456,7 @@ export class SongsterrToAlphaTabConverter {
       note.slideOutType = alphaTab.model.SlideOutType.Legato;
       return;
     }
-    if (normalizedSlide === 'into_from_below') {
+    if (normalizedSlide === 'into_from_below' || normalizedSlide === 'below') {
       note.slideInType = alphaTab.model.SlideInType.IntoFromBelow;
       return;
     }
@@ -322,7 +468,7 @@ export class SongsterrToAlphaTabConverter {
       note.slideOutType = alphaTab.model.SlideOutType.OutUp;
       return;
     }
-    if (normalizedSlide === 'out_down') {
+    if (normalizedSlide === 'out_down' || normalizedSlide === 'downwards') {
       note.slideOutType = alphaTab.model.SlideOutType.OutDown;
       return;
     }
@@ -332,6 +478,46 @@ export class SongsterrToAlphaTabConverter {
       message: `Unsupported slide effect "${slide}"`,
       location
     });
+  }
+
+  private mapHarmonic(
+    note: alphaTab.model.Note,
+    noteData: SongsterrRevisionNotePayload,
+    warnings: ConversionWarning[],
+    location: string
+  ): void {
+    const harmonicStr = noteData.harmonic!.toLowerCase();
+    const mappedType = harmonicTypeMap[harmonicStr];
+
+    if (typeof mappedType === 'number') {
+      note.harmonicType = mappedType;
+      if (typeof noteData.harmonicFret === 'number') {
+        note.harmonicValue = noteData.harmonicFret;
+      }
+    } else {
+      this.pushWarning(warnings, {
+        code: 'harmonic_unsupported',
+        message: `Unsupported harmonic type "${noteData.harmonic}"`,
+        location
+      });
+    }
+  }
+
+  private mapBend(
+    note: alphaTab.model.Note,
+    bend: { tone: number; points: { position: number; tone: number }[] }
+  ): void {
+    note.bendType = alphaTab.model.BendType.Custom;
+
+    for (const point of bend.points) {
+      // Songsterr uses position 0-60, alphaTab uses offset 0-60 (same scale)
+      // Songsterr tone is in semitones × 100 (100 = 1 semitone)
+      // alphaTab value is in quarter-tones (100 = 1 quarter tone)
+      // So: 1 semitone = 2 quarter tones → multiply by 2
+      const offset = Math.round(point.position);
+      const value = Math.round(point.tone * 2);
+      note.addBendPoint(new alphaTab.model.BendPoint(offset, value));
+    }
   }
 
   private fillWithRestBeats(
@@ -344,6 +530,7 @@ export class SongsterrToAlphaTabConverter {
     const mappedDuration = mapSongsterrDuration([1, denominator]);
     for (let i = 0; i < numerator; i++) {
       const restBeat = new alphaTab.model.Beat();
+      restBeat.isEmpty = true;
       restBeat.duration = mappedDuration.duration;
       restBeat.dots = mappedDuration.dots;
       voice.addBeat(restBeat);
@@ -381,6 +568,16 @@ export class SongsterrToAlphaTabConverter {
       return null;
     }
     return [numerator, denominator];
+  }
+
+  private extractMarkerText(marker: string | { text: string; width?: number }): string {
+    if (typeof marker === 'string') {
+      return marker;
+    }
+    if (marker && typeof marker === 'object' && typeof marker.text === 'string') {
+      return marker.text;
+    }
+    return '';
   }
 
   private findTempoPoints(

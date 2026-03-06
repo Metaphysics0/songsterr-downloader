@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:pyguitarpro.readthedocs.io)",
+      "Bash(jq {name, instrument, instrumentId}:*)",
+      "WebFetch(domain:alphatab.net)",
+      "Bash(python3:*)",
+      "Bash(node:*)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}
