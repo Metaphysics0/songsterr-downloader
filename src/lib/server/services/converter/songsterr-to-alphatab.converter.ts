@@ -635,16 +635,18 @@ export class SongsterrToAlphaTabConverter {
         continue;
       }
 
-      const beatReference = point.type || 4;
+      // alphaTab reference index: 0=whole, 1=half(×0.5), 2=quarter(×1.0), 3=dotted-quarter(×1.5), 4=half(×2.0), 5=dotted-half(×3.0)
+      // Songsterr BPM is always in quarter-note beats, so use reference=2 (×1.0)
+      const tempoReference = 2;
       const ratioPosition =
         point.position > 0
-          ? Math.max(0, Math.min(1, point.position / beatReference))
+          ? Math.max(0, Math.min(1, point.position / (point.type || 4)))
           : 0;
       const tempoAutomation = alphaTab.model.Automation.buildTempoAutomation(
         false,
         ratioPosition,
         point.bpm,
-        beatReference,
+        tempoReference,
         true
       );
       masterBar.tempoAutomations.push(tempoAutomation);
