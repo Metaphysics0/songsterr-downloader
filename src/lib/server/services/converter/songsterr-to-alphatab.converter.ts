@@ -98,12 +98,25 @@ export class SongsterrToAlphaTabConverter {
       warnings
     });
 
+    let nextChannel = 0;
     for (const entry of revisions) {
+      const instrumentId =
+        entry.trackMeta.instrumentId ?? entry.revision.instrumentId;
+      const isPercussion = instrumentId === 1024 || !!entry.trackMeta.isDrums;
+      let channel: number;
+      if (isPercussion) {
+        channel = 9;
+      } else {
+        if (nextChannel === 9) nextChannel++; // skip drum channel
+        channel = nextChannel;
+        nextChannel++;
+      }
       this.buildTrack({
         score,
         entry,
         masterBarCount,
-        warnings
+        warnings,
+        channel
       });
     }
 
@@ -175,12 +188,14 @@ export class SongsterrToAlphaTabConverter {
     score,
     entry,
     masterBarCount,
-    warnings
+    warnings,
+    channel
   }: {
     score: alphaTab.model.Score;
     entry: SongsterrRevisionTrackInput;
     masterBarCount: number;
     warnings: ConversionWarning[];
+    channel: number;
   }): void {
     const { trackMeta, revision } = entry;
     const playbackMapping = mapSongsterrInstrumentToPlayback(
@@ -191,19 +206,17 @@ export class SongsterrToAlphaTabConverter {
     track.name = trackMeta.title || trackMeta.name || revision.name || 'Track';
     track.shortName = track.name.slice(0, 20);
     track.playbackInfo.program = playbackMapping.program;
-    if (typeof playbackMapping.primaryChannel === 'number') {
-      track.playbackInfo.primaryChannel = playbackMapping.primaryChannel;
-    }
-    if (typeof playbackMapping.secondaryChannel === 'number') {
-      track.playbackInfo.secondaryChannel = playbackMapping.secondaryChannel;
-    }
+    track.playbackInfo.primaryChannel = channel;
+    track.playbackInfo.secondaryChannel = channel;
 
     const staff = new alphaTab.model.Staff();
     const tuning = revision.tuning || trackMeta.tuning;
     if (Array.isArray(tuning) && tuning.length > 0) {
       staff.stringTuning = new alphaTab.model.Tuning('Custom', tuning, false);
     }
-    staff.isPercussion = playbackMapping.isPercussion || !!trackMeta.isDrums;
+    const isPercussion = playbackMapping.isPercussion || !!trackMeta.isDrums;
+    staff.isPercussion = isPercussion;
+    const numStrings = Array.isArray(tuning) ? tuning.length : 6;
 
     for (let measureIndex = 0; measureIndex < masterBarCount; measureIndex++) {
       const bar = new alphaTab.model.Bar();
@@ -226,7 +239,9 @@ export class SongsterrToAlphaTabConverter {
             sourceVoice,
             masterBar: score.masterBars[measureIndex],
             warnings,
-            locationPrefix: `track:${trackMeta.partId}|measure:${measureIndex}|voice:${voiceIndex}`
+            locationPrefix: `track:${trackMeta.partId}|measure:${measureIndex}|voice:${voiceIndex}`,
+            isPercussion,
+            numStrings
           });
 
           bar.addVoice(voice);
@@ -245,13 +260,17 @@ export class SongsterrToAlphaTabConverter {
     sourceVoice,
     masterBar,
     warnings,
-    locationPrefix
+    locationPrefix,
+    isPercussion,
+    numStrings
   }: {
     voice: alphaTab.model.Voice;
     sourceVoice: SongsterrRevisionVoicePayload | undefined;
     masterBar: alphaTab.model.MasterBar;
     warnings: ConversionWarning[];
     locationPrefix: string;
+    isPercussion: boolean;
+    numStrings: number;
   }): void {
     const beats = sourceVoice?.beats || [];
 
@@ -265,7 +284,9 @@ export class SongsterrToAlphaTabConverter {
       const beat = this.mapBeat(
         beatData,
         warnings,
-        `${locationPrefix}|beat:${beatIndex}`
+        `${locationPrefix}|beat:${beatIndex}`,
+        isPercussion,
+        numStrings
       );
       voice.addBeat(beat);
     }
@@ -278,7 +299,9 @@ export class SongsterrToAlphaTabConverter {
   private mapBeat(
     beatData: SongsterrRevisionBeatPayload,
     warnings: ConversionWarning[],
-    location: string
+    location: string,
+    isPercussion: boolean,
+    numStrings: number
   ): alphaTab.model.Beat {
     const beat = new alphaTab.model.Beat();
 
@@ -361,7 +384,9 @@ export class SongsterrToAlphaTabConverter {
         noteData,
         beatData,
         warnings,
-        `${location}|note:${noteIndex}`
+        `${location}|note:${noteIndex}`,
+        isPercussion,
+        numStrings
       );
       beat.addNote(note);
     }
@@ -373,13 +398,19 @@ export class SongsterrToAlphaTabConverter {
     noteData: SongsterrRevisionNotePayload,
     beatData: SongsterrRevisionBeatPayload,
     warnings: ConversionWarning[],
-    location: string
+    location: string,
+    isPercussion: boolean,
+    numStrings: number
   ): alphaTab.model.Note {
     const note = new alphaTab.model.Note();
 
-    // Fix: Songsterr uses 0-based strings, alphaTab uses 1-based
-    note.string = (noteData.string ?? 0) + 1;
+    // Songsterr: string 0 = highest pitch, alphaTab: string 1 = lowest pitch
+    note.string = isPercussion ? 0 : numStrings - (noteData.string ?? 0);
     note.fret = noteData.fret ?? 0;
+
+    if (isPercussion) {
+      note.percussionArticulation = noteData.fret ?? 0;
+    }
 
     // Tie
     if (noteData.tie) {

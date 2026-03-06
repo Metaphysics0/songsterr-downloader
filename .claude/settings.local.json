@@ -8,7 +8,8 @@
       "WebFetch(domain:alphatab.net)",
       "Bash(python3:*)",
       "Bash(node:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx vitest:*)"
     ]
   }
 }

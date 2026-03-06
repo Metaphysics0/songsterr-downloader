@@ -83,7 +83,7 @@ describe('SongsterrToAlphaTabConverter', () => {
   });
 
   describe('string numbering', () => {
-    it('converts 0-based strings to 1-based', () => {
+    it('inverts string numbering: Songsterr string 0 (high e) → alphaTab string 6 (high e) for 6-string', async () => {
       const revision: SongsterrRevisionTrackPayload = {
         measures: [
           {
@@ -106,8 +106,24 @@ describe('SongsterrToAlphaTabConverter', () => {
         ]
       };
 
-      const { data } = convertSingle(revision);
+      const meta = makeTrackMeta({ tuning: [64, 59, 55, 50, 45, 40] });
+      const converter = new SongsterrToAlphaTabConverter();
+      const { data } = converter.toGp7({
+        meta: makeMeta([meta]),
+        revisions: [{ trackMeta: meta, revision }]
+      });
       expect(data.length).toBeGreaterThan(0);
+
+      // Re-import to verify string mapping
+      const settings = new (await import('@coderline/alphatab')).Settings();
+      const score = (await import('@coderline/alphatab')).importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const beat = score.tracks[0].staves[0].bars[0].voices[0].beats[0];
+      // Songsterr string 0 → alphaTab string 6 (numStrings - 0 = 6)
+      const highENote = beat.notes.find((n: { fret: number }) => n.fret === 5);
+      expect(highENote!.string).toBe(6);
+      // Songsterr string 5 → alphaTab string 1 (numStrings - 5 = 1)
+      const lowENote = beat.notes.find((n: { fret: number }) => n.fret === 3);
+      expect(lowENote!.string).toBe(1);
     });
   });
 
@@ -624,6 +640,115 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('MIDI channel allocation', () => {
+    it('assigns unique channels to each non-drum track, skipping channel 9', async () => {
+      const alphaTabModule = await import('@coderline/alphatab');
+
+      const makeRevision = (): SongsterrRevisionTrackPayload => ({
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [{ fret: 0, string: 0 }],
+                    duration: [1, 1],
+                    type: 1
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      });
+
+      const tracks: SongsterrRevisionTrackInput[] = [];
+      const trackMetas: SongsterrStateMetaCurrentTrack[] = [];
+      for (let i = 0; i < 12; i++) {
+        const meta = makeTrackMeta({
+          partId: i,
+          instrumentId: i === 5 ? 1024 : 25, // track 5 is drums
+          title: `Track ${i}`,
+          isDrums: i === 5
+        });
+        trackMetas.push(meta);
+        tracks.push({ trackMeta: meta, revision: makeRevision() });
+      }
+
+      const converter = new SongsterrToAlphaTabConverter();
+      const { data } = converter.toGp7({
+        meta: makeMeta(trackMetas),
+        revisions: tracks
+      });
+
+      const settings = new alphaTabModule.Settings();
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+
+      const channels = score.tracks.map(
+        (t: { playbackInfo: { primaryChannel: number } }) => t.playbackInfo.primaryChannel
+      );
+      // Drum track should be on channel 9
+      expect(channels[5]).toBe(9);
+      // No two non-drum tracks share a channel
+      const nonDrumChannels = channels.filter((_: number, i: number) => i !== 5);
+      expect(new Set(nonDrumChannels).size).toBe(nonDrumChannels.length);
+      // No non-drum track uses channel 9
+      expect(nonDrumChannels).not.toContain(9);
+    });
+  });
+
+  describe('drum percussion articulation', () => {
+    it('sets percussionArticulation from fret values on drum tracks', async () => {
+      const alphaTabModule = await import('@coderline/alphatab');
+
+      const revision: SongsterrRevisionTrackPayload = {
+        instrumentId: 1024,
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      { fret: 36, string: 0 }, // kick
+                      { fret: 38, string: 1 }  // snare
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const meta = makeTrackMeta({
+        instrumentId: 1024,
+        isDrums: true,
+        title: 'Drums',
+        tuning: []
+      });
+      const converter = new SongsterrToAlphaTabConverter();
+      const { data } = converter.toGp7({
+        meta: makeMeta([meta]),
+        revisions: [{ trackMeta: meta, revision }]
+      });
+
+      const settings = new alphaTabModule.Settings();
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+
+      const beat = score.tracks[0].staves[0].bars[0].voices[0].beats[0];
+      const articulations = beat.notes.map(
+        (n: { percussionArticulation: number }) => n.percussionArticulation
+      );
+      expect(articulations).toContain(36); // kick
+      expect(articulations).toContain(38); // snare
     });
   });
 
