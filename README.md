@@ -14,12 +14,6 @@ Main challenges right now:
 - Handling occasional missing/failed per-part CDN revision requests.
 - Keeping conversion fast enough for large multi-track songs in serverless environments (mitigated with S3 caching).
 
-## Tech Stack:
-
-- [SvelteKit](https://kit.svelte.dev/) for the web app.
-- [Vercel](https://vercel.com/) for hosting + CI/CD.
-- [AlphaTab](https://www.alphatab.net/) for gp tab conversion
-
 ## How to run:
 
 1. clone the repo, `cd` into the directory.
