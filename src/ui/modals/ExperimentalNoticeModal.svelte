@@ -1,14 +1,26 @@
 <script lang="ts">
   import { experimentalNoticeModalStore } from '$lib/stores/experimental-notice-modal.store';
   import { fade } from 'svelte/transition';
-  import SocialLinks from '../common/SocialLinks.svelte';
+  import Link from '../common/Link.svelte';
 </script>
 
+<svelte:window
+  on:keydown={(e) => e.key === 'Escape' && experimentalNoticeModalStore.hide()}
+/>
+
 {#if $experimentalNoticeModalStore}
-  <div class="modal-overlay" transition:fade={{ duration: 300 }}>
-    <div class="modal-content" transition:fade={{ duration: 300, delay: 150 }}>
+  <div
+    class="modal-overlay"
+    transition:fade={{ duration: 300 }}
+    on:click={() => experimentalNoticeModalStore.hide()}
+  >
+    <div
+      class="modal-content"
+      transition:fade={{ duration: 300, delay: 150 }}
+      on:click|stopPropagation
+    >
       <div class="modal-header">
-        <h2>⚠️ NOTICE - Tab quality is experimental</h2>
+        <h2 class="">Tab quality is experimental</h2>
         <button
           class="close-btn"
           on:click={() => experimentalNoticeModalStore.hide()}
@@ -31,17 +43,19 @@
           official download flow.
         </p>
         <p>
-          Pull requests are very welcome while this conversion pipeline is being
-          improved.
+          <Link
+            href="https://github.com/Metaphysics0/songsterr-downloader"
+            innerText="Pull requests"
+          />
+          are very welcome while this conversion pipeline is being improved 🙏
         </p>
-        <SocialLinks />
       </div>
       <div class="modal-footer">
         <button
           class="close-btn-main"
           on:click={() => experimentalNoticeModalStore.hide()}
         >
-          Continue
+          Got it!
         </button>
       </div>
     </div>
@@ -78,7 +92,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
-    border-bottom: 1px solid #eee;
   }
 
   .modal-header h2 {
@@ -98,7 +111,6 @@
 
   .modal-footer {
     padding: 16px 20px;
-    border-top: 1px solid #eee;
     display: flex;
     justify-content: flex-end;
   }
@@ -122,18 +134,19 @@
   }
 
   .close-btn-main {
-    background-color: #ef4444;
-    color: white;
-    border: none;
+    background-color: transparent;
+    color: #333;
+    border: 1px solid #ccc;
     padding: 8px 16px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, border-color 0.2s;
   }
 
   .close-btn-main:hover {
-    background-color: #dc2626;
+    background-color: #f5f5f5;
+    border-color: #999;
   }
 
   @media (max-width: 600px) {
