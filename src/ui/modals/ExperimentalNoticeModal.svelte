@@ -11,7 +11,7 @@
         <h2>⚠️ NOTICE - Tab quality is experimental</h2>
         <button
           class="close-btn"
-          on:click={() => ($experimentalNoticeModalStore = false)}
+          on:click={() => experimentalNoticeModalStore.hide()}
           aria-label="Close modal"
         >
           ✕
@@ -39,7 +39,7 @@
       <div class="modal-footer">
         <button
           class="close-btn-main"
-          on:click={() => ($experimentalNoticeModalStore = false)}
+          on:click={() => experimentalNoticeModalStore.hide()}
         >
           Continue
         </button>
