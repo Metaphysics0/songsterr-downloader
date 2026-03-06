@@ -34,6 +34,16 @@
   let isValid: boolean = false;
 
   let isLoading: boolean = false;
+
+  let formEl: HTMLFormElement;
+
+  function handlePaste(event: ClipboardEvent): void {
+    const pastedText = event.clipboardData?.getData('text') ?? '';
+    if (isUrlFromSongsterr(pastedText)) {
+      isValid = true;
+      setTimeout(() => formEl?.requestSubmit(), 0);
+    }
+  }
 </script>
 
 {#if isLoading && !selectedSong}
@@ -42,6 +52,7 @@
   <SelectedForm {selectedSong} />
 {:else}
   <form
+    bind:this={formEl}
     class="flex flex-col items-center"
     method="POST"
     action="?/getMetadataFromTabUrl"
@@ -72,13 +83,14 @@
       required
       on:invalid={setValidationMessage}
       on:input={setInputValidity}
+      on:paste={handlePaste}
       placeholder={sample(placeholderSongUrls)}
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2 text-center"
     />
     <button
       disabled={!isValid}
       class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-red-500 hover:bg-red-400 text-white disabled:bg-slate-5 disabled:hover:bg-slate-6 disabled:hover:cursor-not-allowed"
-      >Get Tab!</button
+      >Get Tab</button
     >
   </form>
 {/if}
