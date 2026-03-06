@@ -1,6 +1,4 @@
-# Songsterr / Ultimate Guitar to Guitar Pro Downloader 🎸
-
-This is a simple web app I built to quickly download Guitar Pro files (.gpx, .gp5, .gp, etc) from [Songsterr](https://www.songsterr.com/).
+# Songsterr Downloader 🎸
 
 ## ⚠️ Download Support Status - March 2026
 
@@ -16,10 +14,18 @@ Main challenges right now:
 - Handling occasional missing/failed per-part CDN revision requests.
 - Keeping conversion fast enough for large multi-track songs in serverless environments (mitigated with S3 caching).
 
-## Tech Stack
-
-Main Tech:
+## Tech Stack:
 
 - [SvelteKit](https://kit.svelte.dev/) for the web app.
 - [Vercel](https://vercel.com/) for hosting + CI/CD.
 - [AlphaTab](https://www.alphatab.net/) for gp tab conversion
+
+## How to run:
+
+1. clone the repo, `cd` into the directory.
+2. Make sure you have [bun](https://bun.sh/) installed.
+3. Run the following commands in your terminal:
+4. `bun i`
+5. `bun dev`
+
+You should see the app running at http://localhost:5173/
