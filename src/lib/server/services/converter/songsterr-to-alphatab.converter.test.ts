@@ -744,11 +744,14 @@ describe('SongsterrToAlphaTabConverter', () => {
       const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
 
       const beat = score.tracks[0].staves[0].bars[0].voices[0].beats[0];
-      const articulations = beat.notes.map(
-        (n: { percussionArticulation: number }) => n.percussionArticulation
-      );
-      expect(articulations).toContain(36); // kick
-      expect(articulations).toContain(38); // snare
+      // After round-trip, verify the articulations resolve to correct drum sounds
+      const rTrack = score.tracks[0];
+      const articulations = beat.notes.map((n: { percussionArticulation: number }) => {
+        const art = rTrack.percussionArticulations[n.percussionArticulation];
+        return art?.outputMidiNumber;
+      });
+      expect(articulations).toContain(36); // kick (MIDI 36)
+      expect(articulations).toContain(38); // snare (MIDI 38)
     });
   });
 

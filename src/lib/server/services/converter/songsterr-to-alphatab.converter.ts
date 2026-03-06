@@ -79,6 +79,59 @@ function getTupletRatio(tuplet: number): [number, number] {
   }
 }
 
+/**
+ * Builds a map from MIDI note number (articulation ID) → index in alphaTab's
+ * default percussion articulation list. The GP7 format references drum sounds
+ * by index, not by MIDI note number.
+ */
+function buildPercussionIndexMap(): Map<number, number> {
+  const score = new alphaTab.model.Score();
+  const mb = new alphaTab.model.MasterBar();
+  score.addMasterBar(mb);
+  const track = new alphaTab.model.Track();
+  track.playbackInfo.primaryChannel = 9;
+  track.playbackInfo.secondaryChannel = 9;
+  const staff = new alphaTab.model.Staff();
+  staff.isPercussion = true;
+  track.addStaff(staff);
+  const bar = new alphaTab.model.Bar();
+  const voice = new alphaTab.model.Voice();
+  const beat = new alphaTab.model.Beat();
+  beat.isEmpty = true;
+  voice.addBeat(beat);
+  bar.addVoice(voice);
+  staff.addBar(bar);
+  score.addTrack(track);
+
+  const settings = new alphaTab.Settings();
+  score.finish(settings);
+  const exporter = new alphaTab.exporter.Gp7Exporter();
+  const data = exporter.export(score, settings);
+  const reimported = alphaTab.importer.ScoreLoader.loadScoreFromBytes(
+    data,
+    settings
+  );
+
+  const map = new Map<number, number>();
+  const articulations = reimported.tracks[0].percussionArticulations;
+  for (let i = 0; i < articulations.length; i++) {
+    const id = articulations[i].id;
+    if (!map.has(id)) {
+      map.set(id, i);
+    }
+  }
+  return map;
+}
+
+let percussionIndexMap: Map<number, number> | null = null;
+
+function getPercussionArticulationIndex(midiNote: number): number {
+  if (!percussionIndexMap) {
+    percussionIndexMap = buildPercussionIndexMap();
+  }
+  return percussionIndexMap.get(midiNote) ?? midiNote;
+}
+
 export class SongsterrToAlphaTabConverter {
   toGp7({ meta, revisions }: SongsterrToGpInput): SongsterrToGpOutput {
     const warnings: ConversionWarning[] = [];
@@ -409,7 +462,9 @@ export class SongsterrToAlphaTabConverter {
     note.fret = noteData.fret ?? 0;
 
     if (isPercussion) {
-      note.percussionArticulation = noteData.fret ?? 0;
+      note.percussionArticulation = getPercussionArticulationIndex(
+        noteData.fret ?? 0
+      );
     }
 
     // Tie
