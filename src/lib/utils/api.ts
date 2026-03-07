@@ -18,7 +18,7 @@ export const apiService = {
           method: 'POST',
           params: {
             songTitle: searchResult.title,
-            ...pick(searchResult, ['byLinkUrl'])
+            byLinkUrl: searchResult.byLinkUrl
           }
         }),
         ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
@@ -33,7 +33,7 @@ export const apiService = {
           method: 'POST',
           params: {
             songTitle: searchResult.title,
-            ...pick(searchResult, ['byLinkUrl'])
+            byLinkUrl: searchResult.byLinkUrl
           }
         }),
         ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
