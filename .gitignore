@@ -15,3 +15,6 @@ scratches/
 ripsterr/
 
 data/
+
+.agents
+.claude
