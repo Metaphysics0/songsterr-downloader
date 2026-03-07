@@ -1,4 +1,3 @@
-import Fetcher from '$lib/server/utils/fetcher.util';
 import { convertArrayBufferToArray } from '$lib/utils/array';
 import type { SupportedTabDownloadType } from '$lib/types/supported-tab-download-type';
 import { SongsterrService } from './songsterr.service';
@@ -14,12 +13,6 @@ export class DownloadTabService {
   ) {}
 
   async download(request: Request): Promise<SongsterrDownloadResponse> {
-    if (this.SupportedTabDownloadType === 'bySearchResult') {
-      return this.bySearchResult(request);
-    }
-    if (this.SupportedTabDownloadType === 'bySource') {
-      return this.bySource(request);
-    }
     if (this.SupportedTabDownloadType === 'byRevisionJson') {
       return this.byRevisionJson(request);
     }
@@ -30,41 +23,6 @@ export class DownloadTabService {
     throw new Error(
       `Unsupported download type: ${this.SupportedTabDownloadType}`
     );
-  }
-
-  private async bySource(request: Request, options: BySourceOptions = {}) {
-    const { source, songTitle, songId, artist } =
-      options.requestParams || (await request.json());
-
-    const { buffer, contentType } =
-      await this.fetcher.fetchAndReturnArrayBuffer(source);
-
-    const fileName = this.songsterrService.buildFileNameFromSongName(
-      songTitle,
-      source
-    );
-
-    return this.createDownloadResponse({ buffer, fileName, contentType });
-  }
-
-  private async bySearchResult(request: Request) {
-    const { songId, songTitle, artist } = await request.json();
-
-    const guitarProLink =
-      await this.songsterrService.getGuitarProDownloadLinkFromSongId(songId);
-    if (!guitarProLink) {
-      throw new Error(`Unable to find download link from song: ${songTitle}`);
-    }
-
-    const { buffer, contentType } =
-      await this.fetcher.fetchAndReturnArrayBuffer(guitarProLink);
-
-    const fileName = this.songsterrService.buildFileNameFromSongName(
-      songTitle,
-      guitarProLink
-    );
-
-    return this.createDownloadResponse({ buffer, fileName, contentType });
   }
 
   private async byRevisionJson(request: Request) {
@@ -184,16 +142,8 @@ export class DownloadTabService {
     };
   }
 
-  private readonly fetcher = new Fetcher();
   private readonly songsterrService = new SongsterrService();
   private readonly songsterrRevisionJsonService =
     new SongsterrRevisionJsonService();
   private readonly converter = new SongsterrToAlphaTabConverter();
-}
-
-interface BySourceOptions {
-  requestParams?: {
-    source: string;
-    songTitle: string;
-  };
 }
