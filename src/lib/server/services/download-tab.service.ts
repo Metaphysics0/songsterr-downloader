@@ -2,7 +2,7 @@ import { convertArrayBufferToArray } from '$lib/utils/array';
 import type { SupportedTabDownloadType } from '$lib/types/supported-tab-download-type';
 import { SongsterrService } from './songsterr.service';
 import type { SongsterrDownloadResponse } from '$lib/types';
-import { logger } from '$lib/utils/logger';
+import { logger } from '$lib/server/logger';
 import { SongsterrRevisionJsonService } from './songsterr-revision-json.service';
 import { SongsterrToAlphaTabConverter } from './converter/songsterr-to-alphatab.converter';
 import { GUITAR_PRO_CONTENT_TYPE, MIDI_CONTENT_TYPE } from '$lib/constants';
@@ -50,12 +50,12 @@ export class DownloadTabService {
     const allWarnings = [...fetchWarnings, ...convertWarnings];
 
     if (allWarnings.length > 0) {
-      logger.warn('Songsterr to GP conversion warnings', {
+      logger.warn({
         songId: stateMeta.songId,
         revisionId: stateMeta.revisionId,
         warningCount: allWarnings.length,
         warnings: allWarnings.slice(0, 20)
-      });
+      }, 'Songsterr to GP conversion warnings');
     }
 
     const buffer = gpData.buffer.slice(
@@ -93,20 +93,21 @@ export class DownloadTabService {
       );
     }
 
-    const { data: midiData, warnings: convertWarnings } =
-      this.converter.toMidi({
+    const { data: midiData, warnings: convertWarnings } = this.converter.toMidi(
+      {
         meta: stateMeta,
         revisions
-      });
+      }
+    );
     const allWarnings = [...fetchWarnings, ...convertWarnings];
 
     if (allWarnings.length > 0) {
-      logger.warn('Songsterr to MIDI conversion warnings', {
+      logger.warn({
         songId: stateMeta.songId,
         revisionId: stateMeta.revisionId,
         warningCount: allWarnings.length,
         warnings: allWarnings.slice(0, 20)
-      });
+      }, 'Songsterr to MIDI conversion warnings');
     }
 
     const buffer = midiData.buffer.slice(

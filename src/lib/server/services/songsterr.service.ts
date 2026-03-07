@@ -1,4 +1,4 @@
-import { logger } from '$lib/utils/logger';
+import { logger } from '$lib/server/logger';
 import { getGuitarProFileTypeFromUrl, normalize } from '$lib/utils/string';
 import { scraper } from '../utils/scraper.util';
 import type { SongsterrPartialMetadata } from '$lib/types';
@@ -19,7 +19,7 @@ export class SongsterrService {
       const fileType = getGuitarProFileTypeFromUrl(downloadUrl);
       return normalizedSongName + fileType;
     } catch (error) {
-      logger.error('error creating filename from song name', error);
+      logger.error({ err: error }, 'error creating filename from song name');
       return `downloaded-tab_${Date.now()}.gp5`;
     }
   }
@@ -31,7 +31,7 @@ export class SongsterrService {
       // @ts-ignore
       return JSON.parse(metadataScript).meta.current;
     } catch (error) {
-      logger.error('error parsing metadata', error);
+      logger.error({ err: error }, 'error parsing metadata');
       throw new Error('Error reading tab data');
     }
   }

@@ -1,24 +1,16 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
   import {
     setValidationMessage,
     clearValidationMessage
-  } from '../../lib/utils/html-input';
-  import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
+  } from '../lib/utils/html-input';
+  import SelectedForm from './withSelectedSong/SelectedForm.svelte';
   import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
   import { isUrlFromSongsterr } from '$lib/utils/url';
-  import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
+  import SelectedSongSkeleton from './common/SelectedSongSkeleton.svelte';
   import { toastError } from '$lib/utils/toast.util';
-  import { isLoadingMetadata } from '$lib/stores/loading.store';
-  import type { SongsterrPartialMetadata } from '$lib/types';
+  import { appStore } from '$lib/stores/app.store.svelte';
   import { fade } from 'svelte/transition';
-
-  let selectedSong: SongsterrPartialMetadata | undefined;
-
-  selectedSongToDownload.subscribe((value) => {
-    selectedSong = value;
-  });
 
   function setInputValidity(event: Event): void {
     const { value } = event.target as HTMLInputElement;
@@ -31,11 +23,11 @@
     }
   }
 
-  let isValid: boolean = false;
+  let isValid: boolean = $state(false);
 
-  let isLoading: boolean = false;
+  let isLoading: boolean = $state(false);
 
-  let formEl: HTMLFormElement;
+  let formEl: HTMLFormElement | undefined = $state();
 
   function handlePaste(event: ClipboardEvent): void {
     const pastedText = event.clipboardData?.getData('text') ?? '';
@@ -46,16 +38,17 @@
   }
 </script>
 
-{#if isLoading && !selectedSong}
+{#if isLoading && !appStore.selectedSong}
   <div in:fade={{ duration: 200 }}>
     <SelectedSongSkeleton />
   </div>
-{:else if selectedSong}
+{:else if appStore.selectedSong}
   <div in:fade={{ duration: 200 }}>
-    <SelectedForm {selectedSong} />
+    <SelectedForm selectedSong={appStore.selectedSong} />
   </div>
 {:else}
-  <form in:fade={{ duration: 200 }}
+  <form
+    in:fade={{ duration: 200 }}
     bind:this={formEl}
     class="flex flex-col items-center"
     method="POST"
@@ -64,10 +57,10 @@
       const byLinkUrl = formData.get('url');
 
       isLoading = true;
-      $isLoadingMetadata = true;
+      appStore.isLoadingMetadata = true;
       return async ({ result, update }) => {
         isLoading = false;
-        $isLoadingMetadata = false;
+        appStore.isLoadingMetadata = false;
         // @ts-ignore
         const songMetadata = result?.data || {};
 
@@ -77,7 +70,7 @@
           return;
         }
 
-        selectedSongToDownload.set({ ...songMetadata, byLinkUrl });
+        appStore.selectedSong = { ...songMetadata, byLinkUrl };
         update({ reset: false });
       };
     }}
@@ -94,9 +87,9 @@
       name="url"
       pattern={SONGSTERR_URL_REGEX_PATTERN.source}
       required
-      on:invalid={setValidationMessage}
-      on:input={setInputValidity}
-      on:paste={handlePaste}
+      oninvalid={setValidationMessage}
+      oninput={setInputValidity}
+      onpaste={handlePaste}
       placeholder="https://www.songsterr.com/a/wsa/chon-fluffy-tab-s399673"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4 text-center"
     />

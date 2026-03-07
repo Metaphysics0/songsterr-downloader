@@ -2,11 +2,15 @@
   import { apiService } from '$lib/utils/api';
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
   import SelectedSong from './SelectedSong.svelte';
-  import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
+  import { appStore } from '$lib/stores/app.store.svelte';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
   import Icon from '@iconify/svelte';
 
-  export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
+  interface Props {
+    selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
+  }
+
+  let { selectedSong }: Props = $props();
 
   async function downloadTab(): Promise<void> {
     try {
@@ -27,7 +31,7 @@
   }
 
   function deselectSong(): void {
-    selectedSongToDownload.set(undefined);
+    appStore.selectedSong = undefined;
   }
 </script>
 
@@ -38,7 +42,7 @@
   <div class="flex flex-col gap-2 items-center">
     <button
       class="flex items-center px-4 py-1.5 text-sm font-semibold text-white bg-blue-500 border border-blue-600 rounded shadow hover:bg-blue-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-      on:click={downloadTab}
+      onclick={downloadTab}
     >
       <Icon
         icon="mingcute:guitar-fill"
@@ -48,16 +52,16 @@
     <span class="mb-1 font-light">or </span>
     <button
       class="flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50"
-      on:click={downloadMidi}
+      onclick={downloadMidi}
     >
       <Icon icon="mingcute:midi-line" class="inline-block mr-1.5 text-base" />
       Download MIDI</button
     >
   </div>
-  <div class="my-2" />
+  <div class="my-2"></div>
 
   <button
     class="text-slate-400 font-light underline hover:text-slate-500 bg-transparent mb-1"
-    on:click={deselectSong}>Select another</button
+    onclick={deselectSong}>Select another</button
   >
 </div>

@@ -1,14 +1,14 @@
 <script lang="ts">
-  import 'uno.css';
-  import '@unocss/reset/tailwind.css';
-
+  import '../app.css';
   import { SvelteToast } from '@zerodevx/svelte-toast';
   import Header from '../ui/common/Header.svelte';
+
+  let { children } = $props();
 </script>
 
 <SvelteToast />
 
-<header class="my-8 mt-12">
+<header class="mt-12 mb-2.5">
   <Header />
 </header>
-<slot />
+{@render children()}
