@@ -2,7 +2,7 @@ import { logger } from '$lib/utils/logger';
 import { isUrlFromSongsterr } from '$lib/utils/url';
 import type { Actions } from './$types';
 import { SongsterrService } from '$lib/server/services/songsterr.service';
-import { SongsterrPartialMetadata } from '$lib/types';
+import type { SongsterrPartialMetadata } from '$lib/types';
 
 export const actions = {
   getMetadataFromTabUrl: async ({

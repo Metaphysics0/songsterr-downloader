@@ -1,6 +1,5 @@
 import { pick } from 'lodash-es';
 import type {
-  SongsterrSearchMetadataResponse,
   SongsterrDownloadResponse,
   SongsterrPartialMetadata
 } from '$lib/types';
@@ -9,13 +8,6 @@ import { logger } from './logger';
 import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
 
 export const apiService = {
-  search(searchText: string): Promise<SongsterrSearchMetadataResponse> {
-    return make({
-      endpoint: 'search',
-      method: 'POST',
-      params: { searchText }
-    });
-  },
   download: {
     byRevisionJson(
       searchResult: SongsterrPartialMetadata
@@ -42,36 +34,6 @@ export const apiService = {
           params: {
             songTitle: searchResult.title,
             ...pick(searchResult, ['byLinkUrl'])
-          }
-        }),
-        ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
-      );
-    },
-    bySearchResult(
-      searchResult: SongsterrPartialMetadata
-    ): Promise<SongsterrDownloadResponse> {
-      return wrapWithErrorHandling(
-        make({
-          endpoint: 'download/bySearchResult',
-          method: 'POST',
-          params: {
-            songTitle: searchResult.title,
-            ...pick(searchResult, ['artist', 'songId', 'byLinkUrl'])
-          }
-        }),
-        ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
-      );
-    },
-    bySource(
-      searchResult: SongsterrPartialMetadata
-    ): Promise<SongsterrDownloadResponse> {
-      return wrapWithErrorHandling(
-        make({
-          endpoint: 'download/bySource',
-          method: 'POST',
-          params: {
-            songTitle: searchResult.title,
-            ...pick(searchResult, ['source', 'songId', 'artist', 'byLinkUrl'])
           }
         }),
         ERROR_DOWNLOADING_TAB_TOAST_MESSAGE

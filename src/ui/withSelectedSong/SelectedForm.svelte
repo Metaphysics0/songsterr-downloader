@@ -11,12 +11,7 @@
 
   async function downloadTab(): Promise<void> {
     try {
-      const apiMethod = selectedSong.byLinkUrl
-        ? 'byRevisionJson'
-        : selectedSong.source
-        ? 'bySource'
-        : 'bySearchResult';
-      const resp = await apiService.download[apiMethod](selectedSong);
+      const resp = await apiService.download.byRevisionJson(selectedSong);
       triggerFileDownloadFromSongsterrResponse(resp);
     } catch (error) {
       console.error('error', error);
