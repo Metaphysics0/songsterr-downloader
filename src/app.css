@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "@fontsource-variable/nunito";
+
+@theme {
+  --font-sans: "Nunito Variable", ui-sans-serif, system-ui, sans-serif;
+}

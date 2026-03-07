@@ -3,7 +3,7 @@
 </script>
 
 <div class="flex flex-col items-center text-center mb-2.5 font-sans">
-  <h1 class="text-4xl mb-2 mx-a font-bold">Songsterr Downloader</h1>
+  <h1 class="text-4xl mb-2 mx-auto font-bold">Songsterr Downloader</h1>
   <p>
     Enter in a link from
     <Link href="https://songsterr.com" innerText="Songsterr" />

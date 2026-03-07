@@ -1,6 +1,5 @@
 <script lang="ts">
-  import 'uno.css';
-  import '@unocss/reset/tailwind.css';
+  import '../app.css';
 
   import { SvelteToast } from '@zerodevx/svelte-toast';
   import Header from '../ui/common/Header.svelte';
