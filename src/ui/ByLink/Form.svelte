@@ -11,6 +11,7 @@
   import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
   import { toastError } from '$lib/utils/toast.util';
   import type { SongsterrPartialMetadata } from '$lib/types';
+  import { fade } from 'svelte/transition';
 
   let selectedSong: SongsterrPartialMetadata | undefined;
 
@@ -45,11 +46,15 @@
 </script>
 
 {#if isLoading && !selectedSong}
-  <SelectedSongSkeleton />
+  <div in:fade={{ duration: 200 }}>
+    <SelectedSongSkeleton />
+  </div>
 {:else if selectedSong}
-  <SelectedForm {selectedSong} />
+  <div in:fade={{ duration: 200 }}>
+    <SelectedForm {selectedSong} />
+  </div>
 {:else}
-  <form
+  <form in:fade={{ duration: 200 }}
     bind:this={formEl}
     class="flex flex-col items-center"
     method="POST"
