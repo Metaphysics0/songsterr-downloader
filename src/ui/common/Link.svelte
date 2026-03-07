@@ -1,11 +1,21 @@
 <script lang="ts">
-  export let innerText: string;
-  export let href: string;
 
-  export let linkColor: 'primary' | 'secondary' = 'primary';
-  export let target = '_blank';
 
-  export let cssClass = '';
+  interface Props {
+    innerText: string;
+    href: string;
+    linkColor?: 'primary' | 'secondary';
+    target?: string;
+    cssClass?: string;
+  }
+
+  let {
+    innerText,
+    href,
+    linkColor = 'primary',
+    target = '_blank',
+    cssClass = ''
+  }: Props = $props();
 
   const linkColorClass = {
     primary: 'text-blue-400 hover:text-blue-500 ease',

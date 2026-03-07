@@ -14,7 +14,7 @@
   import type { SongsterrPartialMetadata } from '$lib/types';
   import { fade } from 'svelte/transition';
 
-  let selectedSong: SongsterrPartialMetadata | undefined;
+  let selectedSong: SongsterrPartialMetadata | undefined = $state();
 
   selectedSongToDownload.subscribe((value) => {
     selectedSong = value;
@@ -31,11 +31,11 @@
     }
   }
 
-  let isValid: boolean = false;
+  let isValid: boolean = $state(false);
 
-  let isLoading: boolean = false;
+  let isLoading: boolean = $state(false);
 
-  let formEl: HTMLFormElement;
+  let formEl: HTMLFormElement | undefined = $state();
 
   function handlePaste(event: ClipboardEvent): void {
     const pastedText = event.clipboardData?.getData('text') ?? '';
@@ -55,7 +55,8 @@
     <SelectedForm {selectedSong} />
   </div>
 {:else}
-  <form in:fade={{ duration: 200 }}
+  <form
+    in:fade={{ duration: 200 }}
     bind:this={formEl}
     class="flex flex-col items-center"
     method="POST"
@@ -94,9 +95,9 @@
       name="url"
       pattern={SONGSTERR_URL_REGEX_PATTERN.source}
       required
-      on:invalid={setValidationMessage}
-      on:input={setInputValidity}
-      on:paste={handlePaste}
+      oninvalid={setValidationMessage}
+      oninput={setInputValidity}
+      onpaste={handlePaste}
       placeholder="https://www.songsterr.com/a/wsa/chon-fluffy-tab-s399673"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4 text-center"
     />

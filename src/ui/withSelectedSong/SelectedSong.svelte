@@ -3,7 +3,11 @@
   import { selectedSongToDownload } from '$lib/stores/selected-song.store';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
 
-  export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
+  interface Props {
+    selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
+  }
+
+  let { selectedSong }: Props = $props();
 
   function deselectSong(): void {
     selectedSongToDownload.set(undefined);
@@ -15,9 +19,9 @@
     <p>Song - {selectedSong.title}</p>
     <p class="font-light">Artist - {selectedSong.artist}</p>
   </div>
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <p class="h-4 cursor-pointer" on:click={deselectSong}>
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+  <p class="h-4 cursor-pointer" onclick={deselectSong}>
     <Icon icon="fa-solid:times" />
   </p>
 </div>

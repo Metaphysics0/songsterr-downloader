@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { createBubbler, stopPropagation } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import { fretwisePromoModalStore } from '$lib/stores/fretwise-promo-modal.store';
   import fretwiseImg from '$lib/assets/fretwise-img.png';
   import { fade, scale } from 'svelte/transition';
@@ -10,16 +13,16 @@
   <div
     class="modal-overlay"
     transition:fade={{ duration: 200 }}
-    on:click={fretwisePromoModalStore.hide}
-    on:keydown={(e) => e.key === 'Escape' && fretwisePromoModalStore.hide()}
+    onclick={fretwisePromoModalStore.hide}
+    onkeydown={(e) => e.key === 'Escape' && fretwisePromoModalStore.hide()}
     role="button"
     tabindex="0"
   >
     <div
       class="modal-content"
       transition:scale={{ duration: 200, start: 0.95 }}
-      on:click|stopPropagation
-      on:keydown|stopPropagation
+      onclick={stopPropagation(bubble('click'))}
+      onkeydown={stopPropagation(bubble('keydown'))}
       role="dialog"
       aria-modal="true"
       tabindex="-1"
@@ -28,7 +31,7 @@
 
       <button
         class="close-btn"
-        on:click={fretwisePromoModalStore.hide}
+        onclick={fretwisePromoModalStore.hide}
         aria-label="Close modal"
       >
         ✕
@@ -54,7 +57,7 @@
           Try Fretwise Free
         </a>
 
-        <button class="dismiss-link" on:click={fretwisePromoModalStore.hide}>
+        <button class="dismiss-link" onclick={fretwisePromoModalStore.hide}>
           Maybe later
         </button>
       </div>
