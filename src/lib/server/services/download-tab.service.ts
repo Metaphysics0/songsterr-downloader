@@ -6,7 +6,7 @@ import type { SongsterrDownloadResponse } from '$lib/types';
 import { logger } from '$lib/utils/logger';
 import { SongsterrRevisionJsonService } from './songsterr-revision-json.service';
 import { SongsterrToAlphaTabConverter } from './converter/songsterr-to-alphatab.converter';
-import { GUITAR_PRO_CONTENT_TYPE } from '$lib/constants';
+import { GUITAR_PRO_CONTENT_TYPE, MIDI_CONTENT_TYPE } from '$lib/constants';
 
 export class DownloadTabService {
   constructor(
@@ -22,6 +22,9 @@ export class DownloadTabService {
     }
     if (this.SupportedTabDownloadType === 'byRevisionJson') {
       return this.byRevisionJson(request);
+    }
+    if (this.SupportedTabDownloadType === 'byRevisionJsonMidi') {
+      return this.byRevisionJsonMidi(request);
     }
 
     throw new Error(
@@ -111,6 +114,57 @@ export class DownloadTabService {
       buffer,
       fileName,
       contentType: GUITAR_PRO_CONTENT_TYPE
+    });
+  }
+
+  private async byRevisionJsonMidi(request: Request) {
+    const { byLinkUrl, songTitle } = await request.json();
+    if (!byLinkUrl) {
+      throw new Error('Missing byLinkUrl');
+    }
+
+    const stateMeta =
+      await this.songsterrRevisionJsonService.getStateMetaFromTabUrl(byLinkUrl);
+
+    const { revisions, warnings: fetchWarnings } =
+      await this.songsterrRevisionJsonService.fetchAllPartRevisions(stateMeta);
+
+    if (revisions.length === 0) {
+      throw new Error(
+        `Unable to fetch any revision payloads for songId ${stateMeta.songId}`
+      );
+    }
+
+    const { data: midiData, warnings: convertWarnings } =
+      this.converter.toMidi({
+        meta: stateMeta,
+        revisions
+      });
+    const allWarnings = [...fetchWarnings, ...convertWarnings];
+
+    if (allWarnings.length > 0) {
+      logger.warn('Songsterr to MIDI conversion warnings', {
+        songId: stateMeta.songId,
+        revisionId: stateMeta.revisionId,
+        warningCount: allWarnings.length,
+        warnings: allWarnings.slice(0, 20)
+      });
+    }
+
+    const buffer = midiData.buffer.slice(
+      midiData.byteOffset,
+      midiData.byteOffset + midiData.byteLength
+    ) as ArrayBuffer;
+
+    const fileName = this.songsterrService.buildFileNameFromSongName(
+      songTitle || stateMeta.title,
+      `${stateMeta.songId}.mid`
+    );
+
+    return this.createDownloadResponse({
+      buffer,
+      fileName,
+      contentType: MIDI_CONTENT_TYPE
     });
   }
 

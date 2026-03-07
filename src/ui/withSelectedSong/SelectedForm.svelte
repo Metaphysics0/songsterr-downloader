@@ -23,6 +23,16 @@
     }
   }
 
+  async function downloadMidi(): Promise<void> {
+    try {
+      const resp =
+        await apiService.download.byRevisionJsonMidi(selectedSong);
+      triggerFileDownloadFromSongsterrResponse(resp);
+    } catch (error) {
+      console.error('error', error);
+    }
+  }
+
   function deselectSong(): void {
     selectedSongToDownload.set(undefined);
   }
@@ -38,6 +48,14 @@
     disabled={$temporarilyDownModalStore}
     >Download {selectedSong.title} Tab</button
   >
+  {#if selectedSong.byLinkUrl}
+    <button
+      class="mt-2 px-4 py-1.5 text-sm font-medium text-slate-300 border border-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50"
+      on:click={downloadMidi}
+      disabled={$temporarilyDownModalStore}
+      >Download MIDI</button
+    >
+  {/if}
   <div class="my-2" />
 
   <button

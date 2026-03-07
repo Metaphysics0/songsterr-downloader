@@ -22,8 +22,14 @@ interface SongsterrToGpInput {
   revisions: SongsterrRevisionTrackInput[];
 }
 
-interface SongsterrToGpOutput {
+interface SongsterrToAlphaTabOutput {
   data: Uint8Array;
+  warnings: ConversionWarning[];
+}
+
+interface BuildScoreResult {
+  score: alphaTab.model.Score;
+  settings: alphaTab.Settings;
   warnings: ConversionWarning[];
 }
 
@@ -133,7 +139,28 @@ function getPercussionArticulationIndex(midiNote: number): number {
 }
 
 export class SongsterrToAlphaTabConverter {
-  toGp7({ meta, revisions }: SongsterrToGpInput): SongsterrToGpOutput {
+  toGp7(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
+    const { score, settings, warnings } = this.buildScore(input);
+
+    const exporter = new alphaTab.exporter.Gp7Exporter();
+    const data = exporter.export(score, settings);
+
+    return { data, warnings };
+  }
+
+  toMidi(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
+    const { score, settings, warnings } = this.buildScore(input);
+
+    const midiFile = new alphaTab.midi.MidiFile();
+    const handler = new alphaTab.midi.AlphaSynthMidiFileHandler(midiFile, true);
+    const generator = new alphaTab.midi.MidiFileGenerator(score, settings, handler);
+    generator.generate();
+    const data = midiFile.toBinary();
+
+    return { data, warnings };
+  }
+
+  private buildScore({ meta, revisions }: SongsterrToGpInput): BuildScoreResult {
     const warnings: ConversionWarning[] = [];
 
     const score = new alphaTab.model.Score();
@@ -176,10 +203,7 @@ export class SongsterrToAlphaTabConverter {
     const settings = new alphaTab.Settings();
     score.finish(settings);
 
-    const exporter = new alphaTab.exporter.Gp7Exporter();
-    const data = exporter.export(score, settings);
-
-    return { data, warnings };
+    return { score, settings, warnings };
   }
 
   private buildMasterBars({
