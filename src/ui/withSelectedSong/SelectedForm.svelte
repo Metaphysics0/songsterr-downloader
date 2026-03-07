@@ -2,7 +2,7 @@
   import { apiService } from '$lib/utils/api';
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
   import SelectedSong from './SelectedSong.svelte';
-  import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
+  import { appStore } from '$lib/stores/app.store.svelte';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
   import Icon from '@iconify/svelte';
 
@@ -31,7 +31,7 @@
   }
 
   function deselectSong(): void {
-    selectedSongToDownload.set(undefined);
+    appStore.selectedSong = undefined;
   }
 </script>
 

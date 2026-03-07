@@ -1,6 +1,5 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { selectedSongToDownload } from '../lib/stores/selected-song.store';
   import {
     setValidationMessage,
     clearValidationMessage
@@ -10,15 +9,8 @@
   import { isUrlFromSongsterr } from '$lib/utils/url';
   import SelectedSongSkeleton from './common/SelectedSongSkeleton.svelte';
   import { toastError } from '$lib/utils/toast.util';
-  import { isLoadingMetadata } from '$lib/stores/loading.store';
-  import type { SongsterrPartialMetadata } from '$lib/types';
+  import { appStore } from '$lib/stores/app.store.svelte';
   import { fade } from 'svelte/transition';
-
-  let selectedSong: SongsterrPartialMetadata | undefined = $state();
-
-  selectedSongToDownload.subscribe((value) => {
-    selectedSong = value;
-  });
 
   function setInputValidity(event: Event): void {
     const { value } = event.target as HTMLInputElement;
@@ -46,13 +38,13 @@
   }
 </script>
 
-{#if isLoading && !selectedSong}
+{#if isLoading && !appStore.selectedSong}
   <div in:fade={{ duration: 200 }}>
     <SelectedSongSkeleton />
   </div>
-{:else if selectedSong}
+{:else if appStore.selectedSong}
   <div in:fade={{ duration: 200 }}>
-    <SelectedForm {selectedSong} />
+    <SelectedForm selectedSong={appStore.selectedSong} />
   </div>
 {:else}
   <form
@@ -65,10 +57,10 @@
       const byLinkUrl = formData.get('url');
 
       isLoading = true;
-      $isLoadingMetadata = true;
+      appStore.isLoadingMetadata = true;
       return async ({ result, update }) => {
         isLoading = false;
-        $isLoadingMetadata = false;
+        appStore.isLoadingMetadata = false;
         // @ts-ignore
         const songMetadata = result?.data || {};
 
@@ -78,7 +70,7 @@
           return;
         }
 
-        selectedSongToDownload.set({ ...songMetadata, byLinkUrl });
+        appStore.selectedSong = { ...songMetadata, byLinkUrl };
         update({ reset: false });
       };
     }}

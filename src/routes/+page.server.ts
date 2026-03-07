@@ -1,4 +1,4 @@
-import { logger } from '$lib/utils/logger';
+import { logger } from '$lib/server/logger';
 import { isUrlFromSongsterr } from '$lib/utils/url';
 import type { Actions } from './$types';
 import { SongsterrService } from '$lib/server/services/songsterr.service';
@@ -16,7 +16,7 @@ export const actions = {
 
       return new SongsterrService().getMetadataFromTabUrl(url!);
     } catch (error) {
-      logger.error('#getMetadataFromTabUrl failed', error);
+      logger.error({ err: error }, '#getMetadataFromTabUrl failed');
       return undefined;
     }
   }

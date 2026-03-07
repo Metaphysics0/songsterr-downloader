@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { selectedSongToDownload } from '$lib/stores/selected-song.store';
+  import { appStore } from '$lib/stores/app.store.svelte';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
 
   interface Props {
@@ -10,7 +10,7 @@
   let { selectedSong }: Props = $props();
 
   function deselectSong(): void {
-    selectedSongToDownload.set(undefined);
+    appStore.selectedSong = undefined;
   }
 </script>
 

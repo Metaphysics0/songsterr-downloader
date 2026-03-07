@@ -36,6 +36,7 @@
   "type": "module",
   "dependencies": {
     "@coderline/alphatab": "^1.8.1",
-    "@xmldom/xmldom": "^0.8.10"
+    "@xmldom/xmldom": "^0.8.10",
+    "pino": "^10.3.1"
   }
 }

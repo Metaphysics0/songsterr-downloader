@@ -1,10 +1,8 @@
-import { pick } from 'lodash-es';
 import type {
   SongsterrDownloadResponse,
   SongsterrPartialMetadata
 } from '$lib/types';
 import { toastError } from './toast.util';
-import { logger } from './logger';
 import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
 
 export const apiService = {
@@ -61,7 +59,7 @@ async function make<T>({ endpoint, method, params }: MakeApiArgs): Promise<T> {
   const body = method !== 'GET' && params ? JSON.stringify(params) : null;
   const response = await fetch(baseUrl, body ? { ...options, body } : options);
   if (!response.ok) {
-    logger.error('Error fetching', {
+    console.error('Error fetching', {
       url: baseUrl,
       status: response.status,
       statusText: response.statusText
