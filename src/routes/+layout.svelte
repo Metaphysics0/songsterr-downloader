@@ -8,7 +8,7 @@
 
 <SvelteToast />
 
-<header class="my-8 mt-12">
+<header class="mt-12 mb-2.5">
   <Header />
 </header>
 {@render children()}

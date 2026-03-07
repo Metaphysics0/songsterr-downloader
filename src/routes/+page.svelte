@@ -1,5 +1,5 @@
 <script>
-  import Form from '../ui/ByLink/Form.svelte';
+  import Form from '../ui/Form.svelte';
   import SocialLinks from '../ui/common/SocialLinks.svelte';
   import { selectedSongToDownload } from '../lib/stores/selected-song.store';
   import { isLoadingMetadata } from '../lib/stores/loading.store';
