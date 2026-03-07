@@ -38,6 +38,6 @@ songsterr-to-alphatab.converter.ts  — main converter class
 ## Gotchas
 
 - `score.finish(settings)` must be called before export — it finalizes internal state
-- Drum tracks use `staff.isPercussion = true` and `note.string = 0`
+- Drum tracks use `staff.isPercussion = true` and `note.string = -1` (must stay < 0 so alphaTab's `isStringed` returns false)
 - `note.fret` is still set for drums (for internal use) but `percussionArticulation` drives the actual sound
 - Some Songsterr bend types trigger an alphaTab warning ("Unsupported bend type") — this is cosmetic and the bend still exports correctly

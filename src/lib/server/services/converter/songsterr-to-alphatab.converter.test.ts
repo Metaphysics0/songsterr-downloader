@@ -753,6 +753,85 @@ describe('SongsterrToAlphaTabConverter', () => {
       expect(articulations).toContain(36); // kick (MIDI 36)
       expect(articulations).toContain(38); // snare (MIDI 38)
     });
+
+    it('preserves all drum notes through GP7 round-trip (multi-note beats)', async () => {
+      const alphaTabModule = await import('@coderline/alphatab');
+
+      const revision: SongsterrRevisionTrackPayload = {
+        instrumentId: 1024,
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      { fret: 42, string: 0 }, // hi-hat closed
+                      { fret: 38, string: 1 }, // snare
+                      { fret: 36, string: 2 }  // kick
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  },
+                  {
+                    notes: [
+                      { fret: 42, string: 0 }  // hi-hat closed only
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  },
+                  {
+                    notes: [
+                      { fret: 42, string: 0 }, // hi-hat closed
+                      { fret: 38, string: 1 }  // snare
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  },
+                  {
+                    notes: [
+                      { fret: 42, string: 0 }  // hi-hat closed only
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const meta = makeTrackMeta({
+        instrumentId: 1024,
+        isDrums: true,
+        title: 'Drums',
+        tuning: []
+      });
+      const converter = new SongsterrToAlphaTabConverter();
+      const { data } = converter.toGp7({
+        meta: makeMeta([meta]),
+        revisions: [{ trackMeta: meta, revision }]
+      });
+
+      const settings = new alphaTabModule.Settings();
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+
+      // Count total input notes
+      const inputBeats = revision.measures[0]?.voices?.[0]?.beats ?? [];
+      const inputNotes = inputBeats.reduce(
+        (sum, b) => sum + (b.notes?.length ?? 0), 0
+      );
+      expect(inputNotes).toBe(7);
+
+      // Count total output notes after round-trip
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      const outputNotes = beats.reduce(
+        (sum: number, b: { notes: unknown[] }) => sum + b.notes.length, 0
+      );
+      expect(outputNotes).toBe(inputNotes);
+    });
   });
 
   describe('marker format', () => {
