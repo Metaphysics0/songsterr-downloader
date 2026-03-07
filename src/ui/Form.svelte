@@ -1,14 +1,14 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
+  import { selectedSongToDownload } from '../lib/stores/selected-song.store';
   import {
     setValidationMessage,
     clearValidationMessage
-  } from '../../lib/utils/html-input';
-  import SelectedForm from '../withSelectedSong/SelectedForm.svelte';
+  } from '../lib/utils/html-input';
+  import SelectedForm from './withSelectedSong/SelectedForm.svelte';
   import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
   import { isUrlFromSongsterr } from '$lib/utils/url';
-  import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
+  import SelectedSongSkeleton from './common/SelectedSongSkeleton.svelte';
   import { toastError } from '$lib/utils/toast.util';
   import { isLoadingMetadata } from '$lib/stores/loading.store';
   import type { SongsterrPartialMetadata } from '$lib/types';
