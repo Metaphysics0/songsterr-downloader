@@ -10,6 +10,7 @@
   import { isUrlFromSongsterr } from '$lib/utils/url';
   import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
   import { toastError } from '$lib/utils/toast.util';
+  import { isLoadingMetadata } from '$lib/stores/loading.store';
   import type { SongsterrPartialMetadata } from '$lib/types';
   import { fade } from 'svelte/transition';
 
@@ -63,8 +64,10 @@
       const byLinkUrl = formData.get('url');
 
       isLoading = true;
+      $isLoadingMetadata = true;
       return async ({ result, update }) => {
         isLoading = false;
+        $isLoadingMetadata = false;
         // @ts-ignore
         const songMetadata = result?.data || {};
 
