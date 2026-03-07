@@ -61,6 +61,6 @@
 
   <button
     class="text-slate-400 font-light underline hover:text-slate-500 bg-transparent mb-1"
-    on:click={deselectSong}>Select another?</button
+    on:click={deselectSong}>Select another</button
   >
 </div>
