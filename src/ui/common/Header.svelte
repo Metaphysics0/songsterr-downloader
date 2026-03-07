@@ -11,9 +11,9 @@
     <p>
       {headerText} from
       <Link href="https://songsterr.com" innerText="Songsterr" />
-      and click the button to get a
+      to get a
       <Link href="https://www.guitar-pro.com/" innerText="Guitar Pro" />
-      file!
+      or MIDI file!
     </p>
   {/if}
 </div>

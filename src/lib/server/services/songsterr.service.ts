@@ -5,7 +5,7 @@ import { scraper } from '../utils/scraper.util';
 import { env } from '$env/dynamic/private';
 import { SONGSTERR_BASE_URL } from '$lib/constants';
 import { kebabCase } from 'lodash-es';
-import {
+import type {
   SongsterrPartialMetadata,
   SongsterrMetadata,
   SongsterrRevisionsResponse

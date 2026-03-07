@@ -32,6 +32,21 @@ export const apiService = {
         ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
       );
     },
+    byRevisionJsonMidi(
+      searchResult: SongsterrPartialMetadata
+    ): Promise<SongsterrDownloadResponse> {
+      return wrapWithErrorHandling(
+        make({
+          endpoint: 'download/byRevisionJsonMidi',
+          method: 'POST',
+          params: {
+            songTitle: searchResult.title,
+            ...pick(searchResult, ['byLinkUrl'])
+          }
+        }),
+        ERROR_DOWNLOADING_TAB_TOAST_MESSAGE
+      );
+    },
     bySearchResult(
       searchResult: SongsterrPartialMetadata
     ): Promise<SongsterrDownloadResponse> {

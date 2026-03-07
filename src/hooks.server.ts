@@ -1,4 +1,4 @@
-import { Handle, RequestEvent } from '@sveltejs/kit';
+import type { Handle, RequestEvent } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
   if (shouldSupressChromeDevToolsWarningLog(event)) {
