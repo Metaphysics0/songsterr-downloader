@@ -9,10 +9,10 @@
   import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
   import { isUrlFromSongsterr } from '$lib/utils/url';
   import SelectedSongSkeleton from '../common/SelectedSongSkeleton.svelte';
-  import { sample } from 'lodash-es';
-  import { placeholderSongUrls } from '$lib/constants/placeholder-songsterr-url';
   import { toastError } from '$lib/utils/toast.util';
+  import { isLoadingMetadata } from '$lib/stores/loading.store';
   import type { SongsterrPartialMetadata } from '$lib/types';
+  import { fade } from 'svelte/transition';
 
   let selectedSong: SongsterrPartialMetadata | undefined;
 
@@ -47,11 +47,15 @@
 </script>
 
 {#if isLoading && !selectedSong}
-  <SelectedSongSkeleton />
+  <div in:fade={{ duration: 200 }}>
+    <SelectedSongSkeleton />
+  </div>
 {:else if selectedSong}
-  <SelectedForm {selectedSong} />
+  <div in:fade={{ duration: 200 }}>
+    <SelectedForm {selectedSong} />
+  </div>
 {:else}
-  <form
+  <form in:fade={{ duration: 200 }}
     bind:this={formEl}
     class="flex flex-col items-center"
     method="POST"
@@ -60,8 +64,10 @@
       const byLinkUrl = formData.get('url');
 
       isLoading = true;
+      $isLoadingMetadata = true;
       return async ({ result, update }) => {
         isLoading = false;
+        $isLoadingMetadata = false;
         // @ts-ignore
         const songMetadata = result?.data || {};
 
@@ -76,7 +82,14 @@
       };
     }}
   >
+    <label
+      for="songsterr-url"
+      class="self-start text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+    >
+      Songsterr tab URL:</label
+    >
     <input
+      id="songsterr-url"
       type="url"
       name="url"
       pattern={SONGSTERR_URL_REGEX_PATTERN.source}
@@ -84,13 +97,13 @@
       on:invalid={setValidationMessage}
       on:input={setInputValidity}
       on:paste={handlePaste}
-      placeholder={sample(placeholderSongUrls)}
+      placeholder="https://www.songsterr.com/a/wsa/chon-fluffy-tab-s399673"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4 text-center"
     />
     <button
       disabled={!isValid}
-      class="w-fit px-2 py-1 font-semibold p-2 rounded-lg shadow-md transition duration-75 cursor-pointer bg-red-500 hover:bg-red-400 text-white disabled:bg-slate-5 disabled:hover:bg-slate-6 disabled:hover:cursor-not-allowed"
-      >Get Tab</button
+      class="flex items-center px-4 py-1.5 text-sm font-semibold text-white bg-blue-500 border border-blue-600 rounded shadow hover:bg-blue-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+      >Download</button
     >
   </form>
 {/if}

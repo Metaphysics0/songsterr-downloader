@@ -34,7 +34,7 @@
       rel="noreferrer"
       class="h-full mx-3 opacity-50 hover:opacity-100 transition ease-in-out"
     >
-      <Icon icon={link.icon} height="35" />
+      <Icon icon={link.icon} height="30" />
     </a>
   {/each}
 </section>
