@@ -1,6 +1,5 @@
 <script lang="ts">
   import { apiService } from '$lib/utils/api';
-  import { commonCssClasses } from '$lib/utils/css';
   import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
   import SelectedSong from './SelectedSong.svelte';
   import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
@@ -42,13 +41,13 @@
     <SelectedSong {selectedSong} />
   </div>
   <button
-    class={commonCssClasses.getTabButton}
+    class="px-4 py-1.5 text-sm font-medium text-white bg-blue-500 border border-blue-600 rounded shadow hover:bg-blue-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
     on:click={downloadTab}
     disabled={$temporarilyDownModalStore}
-    >Download {selectedSong.title} Tab</button
+    >Download Guitar Pro</button
   >
   <button
-    class="mt-4 px-4 py-1.5 text-sm font-medium text-slate-500 border border-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50"
+    class="mt-4 px-4 py-1.5 text-sm font-medium text-slate-400 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50"
     on:click={downloadMidi}
     disabled={$temporarilyDownModalStore}>Download MIDI</button
   >
