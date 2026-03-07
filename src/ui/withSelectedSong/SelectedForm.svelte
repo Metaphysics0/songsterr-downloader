@@ -4,7 +4,6 @@
   import SelectedSong from './SelectedSong.svelte';
   import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
-  import { temporarilyDownModalStore } from '$lib/stores/temporarily-down-modal.store';
   import Icon from '@iconify/svelte';
 
   export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
@@ -40,7 +39,6 @@
     <button
       class="flex items-center px-4 py-1.5 text-sm font-semibold text-white bg-blue-500 border border-blue-600 rounded shadow hover:bg-blue-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       on:click={downloadTab}
-      disabled={$temporarilyDownModalStore}
     >
       <Icon
         icon="mingcute:guitar-fill"
@@ -51,7 +49,6 @@
     <button
       class="flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50"
       on:click={downloadMidi}
-      disabled={$temporarilyDownModalStore}
     >
       <Icon icon="mingcute:midi-line" class="inline-block mr-1.5 text-base" />
       Download MIDI</button
