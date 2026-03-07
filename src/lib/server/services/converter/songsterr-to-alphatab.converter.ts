@@ -482,7 +482,7 @@ export class SongsterrToAlphaTabConverter {
     const note = new alphaTab.model.Note();
 
     // Songsterr: string 0 = highest pitch, alphaTab: string 1 = lowest pitch
-    note.string = isPercussion ? 0 : numStrings - (noteData.string ?? 0);
+    note.string = isPercussion ? -1 : numStrings - (noteData.string ?? 0);
     note.fret = noteData.fret ?? 0;
 
     if (isPercussion) {

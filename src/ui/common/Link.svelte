@@ -1,6 +1,4 @@
 <script lang="ts">
-
-
   interface Props {
     innerText: string;
     href: string;
