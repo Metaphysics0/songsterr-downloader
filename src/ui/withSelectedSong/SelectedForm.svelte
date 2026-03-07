@@ -6,7 +6,6 @@
   import { selectedSongToDownload } from '../../lib/stores/selected-song.store';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
   import { temporarilyDownModalStore } from '$lib/stores/temporarily-down-modal.store';
-  import { fretwisePromoModalStore } from '$lib/stores/fretwise-promo-modal.store';
 
   export let selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
 
@@ -19,7 +18,6 @@
         : 'bySearchResult';
       const resp = await apiService.download[apiMethod](selectedSong);
       triggerFileDownloadFromSongsterrResponse(resp);
-      fretwisePromoModalStore.show();
     } catch (error) {
       console.error('error', error);
     }
