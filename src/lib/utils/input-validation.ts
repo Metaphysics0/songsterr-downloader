@@ -1,3 +1,5 @@
+import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
+
 export function setValidationMessage(event: Event): void {
   const input = event.target as HTMLInputElement;
   if (input.value === '') {
@@ -11,4 +13,8 @@ export function setValidationMessage(event: Event): void {
 export function clearValidationMessage(event: Event): void {
   const input = event.target as HTMLInputElement;
   input.setCustomValidity('');
+}
+
+export function isUrlFromSongsterr(url: any) {
+  return SONGSTERR_URL_REGEX_PATTERN.test(String(url));
 }

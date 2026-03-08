@@ -1,6 +1,6 @@
 <script lang="ts">
   import { apiService } from '$lib/utils/api';
-  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
+  import { triggerFileDownload } from '$lib/utils/trigger-client-side-download';
   import SelectedSong from './SelectedSong.svelte';
   import { appStore } from '$lib/stores/app.store.svelte';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
@@ -23,7 +23,7 @@
     downloading = 'tab';
     try {
       const resp = await apiService.download.byRevisionJson(selectedSong);
-      triggerFileDownloadFromSongsterrResponse(resp);
+      triggerFileDownload(resp);
       trackGuitarProDownloaded({
         title: selectedSong.title,
         artist: selectedSong.artist,
@@ -41,7 +41,7 @@
     downloading = 'midi';
     try {
       const resp = await apiService.download.byRevisionJsonMidi(selectedSong);
-      triggerFileDownloadFromSongsterrResponse(resp);
+      triggerFileDownload(resp);
       trackMidiDownloaded({
         title: selectedSong.title,
         artist: selectedSong.artist,

@@ -2,11 +2,11 @@
   import { enhance } from '$app/forms';
   import {
     setValidationMessage,
-    clearValidationMessage
-  } from '../lib/utils/html-input';
+    clearValidationMessage,
+    isUrlFromSongsterr
+  } from '../lib/utils/input-validation';
   import SelectedForm from './withSelectedSong/SelectedForm.svelte';
   import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
-  import { isUrlFromSongsterr } from '$lib/utils/url';
   import SelectedSongSkeleton from './common/SelectedSongSkeleton.svelte';
   import { toastError } from '$lib/utils/toast.util';
   import { appStore } from '$lib/stores/app.store.svelte';
