@@ -5,6 +5,10 @@
   import { appStore } from '$lib/stores/app.store.svelte';
   import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
   import Icon from '@iconify/svelte';
+  import {
+    trackGuitarProDownloaded,
+    trackMidiDownloaded
+  } from '$lib/analytics/mixpanel';
 
   interface Props {
     selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
@@ -16,6 +20,11 @@
     try {
       const resp = await apiService.download.byRevisionJson(selectedSong);
       triggerFileDownloadFromSongsterrResponse(resp);
+      trackGuitarProDownloaded({
+        title: selectedSong.title,
+        artist: selectedSong.artist,
+        songId: selectedSong.songId
+      });
     } catch (error) {
       console.error('error', error);
     }
@@ -25,6 +34,11 @@
     try {
       const resp = await apiService.download.byRevisionJsonMidi(selectedSong);
       triggerFileDownloadFromSongsterrResponse(resp);
+      trackMidiDownloaded({
+        title: selectedSong.title,
+        artist: selectedSong.artist,
+        songId: selectedSong.songId
+      });
     } catch (error) {
       console.error('error', error);
     }

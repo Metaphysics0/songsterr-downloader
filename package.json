@@ -38,6 +38,7 @@
   "dependencies": {
     "@coderline/alphatab": "^1.8.1",
     "@xmldom/xmldom": "^0.8.10",
+    "mixpanel-browser": "^2.75.0",
     "pino": "^10.3.1"
   }
 }
