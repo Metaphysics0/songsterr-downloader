@@ -7,7 +7,7 @@
     SONGSTERR_URL_REGEX_PATTERN
   } from '../lib/utils/input-validation';
   import { toastError } from '$lib/utils/toast.util';
-  import { formState as appStore } from '$lib/runes/form-state.svelte';
+  import { formState } from '$lib/runes/form-state.svelte';
 
   function setInputValidity(event: Event): void {
     const { value } = event.target as HTMLInputElement;
@@ -35,16 +35,15 @@
 </script>
 
 <form
+  bind:this={formEl}
   class="flex flex-col items-center"
   method="POST"
   action="?/getMetadataFromTabUrl"
   use:enhance={({ formData }) => {
     const byLinkUrl = formData.get('url');
-    isLoading = true;
-    appStore.isLoadingMetadata = true;
+    formState.isLoadingMetadata = true;
     return async ({ result, update }) => {
-      isLoading = false;
-      appStore.isLoadingMetadata = false;
+      formState.isLoadingMetadata = false;
       // @ts-ignore
       const songMetadata = result?.data || {};
 
@@ -54,7 +53,7 @@
         return;
       }
 
-      appStore.selectedSong = { ...songMetadata, byLinkUrl };
+      formState.selectedSong = { ...songMetadata, byLinkUrl };
       update({ reset: false });
     };
   }}
