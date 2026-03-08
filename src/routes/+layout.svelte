@@ -2,6 +2,11 @@
   import '../app.css';
   import { SvelteToast } from '@zerodevx/svelte-toast';
   import Header from '../ui/common/Header.svelte';
+  import { browser } from '$app/environment';
+
+  if (browser) {
+    import('$lib/analytics/mixpanel');
+  }
 
   let { children } = $props();
 </script>

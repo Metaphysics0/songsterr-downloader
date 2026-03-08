@@ -55,7 +55,6 @@
     action="?/getMetadataFromTabUrl"
     use:enhance={({ formData }) => {
       const byLinkUrl = formData.get('url');
-
       isLoading = true;
       appStore.isLoadingMetadata = true;
       return async ({ result, update }) => {
