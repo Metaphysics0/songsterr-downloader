@@ -1,4 +1,5 @@
-import { SONGSTERR_URL_REGEX_PATTERN } from '$lib/constants';
+export const SONGSTERR_URL_REGEX_PATTERN =
+  /^https:\/\/www\.songsterr\.com\/a\/wsa\/.*/;
 
 export function setValidationMessage(event: Event): void {
   const input = event.target as HTMLInputElement;

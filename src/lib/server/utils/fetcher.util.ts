@@ -1,5 +1,3 @@
-import { getRandomElementFromArray } from '../../utils/array';
-
 export default class Fetcher {
   withRotatingUserAgent: boolean;
   withBrowserLikeHeaders: boolean;
@@ -77,7 +75,8 @@ export default class Fetcher {
   }
 
   private get randomUserAgent() {
-    return getRandomElementFromArray(this.userAgents);
+    const randomIndex = Math.floor(Math.random() * this.userAgents.length);
+    return this.userAgents[randomIndex];
   }
 
   userAgents = [

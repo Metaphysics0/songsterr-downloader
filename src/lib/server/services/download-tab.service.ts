@@ -1,11 +1,9 @@
-import { convertArrayBufferToArray } from '$lib/utils/array';
 import type { SupportedTabDownloadType } from '$lib/types/supported-tab-download-type';
 import { SongsterrService } from './songsterr.service';
 import type { SongsterrDownloadResponse } from '$lib/types';
 import { logger } from '$lib/server/logger';
 import { SongsterrRevisionJsonService } from './songsterr-revision-json.service';
 import { SongsterrToAlphaTabConverter } from './converter/songsterr-to-alphatab.converter';
-import { GUITAR_PRO_CONTENT_TYPE, MIDI_CONTENT_TYPE } from '$lib/constants';
 
 export class DownloadTabService {
   constructor(
@@ -50,12 +48,15 @@ export class DownloadTabService {
     const allWarnings = [...fetchWarnings, ...convertWarnings];
 
     if (allWarnings.length > 0) {
-      logger.warn({
-        songId: stateMeta.songId,
-        revisionId: stateMeta.revisionId,
-        warningCount: allWarnings.length,
-        warnings: allWarnings.slice(0, 20)
-      }, 'Songsterr to GP conversion warnings');
+      logger.warn(
+        {
+          songId: stateMeta.songId,
+          revisionId: stateMeta.revisionId,
+          warningCount: allWarnings.length,
+          warnings: allWarnings.slice(0, 20)
+        },
+        'Songsterr to GP conversion warnings'
+      );
     }
 
     const buffer = gpData.buffer.slice(
@@ -71,7 +72,7 @@ export class DownloadTabService {
     return this.createDownloadResponse({
       buffer,
       fileName,
-      contentType: GUITAR_PRO_CONTENT_TYPE
+      contentType: 'application/gp'
     });
   }
 
@@ -102,12 +103,15 @@ export class DownloadTabService {
     const allWarnings = [...fetchWarnings, ...convertWarnings];
 
     if (allWarnings.length > 0) {
-      logger.warn({
-        songId: stateMeta.songId,
-        revisionId: stateMeta.revisionId,
-        warningCount: allWarnings.length,
-        warnings: allWarnings.slice(0, 20)
-      }, 'Songsterr to MIDI conversion warnings');
+      logger.warn(
+        {
+          songId: stateMeta.songId,
+          revisionId: stateMeta.revisionId,
+          warningCount: allWarnings.length,
+          warnings: allWarnings.slice(0, 20)
+        },
+        'Songsterr to MIDI conversion warnings'
+      );
     }
 
     const buffer = midiData.buffer.slice(
@@ -123,7 +127,7 @@ export class DownloadTabService {
     return this.createDownloadResponse({
       buffer,
       fileName,
-      contentType: MIDI_CONTENT_TYPE
+      contentType: 'audio/midi'
     });
   }
 
@@ -137,7 +141,7 @@ export class DownloadTabService {
     contentType?: string;
   }): SongsterrDownloadResponse {
     return {
-      file: convertArrayBufferToArray(buffer),
+      file: Array.from(new Uint8Array(buffer)),
       fileName,
       contentType
     };

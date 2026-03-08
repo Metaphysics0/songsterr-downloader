@@ -1,5 +1,5 @@
 import { logger } from '$lib/server/logger';
-import { isUrlFromSongsterr } from '$lib/utils/url';
+import { isUrlFromSongsterr } from '$lib/utils/input-validation';
 import type { Actions } from './$types';
 import { SongsterrService } from '$lib/server/services/songsterr.service';
 import type { SongsterrPartialMetadata } from '$lib/types';
