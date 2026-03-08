@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { formState } from '$lib/stores/form-state.svelte';
+  import { formState } from '$lib/runes/form-state.svelte';
   import type { SongsterrPartialMetadata } from '$lib/types';
 
   interface Props {

@@ -9,7 +9,7 @@
   import SelectedForm from './withSelectedSong/SelectedForm.svelte';
   import SelectedSongSkeleton from './common/SelectedSongSkeleton.svelte';
   import { toastError } from '$lib/utils/toast.util';
-  import { formState as appStore } from '$lib/stores/form-state.svelte';
+  import { formState as appStore } from '$lib/runes/form-state.svelte';
   import { fade } from 'svelte/transition';
 
   function setInputValidity(event: Event): void {
