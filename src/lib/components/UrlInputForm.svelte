@@ -5,7 +5,7 @@
     clearValidationMessage,
     isUrlFromSongsterr,
     SONGSTERR_URL_REGEX_PATTERN
-  } from '../lib/utils/input-validation';
+  } from '$lib/utils/input-validation';
   import { toastError } from '$lib/utils/toast.util';
   import { formState } from '$lib/runes/form-state.svelte';
 
