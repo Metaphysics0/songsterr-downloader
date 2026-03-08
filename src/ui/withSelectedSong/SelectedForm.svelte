@@ -1,17 +1,15 @@
 <script lang="ts">
-  import { apiService } from '$lib/utils/api';
-  import { triggerFileDownloadFromSongsterrResponse } from '$lib/utils/trigger-download-from-songsterr-reponse.util';
-  import SelectedSong from './SelectedSong.svelte';
-  import { appStore } from '$lib/stores/app.store.svelte';
-  import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
-  import Icon from '@iconify/svelte';
   import {
-    trackGuitarProDownloaded,
-    trackMidiDownloaded
-  } from '$lib/analytics/mixpanel';
+    downloadGuitarPro,
+    downloadMidi as downloadMidiFile
+  } from '$lib/utils/download-tab';
+  import SelectedSong from './SelectedSong.svelte';
+  import { formState } from '$lib/runes/form-state.svelte';
+  import type { SongsterrPartialMetadata } from '$lib/types';
+  import Icon from '@iconify/svelte';
 
   interface Props {
-    selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
+    selectedSong: SongsterrPartialMetadata;
   }
 
   let { selectedSong }: Props = $props();
@@ -22,15 +20,7 @@
     if (downloading) return;
     downloading = 'tab';
     try {
-      const resp = await apiService.download.byRevisionJson(selectedSong);
-      triggerFileDownloadFromSongsterrResponse(resp);
-      trackGuitarProDownloaded({
-        title: selectedSong.title,
-        artist: selectedSong.artist,
-        songId: selectedSong.songId
-      });
-    } catch (error) {
-      console.error('error', error);
+      await downloadGuitarPro(selectedSong);
     } finally {
       downloading = null;
     }
@@ -40,22 +30,14 @@
     if (downloading) return;
     downloading = 'midi';
     try {
-      const resp = await apiService.download.byRevisionJsonMidi(selectedSong);
-      triggerFileDownloadFromSongsterrResponse(resp);
-      trackMidiDownloaded({
-        title: selectedSong.title,
-        artist: selectedSong.artist,
-        songId: selectedSong.songId
-      });
-    } catch (error) {
-      console.error('error', error);
+      await downloadMidiFile(selectedSong);
     } finally {
       downloading = null;
     }
   }
 
   function deselectSong(): void {
-    appStore.selectedSong = undefined;
+    formState.selectedSong = undefined;
   }
 </script>
 

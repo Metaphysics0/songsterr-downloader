@@ -2,6 +2,8 @@
 
 A web app that converts Songsterr tabs to Guitar Pro (.gp7) files using alphaTab.
 
+[![Star History Chart](https://api.star-history.com/image?repos=Metaphysics0/songsterr-downloader&type=date&legend=top-left)](https://www.star-history.com/?repos=Metaphysics0%2Fsongsterr-downloader&type=date&legend=top-left)
+
 ## How it works
 
 1. User pastes a Songsterr URL
@@ -12,21 +14,14 @@ A web app that converts Songsterr tabs to Guitar Pro (.gp7) files using alphaTab
 
 ## Conversion features
 
-- Multi-track support (guitar, bass, drums, keys, etc.)
-- Time signatures, tempo changes, repeats, alternate endings, and section markers
-- Note effects: bends, slides, harmonics, hammer-ons/pull-offs, vibrato, palm mute, ghost notes, staccato, accents, dead notes
-- Tuplets (triplets, quintuplets, etc.)
-- Multiple voices per measure
-- Correct string tuning per track
-- Percussion with proper MIDI articulation mapping (kick, snare, hi-hat, crashes, etc.)
+See [CONVERTER.md](src/lib/server/services/converter/CONVERTER.md) for full details.
 
 ## How to run
 
 1. Clone the repo
 2. Install [bun](https://bun.sh/)
-3. `bun i && bun dev`
-
-App runs at http://localhost:5173/
+3. `bun install`
+4. `bun dev`
 
 ## Running tests
 

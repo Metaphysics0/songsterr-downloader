@@ -2,6 +2,16 @@
 
 Converts Songsterr revision JSON into Guitar Pro 7 files via `@coderline/alphatab`.
 
+## Features
+
+- Multi-track support (guitar, bass, drums, keys, etc.)
+- Time signatures, tempo changes, repeats, alternate endings, and section markers
+- Note effects: bends, slides, harmonics, hammer-ons/pull-offs, vibrato, palm mute, ghost notes, staccato, accents, dead notes
+- Tuplets (triplets, quintuplets, etc.)
+- Multiple voices per measure
+- Correct string tuning per track
+- Percussion with proper MIDI articulation mapping (kick, snare, hi-hat, crashes, etc.)
+
 ## Key mapping details
 
 ### String numbering

@@ -4,33 +4,12 @@ export interface SongsterrDownloadResponse {
   contentType: string;
 }
 
-export interface SongsterrMetadata {
-  hasPlayer: boolean;
-  artist: string;
-  artistId: number;
-  title: string;
-  songId: number;
-  byLinkUrl?: string;
-  tracks: SongsterrTrack[];
-  hasChords: boolean;
-  defaultTrack: number;
-}
-
 export interface SongsterrPartialMetadata {
   title: string;
   songId: number;
   artistId: number;
   artist: string;
   byLinkUrl?: string;
-}
-
-export interface SongsterrTrack {
-  tuning?: number[];
-  tuningString?: string;
-  instrumentId: number;
-  dailyViews: number;
-  views: number;
-  difficulty?: string;
 }
 
 export interface SongsterrStateMetaCurrentTrack {
