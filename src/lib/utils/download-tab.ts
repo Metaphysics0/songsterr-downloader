@@ -1,6 +1,6 @@
 import type { SongsterrDownloadResponse, SongsterrPartialMetadata } from '$lib/types';
 import { triggerFileDownload } from '$lib/utils/trigger-client-side-download';
-import { trackGuitarProDownloaded, trackMidiDownloaded } from '$lib/analytics/mixpanel';
+import { trackGuitarProDownloaded, trackMidiDownloaded, trackDownloadFailed } from '$lib/analytics/mixpanel';
 import { toastError } from '$lib/utils/toast.util';
 import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
 
@@ -11,6 +11,13 @@ export async function downloadGuitarPro(song: SongsterrPartialMetadata): Promise
     trackGuitarProDownloaded({ title: song.title, artist: song.artist, songId: song.songId });
   } catch (error) {
     console.error('error', error);
+    trackDownloadFailed({
+      title: song.title,
+      artist: song.artist,
+      songId: song.songId,
+      downloadType: 'gp',
+      errorMessage: error instanceof Error ? error.message : 'Unknown error'
+    });
     toastError(ERROR_DOWNLOADING_TAB_TOAST_MESSAGE);
   }
 }
@@ -22,6 +29,13 @@ export async function downloadMidi(song: SongsterrPartialMetadata): Promise<void
     trackMidiDownloaded({ title: song.title, artist: song.artist, songId: song.songId });
   } catch (error) {
     console.error('error', error);
+    trackDownloadFailed({
+      title: song.title,
+      artist: song.artist,
+      songId: song.songId,
+      downloadType: 'midi',
+      errorMessage: error instanceof Error ? error.message : 'Unknown error'
+    });
     toastError(ERROR_DOWNLOADING_TAB_TOAST_MESSAGE);
   }
 }

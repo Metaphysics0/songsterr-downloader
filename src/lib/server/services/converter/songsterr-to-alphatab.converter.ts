@@ -295,6 +295,15 @@ export class SongsterrToAlphaTabConverter {
     staff.isPercussion = isPercussion;
     const numStrings = Array.isArray(tuning) ? tuning.length : 6;
 
+    // Pre-scan to find the max voice count across all measures.
+    // alphaTab expects every bar in a staff to have the same number of voices;
+    // mismatches cause a crash in Voice._chain when calling score.finish().
+    let maxVoiceCount = 1;
+    for (let i = 0; i < masterBarCount; i++) {
+      const m = revision.measures?.[i];
+      maxVoiceCount = Math.max(maxVoiceCount, m?.voices?.length || 0);
+    }
+
     for (let measureIndex = 0; measureIndex < masterBarCount; measureIndex++) {
       const bar = new alphaTab.model.Bar();
       const measure = revision.measures?.[measureIndex];
@@ -323,6 +332,13 @@ export class SongsterrToAlphaTabConverter {
 
           bar.addVoice(voice);
         }
+      }
+
+      // Pad with rest voices up to maxVoiceCount so all bars have the same count
+      for (let v = bar.voices.length; v < maxVoiceCount; v++) {
+        const restVoice = new alphaTab.model.Voice();
+        this.fillWithRestBeats(restVoice, score.masterBars[measureIndex]);
+        bar.addVoice(restVoice);
       }
 
       staff.addBar(bar);

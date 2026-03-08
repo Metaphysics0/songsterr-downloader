@@ -834,6 +834,85 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('varying voice counts across measures', () => {
+    it('pads bars so all have the same voice count (prevents _chain crash)', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [{ fret: 5, string: 0 }],
+                    duration: [1, 2],
+                    type: 2
+                  }
+                ]
+              },
+              {
+                beats: [
+                  {
+                    notes: [{ fret: 0, string: 5 }],
+                    duration: [1, 2],
+                    type: 2
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          },
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [{ fret: 3, string: 0 }],
+                    duration: [1, 1],
+                    type: 1
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      // This would crash before the fix with:
+      // TypeError: Cannot read properties of undefined (reading 'beats')
+      const { data } = convertSingle(revision);
+      expect(data.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('full song conversion (song-3)', () => {
+    it('exports a gp7 file from song-3 revision payloads', () => {
+      const tracks: SongsterrRevisionTrackInput[] = [];
+      const trackMetas: SongsterrStateMetaCurrentTrack[] = [];
+
+      for (let i = 0; i <= 10; i++) {
+        const content = readFileSync(`data/song-3/${i}.json`, 'utf-8');
+        if (!content.trim()) continue; // skip empty files
+        const revision: SongsterrRevisionTrackPayload = JSON.parse(content);
+        const meta = makeTrackMeta({
+          partId: i,
+          instrumentId: revision.instrumentId ?? 27,
+          title: revision.name ?? `Track ${i}`
+        });
+        trackMetas.push(meta);
+        tracks.push({ trackMeta: meta, revision });
+      }
+
+      const converter = new SongsterrToAlphaTabConverter();
+      const { data } = converter.toGp7({
+        meta: makeMeta(trackMetas, { title: 'Song 3', artist: 'Test' }),
+        revisions: tracks
+      });
+
+      expect(data.length).toBeGreaterThan(0);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

@@ -10,7 +10,15 @@ export const POST = (async ({ request, params }) => {
 
   logger.info({ params }, 'Starting download');
 
-  const response = await service.download(request);
-
-  return json(response);
+  try {
+    const response = await service.download(request);
+    return json(response);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    logger.error(
+      { downloadType: params.downloadType, error: message },
+      'Download failed'
+    );
+    return json({ error: message }, { status: 500 });
+  }
 }) satisfies RequestHandler;
