@@ -79,7 +79,7 @@
     </button>
     <span class="mb-1 font-light">or </span>
     <button
-      class="relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+      class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
       disabled={!!downloading}
       onclick={downloadMidi}
     >
@@ -93,7 +93,7 @@
   <div class="my-2"></div>
 
   <button
-    class="text-slate-400 font-light underline hover:text-slate-500 bg-transparent mb-1"
+    class="cursor-pointer text-slate-400 font-light underline hover:text-slate-500 bg-transparent mb-1"
     onclick={deselectSong}>Select another</button
   >
 </div>
@@ -109,7 +109,11 @@
   }
 
   @keyframes progress-loop {
-    0% { width: 0%; }
-    100% { width: 100%; }
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
   }
 </style>
