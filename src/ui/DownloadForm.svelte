@@ -3,7 +3,7 @@
     downloadGuitarPro,
     downloadMidi as downloadMidiFile
   } from '$lib/utils/download-tab';
-  import SelectedSong from './SelectedSong.svelte';
+  import SelectedSong from './SongPreview.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
   import type { SongsterrPartialMetadata } from '$lib/types';
   import Icon from '@iconify/svelte';
