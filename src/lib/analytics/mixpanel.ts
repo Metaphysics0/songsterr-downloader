@@ -18,3 +18,12 @@ export function trackGuitarProDownloaded(props: TrackDownloadParams) {
 export function trackMidiDownloaded(props: TrackDownloadParams) {
   mixpanel.track('MIDI Downloaded', props);
 }
+
+interface TrackDownloadFailedParams extends TrackDownloadParams {
+  downloadType: string;
+  errorMessage: string;
+}
+
+export function trackDownloadFailed(props: TrackDownloadFailedParams) {
+  mixpanel.track('Download Failed', props);
+}
