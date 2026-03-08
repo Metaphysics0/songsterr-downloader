@@ -16,7 +16,7 @@
 
 <SvelteToast />
 
-<header class="mt-12 mb-2.5">
+<header class="mt-12 mb-4">
   <Header />
 </header>
 {@render children()}
