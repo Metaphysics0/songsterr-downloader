@@ -1,6 +1,6 @@
 import type { SongsterrPartialMetadata } from '$lib/types';
 
-export const appStore = $state({
+export const formState = $state({
   isLoadingMetadata: false,
   selectedSong: undefined as SongsterrPartialMetadata | undefined
 });

@@ -1,16 +1,16 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { appStore } from '$lib/stores/app.store.svelte';
-  import type { SongsterrMetadata, SongsterrPartialMetadata } from '$lib/types';
+  import { formState } from '$lib/stores/form-state.svelte';
+  import type { SongsterrPartialMetadata } from '$lib/types';
 
   interface Props {
-    selectedSong: SongsterrMetadata | SongsterrPartialMetadata;
+    selectedSong: SongsterrPartialMetadata;
   }
 
   let { selectedSong }: Props = $props();
 
   function deselectSong(): void {
-    appStore.selectedSong = undefined;
+    formState.selectedSong = undefined;
   }
 </script>
 

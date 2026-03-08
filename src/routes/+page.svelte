@@ -1,7 +1,7 @@
 <script>
   import Form from '../ui/Form.svelte';
   import SocialLinks from '../ui/common/SocialLinks.svelte';
-  import { appStore } from '../lib/stores/app.store.svelte';
+  import { formState as appStore } from '../lib/stores/form-state.svelte';
   import { fade } from 'svelte/transition';
 </script>
 
