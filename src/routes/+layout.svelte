@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import { SvelteToast } from '@zerodevx/svelte-toast';
-  import Header from '../ui/common/Header.svelte';
+  import Header from '$lib/components/Header.svelte';
   import { browser } from '$app/environment';
   import favicon from '$lib/assets/favicon.ico';
 
@@ -16,7 +16,7 @@
 
 <SvelteToast />
 
-<header class="mt-12 mb-2.5">
+<header class="mt-12 mb-4">
   <Header />
 </header>
 {@render children()}

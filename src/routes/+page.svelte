@@ -1,13 +1,13 @@
 <script>
-  import Form from '../ui/Form.svelte';
-  import SocialLinks from '../ui/common/SocialLinks.svelte';
-  import { formState as appStore } from '../lib/runes/form-state.svelte';
+  import Form from '$lib/components/Form.svelte';
+  import SocialLinks from '$lib/components/SocialLinks.svelte';
+  import { formState } from '$lib/runes/form-state.svelte';
   import { fade } from 'svelte/transition';
 </script>
 
-<main class="mb-4 max-w-md mx-auto">
+<main class="max-w-md mx-auto">
   <Form />
-  {#if !appStore.selectedSong && !appStore.isLoadingMetadata}
+  {#if !formState.selectedSong && !formState.isLoadingMetadata}
     <div class="mt-8" transition:fade={{ duration: 200 }}>
       <SocialLinks />
     </div>
