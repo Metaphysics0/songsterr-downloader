@@ -26,7 +26,7 @@
         </svg>
       </div>
     </div>
-    <p class="label">See how I built this app</p>
+    <p class="label">See how I built this app!</p>
   </a>
 </div>
 
