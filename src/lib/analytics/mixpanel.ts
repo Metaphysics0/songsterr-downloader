@@ -27,3 +27,7 @@ interface TrackDownloadFailedParams extends TrackDownloadParams {
 export function trackDownloadFailed(props: TrackDownloadFailedParams) {
   mixpanel.track('Download Failed', props);
 }
+
+export function trackYouTubeVideoClicked() {
+  mixpanel.track('YouTube Video Clicked');
+}
