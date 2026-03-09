@@ -1,14 +1,22 @@
 <script lang="ts">
-  import Link from './Link.svelte';
 </script>
 
 <div class="flex flex-col items-center text-center font-sans">
   <h1 class="text-4xl mb-2 mx-auto font-bold">Songsterr Downloader</h1>
   <p>
     Enter in a link from
-    <Link href="https://songsterr.com" innerText="Songsterr" />
+    <a
+      target="_blank"
+      href="https://songsterr.com"
+      class="text-blue-400 hover:text-blue-500 ease">Songsterr</a
+    >
     to get a
-    <Link href="https://www.guitar-pro.com/" innerText="Guitar Pro" />
+
+    <a
+      target="_blank"
+      href="https://www.guitar-pro.com/"
+      class="text-blue-400 hover:text-blue-500 ease">Guitar Pro</a
+    >
     or MIDI file!
   </p>
 </div>
