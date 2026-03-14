@@ -2,7 +2,7 @@
 
 A web app that converts Songsterr tabs to Guitar Pro (.gp7) files using alphaTab.
 
-[![Star History Chart](https://api.star-history.com/image?repos=Metaphysics0/songsterr-downloader&type=date&legend=top-left)](https://www.star-history.com/?repos=Metaphysics0%2Fsongsterr-downloader&type=date&legend=top-left)
+See how I built it [here!](https://www.youtube.com/watch?v=SsIMY8xmDNY)
 
 ## How it works
 
