@@ -1,16 +1,16 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
 
-  const LINKS: ISocialLink[] = [
+  const LINKS = [
     {
       name: 'github',
       href: 'https://github.com/Metaphysics0/songsterr-downloader',
       icon: 'mdi:github'
     },
     {
-      name: 'instagram',
-      href: 'https://www.instagram.com/mathrockryan/',
-      icon: 'mdi:instagram'
+      name: 'youtube',
+      href: 'https://www.youtube.com/watch?v=SsIMY8xmDNY',
+      icon: 'mdi:youtube'
     },
     {
       name: 'linkedin',
@@ -18,12 +18,6 @@
       icon: 'mdi:linkedin'
     }
   ];
-
-  interface ISocialLink {
-    name?: string;
-    href: string;
-    icon: any;
-  }
 </script>
 
 <section class="flex items-center mx-auto w-fit h-max">
@@ -34,7 +28,7 @@
       rel="noreferrer"
       class="h-full mx-3 opacity-50 hover:opacity-100 transition ease-in-out"
     >
-      <Icon icon={link.icon} height="30" />
+      <Icon icon={link.icon} height="35" />
     </a>
   {/each}
 </section>

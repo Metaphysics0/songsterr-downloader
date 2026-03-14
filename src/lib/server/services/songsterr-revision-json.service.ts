@@ -6,6 +6,7 @@ import type {
 } from '$lib/types';
 import Fetcher from '../utils/fetcher.util';
 import { scraper } from '../utils/scraper.util';
+import { logger } from '$lib/server/logger';
 
 export interface SongsterrFetchedRevisionTrack {
   trackMeta: SongsterrStateMetaCurrentTrack;
@@ -55,20 +56,24 @@ export class SongsterrRevisionJsonService {
     songId,
     revisionId,
     image,
-    partId
+    partId,
+    cdnBaseUrl = this.CDN_BASE_URL
   }: {
     songId: number;
     revisionId: number;
     image: string;
     partId: number;
+    cdnBaseUrl?: string;
   }): string {
-    return `${this.CDN_BASE_URL}/${songId}/${revisionId}/${image}/${partId}.json`;
+    return `${cdnBaseUrl}/${songId}/${revisionId}/${image}/${partId}.json`;
   }
 
   async fetchAllPartRevisions(
-    stateMeta: SongsterrStateMetaCurrent
+    stateMeta: SongsterrStateMetaCurrent,
+    cdnBaseUrl = this.CDN_BASE_URL
   ): Promise<SongsterrFetchAllPartRevisionsResult> {
     const warnings: ConversionWarning[] = [];
+
     const tracks = stateMeta.tracks
       .filter((track) => typeof track.partId === 'number')
       .sort((left, right) => left.partId - right.partId);
@@ -79,7 +84,8 @@ export class SongsterrRevisionJsonService {
           songId: stateMeta.songId,
           revisionId: stateMeta.revisionId,
           image: stateMeta.image,
-          partId: track.partId
+          partId: track.partId,
+          cdnBaseUrl
         });
 
         try {
@@ -116,6 +122,20 @@ export class SongsterrRevisionJsonService {
     };
   }
 
+  async fetchAllPartRevisionsWithFallback(
+    stateMeta: SongsterrStateMetaCurrent
+  ): Promise<SongsterrFetchAllPartRevisionsResult> {
+    const primary = await this.fetchAllPartRevisions(stateMeta);
+    if (primary.revisions.length > 0) return primary;
+
+    logger.warn(
+      { songId: stateMeta.songId, revisionId: stateMeta.revisionId },
+      'Primary CDN returned no revisions, retrying with alternate CDN'
+    );
+    return this.fetchAllPartRevisions(stateMeta, this.CDN_BASE_URL_2);
+  }
+
   private readonly fetcher = new Fetcher({ withBrowserLikeHeaders: true });
   private readonly CDN_BASE_URL = 'https://dqsljvtekg760.cloudfront.net';
+  private readonly CDN_BASE_URL_2 = 'https://d3d3l6a6rcgkaf.cloudfront.net';
 }

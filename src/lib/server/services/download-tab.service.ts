@@ -33,11 +33,11 @@ export class DownloadTabService {
       await this.songsterrRevisionJsonService.getStateMetaFromTabUrl(byLinkUrl);
 
     const { revisions, warnings: fetchWarnings } =
-      await this.songsterrRevisionJsonService.fetchAllPartRevisions(stateMeta);
+      await this.songsterrRevisionJsonService.fetchAllPartRevisionsWithFallback(stateMeta);
 
     if (revisions.length === 0) {
       throw new Error(
-        `Unable to fetch any revision payloads for songId ${stateMeta.songId}`
+        `[gp] Unable to fetch any revision payloads for songId ${stateMeta.songId}`
       );
     }
 
@@ -86,11 +86,11 @@ export class DownloadTabService {
       await this.songsterrRevisionJsonService.getStateMetaFromTabUrl(byLinkUrl);
 
     const { revisions, warnings: fetchWarnings } =
-      await this.songsterrRevisionJsonService.fetchAllPartRevisions(stateMeta);
+      await this.songsterrRevisionJsonService.fetchAllPartRevisionsWithFallback(stateMeta);
 
     if (revisions.length === 0) {
       throw new Error(
-        `Unable to fetch any revision payloads for songId ${stateMeta.songId}`
+        `[midi] Unable to fetch any revision payloads for songId ${stateMeta.songId}`
       );
     }
 
