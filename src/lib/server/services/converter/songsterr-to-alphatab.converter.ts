@@ -407,7 +407,10 @@ export class SongsterrToAlphaTabConverter {
     const mappedDuration = mapSongsterrDuration(beatData.duration);
     beat.duration = mappedDuration.duration;
     beat.dots = beatData.dots ?? mappedDuration.dots;
-    beat.text = beatData.text || null;
+    const rawText = beatData.text;
+    beat.text = typeof rawText === 'string'
+      ? rawText || null
+      : (rawText?.text ?? null);
 
     if (mappedDuration.isApproximate && !beatData.tuplet) {
       this.pushWarning(warnings, {
