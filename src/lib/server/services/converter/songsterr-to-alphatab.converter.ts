@@ -637,11 +637,11 @@ export class SongsterrToAlphaTabConverter {
 
     for (const point of bend.points) {
       // Songsterr uses position 0-60, alphaTab uses offset 0-60 (same scale)
-      // Songsterr tone is in semitones × 100 (100 = 1 semitone)
-      // alphaTab value is in quarter-tones (100 = 1 quarter tone)
-      // So: 1 semitone = 2 quarter tones → multiply by 2
+      // Songsterr and GP both use: 100 = 1 full tone (2 semitones), 50 = 1 semitone
+      // alphaTab BendPoint.value is in GP quarter-steps: 25 raw GP units = 1 unit (MaxValue=12)
+      // Formula: alphaTab_value = Songsterr_tone / 25
       const offset = Math.round(point.position);
-      const value = Math.round(point.tone * 2);
+      const value = Math.round(point.tone / 25);
       note.addBendPoint(new alphaTab.model.BendPoint(offset, value));
     }
   }
