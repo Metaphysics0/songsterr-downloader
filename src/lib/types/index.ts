@@ -74,7 +74,7 @@ export interface SongsterrRevisionBeatPayload {
   type?: number;
   duration?: [number, number];
   dots?: number;
-  text?: string;
+  text?: string | { text: string; width?: number };
   velocity?: string;
   rest?: boolean;
   palmMute?: boolean;

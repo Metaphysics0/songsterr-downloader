@@ -391,12 +391,12 @@ describe('SongsterrToAlphaTabConverter', () => {
                         fret: 3,
                         string: 0,
                         bend: {
+                          // tone: 100 = 1 full tone bend; expected alphaTab value = 100/25 = 4
                           tone: 100,
                           points: [
-                            { position: 0, tone: 100 },
+                            { position: 0, tone: 0 },
                             { position: 30, tone: 100 },
-                            { position: 40, tone: 0 },
-                            { position: 60, tone: 0 }
+                            { position: 60, tone: 100 }
                           ]
                         }
                       }
