@@ -1,6 +1,7 @@
 import mixpanel from 'mixpanel-browser';
+import { PUBLIC_MIXPANEL_ID } from '$env/static/public';
 
-mixpanel.init('09282cac571bcb88db2bd0cfa8a5c5f7', {
+mixpanel.init(PUBLIC_MIXPANEL_ID, {
   autocapture: false,
   record_sessions_percent: 0
 });
