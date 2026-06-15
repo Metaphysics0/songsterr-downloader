@@ -141,6 +141,7 @@ function getPercussionArticulationIndex(midiNote: number): number {
 export class SongsterrToAlphaTabConverter {
   toGp7(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
+    score.finish(settings);
 
     const exporter = new alphaTab.exporter.Gp7Exporter();
     const data = exporter.export(score, settings);
@@ -150,6 +151,7 @@ export class SongsterrToAlphaTabConverter {
 
   toMidi(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
+    score.finish(settings);
 
     const midiFile = new alphaTab.midi.MidiFile();
     const handler = new alphaTab.midi.AlphaSynthMidiFileHandler(midiFile, true);
@@ -635,15 +637,61 @@ export class SongsterrToAlphaTabConverter {
     note: alphaTab.model.Note,
     bend: { tone: number; points: { position: number; tone: number }[] }
   ): void {
+    const points = bend.points;
+    if (!points || points.length === 0) return;
+
+    const toAlphaTabValue = (tone: number) => Math.round(tone / 25);
+
+    const firstTone = points[0].tone;
+    const isPrebend = firstTone > 0;
+
+    if (isPrebend) {
+      const firstVal = toAlphaTabValue(firstTone);
+      const lastPoint = points[points.length - 1];
+      const destVal = toAlphaTabValue(lastPoint.tone);
+
+      const maxTone = Math.max(...points.map((p) => p.tone));
+
+      if (maxTone > firstTone) {
+        note.bendType = alphaTab.model.BendType.PrebendBend;
+        const maxVal = toAlphaTabValue(maxTone);
+        note.addBendPoint(new alphaTab.model.BendPoint(0, firstVal));
+        note.addBendPoint(new alphaTab.model.BendPoint(60, maxVal));
+      } else if (lastPoint.tone < firstTone) {
+        note.bendType = alphaTab.model.BendType.PrebendRelease;
+        note.addBendPoint(new alphaTab.model.BendPoint(0, firstVal));
+        note.addBendPoint(new alphaTab.model.BendPoint(60, destVal));
+      } else {
+        note.bendType = alphaTab.model.BendType.Prebend;
+        note.addBendPoint(new alphaTab.model.BendPoint(0, firstVal));
+        note.addBendPoint(new alphaTab.model.BendPoint(60, destVal));
+      }
+      return;
+    }
+
     note.bendType = alphaTab.model.BendType.Custom;
 
-    for (const point of bend.points) {
-      // Songsterr uses position 0-60, alphaTab uses offset 0-60 (same scale)
-      // Songsterr and GP both use: 100 = 1 full tone (2 semitones), 50 = 1 semitone
-      // alphaTab BendPoint.value is in GP quarter-steps: 25 raw GP units = 1 unit (MaxValue=12)
-      // Formula: alphaTab_value = Songsterr_tone / 25
+    let pointsToUse = points;
+    if (points.length > 4) {
+      let maxTone = 0;
+      let peakIdx = 0;
+      for (let i = 0; i < points.length; i++) {
+        if (points[i].tone >= maxTone) {
+          maxTone = points[i].tone;
+          peakIdx = i;
+        }
+      }
+
+      if (peakIdx === 0 || peakIdx === points.length - 1) {
+        pointsToUse = [points[0], points[points.length - 1]];
+      } else {
+        pointsToUse = [points[0], points[peakIdx], points[points.length - 1]];
+      }
+    }
+
+    for (const point of pointsToUse) {
       const offset = Math.round(point.position);
-      const value = Math.round(point.tone / 25);
+      const value = toAlphaTabValue(point.tone);
       note.addBendPoint(new alphaTab.model.BendPoint(offset, value));
     }
   }

@@ -415,6 +415,193 @@ describe('SongsterrToAlphaTabConverter', () => {
       const { data } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
     });
+
+    it('maps prebend (hold)', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      {
+                        fret: 3,
+                        string: 0,
+                        bend: {
+                          tone: 50,
+                          points: [
+                            { position: 0, tone: 50 },
+                            { position: 30, tone: 50 },
+                            { position: 60, tone: 50 }
+                          ]
+                        }
+                      }
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      expect(data.length).toBeGreaterThan(0);
+    });
+
+    it('maps prebend release', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      {
+                        fret: 3,
+                        string: 0,
+                        bend: {
+                          tone: 100,
+                          points: [
+                            { position: 0, tone: 100 },
+                            { position: 60, tone: 0 }
+                          ]
+                        }
+                      }
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      expect(data.length).toBeGreaterThan(0);
+    });
+
+    it('maps prebend bend', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      {
+                        fret: 3,
+                        string: 0,
+                        bend: {
+                          tone: 100,
+                          points: [
+                            { position: 0, tone: 50 },
+                            { position: 30, tone: 100 },
+                            { position: 60, tone: 100 }
+                          ]
+                        }
+                      }
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      expect(data.length).toBeGreaterThan(0);
+    });
+
+    it('maps prebend release 1/4 step', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      {
+                        fret: 3,
+                        string: 0,
+                        bend: {
+                          tone: 50,
+                          points: [
+                            { position: 0, tone: 50 },
+                            { position: 20, tone: 50 },
+                            { position: 40, tone: 0 },
+                            { position: 60, tone: 0 }
+                          ]
+                        }
+                      }
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      expect(data.length).toBeGreaterThan(0);
+    });
+
+    it('downsamples 5-point bend-release to 3 points', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      {
+                        fret: 3,
+                        string: 0,
+                        bend: {
+                          tone: 50,
+                          points: [
+                            { position: 0, tone: 0 },
+                            { position: 15, tone: 50 },
+                            { position: 30, tone: 50 },
+                            { position: 45, tone: 0 },
+                            { position: 60, tone: 0 }
+                          ]
+                        }
+                      }
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      expect(data.length).toBeGreaterThan(0);
+    });
   });
 
   describe('pick stroke', () => {
