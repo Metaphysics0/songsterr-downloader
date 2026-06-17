@@ -6,7 +6,8 @@
   import SelectedSong from './SongPreview.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
   import type { SongsterrPartialMetadata } from '$lib/types';
-  import Icon from '@iconify/svelte';
+  import GuitarIcon from '$lib/icons/GuitarIcon.svelte';
+  import MidiIcon from '$lib/icons/MidiIcon.svelte';
 
   interface Props {
     selectedSong: SongsterrPartialMetadata;
@@ -51,10 +52,7 @@
       disabled={!!downloading}
       onclick={downloadTab}
     >
-      <Icon
-        icon="mingcute:guitar-fill"
-        class="inline-block mr-1.5 text-base"
-      />Download Guitar Pro
+      <GuitarIcon class="inline-block mr-1.5 text-base" />Download Guitar Pro
       {#if downloading === 'tab'}
         <span class="progress-bar"></span>
       {/if}
@@ -65,7 +63,7 @@
       disabled={!!downloading}
       onclick={downloadMidi}
     >
-      <Icon icon="mingcute:midi-line" class="inline-block mr-1.5 text-base" />
+      <MidiIcon class="inline-block mr-1.5 text-base" />
       Download MIDI
       {#if downloading === 'midi'}
         <span class="progress-bar"></span>
