@@ -1,10 +1,14 @@
 import mixpanel from 'mixpanel-browser';
-import { PUBLIC_MIXPANEL_ID } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
-mixpanel.init(PUBLIC_MIXPANEL_ID, {
-  autocapture: false,
-  record_sessions_percent: 0
-});
+const MIXPANEL_ID = env.PUBLIC_MIXPANEL_ID;
+
+if (MIXPANEL_ID) {
+  mixpanel.init(MIXPANEL_ID, {
+    autocapture: false,
+    record_sessions_percent: 0
+  });
+}
 
 interface TrackDownloadParams {
   title: string;

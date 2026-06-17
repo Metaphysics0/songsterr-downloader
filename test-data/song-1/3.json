@@ -1,0 +1,4659 @@
+{
+    "name": "Caleb Molina - Clean Rhythm Guitar",
+    "balance": 0,
+    "volume": 1,
+    "measures": [
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "signature": [
+                4,
+                4
+            ],
+            "marker": {
+                "text": "[A] Intro",
+                "width": 64
+            },
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "marker": {
+                "text": "[B] Verse 1",
+                "width": 78
+            },
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "marker": {
+                "text": "[C] Chorus",
+                "width": 78
+            },
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "marker": {
+                "text": "[D] Verse 2",
+                "width": 81
+            },
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 2,
+                            "dots": 1,
+                            "rest": true,
+                            "duration": [
+                                3,
+                                4
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "signature": [
+                3,
+                4
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 2,
+                            "dots": 1,
+                            "rest": true,
+                            "duration": [
+                                3,
+                                4
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 2,
+                            "dots": 1,
+                            "rest": true,
+                            "duration": [
+                                3,
+                                4
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 2,
+                            "dots": 1,
+                            "rest": true,
+                            "duration": [
+                                3,
+                                4
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "velocity": "f",
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "signature": [
+                4,
+                4
+            ],
+            "marker": {
+                "text": "[E] Interlude",
+                "width": 93
+            }
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 7,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 8,
+                                    "string": 2
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 5,
+                                    "string": 0
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        },
+                        {
+                            "notes": [
+                                {
+                                    "fret": 6,
+                                    "string": 1
+                                }
+                            ],
+                            "type": 4,
+                            "duration": [
+                                1,
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "marker": {
+                "text": "[F] Bridge",
+                "width": 74
+            },
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "marker": {
+                "text": "[G] Breakdown Outro",
+                "width": 158
+            },
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        },
+        {
+            "voices": [
+                {
+                    "beats": [
+                        {
+                            "notes": [
+                                {
+                                    "rest": true
+                                }
+                            ],
+                            "type": 1,
+                            "rest": true,
+                            "duration": [
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "rest": true
+                }
+            ],
+            "rest": true
+        }
+    ],
+    "frets": 24,
+    "tuning": [
+        61,
+        56,
+        52,
+        47,
+        42,
+        35
+    ],
+    "strings": 6,
+    "instrumentId": 27,
+    "instrument": "Electric Guitar (clean)",
+    "newLyrics": [
+        {
+            "line": 1,
+            "offset": 1,
+            "text": ""
+        },
+        {
+            "line": 2,
+            "offset": 1,
+            "text": ""
+        },
+        {
+            "line": 3,
+            "offset": 1,
+            "text": ""
+        },
+        {
+            "line": 4,
+            "offset": 1,
+            "text": ""
+        },
+        {
+            "line": 5,
+            "offset": 1,
+            "text": ""
+        }
+    ],
+    "partId": 3,
+    "automations": {
+        "tempo": [
+            {
+                "measure": 0,
+                "position": 0,
+                "bpm": 194,
+                "type": 4
+            },
+            {
+                "measure": 67,
+                "position": 0,
+                "bpm": 195,
+                "type": 4
+            },
+            {
+                "measure": 131,
+                "position": 0,
+                "bpm": 121,
+                "type": 4
+            }
+        ]
+    },
+    "version": 8,
+    "songId": 2839508,
+    "revisionId": 5542830
+}

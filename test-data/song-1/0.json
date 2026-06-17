@@ -1,0 +1,3266 @@
+{
+  "name": "Caleb Molina - Chorus Vocals",
+  "balance": 0,
+  "volume": 1,
+  "measures": [
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "signature": [4, 4],
+      "marker": {
+        "text": "[A] Intro",
+        "width": 64
+      },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": {
+        "text": "[B] Verse 1",
+        "width": 78
+      },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": {
+        "text": "[C] Chorus",
+        "width": 78
+      },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 3,
+                  "string": 0,
+                  "bend": {
+                    "tone": 100,
+                    "points": [
+                      {
+                        "position": 0,
+                        "tone": 100
+                      },
+                      {
+                        "position": 30,
+                        "tone": 100
+                      },
+                      {
+                        "position": 40,
+                        "tone": 0
+                      },
+                      {
+                        "position": 60,
+                        "tone": 0
+                      }
+                    ]
+                  }
+                }
+              ],
+              "velocity": "f",
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 3,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 0,
+                  "string": 0
+                }
+              ],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 1
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 1,
+                  "tie": true
+                }
+              ],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 1,
+                  "tie": true
+                }
+              ],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 0
+                }
+              ],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 8,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 6,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 0
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 3,
+                  "string": 0
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 3,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [
+                {
+                  "fret": 3,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "dots": 1,
+              "duration": [3, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 3,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 3,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 0
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 0,
+                  "string": 0
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 0,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 0,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 0,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [
+                {
+                  "fret": 0,
+                  "string": 0
+                }
+              ],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [
+                {
+                  "fret": 1,
+                  "string": 0
+                }
+              ],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 8,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 6,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0
+                }
+              ],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "fret": 5,
+                  "string": 0,
+                  "tie": true
+                }
+              ],
+              "type": 2,
+              "dots": 1,
+              "duration": [3, 4]
+            },
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": {
+        "text": "[D] Verse 2",
+        "width": 81
+      },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "signature": [3, 4],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "signature": [4, 4],
+      "marker": {
+        "text": "[E] Interlude",
+        "width": 93
+      },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": {
+        "text": "[F] Bridge",
+        "width": 74
+      },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": {
+        "text": "[G] Breakdown Outro",
+        "width": 158
+      },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [
+                {
+                  "rest": true
+                }
+              ],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    }
+  ],
+  "frets": 24,
+  "tuning": [61, 56, 52, 47, 42, 35],
+  "strings": 6,
+  "instrumentId": 64,
+  "instrument": "Soprano Sax",
+  "newLyrics": [
+    {
+      "line": 1,
+      "offset": 1,
+      "text": ""
+    },
+    {
+      "line": 2,
+      "offset": 1,
+      "text": ""
+    },
+    {
+      "line": 3,
+      "offset": 1,
+      "text": ""
+    },
+    {
+      "line": 4,
+      "offset": 1,
+      "text": ""
+    },
+    {
+      "line": 5,
+      "offset": 1,
+      "text": ""
+    }
+  ],
+  "partId": 0,
+  "automations": {
+    "tempo": [
+      {
+        "measure": 0,
+        "position": 0,
+        "bpm": 194,
+        "type": 4
+      },
+      {
+        "measure": 67,
+        "position": 0,
+        "bpm": 195,
+        "type": 4
+      },
+      {
+        "measure": 131,
+        "position": 0,
+        "bpm": 121,
+        "type": 4
+      }
+    ]
+  },
+  "version": 8,
+  "songId": 2839508,
+  "revisionId": 5542830
+}
