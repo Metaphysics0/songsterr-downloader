@@ -1,0 +1,5456 @@
+{
+  "name": "Robert Plant | Lead Vocals",
+  "balance": 0,
+  "volume": 1,
+  "measures": [
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "signature": [4, 4],
+      "marker": { "text": "Intro", "width": 38 },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "velocity": "mp",
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Verse 1", "width": 51 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 3 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "tuplet": 3,
+              "rest": true,
+              "duration": [1, 12],
+              "beamStart": true,
+              "tupletStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "tuplet": 3,
+              "duration": [1, 12]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "tuplet": 3,
+              "duration": [1, 12],
+              "beamStop": true,
+              "tupletStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 16,
+              "rest": true,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 2,
+              "dots": 1,
+              "duration": [3, 4]
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Chorus", "width": 52 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "velocity": "f",
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "velocity": "mp",
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Verse 2", "width": 53 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 16,
+              "rest": true,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "tuplet": 3,
+              "rest": true,
+              "duration": [1, 12],
+              "beamStart": true,
+              "tupletStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "tuplet": 3,
+              "duration": [1, 12]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "tuplet": 3,
+              "duration": [1, 12],
+              "beamStop": true,
+              "tupletStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Chorus", "width": 52 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Verse 3", "width": 53 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 2, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": { "text": "Breakdown", "width": 84 },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Verse 4", "width": 53 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 16,
+              "rest": true,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 3 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 16,
+              "rest": true,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 3 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": { "text": "Chorus", "width": 52 },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Verse 5", "width": 53 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 16,
+              "rest": true,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 3 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 3 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "velocity": "mf",
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 2,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2, "tie": true }],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": { "text": "Interlude", "width": 67 },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "marker": { "text": "Guitar Solo", "width": 83 },
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "velocity": "f",
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 3, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Bridge", "width": 49 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 5, "string": 0, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "dots": 1,
+              "rest": true,
+              "duration": [3, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 12, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 12, "string": 0, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 10, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 12, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 10, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 4,
+              "dots": 1,
+              "duration": [3, 8]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 7, "string": 0, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 12, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 12, "string": 0, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 10, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 10, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 12, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 12, "string": 0, "tie": true }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 10, "string": 0 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 10, "string": 0, "tie": true }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 4,
+              "rest": true,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8]
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 1 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 2,
+              "dots": 1,
+              "duration": [3, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ],
+      "marker": { "text": "Outro", "width": 43 }
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 8, "string": 0, "tie": true }],
+              "type": 1,
+              "duration": [1, 1]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 8, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 7, "string": 0 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 5, "string": 0 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 0 }],
+              "type": 16,
+              "duration": [1, 16]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 0, "tie": true }],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 2,
+              "rest": true,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "velocity": "mp",
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 0, "string": 0 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 3, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 0, "string": 1 }],
+              "type": 4,
+              "duration": [1, 4]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "rest": true }],
+              "type": 8,
+              "rest": true,
+              "duration": [1, 8],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 8,
+              "duration": [1, 8],
+              "beamStop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "fret": 1, "string": 1 }],
+              "type": 8,
+              "dots": 1,
+              "duration": [3, 16],
+              "beamStart": true
+            },
+            {
+              "notes": [{ "fret": 0, "string": 2 }],
+              "type": 16,
+              "duration": [1, 16],
+              "beamStop": true
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 2,
+              "duration": [1, 2]
+            },
+            {
+              "notes": [{ "fret": 2, "string": 2 }],
+              "type": 4,
+              "duration": [1, 4]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "voices": [
+        {
+          "beats": [
+            {
+              "notes": [{ "rest": true }],
+              "type": 1,
+              "rest": true,
+              "duration": [1, 1]
+            }
+          ],
+          "rest": true
+        }
+      ],
+      "rest": true
+    }
+  ],
+  "frets": 24,
+  "tuning": [64, 59, 55, 50, 45, 40],
+  "strings": 6,
+  "instrumentId": 66,
+  "instrument": "Tenor Sax",
+  "newLyrics": [
+    {
+      "line": 1,
+      "offset": 1,
+      "text": "There's a la-dy who's sure all that glit-ters is go-ld\nand she's bu-ying a stair-way to hea-ven.\nWhen she gets there she knows, if the stores are all clo-sed,\nwith a word she can get what she ca-me for.\nOoh, ooo, o-o-o, о-о-о\nand she's bu-(u)-ying a sta-ir wa-y to hea-ven.\n\nThere's a sign on the wa-ll, but she wants to be su-re,\n'cause you know some-times words have two me-anings.\nIn a tree by the bro-ok, there's a song-bird who si-ngs,\nsome-times all of our thoughts are mis-gi-(i)-ven.\nOoh, it makes me won-der.\nOoh, it makes me won-der.\n\nA-a-a-a-a-a-ah\n\nThere's a fee-ling I ge-t, when I look to the we-st,\nand my spi-rit is cry-ing for lea-ving.\nIn my thoughts I have se-en, rings of smoke through the tre-es,\nand the voi-ces of those who stand loo-king.\n\nOoh, it makes me won-der.\nOoh, it real-ly makes me won-der.\n\nAnd it's whis-pered that so-on if we all call the tu-ne,\nthen the pi-per will lead us to rea-son.\nAnd a new day will da-wn, for those who stand lo-ng,\nand the fo-rests will e-cho with laugh-ter.\n\nO-o-o-o-o-o-o-o, o-o-oh,\n\nIf there's a bus-tle in your hedge-row, don't be al-armed now,\nit's just a spring clean for the May Queen.\nYes, there are two paths you can go by, but in the long run,\nthere's still time to change the road you're on.\nAnd it makes me won-der.\n\nA-a-a-ah\n\nYour head is hum-ming and it won't go, in case you don't know,\nthe pi-per's call-ing you to join him.\nDear la-dy can you hear the wind blow, and did you know,\nYour stair-way lies on the whis-pering wind.\n\nAh ah A-ah\n\nAnd as we wind on down the road\nOur sha-dows tal-ler than our so-uls.\nThere walks a la-dy we all kno-(o)-w, who shines white light and wants to sh-ow,\nhow ev-'ry-thing still turns to go-ld.\nAnd if you lis-ten ve-ry ha-rd, the tune will come to you at la-st.\nWhen all are one and one is a-(a)-ll+yeah, to be a rock and not to ro-(o)-(o)-(o)-(o)-(o)-(o)-ll.\n\nAnd she's bu-(u)-ying a sta-ir-wa-y to hea-ve-(e)-n."
+    },
+    { "line": 2, "offset": 1, "text": "" },
+    { "line": 3, "offset": 1, "text": "" },
+    { "line": 4, "offset": 1, "text": "" },
+    { "line": 5, "offset": 1, "text": "" }
+  ],
+  "partId": 0,
+  "automations": {
+    "tempo": [
+      { "measure": 0, "position": 0, "bpm": 72, "type": 4 },
+      { "measure": 40, "position": 0, "bpm": 77, "type": 4 },
+      { "measure": 48, "position": 0, "bpm": 78, "type": 4 },
+      { "measure": 57, "position": 0, "bpm": 82, "type": 4 },
+      { "measure": 74, "position": 0, "bpm": 84, "type": 4 },
+      { "measure": 82, "position": 0, "bpm": 85, "type": 4 },
+      { "measure": 91, "position": 0, "bpm": 87, "type": 4 },
+      { "measure": 99, "position": 0, "bpm": 85, "type": 4 },
+      { "measure": 108, "position": 0, "bpm": 87, "type": 4 },
+      { "measure": 109, "position": 0, "bpm": 88, "type": 4 },
+      { "measure": 110, "position": 0, "bpm": 95, "type": 4 },
+      { "measure": 113, "position": 0, "bpm": 97, "type": 4 },
+      { "measure": 117, "position": 0, "bpm": 98, "type": 4 },
+      { "measure": 137, "position": 0, "bpm": 102, "type": 4 },
+      { "measure": 155, "position": 0, "bpm": 96, "type": 4 },
+      { "measure": 161, "position": 0, "bpm": 72, "type": 4 }
+    ]
+  },
+  "version": 8,
+  "withLyrics": true,
+  "songId": 27,
+  "revisionId": 5184162
+}

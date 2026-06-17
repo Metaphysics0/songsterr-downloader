@@ -58,7 +58,7 @@ describe('SongsterrToAlphaTabConverter', () => {
       const trackMetas: SongsterrStateMetaCurrentTrack[] = [];
 
       for (let i = 0; i <= 8; i++) {
-        const revision = loadRevision(`data/song-1/${i}.json`);
+        const revision = loadRevision(`test-data/song-1/${i}.json`);
         const meta = makeTrackMeta({
           partId: i,
           instrumentId: revision.instrumentId ?? 27,
@@ -1078,7 +1078,7 @@ describe('SongsterrToAlphaTabConverter', () => {
       const trackMetas: SongsterrStateMetaCurrentTrack[] = [];
 
       for (let i = 0; i <= 10; i++) {
-        const content = readFileSync(`data/song-3/${i}.json`, 'utf-8');
+        const content = readFileSync(`test-data/song-3/${i}.json`, 'utf-8');
         if (!content.trim()) continue; // skip empty files
         const revision: SongsterrRevisionTrackPayload = JSON.parse(content);
         const meta = makeTrackMeta({
