@@ -19,10 +19,9 @@ See [CONVERTER.md](src/lib/server/services/converter/CONVERTER.md) for full deta
 ## How to run
 
 1. Clone the repo
-2. Setup the `.env` file. (`cp .env.example .env`)
-3. Install [bun](https://bun.sh/)
-4. `bun install`
-5. `bun dev`
+2. Install [bun](https://bun.sh/)
+3. `bun install`
+4. `bun dev`
 
 ## Running tests
 
