@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte';
+  import TimesIcon from '$lib/icons/TimesIcon.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
   import type { SongsterrPartialMetadata } from '$lib/types';
 
@@ -21,7 +21,7 @@
   </div>
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-  <p class="h-4 cursor-pointer" onclick={deselectSong}>
-    <Icon icon="fa-solid:times" />
+  <p class="cursor-pointer" onclick={deselectSong}>
+    <TimesIcon class="h-5 w-5" />
   </p>
 </div>
