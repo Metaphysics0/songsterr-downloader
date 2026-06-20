@@ -24,6 +24,10 @@ export function trackMidiDownloaded(props: TrackDownloadParams) {
   mixpanel.track('MIDI Downloaded', props);
 }
 
+export function trackPdfDownloaded(props: TrackDownloadParams) {
+  mixpanel.track('PDF Downloaded', props);
+}
+
 interface TrackDownloadFailedParams extends TrackDownloadParams {
   downloadType: string;
   errorMessage: string;

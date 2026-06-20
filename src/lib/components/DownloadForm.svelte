@@ -1,13 +1,15 @@
 <script lang="ts">
   import {
     downloadGuitarPro,
-    downloadMidi as downloadMidiFile
+    downloadMidi,
+    downloadPdf
   } from '$lib/utils/download-tab';
   import SelectedSong from './SongPreview.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
   import type { SongsterrPartialMetadata } from '$lib/types';
   import GuitarIcon from '$lib/icons/GuitarIcon.svelte';
   import MidiIcon from '$lib/icons/MidiIcon.svelte';
+  import PdfIcon from '$lib/icons/PdfIcon.svelte';
 
   interface Props {
     selectedSong: SongsterrPartialMetadata;
@@ -15,23 +17,18 @@
 
   let { selectedSong }: Props = $props();
 
-  let downloading: 'tab' | 'midi' | null = $state(null);
+  type DownloadKind = 'tab' | 'midi' | 'pdf';
 
-  async function downloadTab(): Promise<void> {
-    if (downloading) return;
-    downloading = 'tab';
-    try {
-      await downloadGuitarPro(selectedSong);
-    } finally {
-      downloading = null;
-    }
-  }
+  let downloading: DownloadKind | null = $state(null);
 
-  async function downloadMidi(): Promise<void> {
+  async function run(
+    kind: DownloadKind,
+    action: (song: SongsterrPartialMetadata) => Promise<void>
+  ): Promise<void> {
     if (downloading) return;
-    downloading = 'midi';
+    downloading = kind;
     try {
-      await downloadMidiFile(selectedSong);
+      await action(selectedSong);
     } finally {
       downloading = null;
     }
@@ -50,7 +47,7 @@
     <button
       class="relative flex items-center px-4 py-1.5 text-sm font-semibold text-white bg-blue-500 border border-blue-600 rounded shadow hover:bg-blue-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
       disabled={!!downloading}
-      onclick={downloadTab}
+      onclick={() => run('tab', downloadGuitarPro)}
     >
       <GuitarIcon class="inline-block mr-1.5 text-base" />Download Guitar Pro
       {#if downloading === 'tab'}
@@ -61,11 +58,22 @@
     <button
       class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
       disabled={!!downloading}
-      onclick={downloadMidi}
+      onclick={() => run('midi', downloadMidi)}
     >
       <MidiIcon class="inline-block mr-1.5 text-base" />
       Download MIDI
       {#if downloading === 'midi'}
+        <span class="progress-bar"></span>
+      {/if}
+    </button>
+    <button
+      class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+      disabled={!!downloading}
+      onclick={() => run('pdf', downloadPdf)}
+    >
+      <PdfIcon class="inline-block mr-1.5 text-base" />
+      Download PDF
+      {#if downloading === 'pdf'}
         <span class="progress-bar"></span>
       {/if}
     </button>
