@@ -16,6 +16,7 @@
   let { selectedSong }: Props = $props();
 
   let downloading: 'tab' | 'midi' | null = $state(null);
+  let separateMidiTracks = $state(false);
 
   async function downloadTab(): Promise<void> {
     if (downloading) return;
@@ -31,7 +32,9 @@
     if (downloading) return;
     downloading = 'midi';
     try {
-      await downloadMidiFile(selectedSong);
+      await downloadMidiFile(selectedSong, {
+        separateTracks: separateMidiTracks
+      });
     } finally {
       downloading = null;
     }
@@ -69,6 +72,15 @@
         <span class="progress-bar"></span>
       {/if}
     </button>
+    <label class="mt-2 flex items-center gap-2 text-sm text-slate-500 cursor-pointer select-none">
+      <input
+        type="checkbox"
+        bind:checked={separateMidiTracks}
+        disabled={!!downloading}
+        class="checkbox checkbox-xs"
+      />
+      Export separate named MIDI tracks
+    </label>
   </div>
   <div class="my-2"></div>
 

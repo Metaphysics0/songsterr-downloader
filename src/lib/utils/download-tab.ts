@@ -4,6 +4,10 @@ import { trackGuitarProDownloaded, trackMidiDownloaded, trackDownloadFailed } fr
 import { toastError } from '$lib/utils/toast.util';
 import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
 
+interface MidiDownloadOptions {
+  separateTracks?: boolean;
+}
+
 export async function downloadGuitarPro(song: SongsterrPartialMetadata): Promise<void> {
   try {
     const data = await post<SongsterrDownloadResponse>('download/byRevisionJson', song);
@@ -22,9 +26,16 @@ export async function downloadGuitarPro(song: SongsterrPartialMetadata): Promise
   }
 }
 
-export async function downloadMidi(song: SongsterrPartialMetadata): Promise<void> {
+export async function downloadMidi(
+  song: SongsterrPartialMetadata,
+  options: MidiDownloadOptions = {}
+): Promise<void> {
   try {
-    const data = await post<SongsterrDownloadResponse>('download/byRevisionJsonMidi', song);
+    const data = await post<SongsterrDownloadResponse>(
+      'download/byRevisionJsonMidi',
+      song,
+      options
+    );
     triggerFileDownload(data);
     trackMidiDownloaded({ title: song.title, artist: song.artist, songId: song.songId });
   } catch (error) {
@@ -40,11 +51,19 @@ export async function downloadMidi(song: SongsterrPartialMetadata): Promise<void
   }
 }
 
-async function post<T>(endpoint: string, song: SongsterrPartialMetadata): Promise<T> {
+async function post<T>(
+  endpoint: string,
+  song: SongsterrPartialMetadata,
+  options: object = {}
+): Promise<T> {
   const response = await fetch(`/api/${endpoint}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ songTitle: song.title, byLinkUrl: song.byLinkUrl })
+    body: JSON.stringify({
+      songTitle: song.title,
+      byLinkUrl: song.byLinkUrl,
+      ...options
+    })
   });
   if (!response.ok) {
     console.error('Error fetching', { url: `/api/${endpoint}`, status: response.status });
