@@ -27,6 +27,7 @@ export function trackMidiDownloaded(props: TrackDownloadParams) {
 interface TrackDownloadFailedParams extends TrackDownloadParams {
   downloadType: string;
   errorMessage: string;
+  songsterrUrl?: string;
 }
 
 export function trackDownloadFailed(props: TrackDownloadFailedParams) {

@@ -33,7 +33,8 @@ export async function downloadGuitarPro(
       artist: song.artist,
       songId: song.songId,
       downloadType: 'gp',
-      errorMessage: error instanceof Error ? error.message : 'Unknown error'
+      errorMessage: error instanceof Error ? error.message : 'Unknown error',
+      songsterrUrl: song.byLinkUrl
     });
     toastError(ERROR_DOWNLOADING_TAB_TOAST_MESSAGE);
   }
@@ -62,7 +63,8 @@ export async function downloadMidi(
       artist: song.artist,
       songId: song.songId,
       downloadType: 'midi',
-      errorMessage: error instanceof Error ? error.message : 'Unknown error'
+      errorMessage: error instanceof Error ? error.message : 'Unknown error',
+      songsterrUrl: song.byLinkUrl
     });
     toastError(ERROR_DOWNLOADING_TAB_TOAST_MESSAGE);
   }
