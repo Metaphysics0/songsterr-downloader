@@ -22,6 +22,10 @@ interface SongsterrToGpInput {
   revisions: SongsterrRevisionTrackInput[];
 }
 
+interface MidiExportOptions {
+  separateTracks?: boolean;
+}
+
 interface SongsterrToAlphaTabOutput {
   data: Uint8Array;
   warnings: ConversionWarning[];
@@ -138,6 +142,70 @@ function getPercussionArticulationIndex(midiNote: number): number {
   return percussionIndexMap.get(midiNote) ?? midiNote;
 }
 
+function encodeVariableLengthQuantity(value: number): number[] {
+  const bytes = [value & 0x7f];
+  let remaining = value >> 7;
+
+  while (remaining > 0) {
+    bytes.unshift((remaining & 0x7f) | 0x80);
+    remaining >>= 7;
+  }
+
+  return bytes;
+}
+
+function addTrackNamesToMidi(
+  midiData: Uint8Array,
+  trackNames: string[]
+): Uint8Array {
+  const bytes = Array.from(midiData);
+  const headerSize = 14;
+  let offset = headerSize;
+
+  for (let trackIndex = 0; trackIndex < trackNames.length; trackIndex++) {
+    if (offset + 8 > bytes.length) break;
+
+    const chunkId = String.fromCharCode(
+      bytes[offset],
+      bytes[offset + 1],
+      bytes[offset + 2],
+      bytes[offset + 3]
+    );
+    if (chunkId !== 'MTrk') {
+      throw new Error(`Unexpected MIDI chunk ${chunkId} at offset ${offset}`);
+    }
+
+    const length =
+      (bytes[offset + 4] << 24) |
+      (bytes[offset + 5] << 16) |
+      (bytes[offset + 6] << 8) |
+      bytes[offset + 7];
+    const trackDataStart = offset + 8;
+    const trackDataEnd = trackDataStart + length;
+    const trackName = trackNames[trackIndex] || `Track ${trackIndex + 1}`;
+    const trackNameBytes = Array.from(new TextEncoder().encode(trackName));
+    const metaEvent = [
+      0x00,
+      0xff,
+      0x03,
+      ...encodeVariableLengthQuantity(trackNameBytes.length),
+      ...trackNameBytes
+    ];
+
+    bytes.splice(trackDataStart, 0, ...metaEvent);
+
+    const newLength = length + metaEvent.length;
+    bytes[offset + 4] = (newLength >> 24) & 0xff;
+    bytes[offset + 5] = (newLength >> 16) & 0xff;
+    bytes[offset + 6] = (newLength >> 8) & 0xff;
+    bytes[offset + 7] = newLength & 0xff;
+
+    offset = trackDataEnd + metaEvent.length;
+  }
+
+  return Uint8Array.from(bytes);
+}
+
 export class SongsterrToAlphaTabConverter {
   toGp7(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
@@ -149,15 +217,29 @@ export class SongsterrToAlphaTabConverter {
     return { data, warnings };
   }
 
-  toMidi(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
+  toMidi(
+    input: SongsterrToGpInput,
+    options: MidiExportOptions = {}
+  ): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
     score.finish(settings);
 
     const midiFile = new alphaTab.midi.MidiFile();
+    midiFile.format = options.separateTracks
+      ? alphaTab.midi.MidiFileFormat.MultiTrack
+      : alphaTab.midi.MidiFileFormat.SingleTrackMultiChannel;
     const handler = new alphaTab.midi.AlphaSynthMidiFileHandler(midiFile, true);
     const generator = new alphaTab.midi.MidiFileGenerator(score, settings, handler);
     generator.generate();
-    const data = midiFile.toBinary();
+    let data = midiFile.toBinary();
+
+    if (options.separateTracks) {
+      const trackNames = score.tracks.map((track, index) => {
+        const candidate = track.name?.trim() || track.shortName?.trim();
+        return candidate || `Track ${index + 1}`;
+      });
+      data = addTrackNamesToMidi(data, trackNames);
+    }
 
     return { data, warnings };
   }

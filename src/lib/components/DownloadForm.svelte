@@ -8,6 +8,8 @@
   import type { SongsterrPartialMetadata } from '$lib/types';
   import GuitarIcon from '$lib/icons/GuitarIcon.svelte';
   import MidiIcon from '$lib/icons/MidiIcon.svelte';
+  import MidiDownloadOptions from './MidiDownloadOptions.svelte';
+  import type { MidiDownloadOptions as MidiDownloadOptionsValue } from '$lib/types';
 
   interface Props {
     selectedSong: SongsterrPartialMetadata;
@@ -16,6 +18,9 @@
   let { selectedSong }: Props = $props();
 
   let downloading: 'tab' | 'midi' | null = $state(null);
+  let midiDownloadOptions = $state<MidiDownloadOptionsValue>({
+    separateTracks: false
+  });
 
   async function downloadTab(): Promise<void> {
     if (downloading) return;
@@ -31,7 +36,9 @@
     if (downloading) return;
     downloading = 'midi';
     try {
-      await downloadMidiFile(selectedSong);
+      await downloadMidiFile(selectedSong, {
+        separateTracks: midiDownloadOptions.separateTracks
+      });
     } finally {
       downloading = null;
     }
@@ -58,17 +65,23 @@
       {/if}
     </button>
     <span class="mb-1 font-light">or </span>
-    <button
-      class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
-      disabled={!!downloading}
-      onclick={downloadMidi}
-    >
-      <MidiIcon class="inline-block mr-1.5 text-base" />
-      Download MIDI
-      {#if downloading === 'midi'}
-        <span class="progress-bar"></span>
-      {/if}
-    </button>
+    <div class="flex items-stretch gap-1">
+      <button
+        class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+        disabled={!!downloading}
+        onclick={downloadMidi}
+      >
+        <MidiIcon class="inline-block mr-1.5 text-base" />
+        Download MIDI
+        {#if downloading === 'midi'}
+          <span class="progress-bar"></span>
+        {/if}
+      </button>
+      <MidiDownloadOptions
+        bind:options={midiDownloadOptions}
+        disabled={!!downloading}
+      />
+    </div>
   </div>
   <div class="my-2"></div>
 

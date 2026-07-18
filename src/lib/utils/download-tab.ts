@@ -1,14 +1,31 @@
-import type { SongsterrDownloadResponse, SongsterrPartialMetadata } from '$lib/types';
+import type {
+  MidiDownloadOptions,
+  SongsterrDownloadResponse,
+  SongsterrPartialMetadata
+} from '$lib/types';
 import { triggerFileDownload } from '$lib/utils/trigger-client-side-download';
-import { trackGuitarProDownloaded, trackMidiDownloaded, trackDownloadFailed } from '$lib/analytics/mixpanel';
+import {
+  trackGuitarProDownloaded,
+  trackMidiDownloaded,
+  trackDownloadFailed
+} from '$lib/analytics/mixpanel';
 import { toastError } from '$lib/utils/toast.util';
 import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
 
-export async function downloadGuitarPro(song: SongsterrPartialMetadata): Promise<void> {
+export async function downloadGuitarPro(
+  song: SongsterrPartialMetadata
+): Promise<void> {
   try {
-    const data = await post<SongsterrDownloadResponse>('download/byRevisionJson', song);
+    const data = await post<SongsterrDownloadResponse>(
+      'download/byRevisionJson',
+      song
+    );
     triggerFileDownload(data);
-    trackGuitarProDownloaded({ title: song.title, artist: song.artist, songId: song.songId });
+    trackGuitarProDownloaded({
+      title: song.title,
+      artist: song.artist,
+      songId: song.songId
+    });
   } catch (error) {
     console.error('error', error);
     trackDownloadFailed({
@@ -22,11 +39,22 @@ export async function downloadGuitarPro(song: SongsterrPartialMetadata): Promise
   }
 }
 
-export async function downloadMidi(song: SongsterrPartialMetadata): Promise<void> {
+export async function downloadMidi(
+  song: SongsterrPartialMetadata,
+  options: Partial<MidiDownloadOptions> = {}
+): Promise<void> {
   try {
-    const data = await post<SongsterrDownloadResponse>('download/byRevisionJsonMidi', song);
+    const data = await post<SongsterrDownloadResponse>(
+      'download/byRevisionJsonMidi',
+      song,
+      options
+    );
     triggerFileDownload(data);
-    trackMidiDownloaded({ title: song.title, artist: song.artist, songId: song.songId });
+    trackMidiDownloaded({
+      title: song.title,
+      artist: song.artist,
+      songId: song.songId
+    });
   } catch (error) {
     console.error('error', error);
     trackDownloadFailed({
@@ -40,14 +68,25 @@ export async function downloadMidi(song: SongsterrPartialMetadata): Promise<void
   }
 }
 
-async function post<T>(endpoint: string, song: SongsterrPartialMetadata): Promise<T> {
+async function post<T>(
+  endpoint: string,
+  song: SongsterrPartialMetadata,
+  options: object = {}
+): Promise<T> {
   const response = await fetch(`/api/${endpoint}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ songTitle: song.title, byLinkUrl: song.byLinkUrl })
+    body: JSON.stringify({
+      songTitle: song.title,
+      byLinkUrl: song.byLinkUrl,
+      ...options
+    })
   });
   if (!response.ok) {
-    console.error('Error fetching', { url: `/api/${endpoint}`, status: response.status });
+    console.error('Error fetching', {
+      url: `/api/${endpoint}`,
+      status: response.status
+    });
     throw new Error();
   }
   return response.json() as Promise<T>;

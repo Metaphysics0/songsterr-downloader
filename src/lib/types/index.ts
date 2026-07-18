@@ -4,6 +4,10 @@ export interface SongsterrDownloadResponse {
   contentType: string;
 }
 
+export interface MidiDownloadOptions {
+  separateTracks: boolean;
+}
+
 export interface SongsterrPartialMetadata {
   title: string;
   songId: number;

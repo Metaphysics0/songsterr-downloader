@@ -51,6 +51,47 @@ function convertSingle(
   });
 }
 
+function readMidiHeader(data: Uint8Array) {
+  const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+  return {
+    format: view.getUint16(8, false),
+    trackCount: view.getUint16(10, false),
+    division: view.getUint16(12, false)
+  };
+}
+
+function readMidiTrackNames(data: Uint8Array): string[] {
+  const names: string[] = [];
+  let offset = 14;
+
+  for (let trackIndex = 0; offset + 8 <= data.length; trackIndex++) {
+    const chunkId = new TextDecoder().decode(data.slice(offset, offset + 4));
+    if (chunkId !== 'MTrk') break;
+
+    const length = new DataView(
+      data.buffer,
+      data.byteOffset + offset + 4,
+      4
+    ).getUint32(0, false);
+    const trackData = data.slice(offset + 8, offset + 8 + length);
+
+    if (
+      trackData.length >= 4 &&
+      trackData[0] === 0x00 &&
+      trackData[1] === 0xff &&
+      trackData[2] === 0x03
+    ) {
+      const nameLength = trackData[3];
+      const name = new TextDecoder().decode(trackData.slice(4, 4 + nameLength));
+      names.push(name);
+    }
+
+    offset += 8 + length;
+  }
+
+  return names;
+}
+
 describe('SongsterrToAlphaTabConverter', () => {
   describe('full song conversion (song-1)', () => {
     it('exports a gp7 file from multi-track revision payloads', () => {
@@ -885,6 +926,84 @@ describe('SongsterrToAlphaTabConverter', () => {
       expect(new Set(nonDrumChannels).size).toBe(nonDrumChannels.length);
       // No non-drum track uses channel 9
       expect(nonDrumChannels).not.toContain(9);
+    });
+  });
+
+  describe('MIDI export', () => {
+    it('exports separate MIDI tracks for separate Songsterr tracks', () => {
+      const makeRevision = (): SongsterrRevisionTrackPayload => ({
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [{ fret: 0, string: 0 }],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      });
+
+      const trackMetas = [
+        makeTrackMeta({ partId: 0, title: 'Guitar' }),
+        makeTrackMeta({ partId: 1, title: 'Bass', tuning: [43, 38, 33, 28] })
+      ];
+      const revisions: SongsterrRevisionTrackInput[] = [
+        { trackMeta: trackMetas[0], revision: makeRevision() },
+        { trackMeta: trackMetas[1], revision: makeRevision() }
+      ];
+
+      const converter = new SongsterrToAlphaTabConverter();
+      const { data } = converter.toMidi({
+        meta: makeMeta(trackMetas),
+        revisions
+      }, {
+        separateTracks: true
+      });
+
+      const header = readMidiHeader(data);
+      expect(header.format).toBe(1);
+      expect(header.trackCount).toBe(2);
+      expect(header.division).toBeGreaterThan(0);
+      expect(readMidiTrackNames(data)).toEqual(['Guitar', 'Bass']);
+    });
+
+    it('can keep the legacy single-track MIDI export', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [{ fret: 0, string: 0 }],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const meta = makeTrackMeta({ partId: 0, title: 'Guitar' });
+      const converter = new SongsterrToAlphaTabConverter();
+      const { data } = converter.toMidi({
+        meta: makeMeta([meta]),
+        revisions: [{ trackMeta: meta, revision }]
+      });
+
+      const header = readMidiHeader(data);
+      expect(header.format).toBe(0);
+      expect(header.trackCount).toBe(1);
     });
   });
 

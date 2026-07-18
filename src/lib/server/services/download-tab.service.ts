@@ -77,7 +77,7 @@ export class DownloadTabService {
   }
 
   private async byRevisionJsonMidi(request: Request) {
-    const { byLinkUrl, songTitle } = await request.json();
+    const { byLinkUrl, songTitle, separateTracks } = await request.json();
     if (!byLinkUrl) {
       throw new Error('Missing byLinkUrl');
     }
@@ -98,6 +98,9 @@ export class DownloadTabService {
       {
         meta: stateMeta,
         revisions
+      },
+      {
+        separateTracks: separateTracks === true
       }
     );
     const allWarnings = [...fetchWarnings, ...convertWarnings];
