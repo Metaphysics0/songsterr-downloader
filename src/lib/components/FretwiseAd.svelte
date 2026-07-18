@@ -17,7 +17,7 @@
       </div>
 
       <div class="icon-container">
-        <img src={transcriptionImg} class="size-5" alt="transcription" />
+        <img src={transcriptionImg} class="ad-image" alt="transcription" />
       </div>
     </div>
   </a>
@@ -71,6 +71,12 @@
     color: white;
   }
 
+  .ad-image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
   .text-content {
     display: flex;
     flex-direction: column;
@@ -119,9 +125,9 @@
       height: 36px;
     }
 
-    .waveform-icon {
-      width: 20px;
-      height: 20px;
+    .ad-image {
+      width: 30px;
+      height: 30px;
     }
   }
 </style>
