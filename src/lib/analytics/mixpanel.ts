@@ -36,3 +36,7 @@ export function trackDownloadFailed(props: TrackDownloadFailedParams) {
 export function trackYouTubeVideoClicked() {
   mixpanel.track('YouTube Video Clicked');
 }
+
+export function trackFretwiseAdClicked() {
+  mixpanel.track('Fretwise Ad Clicked');
+}

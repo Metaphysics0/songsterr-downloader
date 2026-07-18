@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { trackFretwiseAdClicked } from '$lib/analytics/mixpanel';
   import transcriptionImg from '$lib/assets/transcription.webp';
   const FRETWISE_URL = 'https://fretwise.ai?ref=songsterr-downloader';
 </script>
@@ -9,6 +10,7 @@
     target="_blank"
     rel="noopener noreferrer"
     class="ad-card"
+    onclick={trackFretwiseAdClicked}
   >
     <div class="ad-content">
       <div class="text-content">
