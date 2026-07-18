@@ -12,7 +12,7 @@
   >
     <div class="ad-content">
       <div class="text-content">
-        <p class="headline">Transcribe any song with AI</p>
+        <p class="headline">The fastest Audio to MIDI converter</p>
         <span class="brand">fretwise.ai <span class="arrow">→</span></span>
       </div>
 
@@ -35,8 +35,10 @@
     display: block;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -2px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
     padding: 1.25rem 1.75rem;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -45,8 +47,10 @@
   }
 
   .ad-card:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -4px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
     transform: translateY(-2px);
   }
 
