@@ -14,7 +14,7 @@
   >
     <div class="ad-content">
       <div class="text-content">
-        <p class="headline">The fastest Audio to MIDI converter</p>
+        <p class="headline">The fastest Audio to Tabs converter</p>
         <span class="brand">fretwise.ai <span class="arrow">→</span></span>
       </div>
 
