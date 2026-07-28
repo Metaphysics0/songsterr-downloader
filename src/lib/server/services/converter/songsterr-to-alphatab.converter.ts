@@ -209,7 +209,6 @@ function addTrackNamesToMidi(
 export class SongsterrToAlphaTabConverter {
   toGp7(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
-    score.finish(settings);
 
     const exporter = new alphaTab.exporter.Gp7Exporter();
     const data = exporter.export(score, settings);
@@ -222,7 +221,6 @@ export class SongsterrToAlphaTabConverter {
     options: MidiExportOptions = {}
   ): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
-    score.finish(settings);
 
     const midiFile = new alphaTab.midi.MidiFile();
     midiFile.format = options.separateTracks
@@ -261,6 +259,22 @@ export class SongsterrToAlphaTabConverter {
       masterBarCount,
       warnings
     });
+
+    // buildPercussionIndexMap() builds+exports+reimports a disposable score to
+    // discover the percussion articulation table. Doing that for the first time
+    // *while* this score already has tracks/bars/beats attached corrupts
+    // alphaTab's internal export state and causes bar/beat duplication in the
+    // real export. Warm the (module-level cached) map up front, before this
+    // score has any tracks, so the disposable score never overlaps with a
+    // partially-built real one.
+    const hasPercussion = revisions.some((entry) => {
+      const instrumentId =
+        entry.trackMeta.instrumentId ?? entry.revision.instrumentId;
+      return instrumentId === 1024 || !!entry.trackMeta.isDrums;
+    });
+    if (hasPercussion) {
+      getPercussionArticulationIndex(0);
+    }
 
     let nextChannel = 0;
     for (const entry of revisions) {

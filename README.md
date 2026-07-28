@@ -28,3 +28,24 @@ See [CONVERTER.md](src/lib/server/services/converter/CONVERTER.md) for full deta
 ```
 bun run test:unit
 ```
+
+## CLI
+
+You can also download a tab straight from the terminal, without running the web app:
+
+```
+bun run cli <songsterr-url> [options]
+```
+
+Options:
+
+- `-t, --type <gp|midi>` — output format (default: `gp`)
+- `-o, --output <path>` — output file path (default: derived from the song title)
+- `--separate-tracks` — export MIDI with one track per instrument (midi only)
+
+Examples:
+
+```
+bun run cli https://www.songsterr.com/a/wsa/chon-fluffy-tab-s399673
+bun run cli https://www.songsterr.com/a/wsa/chon-fluffy-tab-s399673 -t midi -o fluffy.mid
+```
