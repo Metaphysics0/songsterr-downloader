@@ -341,8 +341,8 @@ export class SongsterrToAlphaTabConverter {
         masterBar.isRepeatStart = true;
       }
 
-      if (typeof measure?.repeatCount === 'number' && measure.repeatCount > 0) {
-        masterBar.repeatCount = measure.repeatCount;
+      if (typeof measure?.repeat === 'number' && measure.repeat > 0) {
+        masterBar.repeatCount = measure.repeat;
       }
 
       if (
