@@ -14,7 +14,9 @@
   }
 </script>
 
-<div class="flex items-center bg-slate-100 rounded p-3 shadow-md">
+<div
+  class="flex items-center bg-slate-100 rounded dark:bg-slate-800 p-3 shadow-md"
+>
   <div class="mr-auto">
     <p>Song - {selectedSong.title}</p>
     <p class="font-light">Artist - {selectedSong.artist}</p>
