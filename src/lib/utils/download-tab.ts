@@ -1,6 +1,5 @@
 import type {
   MidiDownloadOptions,
-  SongsterrDownloadResponse,
   SongsterrPartialMetadata
 } from '$lib/types';
 import { triggerFileDownload } from '$lib/utils/trigger-client-side-download';
@@ -16,7 +15,7 @@ export async function downloadGuitarPro(
   song: SongsterrPartialMetadata
 ): Promise<void> {
   try {
-    const data = await post<SongsterrDownloadResponse>(
+    const data = await post(
       'download/byRevisionJson',
       song
     );
@@ -45,7 +44,7 @@ export async function downloadMidi(
   options: Partial<MidiDownloadOptions> = {}
 ): Promise<void> {
   try {
-    const data = await post<SongsterrDownloadResponse>(
+    const data = await post(
       'download/byRevisionJsonMidi',
       song,
       options
@@ -70,11 +69,11 @@ export async function downloadMidi(
   }
 }
 
-async function post<T>(
+async function post(
   endpoint: string,
   song: SongsterrPartialMetadata,
   options: object = {}
-): Promise<T> {
+): Promise<{ blob: Blob; fileName: string }> {
   const response = await fetch(`/api/${endpoint}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -89,7 +88,26 @@ async function post<T>(
       url: `/api/${endpoint}`,
       status: response.status
     });
-    throw new Error();
+    throw new Error(`Download failed with status ${response.status}`);
   }
-  return response.json() as Promise<T>;
+
+  return {
+    blob: await response.blob(),
+    fileName: getDownloadFileName(response.headers.get('content-disposition'))
+  };
+}
+
+function getDownloadFileName(contentDisposition: string | null): string {
+  if (!contentDisposition) return 'download';
+
+  const encodedName = contentDisposition.match(/filename\*=UTF-8''([^;]+)/i)?.[1];
+  if (encodedName) {
+    try {
+      return decodeURIComponent(encodedName);
+    } catch {
+      // Fall through to the ASCII filename.
+    }
+  }
+
+  return contentDisposition.match(/filename="([^"]+)"/i)?.[1] ?? 'download';
 }

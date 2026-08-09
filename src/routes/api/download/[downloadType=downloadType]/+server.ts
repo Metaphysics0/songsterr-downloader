@@ -12,7 +12,13 @@ export const POST = (async ({ request, params }) => {
 
   try {
     const response = await service.download(request);
-    return json(response);
+    return new Response(response.buffer, {
+      headers: {
+        'Content-Type': response.contentType,
+        'Content-Disposition': buildContentDisposition(response.fileName),
+        'Content-Length': String(response.buffer.byteLength)
+      }
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     logger.error(
@@ -22,3 +28,12 @@ export const POST = (async ({ request, params }) => {
     return json({ error: message }, { status: 500 });
   }
 }) satisfies RequestHandler;
+
+function buildContentDisposition(fileName: string): string {
+  const safeFileName = fileName.replace(/[\r\n]/g, '');
+  const asciiFallback = safeFileName
+    .replace(/[^\x20-\x7E]/g, '_')
+    .replace(/["\\]/g, '_');
+
+  return `attachment; filename="${asciiFallback}"; filename*=UTF-8''${encodeURIComponent(safeFileName)}`;
+}

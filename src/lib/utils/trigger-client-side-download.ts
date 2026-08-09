@@ -1,23 +1,20 @@
 import { browser } from '$app/environment';
 
 export function triggerFileDownload({
-  file,
-  contentType,
+  blob,
   fileName
 }: {
-  file: number[];
-  contentType: string;
+  blob: Blob;
   fileName: string;
 }) {
   if (!browser) return;
   try {
-    const uint8Array = new Uint8Array(file);
-    const blob = new Blob([uint8Array], { type: contentType });
-
     const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
+    const objectUrl = window.URL.createObjectURL(blob);
+    link.href = objectUrl;
     link.download = fileName;
     link.click();
+    window.setTimeout(() => window.URL.revokeObjectURL(objectUrl), 0);
   } catch (error) {
     console.error('Error triggering download', error);
   }

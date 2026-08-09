@@ -1,6 +1,6 @@
 import type { SupportedTabDownloadType } from '$lib/types/supported-tab-download-type';
 import { SongsterrService } from './songsterr.service';
-import type { SongsterrDownloadResponse } from '$lib/types';
+import type { SongsterrDownloadFile } from '$lib/types';
 import { logger } from '$lib/server/logger';
 import { SongsterrRevisionJsonService } from './songsterr-revision-json.service';
 import { SongsterrToAlphaTabConverter } from './converter/songsterr-to-alphatab.converter';
@@ -10,7 +10,7 @@ export class DownloadTabService {
     private readonly SupportedTabDownloadType: SupportedTabDownloadType
   ) {}
 
-  async download(request: Request): Promise<SongsterrDownloadResponse> {
+  async download(request: Request): Promise<SongsterrDownloadFile> {
     if (this.SupportedTabDownloadType === 'byRevisionJson') {
       return this.byRevisionJson(request);
     }
@@ -142,9 +142,9 @@ export class DownloadTabService {
     buffer: ArrayBuffer;
     fileName: string;
     contentType?: string;
-  }): SongsterrDownloadResponse {
+  }): SongsterrDownloadFile {
     return {
-      file: Array.from(new Uint8Array(buffer)),
+      buffer,
       fileName,
       contentType
     };
