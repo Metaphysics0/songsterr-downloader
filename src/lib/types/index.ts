@@ -1,5 +1,5 @@
-export interface SongsterrDownloadResponse {
-  file: number[];
+export interface SongsterrDownloadFile {
+  buffer: ArrayBuffer;
   fileName: string;
   contentType: string;
 }

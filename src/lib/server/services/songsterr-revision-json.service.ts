@@ -4,7 +4,7 @@ import type {
   SongsterrStateMetaCurrent,
   SongsterrStateMetaCurrentTrack
 } from '$lib/types';
-import Fetcher from '../utils/fetcher.util';
+import Fetcher, { isTimeoutError } from '../utils/fetcher.util';
 import { scraper } from '../utils/scraper.util';
 import { logger } from '$lib/server/logger';
 
@@ -13,9 +13,21 @@ export interface SongsterrFetchedRevisionTrack {
   revision: SongsterrRevisionTrackPayload;
 }
 
+/*
+ * 'status' means the CDN answered and rejected us (403/404) - a different CDN
+ * host may well have the file. 'timeout' and 'error' mean we never got an
+ * answer, so a second full fan-out would most likely stall the same way.
+ */
+export interface SongsterrRevisionFetchFailure {
+  partId: number;
+  kind: 'status' | 'timeout' | 'error';
+  status?: number;
+}
+
 export interface SongsterrFetchAllPartRevisionsResult {
   revisions: SongsterrFetchedRevisionTrack[];
   warnings: ConversionWarning[];
+  failures: SongsterrRevisionFetchFailure[];
 }
 
 export class SongsterrRevisionJsonService {
@@ -73,6 +85,7 @@ export class SongsterrRevisionJsonService {
     cdnBaseUrl = this.CDN_BASE_URL
   ): Promise<SongsterrFetchAllPartRevisionsResult> {
     const warnings: ConversionWarning[] = [];
+    const failures: SongsterrRevisionFetchFailure[] = [];
 
     const tracks = stateMeta.tracks
       .filter((track) => typeof track.partId === 'number')
@@ -99,6 +112,11 @@ export class SongsterrRevisionJsonService {
               message: `Failed to fetch part ${track.partId} (${response.status})`,
               location: `part:${track.partId}`
             });
+            failures.push({
+              partId: track.partId,
+              kind: 'status',
+              status: response.status
+            });
             return null;
           }
 
@@ -106,10 +124,17 @@ export class SongsterrRevisionJsonService {
             (await response.json()) as SongsterrRevisionTrackPayload;
           return { trackMeta: track, revision };
         } catch (error) {
+          const timedOut = isTimeoutError(error);
           warnings.push({
-            code: 'revision_fetch_error',
-            message: `Error fetching part ${track.partId}: ${String(error)}`,
+            code: timedOut ? 'revision_fetch_timeout' : 'revision_fetch_error',
+            message: timedOut
+              ? `Timed out fetching part ${track.partId} after ${this.fetcher.timeoutMs}ms`
+              : `Error fetching part ${track.partId}: ${String(error)}`,
             location: `part:${track.partId}`
+          });
+          failures.push({
+            partId: track.partId,
+            kind: timedOut ? 'timeout' : 'error'
           });
           return null;
         }
@@ -118,7 +143,8 @@ export class SongsterrRevisionJsonService {
 
     return {
       revisions: results.filter(Boolean) as SongsterrFetchedRevisionTrack[],
-      warnings
+      warnings,
+      failures
     };
   }
 
@@ -128,11 +154,45 @@ export class SongsterrRevisionJsonService {
     const primary = await this.fetchAllPartRevisions(stateMeta);
     if (primary.revisions.length > 0) return primary;
 
+    /*
+     * Only worth a second fan-out when the primary CDN actually answered.
+     * If parts timed out, retrying spends another full round of the
+     * invocation budget on a path that is already not responding.
+     */
+    const everyFailureWasAStatus =
+      primary.failures.length > 0 &&
+      primary.failures.every((failure) => failure.kind === 'status');
+
+    if (!everyFailureWasAStatus) {
+      logger.warn(
+        {
+          songId: stateMeta.songId,
+          revisionId: stateMeta.revisionId,
+          failures: primary.failures
+        },
+        'Primary CDN returned no revisions, skipping alternate CDN (no usable response)'
+      );
+      return primary;
+    }
+
     logger.warn(
-      { songId: stateMeta.songId, revisionId: stateMeta.revisionId },
+      {
+        songId: stateMeta.songId,
+        revisionId: stateMeta.revisionId,
+        failures: primary.failures
+      },
       'Primary CDN returned no revisions, retrying with alternate CDN'
     );
-    return this.fetchAllPartRevisions(stateMeta, this.CDN_BASE_URL_2);
+
+    const fallback = await this.fetchAllPartRevisions(
+      stateMeta,
+      this.CDN_BASE_URL_2
+    );
+
+    return {
+      ...fallback,
+      warnings: [...primary.warnings, ...fallback.warnings]
+    };
   }
 
   private readonly fetcher = new Fetcher({ withBrowserLikeHeaders: true });
