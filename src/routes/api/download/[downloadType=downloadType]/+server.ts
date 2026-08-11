@@ -32,6 +32,11 @@ export const POST = (async ({ request, params }) => {
       'Download succeeded'
     );
 
+    /*
+     * The body is a fully buffered ArrayBuffer, so byteLength is exact and
+     * safe to declare. Omitting it drops the response to chunked encoding,
+     * which costs the browser its determinate download progress.
+     */
     return new Response(response.buffer, {
       headers: {
         'Content-Type': response.contentType,
