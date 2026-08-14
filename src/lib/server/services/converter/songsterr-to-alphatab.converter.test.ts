@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { SongsterrToAlphaTabConverter } from './songsterr-to-alphatab.converter';
 import type {
@@ -1137,6 +1137,73 @@ describe('SongsterrToAlphaTabConverter', () => {
         (sum: number, b: { notes: unknown[] }) => sum + b.notes.length, 0
       );
       expect(outputNotes).toBe(inputNotes);
+    });
+
+    it('renders drums correctly on the very first conversion after a cold start', async () => {
+      // The MIDI→articulation index map is cached in module state. It used to be
+      // built lazily while a score was already under construction, which corrupted
+      // that score: every bar came out with duplicated voices and a duplicated set
+      // of beats whose notes had no articulation. Those silent beats filled the
+      // measure, pushing the real drum beats past the bar end so they never played.
+      //
+      // Only the FIRST conversion in a process was affected, so warm test runs (and
+      // every test above this one) hid it. Reset the module registry to get a
+      // genuinely cold converter, as a fresh serverless invocation would.
+      vi.resetModules();
+      const { SongsterrToAlphaTabConverter: ColdConverter } = await import(
+        './songsterr-to-alphatab.converter'
+      );
+      const alphaTabModule = await import('@coderline/alphatab');
+
+      const beat = (frets: number[]) => ({
+        notes: frets.map((fret, i) => ({ fret, string: i })),
+        duration: [1, 4] as [number, number],
+        type: 4
+      });
+      const measure = {
+        voices: [{ beats: [beat([42, 36]), beat([42, 38]), beat([42, 36]), beat([42, 38])] }],
+        signature: [4, 4] as [number, number]
+      };
+      const revision: SongsterrRevisionTrackPayload = {
+        instrumentId: 1024,
+        measures: [measure, structuredClone(measure)]
+      };
+
+      const meta = makeTrackMeta({
+        instrumentId: 1024,
+        isDrums: true,
+        title: 'Drums',
+        tuning: []
+      });
+      const { data } = new ColdConverter().toGp7({
+        meta: makeMeta([meta]),
+        revisions: [{ trackMeta: meta, revision }]
+      });
+
+      const settings = new alphaTabModule.Settings();
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const staff = score.tracks[0].staves[0];
+
+      expect(staff.bars).toHaveLength(2);
+      for (const bar of staff.bars) {
+        // A single source voice must not be duplicated...
+        expect(bar.voices).toHaveLength(1);
+        // ...and the 4 source beats must not be doubled to 8.
+        expect(bar.voices[0].beats).toHaveLength(4);
+      }
+
+      const notes = staff.bars.flatMap((b: { voices: { beats: { notes: unknown[] }[] }[] }) =>
+        b.voices[0].beats.flatMap((bt) => bt.notes)
+      ) as { percussionArticulation: number }[];
+      expect(notes).toHaveLength(16);
+
+      // Every note must carry a real articulation (-1 == silent).
+      expect(notes.every((n) => n.percussionArticulation >= 0)).toBe(true);
+
+      const midi = notes.map(
+        (n) => score.tracks[0].percussionArticulations[n.percussionArticulation]?.outputMidiNumber
+      );
+      expect(new Set(midi)).toEqual(new Set([42, 36, 38]));
     });
   });
 

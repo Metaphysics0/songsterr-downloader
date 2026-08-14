@@ -135,11 +135,29 @@ function buildPercussionIndexMap(): Map<number, number> {
 
 let percussionIndexMap: Map<number, number> | null = null;
 
-function getPercussionArticulationIndex(midiNote: number): number {
+/**
+ * Ensures the MIDI→articulation-index map is available.
+ *
+ * IMPORTANT: this MUST be called before we start building a score, never while
+ * one is under construction. `buildPercussionIndexMap` runs a full alphaTab
+ * export/import round-trip, and doing that in the middle of assembling another
+ * score corrupts the in-progress score: bars come out with duplicated voices and
+ * a duplicated set of beats, where the first copy has no percussion
+ * articulations at all. Those silent beats consume the whole measure, pushing
+ * the real drum beats past the bar end so they never sound.
+ *
+ * Because the map is cached in module state, this only ever bit the *first*
+ * conversion in a process — i.e. every cold serverless invocation.
+ */
+function ensurePercussionIndexMap(): Map<number, number> {
   if (!percussionIndexMap) {
     percussionIndexMap = buildPercussionIndexMap();
   }
-  return percussionIndexMap.get(midiNote) ?? midiNote;
+  return percussionIndexMap;
+}
+
+function getPercussionArticulationIndex(midiNote: number): number {
+  return ensurePercussionIndexMap().get(midiNote) ?? midiNote;
 }
 
 function encodeVariableLengthQuantity(value: number): number[] {
@@ -246,6 +264,9 @@ export class SongsterrToAlphaTabConverter {
 
   private buildScore({ meta, revisions }: SongsterrToGpInput): BuildScoreResult {
     const warnings: ConversionWarning[] = [];
+
+    // Must happen before any model objects exist — see ensurePercussionIndexMap.
+    ensurePercussionIndexMap();
 
     const score = new alphaTab.model.Score();
     score.title = meta.title;
