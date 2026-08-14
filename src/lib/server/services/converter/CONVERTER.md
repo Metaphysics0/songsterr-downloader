@@ -30,6 +30,8 @@ Each non-drum track gets a unique MIDI channel (0-8, 10-15). Channel 9 is reserv
 
 GP7 references drum sounds by **index** into an articulation list, not by MIDI note number. alphaTab's default list has 95 entries (Snare=0, Kick=8, Crash=22, etc.). The converter builds a MIDI-to-index lookup dynamically via a one-time round-trip export/reimport of a dummy percussion track. This stays correct across alphaTab versions.
 
+That lookup **must be built before score construction starts** (`buildScore` calls `ensurePercussionIndexMap()` up front). Building it lazily from inside `mapNote` — i.e. while a score is already being assembled — corrupts the in-progress score: every bar ends up with duplicated voices and a duplicated set of beats, where the first copy carries no articulations. Those silent beats fill the measure, so the real drum beats land past the bar end and never sound. Because the map is cached in module state, only the *first* conversion per process was affected, which made it look intermittent (every cold serverless invocation shipped a broken file, every warm one was fine).
+
 ### Tempo
 
 alphaTab's `buildTempoAutomation` takes a `reference` parameter that's an index (not a note denominator):
