@@ -2,6 +2,9 @@
   "name": "first",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "vite dev",
     "start": "npm run dev",
@@ -17,7 +20,7 @@
   "devDependencies": {
     "@fontsource-variable/nunito": "^5.0.0",
     "@sveltejs/adapter-auto": "^3.0.0",
-    "@sveltejs/adapter-vercel": "^4.0.0",
+    "@sveltejs/adapter-vercel": "^6",
     "@sveltejs/kit": "^2.5.27",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tailwindcss/vite": "^4.2.1",
