@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
+import { unzipSync } from 'fflate';
 import { SongsterrToAlphaTabConverter } from './songsterr-to-alphatab.converter';
 import type {
   SongsterrRevisionTrackPayload,
@@ -1204,6 +1205,83 @@ describe('SongsterrToAlphaTabConverter', () => {
         (n) => score.tracks[0].percussionArticulations[n.percussionArticulation]?.outputMidiNumber
       );
       expect(new Set(midi)).toEqual(new Set([42, 36, 38]));
+    });
+
+    it('writes Fret/Midi properties on percussion notes (required for Guitar Pro to place them)', () => {
+      // alphaTab's Gp7Exporter writes <Fret>/<Midi> only for stringed notes, so
+      // drum tracks exported straight from it open as EMPTY in Guitar Pro. The
+      // converter patches those properties back in after export.
+      const revision: SongsterrRevisionTrackPayload = {
+        instrumentId: 1024,
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  {
+                    notes: [
+                      { fret: 36, string: 0 }, // kick
+                      { fret: 38, string: 1 }, // snare
+                      { fret: 42, string: 2 } // hi-hat
+                    ],
+                    duration: [1, 4],
+                    type: 4
+                  }
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const meta = makeTrackMeta({
+        instrumentId: 1024,
+        isDrums: true,
+        title: 'Drums',
+        tuning: []
+      });
+      const { data } = new SongsterrToAlphaTabConverter().toGp7({
+        meta: makeMeta([meta]),
+        revisions: [{ trackMeta: meta, revision }]
+      });
+
+      const gpif = new TextDecoder().decode(
+        unzipSync(data)['Content/score.gpif']
+      );
+
+      // articulation index → output MIDI number, from the drum kit
+      const articulationMidi: number[] = [];
+      for (const kit of gpif.matchAll(/<InstrumentSet>(.*?)<\/InstrumentSet>/gs)) {
+        if (!kit[1].includes('<Type>drumKit</Type>')) continue;
+        for (const art of kit[1].matchAll(/<Articulation>.*?<\/Articulation>/gs)) {
+          const m = art[0].match(/<OutputMidiNumber>(\d+)<\/OutputMidiNumber>/);
+          if (m) articulationMidi.push(parseInt(m[1], 10));
+        }
+        break;
+      }
+      expect(articulationMidi).toContain(36);
+      expect(articulationMidi).toContain(38);
+      expect(articulationMidi).toContain(42);
+
+      // Every percussion note must carry Fret/Midi equal to its drum sound
+      let percussionNotes = 0;
+      for (const note of gpif.matchAll(/<Note\b.*?<\/Note>/gs)) {
+        if (note[0].includes('<Property name="String">')) continue;
+        const art = note[0].match(
+          /<InstrumentArticulation>(\d+)<\/InstrumentArticulation>/
+        );
+        if (!art) continue;
+        percussionNotes++;
+        const midi = articulationMidi[parseInt(art[1], 10)];
+        expect(note[0]).toContain(
+          `<Property name="Fret"><Fret>${midi}</Fret></Property>`
+        );
+        expect(note[0]).toContain(
+          `<Property name="Midi"><Number>${midi}</Number></Property>`
+        );
+      }
+      expect(percussionNotes).toBe(3);
     });
   });
 
