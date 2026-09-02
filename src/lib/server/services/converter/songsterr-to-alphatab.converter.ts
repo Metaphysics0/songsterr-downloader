@@ -11,6 +11,7 @@ import type {
 } from '$lib/types';
 import { mapSongsterrDuration } from './duration-mapper';
 import { mapSongsterrInstrumentToPlayback } from './instrument-map';
+import { patchGp7Percussion } from './gp7-percussion-patch';
 
 export interface SongsterrRevisionTrackInput {
   trackMeta: SongsterrStateMetaCurrentTrack;
@@ -230,7 +231,10 @@ export class SongsterrToAlphaTabConverter {
     score.finish(settings);
 
     const exporter = new alphaTab.exporter.Gp7Exporter();
-    const data = exporter.export(score, settings);
+    // alphaTab omits <Fret>/<Midi> on percussion notes, which Guitar Pro needs
+    // to place them on the drum staff — patch them back in (no-op for
+    // guitar-only files).
+    const data = patchGp7Percussion(exporter.export(score, settings));
 
     return { data, warnings };
   }
