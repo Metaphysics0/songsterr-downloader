@@ -101,7 +101,7 @@ export interface SongsterrRevisionMeasurePayload {
   signature?: [number, number];
   marker?: string | { text: string; width?: number };
   repeatStart?: boolean;
-  repeatCount?: number;
+  repeat?: number;
   alternateEnding?: number;
   rest?: boolean;
 }
