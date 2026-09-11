@@ -558,6 +558,22 @@ export class SongsterrToAlphaTabConverter {
       });
     }
 
+    /*
+     * Grace notes (`graceNote: "beforeBeat" | "onBeat"` in Songsterr data) must
+     * not consume bar duration. Without graceType, alphaTab counts them as
+     * regular beats, the exported bar sums past its time signature (e.g.
+     * 99/96 instead of 4/4), and notation apps report incomplete measures.
+     * GP7 exports this as <GraceNotes>OnBeat|BeforeBeat</GraceNotes>.
+     */
+    if (typeof beatData.graceNote === 'string') {
+      const gn = beatData.graceNote.toLowerCase();
+      if (gn === 'beforebeat') {
+        beat.graceType = alphaTab.model.GraceType.BeforeBeat;
+      } else if (gn === 'onbeat') {
+        beat.graceType = alphaTab.model.GraceType.OnBeat;
+      }
+    }
+
     // Tuplet support
     if (typeof beatData.tuplet === 'number' && beatData.tuplet > 1) {
       const [num, den] = getTupletRatio(beatData.tuplet);

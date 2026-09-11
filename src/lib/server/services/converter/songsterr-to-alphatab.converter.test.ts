@@ -1473,4 +1473,113 @@ describe('SongsterrToAlphaTabConverter', () => {
       expect(data.length).toBeGreaterThan(0);
     });
   });
+
+  describe('grace notes', () => {
+    function quarterBeat(fret = 3) {
+      return {
+        notes: [{ fret, string: 4 }],
+        duration: [1, 4] as [number, number],
+        type: 4
+      };
+    }
+
+    function graceBeat(style: 'beforeBeat' | 'onBeat') {
+      return {
+        notes: [{ fret: 5, string: 2 }],
+        duration: [1, 32] as [number, number],
+        type: 32,
+        graceNote: style
+      };
+    }
+
+    it('exports `graceNote` as GPIF GraceNotes', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  graceBeat('beforeBeat'),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat()
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      expect(gpif).toContain('<GraceNotes>BeforeBeat</GraceNotes>');
+    });
+
+    it('maps `onBeat` grace notes as well', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  graceBeat('onBeat'),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat()
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      expect(gpif).toContain('<GraceNotes>OnBeat</GraceNotes>');
+    });
+
+    it('grace notes do not consume bar duration', async () => {
+      const alphaTabModule = await import('@coderline/alphatab');
+
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  graceBeat('beforeBeat'),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat()
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const settings = new alphaTabModule.Settings();
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+
+      // The grace beat must not consume bar duration: the 4 normal quarter
+      // notes alone fill exactly 4/4 (3840 ticks at 960 ticks/quarter).
+      // Without the fix the grace 32nd would be a regular beat and the bar
+      // would sum past its time signature (reported by notation apps as
+      // "incomplete measure", e.g. 99/96).
+      const voice = score.tracks[0].staves[0].bars[0].voices[0];
+      const firstBeat = voice.beats[0];
+      expect(firstBeat.graceType).toBe(alphaTabModule.model.GraceType.BeforeBeat);
+      const normalDuration = voice.beats
+        .filter((b: { graceType: number }) => b.graceType === alphaTabModule.model.GraceType.None)
+        .reduce((sum: number, b: { playbackDuration: number }) => sum + b.playbackDuration, 0);
+      expect(normalDuration).toBe(4 * 960);
+    });
+  });
 });

@@ -89,6 +89,8 @@ export interface SongsterrRevisionBeatPayload {
   tuplet?: number;
   tupletStart?: boolean;
   tupletStop?: boolean;
+  /** Grace note style: "beforeBeat" | "onBeat". Must not consume bar duration. */
+  graceNote?: string;
 }
 
 export interface SongsterrRevisionVoicePayload {
