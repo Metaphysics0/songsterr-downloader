@@ -352,15 +352,43 @@ export class SongsterrToAlphaTabConverter {
         masterBar.isRepeatStart = true;
       }
 
-      if (typeof measure?.repeatCount === 'number' && measure.repeatCount > 0) {
-        masterBar.repeatCount = measure.repeatCount;
+      /*
+       * Songsterr names the play-count field `repeat` (drawn as "3x"), not
+       * `repeatCount` — the old name never matched the revision payloads, so
+       * every repeat end (":|" with its count) was silently dropped.
+       */
+      const repeatCount =
+        typeof measure?.repeat === 'number'
+          ? measure.repeat
+          : typeof measure?.repeatCount === 'number'
+            ? measure.repeatCount
+            : 0;
+      if (repeatCount > 0) {
+        masterBar.repeatCount = repeatCount;
       }
 
-      if (
-        typeof measure?.alternateEnding === 'number' &&
-        measure.alternateEnding > 0
-      ) {
-        masterBar.alternateEndings = measure.alternateEnding;
+      /*
+       * `alternateEnding` arrives as an array of ending numbers ([1], [2],
+       * [1,2]); alphaTab expects a bitmask where bit n-1 = ending n. A plain
+       * number is accepted too (already a bitmask).
+       */
+      const alternateEnding = measure?.alternateEnding;
+      let alternateMask = 0;
+      if (Array.isArray(alternateEnding)) {
+        for (const n of alternateEnding) {
+          if (typeof n === 'number' && n >= 1 && n <= 8) {
+            alternateMask |= 1 << (n - 1);
+          }
+        }
+      } else if (typeof alternateEnding === 'number' && alternateEnding > 0) {
+        alternateMask = alternateEnding;
+      }
+      if (alternateMask) {
+        masterBar.alternateEndings = alternateMask;
+      }
+
+      if (measure?.doubleBarline) {
+        masterBar.isDoubleBar = true;
       }
 
       score.addMasterBar(masterBar);

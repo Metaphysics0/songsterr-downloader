@@ -102,7 +102,11 @@ export interface SongsterrRevisionMeasurePayload {
   marker?: string | { text: string; width?: number };
   repeatStart?: boolean;
   repeatCount?: number;
-  alternateEnding?: number;
+  /** Songsterr's actual field name for the total play count ("3x" repeats). */
+  repeat?: number;
+  /** Ending numbers ([1], [2], [1,2]) or a pre-built bitmask. */
+  alternateEnding?: number | number[];
+  doubleBarline?: boolean;
   rest?: boolean;
 }
 

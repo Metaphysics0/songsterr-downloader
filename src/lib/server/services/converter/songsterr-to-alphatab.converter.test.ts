@@ -1395,4 +1395,82 @@ describe('SongsterrToAlphaTabConverter', () => {
       expect(data.length).toBeGreaterThan(0);
     });
   });
+  describe('bar repeats and alternate endings', () => {
+    function quarterBeat() {
+      return {
+        notes: [{ fret: 3, string: 4 }],
+        duration: [1, 4] as [number, number],
+        type: 4
+      };
+    }
+
+    it('maps Songsterr `repeat` (play count) to the GPIF repeat end', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true, repeat: 3 },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeat: 2 }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
+
+      // Measure 2 (index 1): repeatStart + repeat:3 -> start & end, count 3
+      expect(masterBars[1]).toContain('start="true"');
+      expect(masterBars[1]).toContain('end="true"');
+      expect(masterBars[1]).toContain('count="3"');
+      // Measure 3 (index 2): repeat:2 -> end with count 2
+      expect(masterBars[2]).toContain('end="true"');
+      expect(masterBars[2]).toContain('count="2"');
+    });
+
+    it('maps array `alternateEnding` to a volta bitmask', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true },
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            repeat: 2,
+            alternateEnding: [1]
+          },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], alternateEnding: [2] },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], alternateEnding: [1, 2] }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
+
+      const endings = masterBars.map((bar) => {
+        const m = bar.match(/<AlternateEndings>([\d ]+)<\/AlternateEndings>/);
+        // GPIF lists ending numbers space-separated ("1", "2", "1 2")
+        return m ? m[1].trim().split(/\s+/).map(Number) : [];
+      });
+      // [1] -> ending 1; [2] -> ending 2; [1,2] -> endings 1 and 2
+      expect(endings[1]).toEqual([1]);
+      expect(endings[2]).toEqual([2]);
+      expect(endings[3]).toEqual([1, 2]);
+    });
+
+    it('maps `doubleBarline` to a double bar', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4] },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], doubleBarline: true }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
+      // The double bar shows up in the Bars style flags; just assert it survived
+      // without corrupting the export.
+      expect(masterBars.length).toBe(2);
+      expect(data.length).toBeGreaterThan(0);
+    });
+  });
 });
