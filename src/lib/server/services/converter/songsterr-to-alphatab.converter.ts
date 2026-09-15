@@ -12,6 +12,7 @@ import type {
 import { mapSongsterrDuration } from './duration-mapper';
 import { mapSongsterrInstrumentToPlayback } from './instrument-map';
 import { patchGp7Percussion } from './gp7-percussion-patch';
+import { patchGp7Harmonics } from './gp7-harmonic-patch';
 
 export interface SongsterrRevisionTrackInput {
   trackMeta: SongsterrStateMetaCurrentTrack;
@@ -234,7 +235,11 @@ export class SongsterrToAlphaTabConverter {
     // alphaTab omits <Fret>/<Midi> on percussion notes, which Guitar Pro needs
     // to place them on the drum staff — patch them back in (no-op for
     // guitar-only files).
-    const data = patchGp7Percussion(exporter.export(score, settings));
+    // alphaTab also writes the *sounding* pitch into harmonic notes' <Midi>,
+    // while GP7 (and MuseScore) expect the *fretted* pitch and derive the
+    // harmonic offset from HarmonicType/HarmonicFret — patch Midi back to the
+    // fretted ConcertPitch (no-op when the file has no harmonics).
+    const data = patchGp7Harmonics(patchGp7Percussion(exporter.export(score, settings)));
 
     return { data, warnings };
   }

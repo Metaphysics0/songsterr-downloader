@@ -93,6 +93,32 @@ function readMidiTrackNames(data: Uint8Array): string[] {
   return names;
 }
 
+function readGpif(data: Uint8Array): string {
+  const entries = unzipSync(data);
+  for (const [name, bytes] of Object.entries(entries)) {
+    if (name.endsWith('score.gpif')) {
+      return new TextDecoder().decode(bytes);
+    }
+  }
+  throw new Error('score.gpif not found in GP7 output');
+}
+
+/**
+ * Returns the <Midi> number of the first note whose HarmonicType is `type`
+ * ("Artificial" | "Pinch" | ...). GP7 stores the *fretted* pitch in <Midi> and
+ * derives the sounding pitch from HarmonicFret, so this value must be the
+ * fretted pitch, not the harmonic (sounding) pitch.
+ */
+function harmonicNoteMidi(gpif: string, type: string): number | null {
+  const notes = gpif.match(/<Note\b[\s\S]*?<\/Note>/g) ?? [];
+  for (const note of notes) {
+    if (!note.includes(`<HType>${type}</HType>`)) continue;
+    const m = note.match(/<Property name="Midi"><Number>(\d+)<\/Number><\/Property>/);
+    if (m) return parseInt(m[1], 10);
+  }
+  return null;
+}
+
 describe('SongsterrToAlphaTabConverter', () => {
   describe('full song conversion (song-1)', () => {
     it('exports a gp7 file from multi-track revision payloads', () => {
@@ -385,6 +411,13 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
+
+      // GP7 <Midi> must carry the *fretted* pitch (open G3=55 + fret 9 = 64),
+      // not the sounding harmonic pitch (64 + 24 = 88). Otherwise readers
+      // apply the harmonic offset twice.
+      const gpif = readGpif(data);
+      expect(harmonicNoteMidi(gpif, 'Artificial')).toBe(64);
+      expect(gpif).toContain('<HFret>5</HFret>');
     });
 
     it('maps pinch harmonics', () => {
@@ -416,6 +449,12 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
+
+      // fretted pitch: open low E (40) + fret 3 = 43; the pinch harmonic
+      // sounds 24 semitones higher (67), which must NOT leak into <Midi>.
+      const gpif = readGpif(data);
+      expect(harmonicNoteMidi(gpif, 'Pinch')).toBe(43);
+      expect(gpif).toContain('<HFret>24</HFret>');
     });
   });
 
