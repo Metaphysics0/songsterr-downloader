@@ -93,6 +93,32 @@ function readMidiTrackNames(data: Uint8Array): string[] {
   return names;
 }
 
+function readGpif(data: Uint8Array): string {
+  const entries = unzipSync(data);
+  for (const [name, bytes] of Object.entries(entries)) {
+    if (name.endsWith('score.gpif')) {
+      return new TextDecoder().decode(bytes);
+    }
+  }
+  throw new Error('score.gpif not found in GP7 output');
+}
+
+/**
+ * Returns the <Midi> number of the first note whose HarmonicType is `type`
+ * ("Artificial" | "Pinch" | ...). GP7 stores the *fretted* pitch in <Midi> and
+ * derives the sounding pitch from HarmonicFret, so this value must be the
+ * fretted pitch, not the harmonic (sounding) pitch.
+ */
+function harmonicNoteMidi(gpif: string, type: string): number | null {
+  const notes = gpif.match(/<Note\b[\s\S]*?<\/Note>/g) ?? [];
+  for (const note of notes) {
+    if (!note.includes(`<HType>${type}</HType>`)) continue;
+    const m = note.match(/<Property name="Midi"><Number>(\d+)<\/Number><\/Property>/);
+    if (m) return parseInt(m[1], 10);
+  }
+  return null;
+}
+
 describe('SongsterrToAlphaTabConverter', () => {
   describe('full song conversion (song-1)', () => {
     it('exports a gp7 file from multi-track revision payloads', () => {
@@ -385,6 +411,13 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
+
+      // GP7 <Midi> must carry the *fretted* pitch (open G3=55 + fret 9 = 64),
+      // not the sounding harmonic pitch (64 + 24 = 88). Otherwise readers
+      // apply the harmonic offset twice.
+      const gpif = readGpif(data);
+      expect(harmonicNoteMidi(gpif, 'Artificial')).toBe(64);
+      expect(gpif).toContain('<HFret>5</HFret>');
     });
 
     it('maps pinch harmonics', () => {
@@ -416,6 +449,12 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
+
+      // fretted pitch: open low E (40) + fret 3 = 43; the pinch harmonic
+      // sounds 24 semitones higher (67), which must NOT leak into <Midi>.
+      const gpif = readGpif(data);
+      expect(harmonicNoteMidi(gpif, 'Pinch')).toBe(43);
+      expect(gpif).toContain('<HFret>24</HFret>');
     });
   });
 
@@ -1393,6 +1432,193 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
+    });
+  });
+  describe('bar repeats and alternate endings', () => {
+    function quarterBeat() {
+      return {
+        notes: [{ fret: 3, string: 4 }],
+        duration: [1, 4] as [number, number],
+        type: 4
+      };
+    }
+
+    it('maps Songsterr `repeat` (play count) to the GPIF repeat end', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true, repeat: 3 },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeat: 2 }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
+
+      // Measure 2 (index 1): repeatStart + repeat:3 -> start & end, count 3
+      expect(masterBars[1]).toContain('start="true"');
+      expect(masterBars[1]).toContain('end="true"');
+      expect(masterBars[1]).toContain('count="3"');
+      // Measure 3 (index 2): repeat:2 -> end with count 2
+      expect(masterBars[2]).toContain('end="true"');
+      expect(masterBars[2]).toContain('count="2"');
+    });
+
+    it('maps array `alternateEnding` to a volta bitmask', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true },
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            repeat: 2,
+            alternateEnding: [1]
+          },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], alternateEnding: [2] },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], alternateEnding: [1, 2] }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
+
+      const endings = masterBars.map((bar) => {
+        const m = bar.match(/<AlternateEndings>([\d ]+)<\/AlternateEndings>/);
+        // GPIF lists ending numbers space-separated ("1", "2", "1 2")
+        return m ? m[1].trim().split(/\s+/).map(Number) : [];
+      });
+      // [1] -> ending 1; [2] -> ending 2; [1,2] -> endings 1 and 2
+      expect(endings[1]).toEqual([1]);
+      expect(endings[2]).toEqual([2]);
+      expect(endings[3]).toEqual([1, 2]);
+    });
+
+    it('maps `doubleBarline` to a double bar', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4] },
+          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], doubleBarline: true }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
+      // The double bar shows up in the Bars style flags; just assert it survived
+      // without corrupting the export.
+      expect(masterBars.length).toBe(2);
+      expect(data.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('grace notes', () => {
+    function quarterBeat(fret = 3) {
+      return {
+        notes: [{ fret, string: 4 }],
+        duration: [1, 4] as [number, number],
+        type: 4
+      };
+    }
+
+    function graceBeat(style: 'beforeBeat' | 'onBeat') {
+      return {
+        notes: [{ fret: 5, string: 2 }],
+        duration: [1, 32] as [number, number],
+        type: 32,
+        graceNote: style
+      };
+    }
+
+    it('exports `graceNote` as GPIF GraceNotes', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  graceBeat('beforeBeat'),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat()
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      expect(gpif).toContain('<GraceNotes>BeforeBeat</GraceNotes>');
+    });
+
+    it('maps `onBeat` grace notes as well', () => {
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  graceBeat('onBeat'),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat()
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      expect(gpif).toContain('<GraceNotes>OnBeat</GraceNotes>');
+    });
+
+    it('grace notes do not consume bar duration', async () => {
+      const alphaTabModule = await import('@coderline/alphatab');
+
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            voices: [
+              {
+                beats: [
+                  graceBeat('beforeBeat'),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat(),
+                  quarterBeat()
+                ]
+              }
+            ],
+            signature: [4, 4]
+          }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const settings = new alphaTabModule.Settings();
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+
+      // The grace beat must not consume bar duration: the 4 normal quarter
+      // notes alone fill exactly 4/4 (3840 ticks at 960 ticks/quarter).
+      // Without the fix the grace 32nd would be a regular beat and the bar
+      // would sum past its time signature (reported by notation apps as
+      // "incomplete measure", e.g. 99/96).
+      const voice = score.tracks[0].staves[0].bars[0].voices[0];
+      const firstBeat = voice.beats[0];
+      expect(firstBeat.graceType).toBe(alphaTabModule.model.GraceType.BeforeBeat);
+      const normalDuration = voice.beats
+        .filter((b: { graceType: number }) => b.graceType === alphaTabModule.model.GraceType.None)
+        .reduce((sum: number, b: { playbackDuration: number }) => sum + b.playbackDuration, 0);
+      expect(normalDuration).toBe(4 * 960);
     });
   });
 });

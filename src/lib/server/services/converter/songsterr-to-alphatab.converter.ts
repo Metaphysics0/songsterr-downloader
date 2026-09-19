@@ -12,6 +12,7 @@ import type {
 import { mapSongsterrDuration } from './duration-mapper';
 import { mapSongsterrInstrumentToPlayback } from './instrument-map';
 import { patchGp7Percussion } from './gp7-percussion-patch';
+import { patchGp7Harmonics } from './gp7-harmonic-patch';
 
 export interface SongsterrRevisionTrackInput {
   trackMeta: SongsterrStateMetaCurrentTrack;
@@ -234,7 +235,11 @@ export class SongsterrToAlphaTabConverter {
     // alphaTab omits <Fret>/<Midi> on percussion notes, which Guitar Pro needs
     // to place them on the drum staff — patch them back in (no-op for
     // guitar-only files).
-    const data = patchGp7Percussion(exporter.export(score, settings));
+    // alphaTab also writes the *sounding* pitch into harmonic notes' <Midi>,
+    // while GP7 (and MuseScore) expect the *fretted* pitch and derive the
+    // harmonic offset from HarmonicType/HarmonicFret — patch Midi back to the
+    // fretted ConcertPitch (no-op when the file has no harmonics).
+    const data = patchGp7Harmonics(patchGp7Percussion(exporter.export(score, settings)));
 
     return { data, warnings };
   }
@@ -352,15 +357,43 @@ export class SongsterrToAlphaTabConverter {
         masterBar.isRepeatStart = true;
       }
 
-      if (typeof measure?.repeatCount === 'number' && measure.repeatCount > 0) {
-        masterBar.repeatCount = measure.repeatCount;
+      /*
+       * Songsterr names the play-count field `repeat` (drawn as "3x"), not
+       * `repeatCount` — the old name never matched the revision payloads, so
+       * every repeat end (":|" with its count) was silently dropped.
+       */
+      const repeatCount =
+        typeof measure?.repeat === 'number'
+          ? measure.repeat
+          : typeof measure?.repeatCount === 'number'
+            ? measure.repeatCount
+            : 0;
+      if (repeatCount > 0) {
+        masterBar.repeatCount = repeatCount;
       }
 
-      if (
-        typeof measure?.alternateEnding === 'number' &&
-        measure.alternateEnding > 0
-      ) {
-        masterBar.alternateEndings = measure.alternateEnding;
+      /*
+       * `alternateEnding` arrives as an array of ending numbers ([1], [2],
+       * [1,2]); alphaTab expects a bitmask where bit n-1 = ending n. A plain
+       * number is accepted too (already a bitmask).
+       */
+      const alternateEnding = measure?.alternateEnding;
+      let alternateMask = 0;
+      if (Array.isArray(alternateEnding)) {
+        for (const n of alternateEnding) {
+          if (typeof n === 'number' && n >= 1 && n <= 8) {
+            alternateMask |= 1 << (n - 1);
+          }
+        }
+      } else if (typeof alternateEnding === 'number' && alternateEnding > 0) {
+        alternateMask = alternateEnding;
+      }
+      if (alternateMask) {
+        masterBar.alternateEndings = alternateMask;
+      }
+
+      if (measure?.doubleBarline) {
+        masterBar.isDoubleBar = true;
       }
 
       score.addMasterBar(masterBar);
@@ -528,6 +561,22 @@ export class SongsterrToAlphaTabConverter {
         )}`,
         location
       });
+    }
+
+    /*
+     * Grace notes (`graceNote: "beforeBeat" | "onBeat"` in Songsterr data) must
+     * not consume bar duration. Without graceType, alphaTab counts them as
+     * regular beats, the exported bar sums past its time signature (e.g.
+     * 99/96 instead of 4/4), and notation apps report incomplete measures.
+     * GP7 exports this as <GraceNotes>OnBeat|BeforeBeat</GraceNotes>.
+     */
+    if (typeof beatData.graceNote === 'string') {
+      const gn = beatData.graceNote.toLowerCase();
+      if (gn === 'beforebeat') {
+        beat.graceType = alphaTab.model.GraceType.BeforeBeat;
+      } else if (gn === 'onbeat') {
+        beat.graceType = alphaTab.model.GraceType.OnBeat;
+      }
     }
 
     // Tuplet support
