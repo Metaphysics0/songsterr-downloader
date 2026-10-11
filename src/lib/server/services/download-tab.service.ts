@@ -7,6 +7,7 @@ import type {
 import { logger } from '$lib/server/logger';
 import { SongsterrRevisionJsonService } from './songsterr-revision-json.service';
 import { SongsterrToAlphaTabConverter } from './converter/songsterr-to-alphatab.converter';
+import { isUrlFromSongsterr } from '$lib/utils/input-validation';
 
 export class DownloadTabService {
   constructor(
@@ -28,9 +29,7 @@ export class DownloadTabService {
 
   private async byRevisionJson(request: Request) {
     const { byLinkUrl, songTitle } = await request.json();
-    if (!byLinkUrl) {
-      throw new Error('Missing byLinkUrl');
-    }
+    assertSongsterrTabUrl(byLinkUrl);
 
     const startedAt = performance.now();
 
@@ -97,9 +96,7 @@ export class DownloadTabService {
 
   private async byRevisionJsonMidi(request: Request) {
     const { byLinkUrl, songTitle, separateTracks } = await request.json();
-    if (!byLinkUrl) {
-      throw new Error('Missing byLinkUrl');
-    }
+    assertSongsterrTabUrl(byLinkUrl);
 
     const startedAt = performance.now();
 
@@ -228,4 +225,17 @@ export class DownloadTabService {
   private readonly songsterrRevisionJsonService =
     new SongsterrRevisionJsonService();
   private readonly converter = new SongsterrToAlphaTabConverter();
+}
+
+/*
+ * byLinkUrl is fetched server-side, so it has to be constrained here rather
+ * than trusting the client-side form validation. Without this the endpoint
+ * forwards requests to any host the caller names (SSRF).
+ */
+function assertSongsterrTabUrl(
+  byLinkUrl: unknown
+): asserts byLinkUrl is string {
+  if (!isUrlFromSongsterr(byLinkUrl)) {
+    throw new Error('A valid Songsterr tab URL is required');
+  }
 }
