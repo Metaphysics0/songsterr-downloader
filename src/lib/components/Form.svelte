@@ -8,6 +8,7 @@
   import { readSelectedSongFromHash } from '$lib/songsterr/tab-meta';
   import { toastError } from '$lib/utils/toast.util';
   import { replaceState } from '$app/navigation';
+  import { trackBookmarkletOpened } from '$lib/analytics/mixpanel';
 
   /*
    * The bookmarklet opens this page with the tab metadata in the fragment.
@@ -18,7 +19,13 @@
     try {
       const song = readSelectedSongFromHash(window.location.hash);
       if (!song) return;
-      formState.selectedSong = song;
+      formState.selectedSong = { ...song, source: 'bookmarklet' };
+      trackBookmarkletOpened({
+        title: song.title,
+        artist: song.artist,
+        songId: song.songId,
+        source: 'bookmarklet'
+      });
       formState.songsterrBlocked = false;
     } catch (error) {
       console.error('Invalid bookmarklet payload', error);
