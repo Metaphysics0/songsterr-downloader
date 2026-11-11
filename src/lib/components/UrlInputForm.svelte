@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { slide } from 'svelte/transition';
   import {
     setValidationMessage,
     clearValidationMessage,
@@ -89,11 +90,15 @@
     placeholder="https://www.songsterr.com/a/wsa/chon-fluffy-tab-s399673"
     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4 text-center"
   />
-  <button
-    disabled={!isValid}
-    class="flex items-center px-4 py-1.5 text-sm font-semibold text-white bg-blue-500 border border-blue-600 rounded shadow hover:bg-blue-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-    >Download</button
-  >
+  <!-- Hidden until the input holds a Songsterr link, to keep the first
+       screen uncluttered. -->
+  {#if isValid}
+    <button
+      transition:slide={{ duration: 150 }}
+      class="flex items-center px-4 py-1.5 text-sm font-semibold text-white bg-blue-500 border border-blue-600 rounded shadow hover:bg-blue-600 transition-colors cursor-pointer"
+      >Download</button
+    >
+  {/if}
 </form>
 
 <style>
