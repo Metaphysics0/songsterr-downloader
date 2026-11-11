@@ -1,20 +1,40 @@
 # Songsterr Downloader
 
-A web app that converts Songsterr tabs to Guitar Pro (.gp7) files using alphaTab.
+Download any [Songsterr](https://www.songsterr.com) tab as a Guitar Pro (`.gp`) or MIDI file.
 
-See how I built it [here!](https://www.youtube.com/watch?v=SsIMY8xmDNY)
+**Live at [songsterr-downloader.com](https://songsterr-downloader.com)** · See how I built it [here!](https://www.youtube.com/watch?v=SsIMY8xmDNY)
+
+<!-- Demo: drag the bookmarklet, open a Songsterr tab, click it, download. -->
+<!-- ![Using the bookmarklet](.github/assets/bookmarklet-demo.gif) -->
+
+## Current status
+
+In November 2026 Songsterr started blocking requests from our server (they answer with a `429` "Quick check" page). Pasting a Songsterr link into the site may therefore fail.
+
+**The bookmarklet works.** It runs in your own browser on the Songsterr page you already have open, so our server never has to contact Songsterr.
+
+## How to use it
+
+1. Go to [songsterr-downloader.com](https://songsterr-downloader.com) and drag the **⬇ Songsterr Downloader** button to your bookmarks bar.
+   Don't see a bookmarks bar? Press `Ctrl+Shift+B` (`⌘+Shift+B` on Mac).
+2. Open any song tab on [songsterr.com](https://www.songsterr.com).
+3. Click the bookmark. Songsterr Downloader opens with the song ready.
+4. Click **Download Guitar Pro** or **Download MIDI**.
+
+Bookmarklets work best in desktop browsers.
 
 ## How it works
 
-1. User pastes a Songsterr URL
-2. Server parses the page state to get song metadata and track info
-3. Fetches per-track revision JSON payloads from Songsterr's CDN
-4. Converts all tracks into an alphaTab score model
-5. Exports as GP7 and triggers a client-side download
+1. **Bookmarklet** (runs on songsterr.com): reads the tab metadata Songsterr embeds in the page (song, revision, tracks) and opens the app with it in the URL fragment. The fragment is never sent to our server.
+2. **App** (runs in your browser): validates the metadata, then fetches each track's revision JSON directly from Songsterr's CDN.
+3. Converts all tracks into an [alphaTab](https://alphatab.net) score model.
+4. Exports GP7 or MIDI in the browser and triggers the download.
+
+Pasting a link still works where Songsterr doesn't block the server (for example local development). The server reads the same metadata from the page, and the download still happens in the browser.
 
 ## Conversion features
 
-See [CONVERTER.md](src/lib/server/services/converter/CONVERTER.md) for full details.
+See [CONVERTER.md](src/lib/converter/CONVERTER.md) for full details.
 
 ## How to run
 
