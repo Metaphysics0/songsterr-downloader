@@ -6,6 +6,13 @@
 
   const href = $derived(buildBookmarkletHref(`${page.url.origin}/`));
 
+  // Expanded by default; re-opens if a blocked link lookup happens after
+  // the user collapsed it.
+  let open = $state(true);
+  $effect(() => {
+    if (formState.songsterrBlocked) open = true;
+  });
+
   function preventRunningHere(event: MouseEvent): void {
     // Clicking it here would only run it on our own page.
     event.preventDefault();
@@ -17,13 +24,13 @@
 
 <details
   class="mt-6 rounded-lg border border-slate-300 dark:border-slate-600 p-4 text-sm"
-  open={formState.songsterrBlocked}
+  bind:open
 >
   <summary class="cursor-pointer font-semibold">
     {#if formState.songsterrBlocked}
-      Link not working? Use the bookmarklet
+      Songsterr is blocking links right now. Use this instead 👇
     {:else}
-      Prefer one click? Use the bookmarklet
+      Link not working? Download straight from Songsterr instead
     {/if}
   </summary>
 
@@ -31,7 +38,7 @@
     class="list-decimal ml-5 mt-3 space-y-2 text-slate-700 dark:text-slate-300"
   >
     <li>
-      Drag this button to your bookmarks bar:
+      Drag this bookmarklet to your bookmarks bar:
       <div class="my-2">
         <a
           {href}
