@@ -3,16 +3,16 @@
     downloadGuitarPro,
     downloadMidi as downloadMidiFile
   } from '$lib/utils/download-tab';
-  import SelectedSong from './SongPreview.svelte';
+  import SongPreview from './SongPreview.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
-  import type { SongsterrPartialMetadata } from '$lib/types';
+  import type { SelectedSong } from '$lib/types';
   import GuitarIcon from '$lib/icons/GuitarIcon.svelte';
   import MidiIcon from '$lib/icons/MidiIcon.svelte';
   import MidiDownloadOptions from './MidiDownloadOptions.svelte';
   import type { MidiDownloadOptions as MidiDownloadOptionsValue } from '$lib/types';
 
   interface Props {
-    selectedSong: SongsterrPartialMetadata;
+    selectedSong: SelectedSong;
   }
 
   let { selectedSong }: Props = $props();
@@ -51,7 +51,7 @@
 
 <div class="flex flex-col items-center">
   <div class="mb-8 w-full">
-    <SelectedSong {selectedSong} />
+    <SongPreview {selectedSong} />
   </div>
   <div class="flex flex-col gap-2 items-center">
     <button
