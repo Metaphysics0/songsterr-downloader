@@ -3,6 +3,7 @@
   import { buildBookmarkletHref } from '$lib/bookmarklet/bookmarklet';
   import { formState } from '$lib/runes/form-state.svelte';
   import { toast } from '@zerodevx/svelte-toast';
+  import { trackBookmarkletDragged } from '$lib/analytics/mixpanel';
 
   const href = $derived(buildBookmarkletHref(`${page.url.origin}/`));
 
@@ -43,6 +44,7 @@
         <a
           {href}
           onclick={preventRunningHere}
+          ondragstart={trackBookmarkletDragged}
           draggable="true"
           class="inline-block px-3 py-1 font-semibold text-white bg-blue-500 border border-blue-600 rounded shadow cursor-grab"
           >⬇ Songsterr Downloader</a

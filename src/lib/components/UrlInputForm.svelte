@@ -66,7 +66,7 @@
         return;
       }
 
-      formState.selectedSong = { ...songMetadata, byLinkUrl };
+      formState.selectedSong = { ...songMetadata, byLinkUrl, source: 'link' };
       update({ reset: false });
     };
   }}

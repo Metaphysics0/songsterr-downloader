@@ -27,7 +27,8 @@ export async function downloadGuitarPro(song: SelectedSong): Promise<void> {
     trackGuitarProDownloaded({
       title: song.title,
       artist: song.artist,
-      songId: song.songId
+      songId: song.songId,
+      source: song.source
     });
   } catch (error) {
     handleDownloadError(song, 'gp', error);
@@ -47,7 +48,8 @@ export async function downloadMidi(
     trackMidiDownloaded({
       title: song.title,
       artist: song.artist,
-      songId: song.songId
+      songId: song.songId,
+      source: song.source
     });
   } catch (error) {
     handleDownloadError(song, 'midi', error);
@@ -105,6 +107,7 @@ function handleDownloadError(
     title: song.title,
     artist: song.artist,
     songId: song.songId,
+    source: song.source,
     downloadType,
     errorMessage: error instanceof Error ? error.message : 'Unknown error',
     songsterrUrl: song.byLinkUrl

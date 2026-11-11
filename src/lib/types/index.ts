@@ -27,7 +27,11 @@ export interface SongsterrStateMetaCurrent {
 export interface SelectedSong extends SongsterrStateMetaCurrent {
   artistId?: number;
   byLinkUrl?: string;
+  /** How the song reached the app; set client-side, for analytics. */
+  source?: SelectedSongSource;
 }
+
+export type SelectedSongSource = 'bookmarklet' | 'link';
 
 export interface SongsterrRevisionAutomationTempoPoint {
   measure: number;
