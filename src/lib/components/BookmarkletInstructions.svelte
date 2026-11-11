@@ -38,7 +38,7 @@
     class="list-decimal ml-5 mt-3 space-y-2 text-slate-700 dark:text-slate-300"
   >
     <li>
-      Drag this bookmarklet to your bookmarks bar:
+      Drag this button to your bookmarks bar:
       <div class="my-2">
         <a
           {href}
