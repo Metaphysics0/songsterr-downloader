@@ -27,7 +27,12 @@
       aria-label={link.name}
       class="h-full mx-3 opacity-50 hover:opacity-100 transition ease-in-out"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="35"
+        height="35"
+        viewBox="0 0 24 24"
+      >
         {@html link.svg}
       </svg>
     </a>

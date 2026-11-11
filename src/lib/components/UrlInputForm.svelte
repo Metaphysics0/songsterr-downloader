@@ -8,7 +8,7 @@
   } from '$lib/utils/input-validation';
   import { toastError } from '$lib/utils/toast.util';
   import { formState } from '$lib/runes/form-state.svelte';
-  import type { SongsterrPartialMetadata } from '$lib/types';
+  import type { SelectedSong } from '$lib/types';
 
   function setInputValidity(event: Event): void {
     const { value } = event.target as HTMLInputElement;
@@ -47,7 +47,7 @@
       formState.isLoadingMetadata = false;
       const songMetadata =
         result.type === 'success'
-          ? (result.data as unknown as SongsterrPartialMetadata | undefined)
+          ? (result.data as unknown as SelectedSong | undefined)
           : null;
 
       if (!songMetadata || Object.keys(songMetadata).length === 0) {
@@ -55,6 +55,12 @@
           result.type === 'failure' && typeof result.data?.message === 'string'
             ? result.data.message
             : null;
+        if (
+          result.type === 'failure' &&
+          result.data?.code === 'songsterr_blocked'
+        ) {
+          formState.songsterrBlocked = true;
+        }
         toastError(failureMessage ?? 'Error finding song data from URL 😭');
         console.error('result error', result);
         return;

@@ -1,10 +1,10 @@
 <script lang="ts">
   import TimesIcon from '$lib/icons/TimesIcon.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
-  import type { SongsterrPartialMetadata } from '$lib/types';
+  import type { SelectedSong } from '$lib/types';
 
   interface Props {
-    selectedSong: SongsterrPartialMetadata;
+    selectedSong: SelectedSong;
   }
 
   let { selectedSong }: Props = $props();

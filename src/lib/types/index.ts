@@ -1,19 +1,5 @@
-export interface SongsterrDownloadFile {
-  buffer: ArrayBuffer;
-  fileName: string;
-  contentType: string;
-}
-
 export interface MidiDownloadOptions {
   separateTracks: boolean;
-}
-
-export interface SongsterrPartialMetadata {
-  title: string;
-  songId: number;
-  artistId: number;
-  artist: string;
-  byLinkUrl?: string;
 }
 
 export interface SongsterrStateMetaCurrentTrack {
@@ -32,6 +18,15 @@ export interface SongsterrStateMetaCurrent {
   title: string;
   artist: string;
   tracks: SongsterrStateMetaCurrentTrack[];
+}
+
+/*
+ * Everything the browser needs to fetch and convert a tab without asking the
+ * server: the CDN revision coordinates plus display fields.
+ */
+export interface SelectedSong extends SongsterrStateMetaCurrent {
+  artistId?: number;
+  byLinkUrl?: string;
 }
 
 export interface SongsterrRevisionAutomationTempoPoint {
