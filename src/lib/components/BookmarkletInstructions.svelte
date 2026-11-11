@@ -30,7 +30,7 @@
     {#if formState.songsterrBlocked}
       Songsterr is blocking links right now. Use this instead 👇
     {:else}
-      Link not working? Download straight from Songsterr instead
+      Not working? Use the bookmarklet
     {/if}
   </summary>
 
