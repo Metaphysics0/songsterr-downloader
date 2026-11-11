@@ -2,6 +2,20 @@ import Fetcher from '$lib/server/utils/fetcher.util';
 import { DOMParser } from '@xmldom/xmldom';
 import { logger } from '$lib/server/logger';
 
+/*
+ * Songsterr answers server-side requests from datacenter IPs with a 429/403
+ * "Quick check" page. Surface that distinctly so the UI can explain it.
+ */
+export class SongsterrBlockedError extends Error {
+  constructor(
+    url: string,
+    readonly status: number
+  ) {
+    super(`Songsterr blocked the request for ${url} (${status})`);
+    this.name = 'SongsterrBlockedError';
+  }
+}
+
 class Scraper {
   async getDocumentFromUrl(url: string, websiteType: 'xml' | 'html') {
     const fetcher = new Fetcher({ withRotatingUserAgent: false });
@@ -25,6 +39,10 @@ class Scraper {
         },
         'unexpected response scraping songsterr'
       );
+    }
+
+    if (response.status === 429 || response.status === 403) {
+      throw new SongsterrBlockedError(url, response.status);
     }
 
     if (!response.ok) {

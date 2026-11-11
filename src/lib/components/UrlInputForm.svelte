@@ -51,7 +51,11 @@
           : null;
 
       if (!songMetadata || Object.keys(songMetadata).length === 0) {
-        toastError('Error finding song data from URL 😭');
+        const failureMessage =
+          result.type === 'failure' && typeof result.data?.message === 'string'
+            ? result.data.message
+            : null;
+        toastError(failureMessage ?? 'Error finding song data from URL 😭');
         console.error('result error', result);
         return;
       }

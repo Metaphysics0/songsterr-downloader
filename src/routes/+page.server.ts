@@ -4,6 +4,7 @@ import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { SongsterrService } from '$lib/server/services/songsterr.service';
 import type { SongsterrPartialMetadata } from '$lib/types';
+import { SongsterrBlockedError } from '$lib/server/utils/scraper.util';
 
 export const actions = {
   getMetadataFromTabUrl: async ({ request }) => {
@@ -20,7 +21,16 @@ export const actions = {
       return metadata;
     } catch (error) {
       logger.error({ err: error }, '#getMetadataFromTabUrl failed');
-      return fail(502, { message: 'Unable to fetch tab data from Songsterr' });
+      if (error instanceof SongsterrBlockedError) {
+        return fail(503, {
+          message:
+            'Songsterr is currently blocking automated requests from our server, so we could not load this tab. This is not a problem with your link — please try again later.'
+        });
+      }
+      return fail(502, {
+        message:
+          'Could not load song data from Songsterr. Double-check the link and try again.'
+      });
     }
   }
 } satisfies Actions;
