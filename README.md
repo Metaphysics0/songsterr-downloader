@@ -4,8 +4,7 @@ Download any [Songsterr](https://www.songsterr.com) tab as a Guitar Pro (`.gp`) 
 
 **Live at [songsterr-downloader.com](https://songsterr-downloader.com)** · See how I built it [here!](https://www.youtube.com/watch?v=SsIMY8xmDNY)
 
-<!-- Demo: drag the bookmarklet, open a Songsterr tab, click it, download. -->
-<!-- ![Using the bookmarklet](.github/assets/bookmarklet-demo.gif) -->
+![Dragging the bookmarklet to the bookmarks bar, clicking it on a Songsterr tab, and downloading the Guitar Pro file](.github/assets/bookmarklet-demo.gif)
 
 ## Current status
 
