@@ -8,6 +8,7 @@
   } from '$lib/utils/input-validation';
   import { toastError } from '$lib/utils/toast.util';
   import { formState } from '$lib/runes/form-state.svelte';
+  import type { SongsterrPartialMetadata } from '$lib/types';
 
   function setInputValidity(event: Event): void {
     const { value } = event.target as HTMLInputElement;
@@ -40,14 +41,16 @@
   method="POST"
   action="?/getMetadataFromTabUrl"
   use:enhance={({ formData }) => {
-    const byLinkUrl = formData.get('url');
+    const byLinkUrl = formData.get('url')?.toString();
     formState.isLoadingMetadata = true;
     return async ({ result, update }) => {
       formState.isLoadingMetadata = false;
-      // @ts-ignore
-      const songMetadata = result?.data || {};
+      const songMetadata =
+        result.type === 'success'
+          ? (result.data as unknown as SongsterrPartialMetadata | undefined)
+          : null;
 
-      if (!songMetadata) {
+      if (!songMetadata || Object.keys(songMetadata).length === 0) {
         toastError('Error finding song data from URL 😭');
         console.error('result error', result);
         return;
