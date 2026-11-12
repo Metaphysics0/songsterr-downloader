@@ -10,20 +10,14 @@
   class={className}
   aria-hidden="true"
 >
-  <path
+  <g
     fill="none"
     stroke="currentColor"
     stroke-linecap="round"
     stroke-linejoin="round"
     stroke-width="2"
-    d="M2.06 12.35a1 1 0 0 1 0-.7a10.75 10.75 0 0 1 19.88 0a1 1 0 0 1 0 .7a10.75 10.75 0 0 1-19.88 0"
-  />
-  <circle
-    cx="12"
-    cy="12"
-    r="3"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-  />
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 16v-4m0-4h.01" />
+  </g>
 </svg>

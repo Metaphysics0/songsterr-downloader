@@ -1,12 +1,14 @@
 <script lang="ts">
-  import EyeIcon from '$lib/icons/EyeIcon.svelte';
+  import InfoIcon from '$lib/icons/InfoIcon.svelte';
   import dragVideo from '$lib/assets/bookmarklet-drag.mp4';
   import dragPoster from '$lib/assets/bookmarklet-drag-poster.webp';
   import { trackBookmarkletTutorialViewed } from '$lib/analytics/mixpanel';
 
   /*
-   * Positioned against the nearest `relative` ancestor (the step's <li>), so
-   * it spans the card width and opens below the button instead of over it.
+   * Positioned against the nearest `relative` ancestor (the step's <li>):
+   * centred under it and wider than the card so the full browser frame is
+   * readable, but never wider than the viewport. Opens below the button
+   * rather than over it, which would block the drag.
    *
    * Opens on hover or keyboard focus, and toggles on click so it also works
    * on touch screens, which have no hover. A click "pins" it open until the
@@ -73,13 +75,13 @@
     onfocus={() => setHovered(true)}
     onblur={() => setHovered(false)}
   >
-    <EyeIcon class="h-4 w-4" />
+    <InfoIcon class="h-4 w-4" />
   </button>
 
   {#if hasOpened}
     <span
       id="bookmarklet-drag-preview"
-      class="absolute inset-x-0 top-full z-20 mt-1 rounded-lg border border-slate-300 bg-white p-1.5 shadow-xl dark:border-slate-600 dark:bg-slate-800"
+      class="preview absolute left-1/2 top-full z-20 mt-1 -translate-x-1/2 rounded-lg border border-slate-300 bg-white p-1.5 shadow-xl dark:border-slate-600 dark:bg-slate-800"
       class:hidden={!isOpen}
       role="tooltip"
     >
@@ -87,8 +89,8 @@
         <img
           class="block w-full rounded"
           src={dragPoster}
-          width="480"
-          height="428"
+          width="1152"
+          height="722"
           alt="Dragging the Songsterr Downloader button up into the browser's bookmarks bar"
         />
       {:else}
@@ -96,8 +98,8 @@
           class="block w-full rounded"
           src={dragVideo}
           poster={dragPoster}
-          width="480"
-          height="428"
+          width="1152"
+          height="722"
           autoplay
           loop
           muted
@@ -111,3 +113,9 @@
     </span>
   {/if}
 </span>
+
+<style>
+  .preview {
+    width: min(36rem, calc(100vw - 2rem));
+  }
+</style>
