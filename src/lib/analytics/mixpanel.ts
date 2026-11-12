@@ -53,6 +53,10 @@ export function trackBookmarkletOpened(props: TrackDownloadParams) {
   mixpanel.track('Bookmarklet Opened', props);
 }
 
+export function trackBookmarkletTutorialViewed() {
+  mixpanel.track('Bookmarklet Tutorial Viewed');
+}
+
 export function trackFretwiseAdClicked() {
   mixpanel.track('Fretwise Ad Clicked');
 }
