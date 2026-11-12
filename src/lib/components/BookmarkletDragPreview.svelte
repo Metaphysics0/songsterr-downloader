@@ -2,7 +2,6 @@
   import InfoIcon from '$lib/icons/InfoIcon.svelte';
   import dragVideo from '$lib/assets/bookmarklet-drag.mp4';
   import dragPoster from '$lib/assets/bookmarklet-drag-poster.webp';
-  import { trackBookmarkletTutorialViewed } from '$lib/analytics/mixpanel';
 
   /*
    * Positioned against the nearest `relative` ancestor (the step's <li>):
@@ -28,20 +27,14 @@
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function markOpened(): void {
-    if (hasOpened) return;
-    hasOpened = true;
-    trackBookmarkletTutorialViewed();
-  }
-
   function setHovered(value: boolean): void {
     hovered = value;
-    if (value) markOpened();
+    if (value) hasOpened = true;
   }
 
   function togglePinned(): void {
     pinned = !pinned;
-    if (pinned) markOpened();
+    if (pinned) hasOpened = true;
   }
 
   function onDocumentClick(event: MouseEvent): void {
