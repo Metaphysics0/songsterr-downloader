@@ -8,7 +8,3 @@
   <div class="mb-14"></div>
   <SocialLinks />
 </main>
-
-<!-- <footer class="flex flex-col items-center justify-center h-max">
-  <FretwiseAd />
-</footer> -->
