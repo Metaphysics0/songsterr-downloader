@@ -9,8 +9,13 @@ import type {
 } from '$lib/types';
 import type { SongsterrRevisionTrackInput } from './songsterr-to-alphatab.converter';
 
+// Resolved relative to this file so tests pass from any working directory.
+function fixturePath(path: string): URL {
+  return new URL(`./__fixtures__/${path}`, import.meta.url);
+}
+
 function loadRevision(path: string): SongsterrRevisionTrackPayload {
-  return JSON.parse(readFileSync(path, 'utf-8'));
+  return JSON.parse(readFileSync(fixturePath(path), 'utf-8'));
 }
 
 function makeTrackMeta(
@@ -126,7 +131,7 @@ describe('SongsterrToAlphaTabConverter', () => {
       const trackMetas: SongsterrStateMetaCurrentTrack[] = [];
 
       for (let i = 0; i <= 8; i++) {
-        const revision = loadRevision(`test-data/song-1/${i}.json`);
+        const revision = loadRevision(`song-1/${i}.json`);
         const meta = makeTrackMeta({
           partId: i,
           instrumentId: revision.instrumentId ?? 27,
@@ -1381,7 +1386,7 @@ describe('SongsterrToAlphaTabConverter', () => {
       const trackMetas: SongsterrStateMetaCurrentTrack[] = [];
 
       for (let i = 0; i <= 10; i++) {
-        const content = readFileSync(`test-data/song-3/${i}.json`, 'utf-8');
+        const content = readFileSync(fixturePath(`song-3/${i}.json`), 'utf-8');
         if (!content.trim()) continue; // skip empty files
         const revision: SongsterrRevisionTrackPayload = JSON.parse(content);
         const meta = makeTrackMeta({
