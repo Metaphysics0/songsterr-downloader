@@ -1,10 +1,10 @@
-# Songsterr Downloader
+# Songsterr Downloader 🎸
 
 Download any [Songsterr](https://www.songsterr.com) tab as a Guitar Pro (`.gp`) or MIDI file.
 
-**Live at [songsterr-downloader.com](https://songsterr-downloader.com)** · See how I built it [here!](https://www.youtube.com/watch?v=SsIMY8xmDNY)
-
 ![Dragging the bookmarklet to the bookmarks bar, clicking it on a Songsterr tab, and downloading the Guitar Pro file](.github/assets/bookmarklet-demo.gif)
+
+**Live at [songsterr-downloader.com](https://songsterr-downloader.com)** · See how I built it [here!](https://www.youtube.com/watch?v=SsIMY8xmDNY)
 
 ## Current status
 
@@ -38,8 +38,8 @@ See [CONVERTER.md](src/lib/converter/CONVERTER.md) for full details.
 ## How to run
 
 1. Clone the repo
-2. Install [bun](https://bun.sh/)
-3. `bun install`
+2. Install [bun](https://bun.sh/) (version 1.4.4+)
+3. `bun i`
 4. `bun dev`
 
 ## Running tests
