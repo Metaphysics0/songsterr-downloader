@@ -118,7 +118,9 @@ function harmonicNoteMidi(gpif: string, type: string): number | null {
   const notes = gpif.match(/<Note\b[\s\S]*?<\/Note>/g) ?? [];
   for (const note of notes) {
     if (!note.includes(`<HType>${type}</HType>`)) continue;
-    const m = note.match(/<Property name="Midi"><Number>(\d+)<\/Number><\/Property>/);
+    const m = note.match(
+      /<Property name="Midi"><Number>(\d+)<\/Number><\/Property>/
+    );
     if (m) return parseInt(m[1], 10);
   }
   return null;
@@ -150,7 +152,9 @@ describe('SongsterrToAlphaTabConverter', () => {
       expect(data.length).toBeGreaterThan(0);
       // With our fixes, there should be far fewer warnings than before
       // (no more slide_unsupported for "below"/"downwards", no duration_approximated for tuplets)
-      const slideWarnings = warnings.filter((w) => w.code === 'slide_unsupported');
+      const slideWarnings = warnings.filter(
+        (w) => w.code === 'slide_unsupported'
+      );
       expect(slideWarnings.length).toBe(0);
     });
   });
@@ -189,7 +193,9 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       // Re-import to verify string mapping
       const settings = new (await import('@coderline/alphatab')).Settings();
-      const score = (await import('@coderline/alphatab')).importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const score = (
+        await import('@coderline/alphatab')
+      ).importer.ScoreLoader.loadScoreFromBytes(data, settings);
       const beat = score.tracks[0].staves[0].bars[0].voices[0].beats[0];
       // Songsterr string 0 → alphaTab string 6 (numStrings - 0 = 6)
       const highENote = beat.notes.find((n: { fret: number }) => n.fret === 5);
@@ -357,7 +363,9 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data, warnings } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
-      expect(warnings.filter((w) => w.code === 'slide_unsupported').length).toBe(0);
+      expect(
+        warnings.filter((w) => w.code === 'slide_unsupported').length
+      ).toBe(0);
     });
 
     it('maps "downwards" slide correctly', () => {
@@ -382,7 +390,9 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data, warnings } = convertSingle(revision);
       expect(data.length).toBeGreaterThan(0);
-      expect(warnings.filter((w) => w.code === 'slide_unsupported').length).toBe(0);
+      expect(
+        warnings.filter((w) => w.code === 'slide_unsupported').length
+      ).toBe(0);
     });
   });
 
@@ -959,15 +969,21 @@ describe('SongsterrToAlphaTabConverter', () => {
       });
 
       const settings = new alphaTabModule.Settings();
-      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        settings
+      );
 
       const channels = score.tracks.map(
-        (t: { playbackInfo: { primaryChannel: number } }) => t.playbackInfo.primaryChannel
+        (t: { playbackInfo: { primaryChannel: number } }) =>
+          t.playbackInfo.primaryChannel
       );
       // Drum track should be on channel 9
       expect(channels[5]).toBe(9);
       // No two non-drum tracks share a channel
-      const nonDrumChannels = channels.filter((_: number, i: number) => i !== 5);
+      const nonDrumChannels = channels.filter(
+        (_: number, i: number) => i !== 5
+      );
       expect(new Set(nonDrumChannels).size).toBe(nonDrumChannels.length);
       // No non-drum track uses channel 9
       expect(nonDrumChannels).not.toContain(9);
@@ -1005,12 +1021,15 @@ describe('SongsterrToAlphaTabConverter', () => {
       ];
 
       const converter = new SongsterrToAlphaTabConverter();
-      const { data } = converter.toMidi({
-        meta: makeMeta(trackMetas),
-        revisions
-      }, {
-        separateTracks: true
-      });
+      const { data } = converter.toMidi(
+        {
+          meta: makeMeta(trackMetas),
+          revisions
+        },
+        {
+          separateTracks: true
+        }
+      );
 
       const header = readMidiHeader(data);
       expect(header.format).toBe(1);
@@ -1066,7 +1085,7 @@ describe('SongsterrToAlphaTabConverter', () => {
                   {
                     notes: [
                       { fret: 36, string: 0 }, // kick
-                      { fret: 38, string: 1 }  // snare
+                      { fret: 38, string: 1 } // snare
                     ],
                     duration: [1, 4],
                     type: 4
@@ -1092,15 +1111,20 @@ describe('SongsterrToAlphaTabConverter', () => {
       });
 
       const settings = new alphaTabModule.Settings();
-      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        settings
+      );
 
       const beat = score.tracks[0].staves[0].bars[0].voices[0].beats[0];
       // After round-trip, verify the articulations resolve to correct drum sounds
       const rTrack = score.tracks[0];
-      const articulations = beat.notes.map((n: { percussionArticulation: number }) => {
-        const art = rTrack.percussionArticulations[n.percussionArticulation];
-        return art?.outputMidiNumber;
-      });
+      const articulations = beat.notes.map(
+        (n: { percussionArticulation: number }) => {
+          const art = rTrack.percussionArticulations[n.percussionArticulation];
+          return art?.outputMidiNumber;
+        }
+      );
       expect(articulations).toContain(36); // kick (MIDI 36)
       expect(articulations).toContain(38); // snare (MIDI 38)
     });
@@ -1119,14 +1143,14 @@ describe('SongsterrToAlphaTabConverter', () => {
                     notes: [
                       { fret: 42, string: 0 }, // hi-hat closed
                       { fret: 38, string: 1 }, // snare
-                      { fret: 36, string: 2 }  // kick
+                      { fret: 36, string: 2 } // kick
                     ],
                     duration: [1, 4],
                     type: 4
                   },
                   {
                     notes: [
-                      { fret: 42, string: 0 }  // hi-hat closed only
+                      { fret: 42, string: 0 } // hi-hat closed only
                     ],
                     duration: [1, 4],
                     type: 4
@@ -1134,14 +1158,14 @@ describe('SongsterrToAlphaTabConverter', () => {
                   {
                     notes: [
                       { fret: 42, string: 0 }, // hi-hat closed
-                      { fret: 38, string: 1 }  // snare
+                      { fret: 38, string: 1 } // snare
                     ],
                     duration: [1, 4],
                     type: 4
                   },
                   {
                     notes: [
-                      { fret: 42, string: 0 }  // hi-hat closed only
+                      { fret: 42, string: 0 } // hi-hat closed only
                     ],
                     duration: [1, 4],
                     type: 4
@@ -1167,19 +1191,24 @@ describe('SongsterrToAlphaTabConverter', () => {
       });
 
       const settings = new alphaTabModule.Settings();
-      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        settings
+      );
 
       // Count total input notes
       const inputBeats = revision.measures[0]?.voices?.[0]?.beats ?? [];
       const inputNotes = inputBeats.reduce(
-        (sum, b) => sum + (b.notes?.length ?? 0), 0
+        (sum, b) => sum + (b.notes?.length ?? 0),
+        0
       );
       expect(inputNotes).toBe(7);
 
       // Count total output notes after round-trip
       const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
       const outputNotes = beats.reduce(
-        (sum: number, b: { notes: unknown[] }) => sum + b.notes.length, 0
+        (sum: number, b: { notes: unknown[] }) => sum + b.notes.length,
+        0
       );
       expect(outputNotes).toBe(inputNotes);
     });
@@ -1195,9 +1224,8 @@ describe('SongsterrToAlphaTabConverter', () => {
       // every test above this one) hid it. Reset the module registry to get a
       // genuinely cold converter, as a fresh serverless invocation would.
       vi.resetModules();
-      const { SongsterrToAlphaTabConverter: ColdConverter } = await import(
-        './songsterr-to-alphatab.converter'
-      );
+      const { SongsterrToAlphaTabConverter: ColdConverter } =
+        await import('./songsterr-to-alphatab.converter');
       const alphaTabModule = await import('@coderline/alphatab');
 
       const beat = (frets: number[]) => ({
@@ -1206,7 +1234,16 @@ describe('SongsterrToAlphaTabConverter', () => {
         type: 4
       });
       const measure = {
-        voices: [{ beats: [beat([42, 36]), beat([42, 38]), beat([42, 36]), beat([42, 38])] }],
+        voices: [
+          {
+            beats: [
+              beat([42, 36]),
+              beat([42, 38]),
+              beat([42, 36]),
+              beat([42, 38])
+            ]
+          }
+        ],
         signature: [4, 4] as [number, number]
       };
       const revision: SongsterrRevisionTrackPayload = {
@@ -1226,7 +1263,10 @@ describe('SongsterrToAlphaTabConverter', () => {
       });
 
       const settings = new alphaTabModule.Settings();
-      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        settings
+      );
       const staff = score.tracks[0].staves[0];
 
       expect(staff.bars).toHaveLength(2);
@@ -1237,8 +1277,9 @@ describe('SongsterrToAlphaTabConverter', () => {
         expect(bar.voices[0].beats).toHaveLength(4);
       }
 
-      const notes = staff.bars.flatMap((b: { voices: { beats: { notes: unknown[] }[] }[] }) =>
-        b.voices[0].beats.flatMap((bt) => bt.notes)
+      const notes = staff.bars.flatMap(
+        (b: { voices: { beats: { notes: unknown[] }[] }[] }) =>
+          b.voices[0].beats.flatMap((bt) => bt.notes)
       ) as { percussionArticulation: number }[];
       expect(notes).toHaveLength(16);
 
@@ -1246,7 +1287,9 @@ describe('SongsterrToAlphaTabConverter', () => {
       expect(notes.every((n) => n.percussionArticulation >= 0)).toBe(true);
 
       const midi = notes.map(
-        (n) => score.tracks[0].percussionArticulations[n.percussionArticulation]?.outputMidiNumber
+        (n) =>
+          score.tracks[0].percussionArticulations[n.percussionArticulation]
+            ?.outputMidiNumber
       );
       expect(new Set(midi)).toEqual(new Set([42, 36, 38]));
     });
@@ -1296,9 +1339,13 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       // articulation index → output MIDI number, from the drum kit
       const articulationMidi: number[] = [];
-      for (const kit of gpif.matchAll(/<InstrumentSet>(.*?)<\/InstrumentSet>/gs)) {
+      for (const kit of gpif.matchAll(
+        /<InstrumentSet>(.*?)<\/InstrumentSet>/gs
+      )) {
         if (!kit[1].includes('<Type>drumKit</Type>')) continue;
-        for (const art of kit[1].matchAll(/<Articulation>.*?<\/Articulation>/gs)) {
+        for (const art of kit[1].matchAll(
+          /<Articulation>.*?<\/Articulation>/gs
+        )) {
           const m = art[0].match(/<OutputMidiNumber>(\d+)<\/OutputMidiNumber>/);
           if (m) articulationMidi.push(parseInt(m[1], 10));
         }
@@ -1451,14 +1498,25 @@ describe('SongsterrToAlphaTabConverter', () => {
     it('maps Songsterr `repeat` (play count) to the GPIF repeat end', () => {
       const revision: SongsterrRevisionTrackPayload = {
         measures: [
-          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true },
-          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true, repeat: 3 },
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            repeatStart: true
+          },
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            repeatStart: true,
+            repeat: 3
+          },
           { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeat: 2 }
         ]
       };
 
       const { data } = convertSingle(revision);
-      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const gpif = new TextDecoder().decode(
+        unzipSync(data)['Content/score.gpif']
+      );
       const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
 
       // Measure 2 (index 1): repeatStart + repeat:3 -> start & end, count 3
@@ -1473,20 +1531,34 @@ describe('SongsterrToAlphaTabConverter', () => {
     it('maps array `alternateEnding` to a volta bitmask', () => {
       const revision: SongsterrRevisionTrackPayload = {
         measures: [
-          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], repeatStart: true },
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            repeatStart: true
+          },
           {
             voices: [{ beats: [quarterBeat()] }],
             signature: [4, 4],
             repeat: 2,
             alternateEnding: [1]
           },
-          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], alternateEnding: [2] },
-          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], alternateEnding: [1, 2] }
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            alternateEnding: [2]
+          },
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            alternateEnding: [1, 2]
+          }
         ]
       };
 
       const { data } = convertSingle(revision);
-      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const gpif = new TextDecoder().decode(
+        unzipSync(data)['Content/score.gpif']
+      );
       const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
 
       const endings = masterBars.map((bar) => {
@@ -1504,12 +1576,18 @@ describe('SongsterrToAlphaTabConverter', () => {
       const revision: SongsterrRevisionTrackPayload = {
         measures: [
           { voices: [{ beats: [quarterBeat()] }], signature: [4, 4] },
-          { voices: [{ beats: [quarterBeat()] }], signature: [4, 4], doubleBarline: true }
+          {
+            voices: [{ beats: [quarterBeat()] }],
+            signature: [4, 4],
+            doubleBarline: true
+          }
         ]
       };
 
       const { data } = convertSingle(revision);
-      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const gpif = new TextDecoder().decode(
+        unzipSync(data)['Content/score.gpif']
+      );
       const masterBars = gpif.match(/<MasterBar>[\s\S]*?<\/MasterBar>/g) || [];
       // The double bar shows up in the Bars style flags; just assert it survived
       // without corrupting the export.
@@ -1557,7 +1635,9 @@ describe('SongsterrToAlphaTabConverter', () => {
       };
 
       const { data } = convertSingle(revision);
-      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const gpif = new TextDecoder().decode(
+        unzipSync(data)['Content/score.gpif']
+      );
       expect(gpif).toContain('<GraceNotes>BeforeBeat</GraceNotes>');
     });
 
@@ -1582,7 +1662,9 @@ describe('SongsterrToAlphaTabConverter', () => {
       };
 
       const { data } = convertSingle(revision);
-      const gpif = new TextDecoder().decode(unzipSync(data)['Content/score.gpif']);
+      const gpif = new TextDecoder().decode(
+        unzipSync(data)['Content/score.gpif']
+      );
       expect(gpif).toContain('<GraceNotes>OnBeat</GraceNotes>');
     });
 
@@ -1610,7 +1692,10 @@ describe('SongsterrToAlphaTabConverter', () => {
 
       const { data } = convertSingle(revision);
       const settings = new alphaTabModule.Settings();
-      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(data, settings);
+      const score = alphaTabModule.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        settings
+      );
 
       // The grace beat must not consume bar duration: the 4 normal quarter
       // notes alone fill exactly 4/4 (3840 ticks at 960 ticks/quarter).
@@ -1619,10 +1704,19 @@ describe('SongsterrToAlphaTabConverter', () => {
       // "incomplete measure", e.g. 99/96).
       const voice = score.tracks[0].staves[0].bars[0].voices[0];
       const firstBeat = voice.beats[0];
-      expect(firstBeat.graceType).toBe(alphaTabModule.model.GraceType.BeforeBeat);
+      expect(firstBeat.graceType).toBe(
+        alphaTabModule.model.GraceType.BeforeBeat
+      );
       const normalDuration = voice.beats
-        .filter((b: { graceType: number }) => b.graceType === alphaTabModule.model.GraceType.None)
-        .reduce((sum: number, b: { playbackDuration: number }) => sum + b.playbackDuration, 0);
+        .filter(
+          (b: { graceType: number }) =>
+            b.graceType === alphaTabModule.model.GraceType.None
+        )
+        .reduce(
+          (sum: number, b: { playbackDuration: number }) =>
+            sum + b.playbackDuration,
+          0
+        );
       expect(normalDuration).toBe(4 * 960);
     });
   });
