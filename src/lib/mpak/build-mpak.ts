@@ -21,6 +21,8 @@ export interface MpakRecordingInput {
   /** The kind of video and the tab tracks it covers. */
   feature?: string;
   tracks?: number[];
+  /** Names of those tracks in the score file, one per index (spec "names"). */
+  trackNames?: string[];
 }
 
 export interface BuildMpakInput {
@@ -42,10 +44,14 @@ function roleFor(feature?: string): string {
 // backing video lacks them, a solo video has only them.
 function scoreTracksFor(recording: MpakRecordingInput) {
   if (!recording.tracks?.length) return undefined;
+  const names =
+    recording.trackNames?.length === recording.tracks.length
+      ? { names: recording.trackNames }
+      : {};
   if (recording.feature === 'backing')
-    return { [SCORE_ID]: { omits: recording.tracks } };
+    return { [SCORE_ID]: { omits: recording.tracks, ...names } };
   if (recording.feature === 'solo')
-    return { [SCORE_ID]: { only: recording.tracks } };
+    return { [SCORE_ID]: { only: recording.tracks, ...names } };
   return undefined;
 }
 

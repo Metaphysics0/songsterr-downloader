@@ -173,7 +173,7 @@ describe('every Songsterr video is kept', () => {
     ]);
     expect(manifest.defaultRecording).toBeUndefined();
     expect(manifest.recordings[2].scoreTracks).toEqual({
-      main: { omits: [1] }
+      main: { omits: [1], names: ['Drums'] }
     });
     expect(manifest.recordings[0].scoreTracks).toBeUndefined();
   });

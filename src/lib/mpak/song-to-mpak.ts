@@ -55,7 +55,11 @@ export async function buildMpakForSong({
       byVideo.set(set.videoId, { label, points });
     }
     const info: PlacementInfo = {};
-    const meta = { feature: set.feature, tracks: set.tracks };
+    const meta = {
+      feature: set.feature,
+      tracks: set.tracks,
+      trackNames: trackNamesFor(set, song)
+    };
     try {
       recordings.push({
         videoId: set.videoId,
@@ -99,6 +103,20 @@ function kindOf(set: SongsterrSyncSet): string {
 function rank(set: SongsterrSyncSet): number {
   const index = KIND_ORDER.indexOf(kindOf(set));
   return index === -1 ? KIND_ORDER.length : index;
+}
+
+// The names the converter gives the tracks in the .gp file, so a reader can
+// check the indexes against the score. Left out unless every index resolves.
+function trackNamesFor(
+  set: SongsterrSyncSet,
+  song: SelectedSong
+): string[] | undefined {
+  if (!set.tracks?.length) return undefined;
+  const names = set.tracks.map((i) => {
+    const track = song.tracks[i];
+    return track?.title || track?.name;
+  });
+  return names.every(Boolean) ? (names as string[]) : undefined;
 }
 
 function labelFor(
