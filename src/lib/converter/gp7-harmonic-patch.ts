@@ -3,19 +3,31 @@ import { unzipSync, zipSync } from 'fflate';
 const GPIF_PATH = 'Content/score.gpif';
 
 const NOTE_PATTERN = /<Note\b.*?<\/Note>/gs;
-const HARMONIC_TYPE_PATTERN = /<Property name="HarmonicType"><HType>([^<]+)<\/HType><\/Property>/;
+const HARMONIC_TYPE_PATTERN =
+  /<Property name="HarmonicType"><HType>([^<]+)<\/HType><\/Property>/;
 const CONCERT_PITCH_PATTERN =
   /<Property name="ConcertPitch"><Pitch>([\s\S]*?)<\/Pitch><\/Property>/;
-const MIDI_PATTERN = /<Property name="Midi"><Number>(\d+)<\/Number><\/Property>/;
+const MIDI_PATTERN =
+  /<Property name="Midi"><Number>(\d+)<\/Number><\/Property>/;
 const STEP_PATTERN = /<Step>([A-G])<\/Step>/;
 const OCTAVE_PATTERN = /<Octave>(-?\d+)<\/Octave>/;
 const ACCIDENTAL_PATTERN = /<Accidental>([^<]*)<\/Accidental>/;
 
 const STEP_SEMITONES: Record<string, number> = {
-  C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11,
+  C: 0,
+  D: 2,
+  E: 4,
+  F: 5,
+  G: 7,
+  A: 9,
+  B: 11
 };
 const ACCIDENTAL_SEMITONES: Record<string, number> = {
-  '': 0, '#': 1, x: 2, b: -1, bb: -2,
+  '': 0,
+  '#': 1,
+  x: 2,
+  b: -1,
+  bb: -2
 };
 
 /**
@@ -54,7 +66,7 @@ export function patchHarmonicNotesInGpif(gpif: string): string {
     }
     return note.replace(
       midi[0],
-      `<Property name="Midi"><Number>${frettedMidi}</Number></Property>`,
+      `<Property name="Midi"><Number>${frettedMidi}</Number></Property>`
     );
   });
 }

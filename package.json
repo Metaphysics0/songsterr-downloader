@@ -1,5 +1,5 @@
 {
-  "name": "first",
+  "name": "songsterr-downloader",
   "version": "0.0.1",
   "private": true,
   "engines": {
@@ -7,27 +7,23 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "start": "npm run dev",
     "build": "vite build",
     "prepare": "svelte-kit sync",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
-    "lint": "prettier --plugin-search-dir . --check .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "lint": "bun fmt --no-script --check",
+    "format": "bun fmt --no-script"
   },
   "devDependencies": {
     "@fontsource-variable/nunito": "^5.0.0",
-    "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/adapter-vercel": "^6",
     "@sveltejs/kit": "^2.5.27",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tailwindcss/vite": "^4.2.1",
     "@zerodevx/svelte-toast": "^0.9.5",
     "daisyui": "^5.5.19",
-    "prettier": "^3.1.0",
-    "prettier-plugin-svelte": "^3.2.6",
     "svelte": "^5.51.0",
     "svelte-check": "^4.0.0",
     "tailwindcss": "^4.2.1",

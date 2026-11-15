@@ -2,7 +2,13 @@
   let { class: className = '' }: { class?: string } = $props();
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class={className}>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1em"
+  height="1em"
+  viewBox="0 0 24 24"
+  class={className}
+>
   <path d="M0 0h24v24H0z" fill="none" />
   <g fill="none" fill-rule="evenodd">
     <path

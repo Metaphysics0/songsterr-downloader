@@ -239,7 +239,9 @@ export class SongsterrToAlphaTabConverter {
     // while GP7 (and MuseScore) expect the *fretted* pitch and derive the
     // harmonic offset from HarmonicType/HarmonicFret — patch Midi back to the
     // fretted ConcertPitch (no-op when the file has no harmonics).
-    const data = patchGp7Harmonics(patchGp7Percussion(exporter.export(score, settings)));
+    const data = patchGp7Harmonics(
+      patchGp7Percussion(exporter.export(score, settings))
+    );
 
     return { data, warnings };
   }
@@ -256,7 +258,11 @@ export class SongsterrToAlphaTabConverter {
       ? alphaTab.midi.MidiFileFormat.MultiTrack
       : alphaTab.midi.MidiFileFormat.SingleTrackMultiChannel;
     const handler = new alphaTab.midi.AlphaSynthMidiFileHandler(midiFile, true);
-    const generator = new alphaTab.midi.MidiFileGenerator(score, settings, handler);
+    const generator = new alphaTab.midi.MidiFileGenerator(
+      score,
+      settings,
+      handler
+    );
     generator.generate();
     let data = midiFile.toBinary();
 
@@ -271,7 +277,10 @@ export class SongsterrToAlphaTabConverter {
     return { data, warnings };
   }
 
-  private buildScore({ meta, revisions }: SongsterrToGpInput): BuildScoreResult {
+  private buildScore({
+    meta,
+    revisions
+  }: SongsterrToGpInput): BuildScoreResult {
     const warnings: ConversionWarning[] = [];
 
     // Must happen before any model objects exist — see ensurePercussionIndexMap.
@@ -720,7 +729,11 @@ export class SongsterrToAlphaTabConverter {
     }
 
     // Bend
-    if (noteData.bend && noteData.bend.points && noteData.bend.points.length > 0) {
+    if (
+      noteData.bend &&
+      noteData.bend.points &&
+      noteData.bend.points.length > 0
+    ) {
       this.mapBend(note, noteData.bend);
     }
 
@@ -902,11 +915,17 @@ export class SongsterrToAlphaTabConverter {
     return [numerator, denominator];
   }
 
-  private extractMarkerText(marker: string | { text: string; width?: number }): string {
+  private extractMarkerText(
+    marker: string | { text: string; width?: number }
+  ): string {
     if (typeof marker === 'string') {
       return marker;
     }
-    if (marker && typeof marker === 'object' && typeof marker.text === 'string') {
+    if (
+      marker &&
+      typeof marker === 'object' &&
+      typeof marker.text === 'string'
+    ) {
       return marker.text;
     }
     return '';
