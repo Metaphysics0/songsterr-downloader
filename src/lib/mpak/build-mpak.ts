@@ -34,8 +34,19 @@ export interface BuildMpakInput {
 }
 
 function roleFor(feature?: string): string {
-  // The main video and its alternates are the released recording.
-  return !feature || feature === 'alternative' ? 'original' : feature;
+  if (!feature) return 'original';
+  return feature === 'alternative' ? 'alternate' : feature;
+}
+
+// The tab tracks a video covers (spec section 7, "Tracks in a recording"): a
+// backing video lacks them, a solo video has only them.
+function scoreTracksFor(recording: MpakRecordingInput) {
+  if (!recording.tracks?.length) return undefined;
+  if (recording.feature === 'backing')
+    return { [SCORE_ID]: { omits: recording.tracks } };
+  if (recording.feature === 'solo')
+    return { [SCORE_ID]: { only: recording.tracks } };
+  return undefined;
 }
 
 export async function sha256Hex(bytes: Uint8Array): Promise<string> {
@@ -88,13 +99,8 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
               ? { sync: { [SCORE_ID]: `sync/${recording.id}.json` } }
               : {}),
             sources: [{ type: 'youtube', videoId: recording.videoId }],
-            ...(recording.feature || recording.tracks
-              ? {
-                  'x-songsterr': {
-                    feature: recording.feature,
-                    tracks: recording.tracks
-                  }
-                }
+            ...(scoreTracksFor(recording)
+              ? { scoreTracks: scoreTracksFor(recording) }
               : {})
           }))
         }

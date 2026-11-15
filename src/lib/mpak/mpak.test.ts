@@ -163,7 +163,7 @@ describe('every Songsterr video is kept', () => {
     const manifest = JSON.parse(strFromU8(unzipSync(bytes)['manifest.json']));
     expect(manifest.recordings.map((r: any) => r.role)).toEqual([
       'original',
-      'original',
+      'alternate',
       'backing'
     ]);
     expect(manifest.recordings.map((r: any) => r.label)).toEqual([
@@ -172,10 +172,10 @@ describe('every Songsterr video is kept', () => {
       'Backing track (without Drums)'
     ]);
     expect(manifest.defaultRecording).toBeUndefined();
-    expect(manifest.recordings[2]['x-songsterr']).toEqual({
-      feature: 'backing',
-      tracks: [1]
+    expect(manifest.recordings[2].scoreTracks).toEqual({
+      main: { omits: [1] }
     });
+    expect(manifest.recordings[0].scoreTracks).toBeUndefined();
   });
 });
 
