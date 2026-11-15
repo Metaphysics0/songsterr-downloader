@@ -1,4 +1,8 @@
-import type { SelectedSong, SongsterrStateMetaCurrentTrack } from '$lib/types';
+import type {
+  SelectedSong,
+  SongsterrStateMetaCurrentTrack,
+  SongsterrSyncSet
+} from '$lib/types';
 
 /*
  * Tab metadata reaches the app from two untrusted places: the server action
@@ -9,6 +13,9 @@ import type { SelectedSong, SongsterrStateMetaCurrentTrack } from '$lib/types';
 
 const MAX_TRACKS = 100;
 const MAX_TEXT_LENGTH = 300;
+const MAX_SYNC_SETS = 200;
+const MAX_SYNC_POINTS = 5000;
+const VIDEO_ID_PATTERN = /^[A-Za-z0-9_-]{11}$/;
 const IMAGE_PATTERN = /^[A-Za-z0-9_-]{1,100}$/;
 
 export class InvalidTabMetaError extends Error {
@@ -53,7 +60,58 @@ export function parseSelectedSong(input: unknown): SelectedSong {
     song.byLinkUrl = byLinkUrl;
   }
 
+  const syncSets = parseSyncSets(input.syncSets);
+  if (syncSets.length > 0) song.syncSets = syncSets;
+
   return song;
+}
+
+/*
+ * The video-points list: `[{ videoId, points: [seconds...] }]`. Sets
+ * that are unusable (bad video id, too short, not numbers) are dropped
+ * instead of failing the whole tab.
+ */
+export function parseSyncSets(input: unknown): SongsterrSyncSet[] {
+  if (!Array.isArray(input)) return [];
+  const seen = new Set<string>();
+  const sets: SongsterrSyncSet[] = [];
+  for (const entry of input) {
+    if (sets.length >= MAX_SYNC_SETS) break;
+    if (!isRecord(entry)) continue;
+    const { videoId, points } = entry;
+    if (typeof videoId !== 'string' || !VIDEO_ID_PATTERN.test(videoId))
+      continue;
+    if (
+      !Array.isArray(points) ||
+      points.length < 2 ||
+      points.length > MAX_SYNC_POINTS ||
+      !points.every(
+        (point) => typeof point === 'number' && Number.isFinite(point)
+      )
+    ) {
+      continue;
+    }
+    // The same video can be listed several times with different points, and
+    // each is kept; only an exact repeat is dropped.
+    const key = `${videoId}:${points.join(',')}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    const set: SongsterrSyncSet = { videoId, points: points as number[] };
+    const feature = text(entry.feature).slice(0, 32);
+    if (feature) set.feature = feature;
+    if (
+      Array.isArray(entry.tracks) &&
+      entry.tracks.length <= MAX_TRACKS &&
+      entry.tracks.every(
+        (track) => Number.isSafeInteger(track) && track >= 0 && track <= 1000
+      )
+    ) {
+      set.tracks = entry.tracks as number[];
+    }
+    sets.push(set);
+  }
+  return sets;
 }
 
 function parseTrack(input: unknown): SongsterrStateMetaCurrentTrack {

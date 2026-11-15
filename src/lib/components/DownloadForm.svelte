@@ -1,7 +1,8 @@
 <script lang="ts">
   import {
     downloadGuitarPro,
-    downloadMidi as downloadMidiFile
+    downloadMidi as downloadMidiFile,
+    downloadMpak as downloadMpakFile
   } from '$lib/utils/download-tab';
   import SongPreview from './SongPreview.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
@@ -17,7 +18,7 @@
 
   let { selectedSong }: Props = $props();
 
-  let downloading: 'tab' | 'midi' | null = $state(null);
+  let downloading: 'tab' | 'midi' | 'mpak' | null = $state(null);
   let midiDownloadOptions = $state<MidiDownloadOptionsValue>({
     separateTracks: false
   });
@@ -39,6 +40,16 @@
       await downloadMidiFile(selectedSong, {
         separateTracks: midiDownloadOptions.separateTracks
       });
+    } finally {
+      downloading = null;
+    }
+  }
+
+  async function downloadMpak(): Promise<void> {
+    if (downloading) return;
+    downloading = 'mpak';
+    try {
+      await downloadMpakFile(selectedSong);
     } finally {
       downloading = null;
     }
@@ -82,6 +93,19 @@
         disabled={!!downloading}
       />
     </div>
+    <button
+      class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+      disabled={!!downloading}
+      title="Music Pack: the tab plus its synced YouTube videos"
+      onclick={downloadMpak}
+    >
+      Download Music Pack{#if selectedSong.syncSets?.length}{' '}({selectedSong
+          .syncSets.length}
+        {selectedSong.syncSets.length === 1 ? 'video' : 'videos'}){/if}
+      {#if downloading === 'mpak'}
+        <span class="progress-bar"></span>
+      {/if}
+    </button>
   </div>
   <div class="my-2"></div>
 

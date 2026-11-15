@@ -4,7 +4,7 @@
  */
 export function buildFileNameFromSongName(
   songName: string,
-  extension: '.gp' | '.mid'
+  extension: '.gp' | '.mid' | '.mpak'
 ): string {
   const normalized = normalizeSongName(songName);
   return (normalized || `downloaded-tab_${Date.now()}`) + extension;
