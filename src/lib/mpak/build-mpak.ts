@@ -81,6 +81,29 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
     id: `v${index + 1}`
   }));
 
+  // The sync files are written first so that the manifest can state their size and hash (spec section 4, "Integrity").
+  const syncFiles: Record<string, Uint8Array> = {};
+  const entries: Record<string, { size: number; sha256: string }> = {};
+  for (const recording of recordings) {
+    if (!recording.points?.length) continue;
+    const path = `sync/${recording.id}.json`;
+    const bytes = json({
+      version: 1,
+      recording: recording.id,
+      score: SCORE_ID,
+      anchorType: 'bar',
+      updatedAt: now,
+      points: recording.points.map((point) => ({
+        timeMs: point.timeMs,
+        bar: point.barIndex,
+        occurrence: point.occurrence,
+        pos: 0
+      }))
+    });
+    syncFiles[path] = bytes;
+    entries[path] = { size: bytes.length, sha256: await sha256Hex(bytes) };
+  }
+
   const scoreSha256 = await sha256Hex(input.tab.bytes);
   const manifest = {
     format: 'mpak',
@@ -95,6 +118,7 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
         path: 'score/song.gp',
         format: 'gp',
         sha256: scoreSha256,
+        size: input.tab.bytes.length,
         name: input.tab.name
       }
     ],
@@ -113,7 +137,8 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
               : {})
           }))
         }
-      : {})
+      : {}),
+    ...(Object.keys(entries).length > 0 ? { entries } : {})
   };
 
   const files: Record<string, Uint8Array | [Uint8Array, { level: 0 }]> = {
@@ -122,22 +147,7 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
     'score/song.gp': [input.tab.bytes, { level: 0 }]
   };
 
-  for (const recording of recordings) {
-    if (!recording.points?.length) continue;
-    files[`sync/${recording.id}.json`] = json({
-      version: 1,
-      recording: recording.id,
-      score: SCORE_ID,
-      anchorType: 'bar',
-      updatedAt: now,
-      points: recording.points.map((point) => ({
-        timeMs: point.timeMs,
-        bar: point.barIndex,
-        occurrence: point.occurrence,
-        pos: 0
-      }))
-    });
-  }
+  Object.assign(files, syncFiles);
 
   return zipSync(files as Parameters<typeof zipSync>[0]);
 }

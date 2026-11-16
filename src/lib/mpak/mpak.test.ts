@@ -3,6 +3,7 @@ import { unzipSync, strFromU8 } from 'fflate';
 import { placeBarTimes, timesToMs, type PlayedBar } from './place-bar-times';
 import { buildMpakForSong } from './song-to-mpak';
 import { derivedPackId } from './pack-id';
+import { sha256Hex } from './build-mpak';
 import { findSyncSets } from '$lib/songsterr/video-points';
 import { parseSelectedSong } from '$lib/songsterr/tab-meta';
 
@@ -84,6 +85,16 @@ describe('buildMpakForSong', () => {
     expect(manifest.scores[0].format).toBe('gp');
     // The pack id is derived from the score, so the same song makes the same id (spec section 4).
     expect(manifest.id).toBe(await derivedPackId(manifest.scores[0].sha256));
+    // The manifest states the size of the score and the size and hash of each sync file (spec section 4, "Integrity").
+    expect(manifest.scores[0].size).toBe(tab.length);
+    for (const [path, info] of Object.entries(manifest.entries) as [
+      string,
+      { size: number; sha256: string }
+    ][]) {
+      expect(info.size).toBe(files[path].length);
+      expect(info.sha256).toBe(await sha256Hex(files[path]));
+    }
+    expect(Object.keys(manifest.entries)).toEqual(['sync/v1.json']);
     expect(manifest.scores[0].sha256).toMatch(/^[0-9a-f]{64}$/);
     expect(manifest.recordings.map((r: any) => r.sources[0].videoId)).toEqual([
       'AAAAAAAAAAA',
