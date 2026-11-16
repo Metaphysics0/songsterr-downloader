@@ -99,9 +99,7 @@
       title="Music Pack: the tab plus its synced YouTube videos"
       onclick={downloadMpak}
     >
-      Download Music Pack{#if selectedSong.syncSets?.length}{' '}({selectedSong
-          .syncSets.length}
-        {selectedSong.syncSets.length === 1 ? 'video' : 'videos'}){/if}
+      Download MPAK
       {#if downloading === 'mpak'}
         <span class="progress-bar"></span>
       {/if}
