@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { unzipSync, strFromU8 } from 'fflate';
 import { placeBarTimes, timesToMs, type PlayedBar } from './place-bar-times';
 import { buildMpakForSong } from './song-to-mpak';
+import { derivedPackId } from './pack-id';
 import { findSyncSets } from '$lib/songsterr/video-points';
 import { parseSelectedSong } from '$lib/songsterr/tab-meta';
 
@@ -81,6 +82,8 @@ describe('buildMpakForSong', () => {
 
     const manifest = JSON.parse(strFromU8(files['manifest.json']));
     expect(manifest.scores[0].format).toBe('gp');
+    // The pack id is derived from the score, so the same song makes the same id (spec section 4).
+    expect(manifest.id).toBe(await derivedPackId(manifest.scores[0].sha256));
     expect(manifest.scores[0].sha256).toMatch(/^[0-9a-f]{64}$/);
     expect(manifest.recordings.map((r: any) => r.sources[0].videoId)).toEqual([
       'AAAAAAAAAAA',
@@ -256,5 +259,16 @@ describe('findSyncSets', () => {
         throw new Error('blocked');
       })
     ).toEqual([]);
+  });
+});
+
+describe('derivedPackId', () => {
+  it('is the version 5 UUID of the score hash in the spec namespace', async () => {
+    expect(await derivedPackId('0'.repeat(64))).toBe(
+      '8980d354-7334-5de0-8804-bb35580aea65'
+    );
+    expect(await derivedPackId('A'.repeat(64))).toBe(
+      await derivedPackId('a'.repeat(64))
+    );
   });
 });

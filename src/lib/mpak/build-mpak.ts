@@ -1,5 +1,6 @@
 import { zipSync } from 'fflate';
 import type { BarPoint } from './place-bar-times';
+import { derivedPackId } from './pack-id';
 
 /*
  * Writes a Music Pack (.mpak) archive, version 1: the score stored
@@ -80,9 +81,11 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
     id: `v${index + 1}`
   }));
 
+  const scoreSha256 = await sha256Hex(input.tab.bytes);
   const manifest = {
     format: 'mpak',
     version: 1,
+    id: await derivedPackId(scoreSha256),
     createdAt: now,
     generator: input.generator,
     song: { title: input.title, artist: input.artist },
@@ -91,7 +94,7 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
         id: SCORE_ID,
         path: 'score/song.gp',
         format: 'gp',
-        sha256: await sha256Hex(input.tab.bytes),
+        sha256: scoreSha256,
         name: input.tab.name
       }
     ],
