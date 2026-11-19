@@ -87,6 +87,7 @@ describe('buildMpakForSong', () => {
     expect(manifest.id).toBe(await derivedPackId(manifest.scores[0].sha256));
     // The manifest states the size of the score and the size and hash of each sync file (spec section 4, "Integrity").
     expect(manifest.scores[0].size).toBe(tab.length);
+    expect(manifest.scores[0].origin).toBe('Songsterr');
     for (const [path, info] of Object.entries(manifest.entries) as [
       string,
       { size: number; sha256: string }

@@ -119,7 +119,8 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
         format: 'gp',
         sha256: scoreSha256,
         size: input.tab.bytes.length,
-        name: input.tab.name
+        name: input.tab.name,
+        origin: 'Songsterr'
       }
     ],
     ...(recordings.length > 0
