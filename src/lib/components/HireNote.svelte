@@ -3,8 +3,7 @@
   import { trackHireLinkClicked } from '$lib/analytics/mixpanel';
 
   // Shown after a successful download, when people just got value from the app.
-  const HIRE_URL =
-    'https://ryanroberts.dev/build?ref=songsterr-dl&placement=after-download';
+  const HIRE_URL = 'https://ryanroberts.dev/build';
 </script>
 
 <p
