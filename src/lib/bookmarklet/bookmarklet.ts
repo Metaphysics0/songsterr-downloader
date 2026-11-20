@@ -34,7 +34,58 @@ export function bookmarkletMain(appUrl: string): void {
     }
   }
 
-  function toPayload(current: any): string {
+  /*
+   * Fetches video sync points here because the video API answers only on
+   * the tab site's own origin, then sends them in the payload. Only entries with
+   * status "done" count, and only the tab's own revision is used. If a request
+   * fails, the download has no video sync. Mirrors findSyncSets.
+   */
+  function getJson(path: string): Promise<any> {
+    return fetch(path, { credentials: 'include' })
+      .then(function (response) {
+        return response && response.ok && response.json
+          ? response.json()
+          : null;
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
+  function usableSets(list: any): any[] {
+    if (!Array.isArray(list)) return [];
+    return list
+      .filter(function (entry: any) {
+        return (
+          entry &&
+          entry.status === 'done' &&
+          typeof entry.videoId === 'string' &&
+          Array.isArray(entry.points) &&
+          entry.points.length > 1
+        );
+      })
+      .map(function (entry: any) {
+        return {
+          videoId: entry.videoId,
+          id: entry.id,
+          revisionToVideoId: entry.revisionToVideoId,
+          revisionId: entry.revisionId,
+          feature: entry.feature || undefined,
+          tracks: Array.isArray(entry.tracks) ? entry.tracks : undefined,
+          points: entry.points.map(function (point: any) {
+            return Math.round(Number(point) * 1000) / 1000;
+          })
+        };
+      });
+  }
+
+  function loadSyncSets(current: any): Promise<any[]> {
+    return getJson(
+      '/api/video-points/' + current.songId + '/' + current.revisionId + '/list'
+    ).then(usableSets);
+  }
+
+  function toPayload(current: any, syncSets: any[]): string {
     const tracks = (current.tracks || []).map(function (track: any) {
       return {
         partId: track.partId,
@@ -53,7 +104,8 @@ export function bookmarkletMain(appUrl: string): void {
       artist: current.artist,
       artistId: current.artistId,
       tracks: tracks,
-      byLinkUrl: location.origin + location.pathname
+      byLinkUrl: location.origin + location.pathname,
+      syncSets: syncSets.length ? syncSets : undefined
     });
     const bytes = new TextEncoder().encode(json);
     let binary = '';
@@ -66,7 +118,25 @@ export function bookmarkletMain(appUrl: string): void {
   }
 
   function send(current: any): void {
-    const target = appUrl + '#' + HASH_KEY + '=' + toPayload(current);
+    // Don't let a slow video API delay the tab. Browsers allow the popup
+    // only shortly after the click.
+    let sent = false;
+    function go(syncSets: any[]): void {
+      if (sent) return;
+      sent = true;
+      clearTimeout(timer);
+      openApp(current, syncSets);
+    }
+    const timer = setTimeout(function () {
+      go([]);
+    }, 1500);
+    loadSyncSets(current).then(go, function () {
+      go([]);
+    });
+  }
+
+  function openApp(current: any, syncSets: any[]): void {
+    const target = appUrl + '#' + HASH_KEY + '=' + toPayload(current, syncSets);
     const opened = window.open(target, 'songsterr-downloader');
     // Popup blocked (e.g. after the async fallback below): navigate instead.
     if (!opened) location.href = target;

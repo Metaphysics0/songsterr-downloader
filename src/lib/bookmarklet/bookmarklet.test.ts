@@ -41,6 +41,7 @@ interface RunOptions {
   state?: unknown;
   fetchedState?: unknown;
   popupBlocked?: boolean;
+  api?: Record<string, unknown>;
 }
 
 /*
@@ -51,7 +52,8 @@ async function runBookmarklet({
   href = 'https://www.songsterr.com/a/wsa/dragonforce-through-the-fire-and-flames-tab-s334',
   state = current,
   fetchedState,
-  popupBlocked = false
+  popupBlocked = false,
+  api = {}
 }: RunOptions = {}) {
   const url = new URL(href);
   const location = {
@@ -62,7 +64,11 @@ async function runBookmarklet({
   };
   const alert = vi.fn();
   const open = vi.fn(() => (popupBlocked ? null : {}));
-  const fetch = vi.fn(async () => ({ text: async () => 'html' }));
+  const fetch = vi.fn(async (path: string) =>
+    path in api
+      ? { ok: true, json: async () => api[path] }
+      : { text: async () => 'html' }
+  );
   class DOMParser {
     parseFromString() {
       return fakeDocument(fetchedState);
@@ -130,6 +136,21 @@ describe('bookmarklet', () => {
     });
   });
 
+  it('carries the done Songsterr video sync points of the tab revision', async () => {
+    const { open } = await runBookmarklet({
+      api: {
+        '/api/video-points/334/10072207/list': [
+          { videoId: 'BBBBBBBBBBB', points: [0, 1, 2], status: 'pending' },
+          { videoId: 'AAAAAAAAAAA', points: [0, 1.23456, 2.5], status: 'done' }
+        ]
+      }
+    });
+    const [target] = open.mock.calls[0] as unknown as [string];
+    expect(readSelectedSongFromHash(hashOf(target))?.syncSets).toEqual([
+      { videoId: 'AAAAAAAAAAA', points: [0, 1.235, 2.5] }
+    ]);
+  });
+
   it('round-trips non-ASCII titles', async () => {
     const { open } = await runBookmarklet({
       state: { ...current, title: 'Пачка сигарет', artist: 'Кино' }
@@ -147,7 +168,10 @@ describe('bookmarklet', () => {
       fetchedState: { ...current, songId: 999 }
     });
 
-    expect(fetch).toHaveBeenCalledOnce();
+    expect(fetch.mock.calls[0]).toEqual([
+      'https://www.songsterr.com/a/wsa/some-other-song-tab-s999',
+      { credentials: 'include' }
+    ]);
     const [target] = open.mock.calls[0] as unknown as [string];
     expect(readSelectedSongFromHash(hashOf(target))?.songId).toBe(999);
   });

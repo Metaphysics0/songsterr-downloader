@@ -1,13 +1,20 @@
-import type { MidiDownloadOptions, SelectedSong } from '$lib/types';
+import type {
+  DownloadType,
+  MidiDownloadOptions,
+  MpakDownloadOptions,
+  SelectedSong
+} from '$lib/types';
 import { triggerFileDownload } from '$lib/utils/trigger-client-side-download';
 import {
   trackGuitarProDownloaded,
   trackMidiDownloaded,
+  trackMpakDownloaded,
   trackDownloadFailed
 } from '$lib/analytics/mixpanel';
 import { toastError } from '$lib/utils/toast.util';
 import { ERROR_DOWNLOADING_TAB_TOAST_MESSAGE } from '$lib/constants/error-downloading-tab-toast-message';
 import { fetchAllPartRevisionsWithFallback } from '$lib/songsterr/revision-fetcher';
+import { MPAK_MEDIA_TYPE } from '$lib/mpak/build-mpak';
 import { buildFileNameFromSongName } from '$lib/songsterr/file-name';
 
 /*
@@ -56,10 +63,31 @@ export async function downloadMidi(
   }
 }
 
+export async function downloadMpak(
+  song: SelectedSong,
+  options: Partial<MpakDownloadOptions> = {}
+): Promise<void> {
+  try {
+    const blob = await buildFile(song, 'mpak', options);
+    triggerFileDownload({
+      blob,
+      fileName: buildFileNameFromSongName(song.title, '.mpak')
+    });
+    trackMpakDownloaded({
+      title: song.title,
+      artist: song.artist,
+      songId: song.songId,
+      source: song.source
+    });
+  } catch (error) {
+    handleDownloadError(song, 'mpak', error);
+  }
+}
+
 async function buildFile(
   song: SelectedSong,
-  format: 'gp' | 'midi',
-  options: Partial<MidiDownloadOptions> = {}
+  format: DownloadType,
+  options: Partial<MidiDownloadOptions & MpakDownloadOptions> = {}
 ): Promise<Blob> {
   // alphaTab is large; load it only once someone actually downloads.
   const [
@@ -78,7 +106,7 @@ async function buildFile(
   const converter = new SongsterrToAlphaTabConverter();
   const input = { meta: song, revisions };
   const { data, warnings: convertWarnings } =
-    format === 'gp'
+    format === 'gp' || format === 'mpak'
       ? converter.toGp7(input)
       : converter.toMidi(input, {
           separateTracks: options.separateTracks === true
@@ -92,6 +120,21 @@ async function buildFile(
     );
   }
 
+  if (format === 'mpak') {
+    const { buildMpakForSong } = await import('$lib/mpak/song-to-mpak');
+    const mpak = await buildMpakForSong({
+      song,
+      tab: data,
+      allVideos: options.allVideos === true
+    });
+    if (mpak.skipped.length > 0) {
+      console.warn('Videos left without sync points', mpak.skipped);
+    }
+    return new Blob([mpak.bytes as Uint8Array<ArrayBuffer>], {
+      type: MPAK_MEDIA_TYPE
+    });
+  }
+
   return new Blob([data as Uint8Array<ArrayBuffer>], {
     type: format === 'gp' ? 'application/gp' : 'audio/midi'
   });
@@ -99,7 +142,7 @@ async function buildFile(
 
 function handleDownloadError(
   song: SelectedSong,
-  downloadType: 'gp' | 'midi',
+  downloadType: DownloadType,
   error: unknown
 ) {
   console.error('error', error);

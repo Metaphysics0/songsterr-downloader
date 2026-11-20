@@ -1,15 +1,21 @@
 <script lang="ts">
   import {
     downloadGuitarPro,
-    downloadMidi as downloadMidiFile
+    downloadMidi as downloadMidiFile,
+    downloadMpak as downloadMpakFile
   } from '$lib/utils/download-tab';
   import SongPreview from './SongPreview.svelte';
   import { formState } from '$lib/runes/form-state.svelte';
   import type { SelectedSong } from '$lib/types';
   import GuitarIcon from '$lib/icons/GuitarIcon.svelte';
   import MidiIcon from '$lib/icons/MidiIcon.svelte';
+  import MpakIcon from '$lib/icons/MpakIcon.svelte';
   import MidiDownloadOptions from './MidiDownloadOptions.svelte';
-  import type { MidiDownloadOptions as MidiDownloadOptionsValue } from '$lib/types';
+  import MpakDownloadOptions from './MpakDownloadOptions.svelte';
+  import type {
+    MidiDownloadOptions as MidiDownloadOptionsValue,
+    MpakDownloadOptions as MpakDownloadOptionsValue
+  } from '$lib/types';
 
   interface Props {
     selectedSong: SelectedSong;
@@ -17,9 +23,12 @@
 
   let { selectedSong }: Props = $props();
 
-  let downloading: 'tab' | 'midi' | null = $state(null);
+  let downloading: 'tab' | 'midi' | 'mpak' | null = $state(null);
   let midiDownloadOptions = $state<MidiDownloadOptionsValue>({
     separateTracks: false
+  });
+  let mpakDownloadOptions = $state<MpakDownloadOptionsValue>({
+    allVideos: false
   });
 
   async function downloadTab(): Promise<void> {
@@ -38,6 +47,18 @@
     try {
       await downloadMidiFile(selectedSong, {
         separateTracks: midiDownloadOptions.separateTracks
+      });
+    } finally {
+      downloading = null;
+    }
+  }
+
+  async function downloadMpak(): Promise<void> {
+    if (downloading) return;
+    downloading = 'mpak';
+    try {
+      await downloadMpakFile(selectedSong, {
+        allVideos: mpakDownloadOptions.allVideos
       });
     } finally {
       downloading = null;
@@ -79,6 +100,24 @@
       </button>
       <MidiDownloadOptions
         bind:options={midiDownloadOptions}
+        disabled={!!downloading}
+      />
+    </div>
+    <div class="flex items-stretch gap-1">
+      <button
+        class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+        disabled={!!downloading}
+        title="Music Pack: the tab plus its synced YouTube videos (full band, backing track and solo by default)"
+        onclick={downloadMpak}
+      >
+        <MpakIcon class="inline-block mr-1.5 text-base" />
+        Download MPAK
+        {#if downloading === 'mpak'}
+          <span class="progress-bar"></span>
+        {/if}
+      </button>
+      <MpakDownloadOptions
+        bind:options={mpakDownloadOptions}
         disabled={!!downloading}
       />
     </div>

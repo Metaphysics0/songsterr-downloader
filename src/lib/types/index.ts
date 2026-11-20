@@ -1,5 +1,11 @@
+export type DownloadType = 'gp' | 'midi' | 'mpak';
+
 export interface MidiDownloadOptions {
   separateTracks: boolean;
+}
+
+export interface MpakDownloadOptions {
+  allVideos: boolean;
 }
 
 export interface SongsterrStateMetaCurrentTrack {
@@ -24,9 +30,29 @@ export interface SongsterrStateMetaCurrent {
  * Everything the browser needs to fetch and convert a tab without asking the
  * server: the CDN revision coordinates plus display fields.
  */
+/*
+ * One YouTube video the tab site has synced to the tab: the start time of every
+ * played bar (repeats expanded), in seconds, as served by its video-points API.
+ */
+export interface SongsterrSyncSet {
+  videoId: string;
+  /** Start of each played bar in seconds, in playback order. */
+  points: number[];
+  /** The tab site's ids for this record, its link to the video, and the tab revision the points were made for. */
+  id?: number;
+  revisionToVideoId?: number;
+  revisionId?: number;
+  /** The kind of video: "alternative", "backing", "solo", or none. */
+  feature?: string;
+  /** Indices into the tab's tracks that a backing or solo video covers. */
+  tracks?: number[];
+}
+
 export interface SelectedSong extends SongsterrStateMetaCurrent {
   artistId?: number;
   byLinkUrl?: string;
+  /** YouTube videos with bar start times; absent when none are synced. */
+  syncSets?: SongsterrSyncSet[];
   /** How the song reached the app; set client-side, for analytics. */
   source?: SelectedSongSource;
 }
