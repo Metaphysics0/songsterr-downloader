@@ -17,7 +17,8 @@ import { buildFileNameFromSongName } from '$lib/songsterr/file-name';
  * does not affect it.
  */
 
-export async function downloadGuitarPro(song: SelectedSong): Promise<void> {
+/** Resolves to true when the file was saved, false when the download failed. */
+export async function downloadGuitarPro(song: SelectedSong): Promise<boolean> {
   try {
     const blob = await buildFile(song, 'gp');
     triggerFileDownload({
@@ -30,15 +31,17 @@ export async function downloadGuitarPro(song: SelectedSong): Promise<void> {
       songId: song.songId,
       source: song.source
     });
+    return true;
   } catch (error) {
     handleDownloadError(song, 'gp', error);
+    return false;
   }
 }
 
 export async function downloadMidi(
   song: SelectedSong,
   options: Partial<MidiDownloadOptions> = {}
-): Promise<void> {
+): Promise<boolean> {
   try {
     const blob = await buildFile(song, 'midi', options);
     triggerFileDownload({
@@ -51,8 +54,10 @@ export async function downloadMidi(
       songId: song.songId,
       source: song.source
     });
+    return true;
   } catch (error) {
     handleDownloadError(song, 'midi', error);
+    return false;
   }
 }
 
