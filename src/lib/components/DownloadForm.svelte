@@ -9,6 +9,7 @@
   import type { SelectedSong } from '$lib/types';
   import GuitarIcon from '$lib/icons/GuitarIcon.svelte';
   import MidiIcon from '$lib/icons/MidiIcon.svelte';
+  import MpakIcon from '$lib/icons/MpakIcon.svelte';
   import MidiDownloadOptions from './MidiDownloadOptions.svelte';
   import MpakDownloadOptions from './MpakDownloadOptions.svelte';
   import type {
@@ -109,6 +110,7 @@
         title="Music Pack: the tab plus its synced YouTube videos (full band and backing track by default)"
         onclick={downloadMpak}
       >
+        <MpakIcon class="inline-block mr-1.5 text-base" />
         Download MPAK
         {#if downloading === 'mpak'}
           <span class="progress-bar"></span>
