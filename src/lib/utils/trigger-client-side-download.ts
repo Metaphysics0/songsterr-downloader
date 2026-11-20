@@ -1,27 +1,27 @@
-import { browser } from '$app/environment';
+import { browser } from "$app/environment";
 
 const REVOKE_DELAY_MS = 60_000;
 
 export function triggerFileDownload({
   blob,
-  fileName
+  fileName,
 }: {
   blob: Blob;
   fileName: string;
 }) {
   if (!browser) return;
   try {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     const objectUrl = window.URL.createObjectURL(blob);
     link.href = objectUrl;
     link.download = fileName;
-    link.rel = 'noopener';
+    link.rel = "noopener";
 
     /*
      * Firefox only honours a programmatic click on an anchor that is in the
      * document, so the link is attached for the click and removed after.
      */
-    link.style.display = 'none';
+    link.style.display = "none";
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -33,9 +33,9 @@ export function triggerFileDownload({
      */
     window.setTimeout(
       () => window.URL.revokeObjectURL(objectUrl),
-      REVOKE_DELAY_MS
+      REVOKE_DELAY_MS,
     );
   } catch (error) {
-    console.error('Error triggering download', error);
+    console.error("Error triggering download", error);
   }
 }

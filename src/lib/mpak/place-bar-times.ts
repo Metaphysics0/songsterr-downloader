@@ -46,7 +46,7 @@ function firstPassBars(playedBars: PlayedBar[]): PlayedBar[] {
 
 function barsForCount(
   count: number,
-  playedBars: PlayedBar[]
+  playedBars: PlayedBar[],
 ): PlayedBar[] | null {
   if (count === playedBars.length) return playedBars;
   const once = firstPassBars(playedBars);
@@ -83,7 +83,7 @@ function fitsScoreStart(times: number[], playedBars: PlayedBar[]): boolean {
 export function placeBarTimes(
   barTimesMs: number[],
   playedBars: PlayedBar[],
-  info: PlacementInfo = {}
+  info: PlacementInfo = {},
 ): BarPoint[] {
   let times = barTimesMs;
   let target = barsForCount(times.length, playedBars);
@@ -101,9 +101,9 @@ export function placeBarTimes(
   if (!target && !partial) {
     const once = firstPassBars(playedBars).length;
     const plays =
-      once !== playedBars.length ? ` (${once} without its repeats)` : '';
+      once !== playedBars.length ? ` (${once} without its repeats)` : "";
     throw new Error(
-      `List has ${times.length} bars, but the tab plays ${playedBars.length}${plays}`
+      `List has ${times.length} bars, but the tab plays ${playedBars.length}${plays}`,
     );
   }
   const bars = target ?? playedBars;
@@ -118,7 +118,7 @@ export function placeBarTimes(
     return {
       barIndex: bars[i].barIndex,
       occurrence: bars[i].occurrence,
-      timeMs
+      timeMs,
     };
   });
 }

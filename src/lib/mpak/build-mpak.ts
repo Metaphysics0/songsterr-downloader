@@ -1,6 +1,6 @@
-import { zipSync } from 'fflate';
-import type { BarPoint } from './place-bar-times';
-import { derivedPackId } from './pack-id';
+import { zipSync } from "fflate";
+import type { BarPoint } from "./place-bar-times";
+import { derivedPackId } from "./pack-id";
 
 /*
  * Writes a Music Pack (.mpak) archive, version 1: the score stored
@@ -10,9 +10,9 @@ import { derivedPackId } from './pack-id';
  * default, so recordings with sync points are listed first.
  */
 
-const SCORE_ID = 'main';
+const SCORE_ID = "main";
 
-export const MPAK_MEDIA_TYPE = 'application/vnd.mpak+zip';
+export const MPAK_MEDIA_TYPE = "application/vnd.mpak+zip";
 
 export interface MpakRecordingInput {
   videoId: string;
@@ -37,8 +37,8 @@ export interface BuildMpakInput {
 }
 
 function roleFor(feature?: string): string {
-  if (!feature) return 'original';
-  return feature === 'alternative' ? 'alternate' : feature;
+  if (!feature) return "original";
+  return feature === "alternative" ? "alternate" : feature;
 }
 
 // The tab tracks a video covers (spec section 7, "Tracks in a recording"): a
@@ -49,19 +49,19 @@ function scoreTracksFor(recording: MpakRecordingInput) {
     recording.trackNames?.length === recording.tracks.length
       ? { names: recording.trackNames }
       : {};
-  if (recording.feature === 'backing')
+  if (recording.feature === "backing")
     return { [SCORE_ID]: { omits: recording.tracks, ...names } };
-  if (recording.feature === 'solo')
+  if (recording.feature === "solo")
     return { [SCORE_ID]: { only: recording.tracks, ...names } };
   return undefined;
 }
 
 export async function sha256Hex(bytes: Uint8Array): Promise<string> {
   const digest = new Uint8Array(
-    await crypto.subtle.digest('SHA-256', bytes as Uint8Array<ArrayBuffer>)
+    await crypto.subtle.digest("SHA-256", bytes as Uint8Array<ArrayBuffer>),
   );
-  return Array.from(digest, (byte) => byte.toString(16).padStart(2, '0')).join(
-    ''
+  return Array.from(digest, (byte) => byte.toString(16).padStart(2, "0")).join(
+    "",
   );
 }
 
@@ -74,11 +74,11 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
   // The first recording is the default (spec section 7); put a synced one first.
   const ordered = [
     ...input.recordings.filter((recording) => recording.points?.length),
-    ...input.recordings.filter((recording) => !recording.points?.length)
+    ...input.recordings.filter((recording) => !recording.points?.length),
   ];
   const recordings = ordered.map((recording, index) => ({
     ...recording,
-    id: `v${index + 1}`
+    id: `v${index + 1}`,
   }));
 
   // The sync files are written first so that the manifest can state their size and hash (spec section 4, "Integrity").
@@ -91,14 +91,14 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
       version: 1,
       recording: recording.id,
       score: SCORE_ID,
-      anchorType: 'bar',
+      anchorType: "bar",
       updatedAt: now,
       points: recording.points.map((point) => ({
         timeMs: point.timeMs,
         bar: point.barIndex,
         occurrence: point.occurrence,
-        pos: 0
-      }))
+        pos: 0,
+      })),
     });
     syncFiles[path] = bytes;
     entries[path] = { size: bytes.length, sha256: await sha256Hex(bytes) };
@@ -106,7 +106,7 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
 
   const scoreSha256 = await sha256Hex(input.tab.bytes);
   const manifest = {
-    format: 'mpak',
+    format: "mpak",
     version: 1,
     id: await derivedPackId(scoreSha256),
     createdAt: now,
@@ -115,13 +115,13 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
     scores: [
       {
         id: SCORE_ID,
-        path: 'score/song.gp',
-        format: 'gp',
+        path: "score/song.gp",
+        format: "gp",
         sha256: scoreSha256,
         size: input.tab.bytes.length,
         name: input.tab.name,
-        origin: 'Songsterr'
-      }
+        origin: "Songsterr",
+      },
     ],
     ...(recordings.length > 0
       ? {
@@ -132,20 +132,20 @@ export async function buildMpak(input: BuildMpakInput): Promise<Uint8Array> {
             ...(recording.points?.length
               ? { sync: { [SCORE_ID]: `sync/${recording.id}.json` } }
               : {}),
-            sources: [{ type: 'youtube', videoId: recording.videoId }],
+            sources: [{ type: "youtube", videoId: recording.videoId }],
             ...(scoreTracksFor(recording)
               ? { scoreTracks: scoreTracksFor(recording) }
-              : {})
-          }))
+              : {}),
+          })),
         }
       : {}),
-    ...(Object.keys(entries).length > 0 ? { entries } : {})
+    ...(Object.keys(entries).length > 0 ? { entries } : {}),
   };
 
   const files: Record<string, Uint8Array | [Uint8Array, { level: 0 }]> = {
-    'manifest.json': json(manifest),
+    "manifest.json": json(manifest),
     // The score is already a ZIP; deflating it again gains nothing.
-    'score/song.gp': [input.tab.bytes, { level: 0 }]
+    "score/song.gp": [input.tab.bytes, { level: 0 }],
   };
 
   Object.assign(files, syncFiles);

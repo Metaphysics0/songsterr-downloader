@@ -4,6 +4,10 @@ export interface MidiDownloadOptions {
   separateTracks: boolean;
 }
 
+export interface MpakDownloadOptions {
+  allVideos: boolean;
+}
+
 export interface SongsterrStateMetaCurrentTrack {
   partId: number;
   instrumentId: number;

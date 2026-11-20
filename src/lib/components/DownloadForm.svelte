@@ -10,7 +10,11 @@
   import GuitarIcon from '$lib/icons/GuitarIcon.svelte';
   import MidiIcon from '$lib/icons/MidiIcon.svelte';
   import MidiDownloadOptions from './MidiDownloadOptions.svelte';
-  import type { MidiDownloadOptions as MidiDownloadOptionsValue } from '$lib/types';
+  import MpakDownloadOptions from './MpakDownloadOptions.svelte';
+  import type {
+    MidiDownloadOptions as MidiDownloadOptionsValue,
+    MpakDownloadOptions as MpakDownloadOptionsValue
+  } from '$lib/types';
 
   interface Props {
     selectedSong: SelectedSong;
@@ -21,6 +25,9 @@
   let downloading: 'tab' | 'midi' | 'mpak' | null = $state(null);
   let midiDownloadOptions = $state<MidiDownloadOptionsValue>({
     separateTracks: false
+  });
+  let mpakDownloadOptions = $state<MpakDownloadOptionsValue>({
+    allVideos: false
   });
 
   async function downloadTab(): Promise<void> {
@@ -49,7 +56,9 @@
     if (downloading) return;
     downloading = 'mpak';
     try {
-      await downloadMpakFile(selectedSong);
+      await downloadMpakFile(selectedSong, {
+        allVideos: mpakDownloadOptions.allVideos
+      });
     } finally {
       downloading = null;
     }
@@ -93,17 +102,23 @@
         disabled={!!downloading}
       />
     </div>
-    <button
-      class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
-      disabled={!!downloading}
-      title="Music Pack: the tab plus its synced YouTube videos"
-      onclick={downloadMpak}
-    >
-      Download MPAK
-      {#if downloading === 'mpak'}
-        <span class="progress-bar"></span>
-      {/if}
-    </button>
+    <div class="flex items-stretch gap-1">
+      <button
+        class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+        disabled={!!downloading}
+        title="Music Pack: the tab plus its synced YouTube videos (full band and backing track by default)"
+        onclick={downloadMpak}
+      >
+        Download MPAK
+        {#if downloading === 'mpak'}
+          <span class="progress-bar"></span>
+        {/if}
+      </button>
+      <MpakDownloadOptions
+        bind:options={mpakDownloadOptions}
+        disabled={!!downloading}
+      />
+    </div>
   </div>
   <div class="my-2"></div>
 
