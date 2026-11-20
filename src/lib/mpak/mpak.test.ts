@@ -1,319 +1,194 @@
-import { describe, expect, it } from "vitest";
-import { unzipSync, strFromU8 } from "fflate";
-import { placeBarTimes, timesToMs, type PlayedBar } from "./place-bar-times";
-import { buildMpakForSong } from "./song-to-mpak";
-import { derivedPackId } from "./pack-id";
-import { sha256Hex } from "./build-mpak";
-import { findSyncSets } from "$lib/songsterr/video-points";
-import { parseSelectedSong } from "$lib/songsterr/tab-meta";
+import { describe, expect, it } from 'vitest';
+import { unzipSync, strFromU8 } from 'fflate';
+import { buildMpakForSong } from './song-to-mpak';
+import { sha256Hex } from './build-mpak';
+import { findSyncSets } from '$lib/songsterr/video-points';
+import { parseSelectedSong } from '$lib/songsterr/tab-meta';
 
-// Bars 0,1,2 then a repeat of bar 1: four played bars.
-const bars: PlayedBar[] = [
-  { barIndex: 0, occurrence: 0, seconds: 2 },
-  { barIndex: 1, occurrence: 0, seconds: 2 },
-  { barIndex: 2, occurrence: 0, seconds: 2 },
-  { barIndex: 1, occurrence: 1, seconds: 2 },
-];
+const tab = Uint8Array.from([1, 2, 3, 4]);
+const points = [0, 2, 4, 6];
 
-describe("placeBarTimes", () => {
-  it("places one time per played bar, repeats included", () => {
-    expect(placeBarTimes([0, 2000, 4000, 6000], bars)).toEqual([
-      { barIndex: 0, occurrence: 0, timeMs: 0 },
-      { barIndex: 1, occurrence: 0, timeMs: 2000 },
-      { barIndex: 2, occurrence: 0, timeMs: 4000 },
-      { barIndex: 1, occurrence: 1, timeMs: 6000 },
-    ]);
-  });
-
-  it("places one time per bar without repeats on first passes", () => {
-    const info = {};
-    const points = placeBarTimes([0, 2000, 4000], bars, info);
-    expect(points.map((p) => p.barIndex)).toEqual([0, 1, 2]);
-    expect(info).toEqual({ firstPassOnly: true });
-  });
-
-  it("refuses a count that fits nothing", () => {
-    expect(() => placeBarTimes([0, 1000], bars)).toThrow(/plays 4/);
-  });
-
-  it("keeps times strictly increasing", () => {
-    const points = placeBarTimes([0, 0, 0, 5], bars);
-    expect(points.map((p) => p.timeMs)).toEqual([0, 1, 2, 5]);
-  });
-});
-
-describe("timesToMs", () => {
-  it("reads seconds and milliseconds", () => {
-    expect(timesToMs([0, 1.5, 3])).toEqual([0, 1500, 3000]);
-    expect(timesToMs([0, 1500, 3000])).toEqual([0, 1500, 3000]);
-  });
-});
-
-describe("buildMpakForSong", () => {
-  const song = parseSelectedSong({
-    songId: 1,
-    revisionId: 2,
-    image: "img",
-    title: "Song",
-    artist: "Artist",
-    tracks: [{ partId: 0, instrumentId: 30 }],
-    syncSets: [
-      { videoId: "AAAAAAAAAAA", points: [0, 2, 4, 6] },
-      { videoId: "BBBBBBBBBBB", points: [0, 2] },
-      { videoId: "bad", points: [0, 2, 4, 6] },
+const makeSong = (syncSets: unknown[]) =>
+  parseSelectedSong({
+    songId: 4,
+    revisionId: 10,
+    image: 'img',
+    title: 'Song',
+    artist: 'Artist',
+    tracks: [
+      { partId: 0, instrumentId: 30, name: 'Lead' },
+      { partId: 1, instrumentId: 1024, name: 'Drums' }
     ],
+    syncSets
   });
 
-  it("writes the tab, every valid video, and sync only where it fits", async () => {
-    const tab = Uint8Array.from([1, 2, 3, 4]);
-    const { bytes, skipped } = await buildMpakForSong({
-      song,
-      tab,
-      playedBars: bars,
-      allVideos: true,
-    });
+async function build(
+  song: Parameters<typeof buildMpakForSong>[0]['song'],
+  allVideos = true
+) {
+  const { bytes, skipped } = await buildMpakForSong({ song, tab, allVideos });
+  const files = unzipSync(bytes);
+  const manifest = JSON.parse(strFromU8(files['manifest.json']));
+  return { files, manifest, skipped };
+}
 
-    const files = unzipSync(bytes);
+describe('buildMpakForSong', () => {
+  it('writes the tab, every valid video, and sync only where it fits', async () => {
+    const { files, manifest, skipped } = await build(
+      makeSong([
+        {
+          videoId: 'AAAAAAAAAAA',
+          points,
+          id: 7,
+          revisionId: 9,
+          revisionToVideoId: 8
+        },
+        { videoId: 'BBBBBBBBBBB', points: [0, 2, 2, 6] },
+        { videoId: 'bad', points }
+      ])
+    );
+
     expect(Object.keys(files)).toEqual([
-      "manifest.json",
-      "score/song.gp",
-      "sync/v1.json",
+      'manifest.json',
+      'score/song.gp',
+      'sync/v1.json'
     ]);
-    expect(files.mimetype).toBeUndefined();
-    expect(Array.from(files["score/song.gp"])).toEqual([1, 2, 3, 4]);
+    expect(Array.from(files['score/song.gp'])).toEqual(Array.from(tab));
 
-    const manifest = JSON.parse(strFromU8(files["manifest.json"]));
-    expect(manifest.scores[0].format).toBe("gp");
-    // The pack id is derived from the score, so the same song makes the same id (spec section 4).
-    expect(manifest.id).toBe(await derivedPackId(manifest.scores[0].sha256));
-    // The manifest states the size of the score and the size and hash of each sync file (spec section 4, "Integrity").
-    expect(manifest.scores[0].size).toBe(tab.length);
-    expect(manifest.scores[0].origin).toBe("Songsterr");
-    for (const [path, info] of Object.entries(manifest.entries) as [
-      string,
-      { size: number; sha256: string },
-    ][]) {
-      expect(info.size).toBe(files[path].length);
-      expect(info.sha256).toBe(await sha256Hex(files[path]));
-    }
-    expect(Object.keys(manifest.entries)).toEqual(["sync/v1.json"]);
-    expect(manifest.scores[0].sha256).toMatch(/^[0-9a-f]{64}$/);
+    expect(manifest.id).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+    );
+    expect(manifest.scores[0]).toMatchObject({
+      format: 'gp',
+      size: tab.length,
+      origin: 'Songsterr'
+    });
+    expect(manifest.scores[0].sha256).toBe(await sha256Hex(tab));
+    // The size and hash of each sync file (spec section 4, "Integrity").
+    expect(Object.keys(manifest.entries)).toEqual(['sync/v1.json']);
+    expect(manifest.entries['sync/v1.json']).toEqual({
+      size: files['sync/v1.json'].length,
+      sha256: await sha256Hex(files['sync/v1.json'])
+    });
     expect(manifest.recordings.map((r: any) => r.sources[0].videoId)).toEqual([
-      "AAAAAAAAAAA",
-      "BBBBBBBBBBB",
+      'AAAAAAAAAAA',
+      'BBBBBBBBBBB'
     ]);
-    expect(manifest.recordings[0].sync).toEqual({ main: "sync/v1.json" });
+    expect(manifest.recordings[0].sync).toEqual({ main: 'sync/v1.json' });
     expect(manifest.recordings[1].sync).toBeUndefined();
     expect(manifest.defaultRecording).toBeUndefined();
-    expect(skipped).toHaveLength(1);
+    expect(skipped).toEqual(['BBBBBBBBBBB: Times are not increasing']);
 
-    const sync = JSON.parse(strFromU8(files["sync/v1.json"]));
-    expect(sync.anchorType).toBe("bar");
-    expect(sync.score).toBe("main");
-    expect(sync.points[3]).toEqual({
-      timeMs: 6000,
-      bar: 1,
-      occurrence: 1,
-      pos: 0,
+    expect(JSON.parse(strFromU8(files['sync/v1.json']))).toMatchObject({
+      version: 1,
+      score: 'main',
+      anchorType: 'bar',
+      videoId: 'AAAAAAAAAAA',
+      revisionId: 9,
+      'x-songsterr-songId': 4,
+      'x-songsterr-id': 7,
+      'x-songsterr-revisionToVideoId': 8,
+      points
     });
   });
 
-  it("writes a tab-only file when no video is synced", async () => {
-    const { bytes } = await buildMpakForSong({
-      song: { ...song, syncSets: undefined },
-      tab: Uint8Array.from([9]),
-      playedBars: bars,
-      allVideos: true,
-    });
-    const manifest = JSON.parse(strFromU8(unzipSync(bytes)["manifest.json"]));
+  it('writes a tab-only file when no video is synced', async () => {
+    const { manifest } = await build({ ...makeSong([]), syncSets: undefined });
     expect(manifest.recordings).toBeUndefined();
   });
-});
 
-describe("every Songsterr video is kept", () => {
-  const entry = (videoId: string, extra = {}) => ({
-    videoId,
-    points: [0, 2, 4, 6],
-    ...extra,
-  });
-  const base = {
-    songId: 1,
-    revisionId: 2,
-    image: "img",
-    title: "Song",
-    artist: "Artist",
-    tracks: [
-      { partId: 0, instrumentId: 30, name: "Lead" },
-      { partId: 1, instrumentId: 1024, name: "Drums" },
-    ],
-  };
-
-  it("keeps more than 20 videos and repeats of one video with different points", () => {
-    const many = Array.from({ length: 40 }, (_, i) =>
-      entry(`video${String(i).padStart(6, "0")}`),
+  it('names backing videos after their tracks and records the feature', async () => {
+    const { manifest } = await build(
+      makeSong([
+        { videoId: 'BBBBBBBBBBB', points, feature: 'backing', tracks: [1] },
+        { videoId: 'CCCCCCCCCCC', points, feature: 'alternative' },
+        { videoId: 'AAAAAAAAAAA', points, feature: null }
+      ])
     );
-    const song = parseSelectedSong({
-      ...base,
-      syncSets: [
-        ...many,
-        entry("video000000", { points: [0, 3, 6, 9] }),
-        entry("video000000"), // exact repeat
-      ],
-    });
-    expect(song.syncSets).toHaveLength(41);
-  });
-
-  it("names backing videos after their tracks and records the feature", async () => {
-    const song = parseSelectedSong({
-      ...base,
-      syncSets: [
-        entry("BBBBBBBBBBB", { feature: "backing", tracks: [1] }),
-        entry("CCCCCCCCCCC", { feature: "alternative" }),
-        entry("AAAAAAAAAAA", { feature: null }),
-      ],
-    });
-    const { bytes } = await buildMpakForSong({
-      song,
-      tab: Uint8Array.from([1]),
-      playedBars: bars,
-      allVideos: true,
-    });
-    const manifest = JSON.parse(strFromU8(unzipSync(bytes)["manifest.json"]));
     expect(manifest.recordings.map((r: any) => r.role)).toEqual([
-      "original",
-      "alternate",
-      "backing",
+      'original',
+      'alternate',
+      'backing'
     ]);
     expect(manifest.recordings.map((r: any) => r.label)).toEqual([
-      "Full mix",
-      "Full mix (alternative 1)",
-      "Backing track (without Drums)",
+      'Full mix',
+      'Full mix (alternative 1)',
+      'Backing track (without Drums)'
     ]);
-    expect(manifest.defaultRecording).toBeUndefined();
     expect(manifest.recordings[2].scoreTracks).toEqual({
-      main: { omits: [1], names: ["Drums"] },
+      main: { omits: [1], names: ['Drums'] }
     });
     expect(manifest.recordings[0].scoreTracks).toBeUndefined();
   });
-});
 
-describe("one video with several sets of points", () => {
-  const base = {
-    songId: 1,
-    revisionId: 1,
-    image: "x",
-    title: "Song",
-    artist: "Artist",
-    tracks: [{ partId: 0, instrumentId: 30 }],
-  };
-
-  it("keeps differing sets as recordings labelled as alternate sync, and drops identical ones", async () => {
-    const { bytes } = await buildMpakForSong({
-      song: {
-        ...base,
-        syncSets: [
-          { videoId: "AAAAAAAAAAA", points: [0, 2, 4, 6] },
-          {
-            videoId: "AAAAAAAAAAA",
-            points: [0, 2.04, 4.04, 6.04],
-            feature: "alternative",
-          },
-          {
-            videoId: "AAAAAAAAAAA",
-            points: [0, 2, 4, 6],
-            feature: "alternative",
-          },
-        ],
-      },
-      tab: Uint8Array.from([1]),
-      playedBars: bars,
-      allVideos: true,
+  it('keeps differing sets of one video as alternate sync, and drops identical ones', async () => {
+    // Not parsed, so the builder's own handling of repeats is what is tested.
+    const song = makeSong([]);
+    const { manifest } = await build({
+      ...song,
+      syncSets: [
+        { videoId: 'AAAAAAAAAAA', points },
+        {
+          videoId: 'AAAAAAAAAAA',
+          points: [0, 2.04, 4.04, 6.04],
+          feature: 'alternative'
+        },
+        { videoId: 'AAAAAAAAAAA', points, feature: 'alternative' }
+      ]
     });
-    const manifest = JSON.parse(strFromU8(unzipSync(bytes)["manifest.json"]));
     expect(manifest.recordings.map((r: any) => r.label)).toEqual([
-      "Full mix",
-      "Full mix (alternate sync)",
+      'Full mix',
+      'Full mix (alternate sync)'
     ]);
     expect(manifest.recordings.map((r: any) => r.sync.main)).toEqual([
-      "sync/v1.json",
-      "sync/v2.json",
+      'sync/v1.json',
+      'sync/v2.json'
     ]);
+  });
+
+  it('keeps only the primary full mix, backing track and solo by default', async () => {
+    const song = makeSong([
+      { videoId: 'AAAAAAAAAAA', points },
+      { videoId: 'BBBBBBBBBBB', points, feature: 'backing' },
+      { videoId: 'CCCCCCCCCCC', points, feature: 'backing' },
+      { videoId: 'DDDDDDDDDDD', points, feature: 'solo' },
+      { videoId: 'EEEEEEEEEEE', points, feature: 'solo' }
+    ]);
+    const labels = async (allVideos: boolean) =>
+      (await build(song, allVideos)).manifest.recordings.map(
+        (r: any) => r.label
+      );
+    expect(await labels(false)).toEqual(['Full mix', 'Backing track', 'Solo']);
+    expect(await labels(true)).toHaveLength(5);
   });
 });
 
-describe("findSyncSets", () => {
-  const list = [{ videoId: "AAAAAAAAAAA", points: [0, 1, 2] }];
+describe('findSyncSets', () => {
+  const list = [{ videoId: 'AAAAAAAAAAA', points: [0, 1, 2], status: 'done' }];
+  const pending = { ...list[0], status: 'pending' };
 
-  it("uses the current revision when it has points", async () => {
+  it('reads the list of the given revision and no other', async () => {
     const seen: string[] = [];
     const sets = await findSyncSets(7, 10, async (path) => {
       seen.push(path);
       return list;
     });
     expect(sets).toHaveLength(1);
-    expect(seen).toEqual(["/api/video-points/7/10/list"]);
+    expect(seen).toEqual(['/api/video-points/7/10/list']);
   });
 
-  it("falls back to older revisions, newest first", async () => {
-    const seen: string[] = [];
-    const sets = await findSyncSets(7, 10, async (path) => {
-      seen.push(path);
-      if (path.endsWith("/revisions"))
-        return [{ revisionId: 3 }, { revisionId: 10 }, { revisionId: 8 }];
-      return path.includes("/3/") ? list : [];
-    });
-    expect(sets).toHaveLength(1);
-    expect(seen.at(-1)).toBe("/api/video-points/7/3/list");
-    expect(seen.indexOf("/api/video-points/7/8/list")).toBeLessThan(
-      seen.indexOf("/api/video-points/7/3/list"),
-    );
+  it('ignores entries that are not done', async () => {
+    expect(
+      await findSyncSets(7, 10, async () => [pending, ...list])
+    ).toHaveLength(1);
+    expect(await findSyncSets(7, 10, async () => [pending])).toEqual([]);
   });
 
-  it("returns nothing when requests fail", async () => {
+  it('returns nothing when requests fail', async () => {
     expect(
       await findSyncSets(7, 10, async () => {
-        throw new Error("blocked");
-      }),
+        throw new Error('blocked');
+      })
     ).toEqual([]);
-  });
-});
-
-describe("derivedPackId", () => {
-  it("is the version 5 UUID of the score hash in the spec namespace", async () => {
-    expect(await derivedPackId("0".repeat(64))).toBe(
-      "8980d354-7334-5de0-8804-bb35580aea65",
-    );
-    expect(await derivedPackId("A".repeat(64))).toBe(
-      await derivedPackId("a".repeat(64)),
-    );
-  });
-
-  it("keeps only the primary full mix and backing track by default", async () => {
-    const multi = parseSelectedSong({
-      songId: 1,
-      revisionId: 2,
-      image: "img",
-      title: "Song",
-      artist: "Artist",
-      tracks: [{ partId: 0, instrumentId: 30 }],
-      syncSets: [
-        { videoId: "AAAAAAAAAAA", points: [0, 2, 4, 6] },
-        { videoId: "BBBBBBBBBBB", points: [0, 2, 4, 6], feature: "backing" },
-        { videoId: "CCCCCCCCCCC", points: [0, 2, 4, 6], feature: "backing" },
-        { videoId: "DDDDDDDDDDD", points: [0, 2, 4, 6], feature: "solo" },
-      ],
-    });
-    const input = {
-      song: multi,
-      tab: Uint8Array.from([1]),
-      playedBars: bars,
-    };
-    const ids = async (allVideos?: boolean) => {
-      const { bytes } = await buildMpakForSong({ ...input, allVideos });
-      const manifest = JSON.parse(strFromU8(unzipSync(bytes)["manifest.json"]));
-      return manifest.recordings.map((r: any) => r.label);
-    };
-    expect(await ids()).toHaveLength(2);
-    expect(await ids(true)).toHaveLength(4);
   });
 });

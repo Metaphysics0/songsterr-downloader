@@ -107,7 +107,7 @@
       <button
         class="cursor-pointer relative flex items-center px-4 py-1.5 text-sm text-slate-600 border border-slate-500 rounded hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
         disabled={!!downloading}
-        title="Music Pack: the tab plus its synced YouTube videos (full band and backing track by default)"
+        title="Music Pack: the tab plus its synced YouTube videos (full band, backing track and solo by default)"
         onclick={downloadMpak}
       >
         <MpakIcon class="inline-block mr-1.5 text-base" />

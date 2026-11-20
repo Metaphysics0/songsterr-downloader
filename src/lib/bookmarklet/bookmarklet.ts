@@ -36,9 +36,9 @@ export function bookmarkletMain(appUrl: string): void {
 
   /*
    * Fetches video sync points here because the video API answers only on
-   * the tab site's own origin, then sends them in the payload. The current revision often
-   * has none, so this also tries a few older revisions. If a request fails,
-   * the download has no video sync. Mirrors findSyncSets.
+   * the tab site's own origin, then sends them in the payload. Only entries with
+   * status "done" count, and only the tab's own revision is used. If a request
+   * fails, the download has no video sync. Mirrors findSyncSets.
    */
   function getJson(path: string): Promise<any> {
     return fetch(path, { credentials: 'include' })
@@ -58,6 +58,7 @@ export function bookmarkletMain(appUrl: string): void {
       .filter(function (entry: any) {
         return (
           entry &&
+          entry.status === 'done' &&
           typeof entry.videoId === 'string' &&
           Array.isArray(entry.points) &&
           entry.points.length > 1
@@ -66,6 +67,9 @@ export function bookmarkletMain(appUrl: string): void {
       .map(function (entry: any) {
         return {
           videoId: entry.videoId,
+          id: entry.id,
+          revisionToVideoId: entry.revisionToVideoId,
+          revisionId: entry.revisionId,
           feature: entry.feature || undefined,
           tracks: Array.isArray(entry.tracks) ? entry.tracks : undefined,
           points: entry.points.map(function (point: any) {
@@ -76,35 +80,9 @@ export function bookmarkletMain(appUrl: string): void {
   }
 
   function loadSyncSets(current: any): Promise<any[]> {
-    const base = '/api/video-points/' + current.songId + '/';
-    return getJson(base + current.revisionId + '/list').then(function (list) {
-      const sets = usableSets(list);
-      if (sets.length) return sets;
-      return getJson('/api/meta/' + current.songId + '/revisions').then(
-        function (revisions) {
-          const ids = (Array.isArray(revisions) ? revisions : [])
-            .map(function (revision: any) {
-              return revision && revision.revisionId;
-            })
-            .filter(function (id: any) {
-              return id && id !== current.revisionId;
-            })
-            .sort(function (a: number, b: number) {
-              return b - a;
-            })
-            .slice(0, 3);
-          let chain: Promise<any[]> = Promise.resolve([]);
-          ids.forEach(function (id: number) {
-            chain = chain.then(function (found) {
-              return found.length
-                ? found
-                : getJson(base + id + '/list').then(usableSets);
-            });
-          });
-          return chain;
-        }
-      );
-    });
+    return getJson(
+      '/api/video-points/' + current.songId + '/' + current.revisionId + '/list'
+    ).then(usableSets);
   }
 
   function toPayload(current: any, syncSets: any[]): string {

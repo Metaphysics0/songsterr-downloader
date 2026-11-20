@@ -9,7 +9,6 @@ import type {
   SongsterrStateMetaCurrent,
   SongsterrStateMetaCurrentTrack
 } from '$lib/types';
-import type { PlayedBar } from '$lib/mpak/place-bar-times';
 import { mapSongsterrDuration } from './duration-mapper';
 import { mapSongsterrInstrumentToPlayback } from './instrument-map';
 import { patchGp7Percussion } from './gp7-percussion-patch';
@@ -32,12 +31,6 @@ interface MidiExportOptions {
 interface SongsterrToAlphaTabOutput {
   data: Uint8Array;
   warnings: ConversionWarning[];
-  /** The bars in playback order, repeats expanded. Only when asked for. */
-  playedBars?: PlayedBar[];
-}
-
-interface Gp7ExportOptions {
-  withPlayedBars?: boolean;
 }
 
 interface BuildScoreResult {
@@ -234,10 +227,7 @@ function addTrackNamesToMidi(
 }
 
 export class SongsterrToAlphaTabConverter {
-  toGp7(
-    input: SongsterrToGpInput,
-    options: Gp7ExportOptions = {}
-  ): SongsterrToAlphaTabOutput {
+  toGp7(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
     score.finish(settings);
 
@@ -253,13 +243,7 @@ export class SongsterrToAlphaTabConverter {
       patchGp7Percussion(exporter.export(score, settings))
     );
 
-    return {
-      data,
-      warnings,
-      playedBars: options.withPlayedBars
-        ? computePlayedBars(score, settings)
-        : undefined
-    };
+    return { data, warnings };
   }
 
   toMidi(
@@ -997,50 +981,4 @@ export class SongsterrToAlphaTabConverter {
       warnings.push(warning);
     }
   }
-}
-
-const TICKS_PER_QUARTER = 960;
-
-/*
- * The score's bars in playback order, as alphaTab's MIDI generator plays them:
- * a bar inside a repeat shows up once per pass, with a rising `occurrence`.
- * `seconds` is the bar's length at the tempo in force there.
- */
-function computePlayedBars(
-  score: alphaTab.model.Score,
-  settings: alphaTab.Settings
-): PlayedBar[] {
-  const midiFile = new alphaTab.midi.MidiFile();
-  const handler = new alphaTab.midi.AlphaSynthMidiFileHandler(midiFile);
-  const generator = new alphaTab.midi.MidiFileGenerator(
-    score,
-    settings,
-    handler
-  );
-  generator.generate();
-
-  let bpm = Number(score.tempo) || 0;
-  const tempoByBar = score.masterBars.map((masterBar) => {
-    const automations = masterBar.tempoAutomations;
-    const last = automations?.[automations.length - 1];
-    if (last && Number(last.value) > 0) bpm = Number(last.value);
-    return bpm;
-  });
-
-  const passes = new Map<number, number>();
-  return generator.tickLookup.masterBars.map((bar) => {
-    const barIndex = bar.masterBar.index;
-    const occurrence = passes.get(barIndex) ?? 0;
-    passes.set(barIndex, occurrence + 1);
-    const length = bar.end - bar.start;
-    const tempo = tempoByBar[barIndex];
-    return {
-      barIndex,
-      occurrence,
-      seconds:
-        tempo > 0 && length > 0
-          ? (length / TICKS_PER_QUARTER) * (60 / tempo)
-          : null
-    };
-  });
 }

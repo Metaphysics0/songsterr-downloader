@@ -1,19 +1,14 @@
-import type { SelectedSong, SongsterrSyncSet } from "$lib/types";
-import { buildFileNameFromSongName } from "$lib/songsterr/file-name";
-import { buildMpak, type MpakRecordingInput } from "./build-mpak";
-import {
-  placeBarTimes,
-  timesToMs,
-  type PlacementInfo,
-  type PlayedBar,
-} from "./place-bar-times";
+import type { SelectedSong, SongsterrSyncSet } from '$lib/types';
+import { buildFileNameFromSongName } from '$lib/songsterr/file-name';
+import { buildMpak, type MpakRecordingInput } from './build-mpak';
 
 /*
  * Packs a converted tab and its synced YouTube videos as a .mpak.
  * By default only the primary full mix and backing track become recordings;
- * with allVideos, every video does. If a video's bar count doesn't fit the
- * tab's played bars, the recording is still included but has no sync points,
- * because points on the wrong bars are worse than none.
+ * with allVideos, every video does. The times are written as the tab site gives
+ * them, one per played bar (spec section 9.1), and the reader matches them to
+ * the score's bars. If a video's times don't increase, the recording is still
+ * included but has no sync points.
  */
 
 export interface SongToMpakResult {
@@ -25,13 +20,11 @@ export interface SongToMpakResult {
 export async function buildMpakForSong({
   song,
   tab,
-  playedBars,
-  allVideos = false,
+  allVideos = false
 }: {
   song: SelectedSong;
   tab: Uint8Array;
-  playedBars: PlayedBar[];
-  /** Include every synced video, not just the primary full mix and backing track. */
+  /** Include every synced video, not just the primary full mix, backing track and solo. */
   allVideos?: boolean;
 }): Promise<SongToMpakResult> {
   const skipped: string[] = [];
@@ -59,47 +52,49 @@ export async function buildMpakForSong({
       label = labelFor(set, seen[kind], song);
       byVideo.set(set.videoId, { label, points });
     }
-    const info: PlacementInfo = {};
     const meta = {
       feature: set.feature,
       tracks: set.tracks,
-      trackNames: trackNamesFor(set, song),
+      trackNames: trackNamesFor(set, song)
     };
-    try {
-      recordings.push({
-        videoId: set.videoId,
-        label: withPlacementNote(label, info, playedBars.length),
-        points: placeBarTimes(timesToMs(set.points), playedBars, info),
-        ...meta,
-      });
-    } catch (error) {
-      skipped.push(
-        `${set.videoId}: ${error instanceof Error ? error.message : "not usable"}`,
-      );
-      recordings.push({ videoId: set.videoId, label, ...meta });
-    }
+    const problem = pointsProblem(set.points);
+    if (problem) skipped.push(`${set.videoId}: ${problem}`);
+    recordings.push({
+      videoId: set.videoId,
+      label,
+      ...(problem ? {} : { points: set.points }),
+      sync: {
+        revisionId: set.revisionId,
+        id: set.id,
+        revisionToVideoId: set.revisionToVideoId
+      },
+      ...meta
+    });
   }
 
   const bytes = await buildMpak({
     title: song.title,
     artist: song.artist,
-    tab: { bytes: tab, name: buildFileNameFromSongName(song.title, ".gp") },
+    tab: { bytes: tab, name: buildFileNameFromSongName(song.title, '.gp') },
     recordings,
-    generator: { name: "songsterr-downloader" },
+    songId: song.songId,
+    generator: { name: 'songsterr-downloader' }
   });
 
   return { bytes, skipped };
 }
 
-// The primary full mix (else its first alternative) and the primary backing
-// track. Takes the sorted list, so the first of each kind is the primary. If
-// neither exists, keeps the first video so the pack still has a recording.
+// The primary full mix (else its first alternative), the primary backing track
+// and the primary solo video. Takes the sorted list, so the first of each kind
+// is the primary. If none exists, keeps the first video so the pack still has a
+// recording.
 function primarySets(sorted: SongsterrSyncSet[]): SongsterrSyncSet[] {
   const full =
-    sorted.find((set) => kindOf(set) === "main") ??
-    sorted.find((set) => kindOf(set) === "alternative");
-  const backing = sorted.find((set) => kindOf(set) === "backing");
-  const picked = [full, backing].filter((set) => set !== undefined);
+    sorted.find((set) => kindOf(set) === 'main') ??
+    sorted.find((set) => kindOf(set) === 'alternative');
+  const backing = sorted.find((set) => kindOf(set) === 'backing');
+  const solo = sorted.find((set) => kindOf(set) === 'solo');
+  const picked = [full, backing, solo].filter((set) => set !== undefined);
   return picked.length > 0 ? picked : sorted.slice(0, 1);
 }
 
@@ -109,12 +104,12 @@ function primarySets(sorted: SongsterrSyncSet[]): SongsterrSyncSet[] {
  * other regions); "backing" is the mix without the listed tracks; "solo" is
  * the solo version for the listed tracks; "playthrough" is a player video.
  */
-const KIND_ORDER = ["main", "alternative", "backing", "solo", "playthrough"];
+const KIND_ORDER = ['main', 'alternative', 'backing', 'solo', 'playthrough'];
 
 function kindOf(set: SongsterrSyncSet): string {
   return set.feature && KIND_ORDER.includes(set.feature)
     ? set.feature
-    : set.feature || "main";
+    : set.feature || 'main';
 }
 
 function rank(set: SongsterrSyncSet): number {
@@ -126,7 +121,7 @@ function rank(set: SongsterrSyncSet): number {
 // check the indexes against the score. Left out unless every index resolves.
 function trackNamesFor(
   set: SongsterrSyncSet,
-  song: SelectedSong,
+  song: SelectedSong
 ): string[] | undefined {
   if (!set.tracks?.length) return undefined;
   const names = set.tracks.map((i) => {
@@ -139,7 +134,7 @@ function trackNamesFor(
 function labelFor(
   set: SongsterrSyncSet,
   number: number,
-  song: SelectedSong,
+  song: SelectedSong
 ): string {
   const names = (set.tracks ?? [])
     .map((i) => song.tracks[i])
@@ -148,31 +143,28 @@ function labelFor(
     .filter(Boolean);
   const list =
     names.length > 3
-      ? `${names.slice(0, 3).join(", ")} +${names.length - 3}`
-      : names.join(", ");
+      ? `${names.slice(0, 3).join(', ')} +${names.length - 3}`
+      : names.join(', ');
   switch (kindOf(set)) {
-    case "main":
-      return "Full mix";
-    case "alternative":
+    case 'main':
+      return 'Full mix';
+    case 'alternative':
       return `Full mix (alternative ${number})`;
-    case "backing":
-      return list ? `Backing track (without ${list})` : "Backing track";
-    case "solo":
-      return list ? `Solo (${list})` : "Solo";
-    case "playthrough":
-      return "Playthrough";
+    case 'backing':
+      return list ? `Backing track (without ${list})` : 'Backing track';
+    case 'solo':
+      return list ? `Solo (${list})` : 'Solo';
+    case 'playthrough':
+      return 'Playthrough';
     default:
       return `${kindOf(set)} ${number}`;
   }
 }
 
-function withPlacementNote(
-  label: string,
-  info: PlacementInfo,
-  bars: number,
-): string {
-  if (info.covered) return `${label} (bars 1-${info.covered} of ${bars})`;
-  if (info.extra) return `${label} (list had ${info.extra} extra bars)`;
-  if (info.firstPassOnly) return `${label} (repeats not synced)`;
-  return label;
+// Seconds, from 0 or more, increasing (spec section 9, number form).
+function pointsProblem(points: number[]): string | null {
+  const increasing = points.every(
+    (time, i) => time >= 0 && (i === 0 || time > points[i - 1])
+  );
+  return increasing ? null : 'Times are not increasing';
 }

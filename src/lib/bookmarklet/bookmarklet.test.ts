@@ -136,18 +136,12 @@ describe('bookmarklet', () => {
     });
   });
 
-  it('carries Songsterr video sync points, falling back to older revisions', async () => {
+  it('carries the done Songsterr video sync points of the tab revision', async () => {
     const { open } = await runBookmarklet({
       api: {
-        '/api/video-points/334/10072207/list': [],
-        '/api/meta/334/revisions': [
-          { revisionId: 10072207 },
-          { revisionId: 5 },
-          { revisionId: 9 }
-        ],
-        '/api/video-points/334/9/list': [],
-        '/api/video-points/334/5/list': [
-          { videoId: 'AAAAAAAAAAA', points: [0, 1.23456, 2.5], status: 'x' }
+        '/api/video-points/334/10072207/list': [
+          { videoId: 'BBBBBBBBBBB', points: [0, 1, 2], status: 'pending' },
+          { videoId: 'AAAAAAAAAAA', points: [0, 1.23456, 2.5], status: 'done' }
         ]
       }
     });

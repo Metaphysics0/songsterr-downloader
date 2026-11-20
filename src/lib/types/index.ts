@@ -36,7 +36,12 @@ export interface SongsterrStateMetaCurrent {
  */
 export interface SongsterrSyncSet {
   videoId: string;
+  /** Start of each played bar in seconds, in playback order. */
   points: number[];
+  /** The tab site's ids for this record, its link to the video, and the tab revision the points were made for. */
+  id?: number;
+  revisionToVideoId?: number;
+  revisionId?: number;
   /** The kind of video: "alternative", "backing", "solo", or none. */
   feature?: string;
   /** Indices into the tab's tracks that a backing or solo video covers. */

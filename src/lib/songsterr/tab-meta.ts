@@ -98,6 +98,12 @@ export function parseSyncSets(input: unknown): SongsterrSyncSet[] {
     seen.add(key);
 
     const set: SongsterrSyncSet = { videoId, points: points as number[] };
+    for (const key of ['id', 'revisionToVideoId', 'revisionId'] as const) {
+      const value = entry[key];
+      if (Number.isSafeInteger(value) && (value as number) > 0) {
+        set[key] = value as number;
+      }
+    }
     const feature = text(entry.feature).slice(0, 32);
     if (feature) set.feature = feature;
     if (
