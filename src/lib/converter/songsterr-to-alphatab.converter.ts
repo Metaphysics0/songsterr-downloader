@@ -13,6 +13,7 @@ import { mapSongsterrDuration } from './duration-mapper';
 import { mapSongsterrInstrumentToPlayback } from './instrument-map';
 import { patchGp7Percussion } from './gp7-percussion-patch';
 import { patchGp7Harmonics } from './gp7-harmonic-patch';
+import { patchGp7RseSounds } from './gp7-rse-patch';
 
 export interface SongsterrRevisionTrackInput {
   trackMeta: SongsterrStateMetaCurrentTrack;
@@ -239,8 +240,10 @@ export class SongsterrToAlphaTabConverter {
     // while GP7 (and MuseScore) expect the *fretted* pitch and derive the
     // harmonic offset from HarmonicType/HarmonicFret — patch Midi back to the
     // fretted ConcertPitch (no-op when the file has no harmonics).
-    const data = patchGp7Harmonics(
-      patchGp7Percussion(exporter.export(score, settings))
+    // alphaTab also writes every track as a General MIDI sound — switch tracks
+    // to the RSE sounds Guitar Pro (and Songsterr's own downloads) use.
+    const data = patchGp7RseSounds(
+      patchGp7Harmonics(patchGp7Percussion(exporter.export(score, settings)))
     );
 
     return { data, warnings };
