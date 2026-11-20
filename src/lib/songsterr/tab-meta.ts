@@ -9,7 +9,9 @@ import type { SelectedSong, SongsterrStateMetaCurrentTrack } from '$lib/types';
 
 const MAX_TRACKS = 100;
 const MAX_TEXT_LENGTH = 300;
-const IMAGE_PATTERN = /^[A-Za-z0-9_-]{1,100}$/;
+// Some tabs have dotted image ids (e.g. "ta.tos2w0.n0000000000.Hvx….v0-3-2-Se…").
+// A dot is only allowed between other characters, so "." and ".." never occur.
+const IMAGE_PATTERN = /^(?=.{1,100}$)[\w-]+(\.[\w-]+)*$/;
 
 export class InvalidTabMetaError extends Error {
   constructor(reason: string) {

@@ -30,6 +30,10 @@ describe('parseSelectedSong', () => {
     ['revisionId', { revisionId: '5184162' }],
     ['image path traversal', { image: '../../evil' }],
     ['image with slash', { image: 'a/b' }],
+    ['image with dot segments', { image: 'a/../b' }],
+    ['image that is a dot segment', { image: '..' }],
+    ['image with empty dot parts', { image: 'a..b' }],
+    ['image with a trailing dot', { image: 'abc.' }],
     ['empty tracks', { tracks: [] }],
     ['bad partId', { tracks: [{ partId: '0/../x', instrumentId: 30 }] }],
     [
@@ -45,6 +49,12 @@ describe('parseSelectedSong', () => {
     expect(() => parseSelectedSong({ ...valid, ...override })).toThrow(
       InvalidTabMetaError
     );
+  });
+
+  it('accepts a dotted image id', () => {
+    const image =
+      'ta.tos2w0.n0000000000.HvxW7XgBjxAcnjgrDPto9e.v0-3-2-SeGeQFVt6DT1lgoQ';
+    expect(parseSelectedSong({ ...valid, image }).image).toBe(image);
   });
 
   it('only keeps songsterr byLinkUrls', () => {
