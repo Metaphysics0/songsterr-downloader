@@ -243,6 +243,8 @@ function addTrackNamesToMidi(
 }
 
 export class SongsterrToAlphaTabConverter {
+  private pickupLength: number | null = null;
+
   toGp7(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
     score.finish(settings);
@@ -318,6 +320,19 @@ export class SongsterrToAlphaTabConverter {
       masterBarCount,
       warnings
     });
+
+    this.pickupLength = this.getPickupLength(revisions);
+    const firstMasterBar = score.masterBars[0];
+    if (
+      this.pickupLength !== null &&
+      this.pickupLength <
+        firstMasterBar.timeSignatureNumerator /
+          firstMasterBar.timeSignatureDenominator
+    ) {
+      firstMasterBar.isAnacrusis = true;
+    } else {
+      this.pickupLength = null;
+    }
 
     let nextChannel = 0;
     for (const entry of revisions) {
@@ -997,6 +1012,22 @@ export class SongsterrToAlphaTabConverter {
     voice: alphaTab.model.Voice,
     masterBar: alphaTab.model.MasterBar
   ): void {
+    if (masterBar.isAnacrusis && this.pickupLength !== null) {
+      let remaining = this.pickupLength;
+      for (const den of [1, 2, 4, 8, 16, 32, 64]) {
+        while (remaining >= 1 / den - 1e-9) {
+          const restDuration = mapSongsterrDuration([1, den]);
+          const restBeat = new alphaTab.model.Beat();
+          restBeat.isEmpty = true;
+          restBeat.duration = restDuration.duration;
+          restBeat.dots = restDuration.dots;
+          voice.addBeat(restBeat);
+          remaining -= 1 / den;
+        }
+      }
+      return;
+    }
+
     const denominator = masterBar.timeSignatureDenominator || 4;
     const numerator = masterBar.timeSignatureNumerator || 4;
 
@@ -1008,6 +1039,26 @@ export class SongsterrToAlphaTabConverter {
       restBeat.dots = mappedDuration.dots;
       voice.addBeat(restBeat);
     }
+  }
+
+  private getPickupLength(
+    revisions: SongsterrRevisionTrackInput[]
+  ): number | null {
+    if (!revisions.some((entry) => entry.revision.anacrusis)) return null;
+    let length = 0;
+    for (const entry of revisions) {
+      for (const voice of entry.revision.measures?.[0]?.voices ?? []) {
+        const voiceLength = (voice.beats ?? []).reduce(
+          (sum, beat) =>
+            beat.graceNote || !beat.duration
+              ? sum
+              : sum + beat.duration[0] / beat.duration[1],
+          0
+        );
+        length = Math.max(length, voiceLength);
+      }
+    }
+    return length > 0 ? length : null;
   }
 
   private getMasterBarCount(revisions: SongsterrRevisionTrackInput[]): number {

@@ -154,6 +154,7 @@ export interface SongsterrRevisionTrackPayload {
   automations?: SongsterrRevisionAutomations;
   newLyrics?: SongsterrRevisionLyricsLine[];
   capo?: number;
+  anacrusis?: boolean;
   songId?: number;
   revisionId?: number;
   partId?: number;

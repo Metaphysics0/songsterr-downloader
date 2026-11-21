@@ -1927,6 +1927,81 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('pickup bar', () => {
+    it('marks the pickup bar', () => {
+      const full = {
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ]
+      };
+      const guitar: SongsterrRevisionTrackPayload = {
+        anacrusis: true,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 8], notes: [E] }] }]
+          },
+          full
+        ]
+      };
+      const bass: SongsterrRevisionTrackPayload = {
+        anacrusis: true,
+        measures: [
+          {
+            signature: [4, 4],
+            rest: true,
+            voices: [
+              {
+                rest: true,
+                beats: [
+                  { rest: true, duration: [1, 8], notes: [{ rest: true }] }
+                ]
+              }
+            ]
+          },
+          full
+        ]
+      };
+      const metas = [
+        makeTrackMeta({ partId: 0 }),
+        makeTrackMeta({ partId: 1, title: 'Bass' })
+      ];
+      const { data } = new SongsterrToAlphaTabConverter().toGp7({
+        meta: makeMeta(metas),
+        revisions: [
+          { trackMeta: metas[0], revision: guitar },
+          { trackMeta: metas[1], revision: bass }
+        ]
+      });
+      const score = alphaTab.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        new alphaTab.Settings()
+      );
+      expect(score.masterBars[0].isAnacrusis).toBe(true);
+      expect(score.masterBars[1].isAnacrusis).toBe(false);
+      const [guitarBar, bassBar] = score.tracks.map(
+        (track) => track.staves[0].bars[0]
+      );
+      expect(guitarBar.voices[0].beats.map((beat) => beat.duration)).toEqual([
+        alphaTab.model.Duration.Eighth
+      ]);
+      expect(bassBar.isEmpty).toBe(true);
+    });
+
+    it('ignores the flag when the first bar is already full', () => {
+      const score = roundTrip({
+        anacrusis: true,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.masterBars[0].isAnacrusis).toBe(false);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
