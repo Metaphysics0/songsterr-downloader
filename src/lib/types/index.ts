@@ -169,6 +169,7 @@ export interface SongsterrRevisionTrackPayload {
   anacrusis?: boolean;
   volume?: number;
   balance?: number;
+  transpose?: { chromatic?: number; octave?: number };
   songId?: number;
   revisionId?: number;
   partId?: number;

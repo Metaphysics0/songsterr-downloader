@@ -522,6 +522,11 @@ export class SongsterrToAlphaTabConverter {
     if (typeof revision.capo === 'number' && revision.capo > 0) {
       staff.capo = revision.capo;
     }
+    if (revision.transpose) {
+      staff.displayTranspositionPitch =
+        (revision.transpose.octave ?? 0) * 12 +
+        (revision.transpose.chromatic ?? 0);
+    }
     const numStrings = Array.isArray(tuning) ? tuning.length : 6;
 
     // Pre-scan to find the max voice count across all measures.

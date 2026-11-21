@@ -2166,6 +2166,21 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('transpose', () => {
+    it('keeps the written transposition', () => {
+      const score = roundTrip({
+        transpose: { chromatic: -10, octave: 0 },
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.tracks[0].staves[0].displayTranspositionPitch).toBe(-10);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
