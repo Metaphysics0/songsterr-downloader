@@ -244,6 +244,7 @@ function addTrackNamesToMidi(
 
 export class SongsterrToAlphaTabConverter {
   private pickupLength: number | null = null;
+  private trillFrets = new Map<alphaTab.model.Note, number>();
 
   toGp7(input: SongsterrToGpInput): SongsterrToAlphaTabOutput {
     const { score, settings, warnings } = this.buildScore(input);
@@ -565,6 +566,11 @@ export class SongsterrToAlphaTabConverter {
       staff.addBar(bar);
     }
 
+    for (const [note, fret] of this.trillFrets) {
+      note.trillValue = fret + note.stringTuning;
+    }
+    this.trillFrets.clear();
+
     for (const bar of staff.bars) {
       for (const voice of bar.voices) {
         for (const beat of voice.beats) {
@@ -859,6 +865,17 @@ export class SongsterrToAlphaTabConverter {
       note.vibrato = alphaTab.model.VibratoType.Wide;
     } else if (noteData.vibrato || noteData.leftHandVibrato) {
       note.vibrato = alphaTab.model.VibratoType.Slight;
+    }
+
+    if (typeof noteData.trill?.auxiliaryFret === 'number') {
+      this.trillFrets.set(note, noteData.trill.auxiliaryFret);
+      const speed = noteData.trill.speed ?? 60;
+      note.trillSpeed =
+        speed >= 180
+          ? alphaTab.model.Duration.Sixteenth
+          : speed >= 90
+            ? alphaTab.model.Duration.ThirtySecond
+            : alphaTab.model.Duration.SixtyFourth;
     }
 
     // Slide

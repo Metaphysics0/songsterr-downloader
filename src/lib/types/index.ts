@@ -72,6 +72,7 @@ export interface SongsterrRevisionNotePayload {
   bend?: SongsterrRevisionBendPayload;
   letRing?: boolean;
   leftHandVibrato?: string;
+  trill?: { auxiliaryFret?: number; speed?: number };
 }
 
 export interface SongsterrRevisionStrokePayload {

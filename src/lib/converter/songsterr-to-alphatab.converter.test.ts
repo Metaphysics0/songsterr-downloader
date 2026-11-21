@@ -2002,6 +2002,37 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('trill', () => {
+    it('keeps the trill fret', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 1],
+                    notes: [
+                      {
+                        fret: 5,
+                        string: 1,
+                        trill: { auxiliaryFret: 7, speed: 30 }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const note = firstBeat(score).notes[0];
+      expect(note.isTrill).toBe(true);
+      expect(note.trillFret).toBe(7);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
