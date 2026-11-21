@@ -1194,6 +1194,9 @@ export class SongsterrToAlphaTabConverter {
         tempoReference,
         true
       );
+      if (typeof point.text === 'string' && point.text.trim()) {
+        tempoAutomation.text = point.text.trim();
+      }
       masterBar.tempoAutomations.push(tempoAutomation);
     }
   }

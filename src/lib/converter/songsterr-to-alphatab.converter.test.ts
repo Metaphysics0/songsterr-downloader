@@ -2132,6 +2132,23 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('tempo label', () => {
+    it('keeps the text on a tempo change', () => {
+      const score = roundTrip({
+        automations: {
+          tempo: [{ measure: 0, position: 0, bpm: 70, type: 4, text: 'Slowly' }]
+        },
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.masterBars[0].tempoAutomations[0].text).toBe('Slowly');
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

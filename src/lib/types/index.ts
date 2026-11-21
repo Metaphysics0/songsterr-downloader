@@ -39,6 +39,7 @@ export interface SongsterrRevisionAutomationTempoPoint {
   bpm: number;
   type: number;
   linear?: boolean;
+  text?: string;
 }
 
 export interface SongsterrRevisionFermata {
