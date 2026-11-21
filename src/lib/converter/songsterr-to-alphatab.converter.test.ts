@@ -2149,6 +2149,23 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('volume and pan', () => {
+    it('keeps the track mix', () => {
+      const score = roundTrip({
+        volume: 0.5,
+        balance: -0.25,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.tracks[0].playbackInfo.volume).toBe(8);
+      expect(score.tracks[0].playbackInfo.balance).toBe(6);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

@@ -499,6 +499,18 @@ export class SongsterrToAlphaTabConverter {
     track.playbackInfo.program = playbackMapping.program;
     track.playbackInfo.primaryChannel = channel;
     track.playbackInfo.secondaryChannel = channel;
+    if (typeof revision.volume === 'number') {
+      track.playbackInfo.volume = Math.max(
+        0,
+        Math.min(16, Math.round(revision.volume * 16))
+      );
+    }
+    if (typeof revision.balance === 'number') {
+      track.playbackInfo.balance = Math.max(
+        0,
+        Math.min(16, Math.round(((revision.balance + 1) / 2) * 16))
+      );
+    }
 
     const staff = new alphaTab.model.Staff();
     const tuning = revision.tuning || trackMeta.tuning;

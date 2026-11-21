@@ -167,6 +167,8 @@ export interface SongsterrRevisionTrackPayload {
   newLyrics?: SongsterrRevisionLyricsLine[];
   capo?: number;
   anacrusis?: boolean;
+  volume?: number;
+  balance?: number;
   songId?: number;
   revisionId?: number;
   partId?: number;
