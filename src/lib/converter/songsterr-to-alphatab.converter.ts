@@ -656,6 +656,21 @@ export class SongsterrToAlphaTabConverter {
       }
     }
 
+    const stroke = beatData.arpeggio ?? beatData.brushStroke;
+    if (stroke?.direction === 'up' || stroke?.direction === 'down') {
+      const up = stroke.direction === 'up';
+      beat.brushType = beatData.arpeggio
+        ? up
+          ? alphaTab.model.BrushType.ArpeggioUp
+          : alphaTab.model.BrushType.ArpeggioDown
+        : up
+          ? alphaTab.model.BrushType.BrushUp
+          : alphaTab.model.BrushType.BrushDown;
+      if (typeof stroke.duration === 'number' && stroke.duration > 0) {
+        beat.brushDuration = Math.round(stroke.duration);
+      }
+    }
+
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
       beat.vibrato = alphaTab.model.VibratoType.Wide;

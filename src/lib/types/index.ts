@@ -74,6 +74,12 @@ export interface SongsterrRevisionNotePayload {
   leftHandVibrato?: string;
 }
 
+export interface SongsterrRevisionStrokePayload {
+  direction?: string;
+  duration?: number;
+  shift?: number;
+}
+
 export interface SongsterrRevisionBeatPayload {
   notes?: SongsterrRevisionNotePayload[];
   type?: number;
@@ -94,6 +100,8 @@ export interface SongsterrRevisionBeatPayload {
   graceNote?: string;
   chord?: { text: string; width?: number };
   letRing?: boolean;
+  brushStroke?: SongsterrRevisionStrokePayload;
+  arpeggio?: SongsterrRevisionStrokePayload;
 }
 
 export interface SongsterrRevisionVoicePayload {

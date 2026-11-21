@@ -1648,6 +1648,54 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('strums and arpeggios', () => {
+    it('keeps brush and arpeggio direction and speed', () => {
+      const chord = [E, { fret: 2, string: 1 }, { fret: 2, string: 2 }];
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    brushStroke: { direction: 'down', duration: 30, shift: 100 }
+                  },
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    brushStroke: { direction: 'up', duration: 30, shift: 100 }
+                  },
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    arpeggio: { direction: 'down', duration: 240, shift: 100 }
+                  },
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    arpeggio: { direction: 'up', duration: 78, shift: 100 }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => [beat.brushType, beat.brushDuration])).toEqual(
+        [
+          [alphaTab.model.BrushType.BrushDown, 30],
+          [alphaTab.model.BrushType.BrushUp, 30],
+          [alphaTab.model.BrushType.ArpeggioDown, 240],
+          [alphaTab.model.BrushType.ArpeggioUp, 78]
+        ]
+      );
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
