@@ -110,6 +110,7 @@ export interface SongsterrRevisionBeatPayload {
   popping?: boolean;
   tapping?: boolean;
   deadSlapped?: boolean;
+  octaveClef?: string;
 }
 
 export interface SongsterrRevisionVoicePayload {

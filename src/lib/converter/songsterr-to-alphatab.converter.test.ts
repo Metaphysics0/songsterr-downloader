@@ -1823,6 +1823,31 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('ottava', () => {
+    it('keeps 8va and 8vb', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 2], notes: [E], octaveClef: '8va' },
+                  { duration: [1, 2], notes: [E], octaveClef: '8vb' }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.ottava)).toEqual([
+        alphaTab.model.Ottavia._8va,
+        alphaTab.model.Ottavia._8vb
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

@@ -53,6 +53,13 @@ const velocityToDynamicMap: Record<string, alphaTab.model.DynamicValue> = {
   fff: alphaTab.model.DynamicValue.FFF
 };
 
+const ottavaMap: Record<string, alphaTab.model.Ottavia> = {
+  '15ma': alphaTab.model.Ottavia._15ma,
+  '8va': alphaTab.model.Ottavia._8va,
+  '8vb': alphaTab.model.Ottavia._8vb,
+  '15mb': alphaTab.model.Ottavia._15mb
+};
+
 const harmonicTypeMap: Record<string, alphaTab.model.HarmonicType> = {
   natural: alphaTab.model.HarmonicType.Natural,
   artificial: alphaTab.model.HarmonicType.Artificial,
@@ -699,6 +706,13 @@ export class SongsterrToAlphaTabConverter {
     beat.pop = !!beatData.popping;
     beat.tap = !!beatData.tapping;
     beat.deadSlapped = !!beatData.deadSlapped;
+
+    const ottava = beatData.octaveClef
+      ? ottavaMap[beatData.octaveClef]
+      : undefined;
+    if (ottava !== undefined) {
+      beat.ottava = ottava;
+    }
 
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
