@@ -71,6 +71,7 @@ export interface SongsterrRevisionNotePayload {
   harmonicFret?: number;
   bend?: SongsterrRevisionBendPayload;
   letRing?: boolean;
+  leftHandVibrato?: string;
 }
 
 export interface SongsterrRevisionBeatPayload {

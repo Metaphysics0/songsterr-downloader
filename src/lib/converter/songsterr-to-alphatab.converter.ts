@@ -744,9 +744,9 @@ export class SongsterrToAlphaTabConverter {
     }
 
     // Vibrato (note-level takes priority, falls back to beat-level)
-    if (noteData.wideVibrato) {
+    if (noteData.wideVibrato || noteData.leftHandVibrato === 'wide') {
       note.vibrato = alphaTab.model.VibratoType.Wide;
-    } else if (noteData.vibrato) {
+    } else if (noteData.vibrato || noteData.leftHandVibrato) {
       note.vibrato = alphaTab.model.VibratoType.Slight;
     }
 

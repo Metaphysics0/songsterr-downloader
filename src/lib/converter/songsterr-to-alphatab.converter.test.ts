@@ -1617,6 +1617,37 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('left hand vibrato', () => {
+    it('reads the leftHandVibrato field newer tabs use', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [{ ...E, leftHandVibrato: 'slight' }]
+                  },
+                  {
+                    duration: [1, 2],
+                    notes: [{ ...E, leftHandVibrato: 'wide' }]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.notes[0].vibrato)).toEqual([
+        alphaTab.model.VibratoType.Slight,
+        alphaTab.model.VibratoType.Wide
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
