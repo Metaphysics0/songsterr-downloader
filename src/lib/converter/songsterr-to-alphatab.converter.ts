@@ -364,6 +364,7 @@ export class SongsterrToAlphaTabConverter {
   }): void {
     let timeSignatureNumerator = 4;
     let timeSignatureDenominator = 4;
+    let tripletFeel = alphaTab.model.TripletFeel.NoTripletFeel;
 
     for (let index = 0; index < masterBarCount; index++) {
       const measure = masterTrack?.measures?.[index];
@@ -372,7 +373,16 @@ export class SongsterrToAlphaTabConverter {
         [timeSignatureNumerator, timeSignatureDenominator] = signature;
       }
 
+      if (measure?.tripletFeel === '8th') {
+        tripletFeel = alphaTab.model.TripletFeel.Triplet8th;
+      } else if (measure?.tripletFeel === '16th') {
+        tripletFeel = alphaTab.model.TripletFeel.Triplet16th;
+      } else if (measure?.tripletFeel === 'off') {
+        tripletFeel = alphaTab.model.TripletFeel.NoTripletFeel;
+      }
+
       const masterBar = new alphaTab.model.MasterBar();
+      masterBar.tripletFeel = tripletFeel;
       masterBar.timeSignatureNumerator = timeSignatureNumerator;
       masterBar.timeSignatureDenominator = timeSignatureDenominator;
 

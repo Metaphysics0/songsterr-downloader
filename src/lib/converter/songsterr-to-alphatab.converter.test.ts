@@ -1902,6 +1902,31 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('triplet feel', () => {
+    it('keeps swing until it is turned off', () => {
+      const bar = (tripletFeel?: string) => ({
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ],
+        ...(tripletFeel ? { tripletFeel } : {})
+      });
+      const score = roundTrip({
+        measures: [
+          { signature: [4, 4], ...bar('8th') },
+          bar(),
+          bar('16th'),
+          bar('off')
+        ]
+      });
+      expect(score.masterBars.map((mb) => mb.tripletFeel)).toEqual([
+        alphaTab.model.TripletFeel.Triplet8th,
+        alphaTab.model.TripletFeel.Triplet8th,
+        alphaTab.model.TripletFeel.Triplet16th,
+        alphaTab.model.TripletFeel.NoTripletFeel
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
