@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { unzipSync } from 'fflate';
+import * as alphaTab from '@coderline/alphatab';
 import { SongsterrToAlphaTabConverter } from './songsterr-to-alphatab.converter';
 import type {
   SongsterrRevisionTrackPayload,
@@ -97,6 +98,23 @@ function readMidiTrackNames(data: Uint8Array): string[] {
 
   return names;
 }
+
+function roundTrip(
+  revision: SongsterrRevisionTrackPayload,
+  trackMeta?: SongsterrStateMetaCurrentTrack
+): alphaTab.model.Score {
+  const { data } = convertSingle(revision, trackMeta);
+  return alphaTab.importer.ScoreLoader.loadScoreFromBytes(
+    data,
+    new alphaTab.Settings()
+  );
+}
+
+function firstBeat(score: alphaTab.model.Score, barIndex = 0) {
+  return score.tracks[0].staves[0].bars[barIndex].voices[0].beats[0];
+}
+
+const E = { fret: 0, string: 0 };
 
 function readGpif(data: Uint8Array): string {
   const entries = unzipSync(data);
@@ -1452,6 +1470,746 @@ describe('SongsterrToAlphaTabConverter', () => {
       });
 
       expect(data.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('lyrics', () => {
+    function reimport(data: Uint8Array): alphaTab.model.Score {
+      return alphaTab.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        new alphaTab.Settings()
+      );
+    }
+
+    function sungBeats(track: alphaTab.model.Track) {
+      return track.staves[0].bars.flatMap((bar) =>
+        bar.voices[0].beats.filter((beat) => beat.lyrics?.some(Boolean))
+      );
+    }
+
+    it('puts every syllable of a vocal track into the gp7 file (song-3)', () => {
+      const revision = loadRevision('song-3/0.json');
+      const { data } = convertSingle(revision);
+
+      const vocals = reimport(data).tracks[0];
+      const beats = sungBeats(vocals);
+      expect(beats).toHaveLength(464);
+      expect(beats[0].voice.bar.index).toBe(15);
+      expect(beats[0].lyrics![0]).toBe("There's");
+      expect(beats.at(-1)!.lyrics![0]).toBe('n.');
+      expect(readGpif(data)).toContain('<Lyrics dispatched="true">');
+    });
+
+    it('skips rests and tied notes, honours the bar offset and keeps verses apart', () => {
+      const note = { fret: 0, string: 0 };
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ rest: true, duration: [1, 1] }] }]
+          },
+          {
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 4], notes: [note] },
+                  { duration: [1, 4], notes: [{ ...note, tie: true }] },
+                  { duration: [1, 4], rest: true, notes: [{ rest: true }] },
+                  { duration: [1, 4], notes: [note] }
+                ]
+              }
+            ]
+          },
+          { voices: [{ beats: [{ duration: [1, 1], notes: [note] }] }] }
+        ],
+        newLyrics: [
+          { line: 1, offset: 2, text: 'hel-lo world' },
+          { line: 2, offset: 3, text: '' },
+          { line: 3, offset: 3, text: 'two' }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const beats = sungBeats(reimport(data).tracks[0]);
+      expect(beats.map((beat) => [beat.voice.bar.index, beat.lyrics])).toEqual([
+        [1, ['hel-', '']],
+        [1, ['lo', '']],
+        [2, ['world', 'two']]
+      ]);
+    });
+
+    it('leaves tracks with only empty lyric lines alone', () => {
+      const { data } = convertSingle(loadRevision('song-3/1.json'));
+      expect(sungBeats(reimport(data).tracks[0])).toHaveLength(0);
+    });
+  });
+
+  describe('capo', () => {
+    it('keeps the capo fret', () => {
+      const score = roundTrip({
+        capo: 2,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.tracks[0].staves[0].capo).toBe(2);
+    });
+  });
+
+  describe('chords', () => {
+    it('keeps chord names above the beats', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    chord: { text: 'Am7', width: 29 }
+                  },
+                  { duration: [1, 4], notes: [E] },
+                  { duration: [1, 4], notes: [E], chord: { text: 'G' } }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.chord?.name ?? null)).toEqual([
+        'Am7',
+        null,
+        'G'
+      ]);
+    });
+  });
+
+  describe('let ring', () => {
+    it('marks every note of a let-ring beat', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E, { fret: 2, string: 1 }],
+                    letRing: true
+                  },
+                  { duration: [1, 2], notes: [E] }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats[0].notes.every((note) => note.isLetRing)).toBe(true);
+      expect(beats[1].notes[0].isLetRing).toBe(false);
+    });
+  });
+
+  describe('left hand vibrato', () => {
+    it('reads the leftHandVibrato field newer tabs use', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [{ ...E, leftHandVibrato: 'slight' }]
+                  },
+                  {
+                    duration: [1, 2],
+                    notes: [{ ...E, leftHandVibrato: 'wide' }]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.notes[0].vibrato)).toEqual([
+        alphaTab.model.VibratoType.Slight,
+        alphaTab.model.VibratoType.Wide
+      ]);
+    });
+  });
+
+  describe('strums and arpeggios', () => {
+    it('keeps brush and arpeggio direction and speed', () => {
+      const chord = [E, { fret: 2, string: 1 }, { fret: 2, string: 2 }];
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    brushStroke: { direction: 'down', duration: 30, shift: 100 }
+                  },
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    brushStroke: { direction: 'up', duration: 30, shift: 100 }
+                  },
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    arpeggio: { direction: 'down', duration: 240, shift: 100 }
+                  },
+                  {
+                    duration: [1, 4],
+                    notes: chord,
+                    arpeggio: { direction: 'up', duration: 78, shift: 100 }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => [beat.brushType, beat.brushDuration])).toEqual(
+        [
+          [alphaTab.model.BrushType.BrushDown, 30],
+          [alphaTab.model.BrushType.BrushUp, 30],
+          [alphaTab.model.BrushType.ArpeggioDown, 240],
+          [alphaTab.model.BrushType.ArpeggioUp, 78]
+        ]
+      );
+    });
+  });
+
+  describe('crescendo', () => {
+    it('keeps crescendo and decrescendo', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    gradualVelocity: 'crescendo'
+                  },
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    gradualVelocity: 'decrescendo'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.crescendo)).toEqual([
+        alphaTab.model.CrescendoType.Crescendo,
+        alphaTab.model.CrescendoType.Decrescendo
+      ]);
+    });
+  });
+
+  describe('tremolo picking', () => {
+    it('keeps the tremolo speed', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 2], notes: [E], tremolo: [1, 32] },
+                  { duration: [1, 2], notes: [E], tremolo: [1, 16] }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.tremoloPicking?.marks)).toEqual([3, 2]);
+    });
+  });
+
+  describe('wah', () => {
+    it('keeps open and closed wah', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 2], notes: [E], wahwah: 'open' },
+                  { duration: [1, 2], notes: [E], wahwah: 'closed' }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.wahPedal)).toEqual([
+        alphaTab.model.WahPedal.Open,
+        alphaTab.model.WahPedal.Closed
+      ]);
+    });
+  });
+
+  describe('fade in', () => {
+    it('keeps fade in', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              { beats: [{ duration: [1, 1], notes: [E], fadeIn: true }] }
+            ]
+          }
+        ]
+      });
+      expect(firstBeat(score).fade).toBe(alphaTab.model.FadeType.FadeIn);
+    });
+  });
+
+  describe('slap, pop and tapping', () => {
+    it('keeps each technique', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 4], notes: [E], slapping: true },
+                  { duration: [1, 4], notes: [E], popping: true },
+                  { duration: [1, 4], notes: [E], tapping: true },
+                  { duration: [1, 4], notes: [E], deadSlapped: true }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(
+        beats.map((beat) => [beat.slap, beat.pop, beat.tap, beat.deadSlapped])
+      ).toEqual([
+        [true, false, false, false],
+        [false, true, false, false],
+        [false, false, true, false],
+        [false, false, false, true]
+      ]);
+    });
+  });
+
+  describe('ottava', () => {
+    it('keeps 8va and 8vb', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 2], notes: [E], octaveClef: '8va' },
+                  { duration: [1, 2], notes: [E], octaveClef: '8vb' }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.ottava)).toEqual([
+        alphaTab.model.Ottavia._8va,
+        alphaTab.model.Ottavia._8vb
+      ]);
+    });
+  });
+
+  describe('clef', () => {
+    it('keeps a clef change until the next one', () => {
+      const bar = (extra = {}) => ({
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ],
+        ...extra
+      });
+      const score = roundTrip({
+        measures: [
+          { signature: [4, 4], ...bar({ clef: 'F4' }) },
+          bar(),
+          bar({ clef: 'G2' })
+        ]
+      });
+      expect(score.tracks[0].staves[0].bars.map((b) => b.clef)).toEqual([
+        alphaTab.model.Clef.F4,
+        alphaTab.model.Clef.F4,
+        alphaTab.model.Clef.G2
+      ]);
+    });
+  });
+
+  describe('key signature', () => {
+    it('keeps sharps, flats and minor keys', () => {
+      const bar = (keySignature?: object) => ({
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ],
+        ...(keySignature ? { keySignature } : {})
+      });
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            ...bar({ accidentalCount: 3, mode: 'major', transposeAs: '#' })
+          },
+          bar(),
+          bar({ accidentalCount: 1, mode: 'minor', transposeAs: 'b' })
+        ]
+      });
+      expect(
+        score.tracks[0].staves[0].bars.map((b) => [
+          b.keySignature,
+          b.keySignatureType
+        ])
+      ).toEqual([
+        [3, alphaTab.model.KeySignatureType.Major],
+        [3, alphaTab.model.KeySignatureType.Major],
+        [-1, alphaTab.model.KeySignatureType.Minor]
+      ]);
+    });
+  });
+
+  describe('triplet feel', () => {
+    it('keeps swing until it is turned off', () => {
+      const bar = (tripletFeel?: string) => ({
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ],
+        ...(tripletFeel ? { tripletFeel } : {})
+      });
+      const score = roundTrip({
+        measures: [
+          { signature: [4, 4], ...bar('8th') },
+          bar(),
+          bar('16th'),
+          bar('off')
+        ]
+      });
+      expect(score.masterBars.map((mb) => mb.tripletFeel)).toEqual([
+        alphaTab.model.TripletFeel.Triplet8th,
+        alphaTab.model.TripletFeel.Triplet8th,
+        alphaTab.model.TripletFeel.Triplet16th,
+        alphaTab.model.TripletFeel.NoTripletFeel
+      ]);
+    });
+  });
+
+  describe('pickup bar', () => {
+    it('marks the pickup bar', () => {
+      const full = {
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ]
+      };
+      const guitar: SongsterrRevisionTrackPayload = {
+        anacrusis: true,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 8], notes: [E] }] }]
+          },
+          full
+        ]
+      };
+      const bass: SongsterrRevisionTrackPayload = {
+        anacrusis: true,
+        measures: [
+          {
+            signature: [4, 4],
+            rest: true,
+            voices: [
+              {
+                rest: true,
+                beats: [
+                  { rest: true, duration: [1, 8], notes: [{ rest: true }] }
+                ]
+              }
+            ]
+          },
+          full
+        ]
+      };
+      const metas = [
+        makeTrackMeta({ partId: 0 }),
+        makeTrackMeta({ partId: 1, title: 'Bass' })
+      ];
+      const { data } = new SongsterrToAlphaTabConverter().toGp7({
+        meta: makeMeta(metas),
+        revisions: [
+          { trackMeta: metas[0], revision: guitar },
+          { trackMeta: metas[1], revision: bass }
+        ]
+      });
+      const score = alphaTab.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        new alphaTab.Settings()
+      );
+      expect(score.masterBars[0].isAnacrusis).toBe(true);
+      expect(score.masterBars[1].isAnacrusis).toBe(false);
+      const [guitarBar, bassBar] = score.tracks.map(
+        (track) => track.staves[0].bars[0]
+      );
+      expect(guitarBar.voices[0].beats.map((beat) => beat.duration)).toEqual([
+        alphaTab.model.Duration.Eighth
+      ]);
+      expect(bassBar.isEmpty).toBe(true);
+    });
+
+    it('ignores the flag when the first bar is already full', () => {
+      const score = roundTrip({
+        anacrusis: true,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.masterBars[0].isAnacrusis).toBe(false);
+    });
+  });
+
+  describe('trill', () => {
+    it('keeps the trill fret', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 1],
+                    notes: [
+                      {
+                        fret: 5,
+                        string: 1,
+                        trill: { auxiliaryFret: 7, speed: 30 }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const note = firstBeat(score).notes[0];
+      expect(note.isTrill).toBe(true);
+      expect(note.trillFret).toBe(7);
+    });
+  });
+
+  describe('whammy bar', () => {
+    it('keeps whammy dives and returns', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    tremoloBar: {
+                      tone: 0,
+                      points: [
+                        { position: 0, tone: 0 },
+                        { position: 0, tone: 0 },
+                        { position: 15, tone: -100 },
+                        { position: 30, tone: 0 }
+                      ]
+                    }
+                  },
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    tremoloBar: { tone: 0, points: [{ position: 0, tone: 0 }] }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const [dip, flat] = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(dip.hasWhammyBar).toBe(true);
+      expect(dip.whammyBarPoints!.map((point) => point.value)).toEqual([
+        0, -4, 0
+      ]);
+      expect(flat.hasWhammyBar).toBe(false);
+    });
+  });
+
+  describe('fermata', () => {
+    it('keeps fermatas at their beat', () => {
+      const score = roundTrip({
+        automations: {
+          fermata: [{ measure: 0, position: 960, type: 'medium', length: 0.5 }]
+        },
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 4], notes: [E] },
+                  { duration: [1, 4], notes: [E] },
+                  { duration: [1, 2], notes: [E] }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const fermatas = score.masterBars[0].fermata;
+      expect(
+        fermatas &&
+          [...fermatas.entries()].map(([offset, f]) => [
+            offset,
+            f.type,
+            f.length
+          ])
+      ).toEqual([[960, alphaTab.model.FermataType.Medium, 0.5]]);
+    });
+  });
+
+  describe('gradual tempo', () => {
+    it('keeps linear tempo changes', () => {
+      const bar = {
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ]
+      };
+      const score = roundTrip({
+        automations: {
+          tempo: [
+            { measure: 0, position: 0, bpm: 120, type: 4 },
+            { measure: 1, position: 0, bpm: 90, type: 4, linear: true }
+          ]
+        },
+        measures: [{ signature: [4, 4], ...bar }, bar]
+      });
+      expect(
+        score.masterBars.map((mb) =>
+          mb.tempoAutomations.map((a) => [a.value, a.isLinear])
+        )
+      ).toEqual([[[120, false]], [[90, true]]]);
+    });
+  });
+
+  describe('tempo label', () => {
+    it('keeps the text on a tempo change', () => {
+      const score = roundTrip({
+        automations: {
+          tempo: [{ measure: 0, position: 0, bpm: 70, type: 4, text: 'Slowly' }]
+        },
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.masterBars[0].tempoAutomations[0].text).toBe('Slowly');
+    });
+  });
+
+  describe('volume and pan', () => {
+    it('keeps the track mix', () => {
+      const score = roundTrip({
+        volume: 0.5,
+        balance: -0.25,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.tracks[0].playbackInfo.volume).toBe(8);
+      expect(score.tracks[0].playbackInfo.balance).toBe(6);
+    });
+  });
+
+  describe('transpose', () => {
+    it('keeps the written transposition', () => {
+      const score = roundTrip({
+        transpose: { chromatic: -10, octave: 0 },
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.tracks[0].staves[0].displayTranspositionPitch).toBe(-10);
+    });
+  });
+
+  describe('instrument changes', () => {
+    it('switches sound partway through the track', () => {
+      const bar = {
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ]
+      };
+      const score = roundTrip({
+        sounds: [
+          { instrumentId: 30, label: 'Distortion Guitar' },
+          { instrumentId: 27, label: 'Electric Guitar (clean)' }
+        ],
+        trackAutomations: {
+          trackSoundAutomations: [
+            { soundId: 0, measure: 0, position: 0 },
+            { soundId: 1, measure: 1, position: 0 },
+            { soundId: 0, measure: 2, position: 0 }
+          ]
+        },
+        measures: [{ signature: [4, 4], ...bar }, bar, bar]
+      });
+      const programs = score.tracks[0].staves[0].bars.map(
+        (b) =>
+          b.voices[0].beats[0].getAutomation(
+            alphaTab.model.AutomationType.Instrument
+          )?.value ?? null
+      );
+      expect(score.tracks[0].playbackInfo.program).toBe(30);
+      expect(programs.slice(1)).toEqual([27, 30]);
     });
   });
 

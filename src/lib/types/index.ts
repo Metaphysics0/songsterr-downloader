@@ -38,10 +38,20 @@ export interface SongsterrRevisionAutomationTempoPoint {
   position: number;
   bpm: number;
   type: number;
+  linear?: boolean;
+  text?: string;
+}
+
+export interface SongsterrRevisionFermata {
+  measure: number;
+  position: number;
+  type?: string;
+  length?: number;
 }
 
 export interface SongsterrRevisionAutomations {
   tempo?: SongsterrRevisionAutomationTempoPoint[];
+  fermata?: SongsterrRevisionFermata[];
 }
 
 export interface SongsterrRevisionBendPoint {
@@ -70,6 +80,15 @@ export interface SongsterrRevisionNotePayload {
   harmonic?: string;
   harmonicFret?: number;
   bend?: SongsterrRevisionBendPayload;
+  letRing?: boolean;
+  leftHandVibrato?: string;
+  trill?: { auxiliaryFret?: number; speed?: number };
+}
+
+export interface SongsterrRevisionStrokePayload {
+  direction?: string;
+  duration?: number;
+  shift?: number;
 }
 
 export interface SongsterrRevisionBeatPayload {
@@ -90,6 +109,20 @@ export interface SongsterrRevisionBeatPayload {
   tupletStop?: boolean;
   /** Grace note style: "beforeBeat" | "onBeat". Must not consume bar duration. */
   graceNote?: string;
+  chord?: { text: string; width?: number };
+  letRing?: boolean;
+  brushStroke?: SongsterrRevisionStrokePayload;
+  arpeggio?: SongsterrRevisionStrokePayload;
+  gradualVelocity?: string;
+  tremolo?: [number, number];
+  wahwah?: string;
+  fadeIn?: boolean;
+  slapping?: boolean;
+  popping?: boolean;
+  tapping?: boolean;
+  deadSlapped?: boolean;
+  octaveClef?: string;
+  tremoloBar?: SongsterrRevisionBendPayload;
 }
 
 export interface SongsterrRevisionVoicePayload {
@@ -108,7 +141,20 @@ export interface SongsterrRevisionMeasurePayload {
   /** Ending numbers ([1], [2], [1,2]) or a pre-built bitmask. */
   alternateEnding?: number | number[];
   doubleBarline?: boolean;
+  clef?: string;
+  tripletFeel?: string;
+  keySignature?: {
+    accidentalCount?: number;
+    mode?: string;
+    transposeAs?: string;
+  };
   rest?: boolean;
+}
+
+export interface SongsterrRevisionLyricsLine {
+  line?: number;
+  offset?: number;
+  text?: string;
 }
 
 export interface SongsterrRevisionTrackPayload {
@@ -118,6 +164,20 @@ export interface SongsterrRevisionTrackPayload {
   strings?: number;
   measures: SongsterrRevisionMeasurePayload[];
   automations?: SongsterrRevisionAutomations;
+  newLyrics?: SongsterrRevisionLyricsLine[];
+  capo?: number;
+  anacrusis?: boolean;
+  volume?: number;
+  balance?: number;
+  transpose?: { chromatic?: number; octave?: number };
+  sounds?: { instrumentId: number; label?: string }[];
+  trackAutomations?: {
+    trackSoundAutomations?: {
+      soundId: number;
+      measure: number;
+      position: number;
+    }[];
+  };
   songId?: number;
   revisionId?: number;
   partId?: number;
