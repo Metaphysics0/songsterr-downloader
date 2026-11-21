@@ -739,6 +739,10 @@ export class SongsterrToAlphaTabConverter {
       note.isPalmMute = true;
     }
 
+    if (beatData.letRing || noteData.letRing) {
+      note.isLetRing = true;
+    }
+
     // Vibrato (note-level takes priority, falls back to beat-level)
     if (noteData.wideVibrato) {
       note.vibrato = alphaTab.model.VibratoType.Wide;

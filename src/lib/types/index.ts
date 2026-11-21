@@ -70,6 +70,7 @@ export interface SongsterrRevisionNotePayload {
   harmonic?: string;
   harmonicFret?: number;
   bend?: SongsterrRevisionBendPayload;
+  letRing?: boolean;
 }
 
 export interface SongsterrRevisionBeatPayload {
@@ -91,6 +92,7 @@ export interface SongsterrRevisionBeatPayload {
   /** Grace note style: "beforeBeat" | "onBeat". Must not consume bar duration. */
   graceNote?: string;
   chord?: { text: string; width?: number };
+  letRing?: boolean;
 }
 
 export interface SongsterrRevisionVoicePayload {

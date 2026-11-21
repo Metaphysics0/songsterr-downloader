@@ -1590,6 +1590,33 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('let ring', () => {
+    it('marks every note of a let-ring beat', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E, { fret: 2, string: 1 }],
+                    letRing: true
+                  },
+                  { duration: [1, 2], notes: [E] }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats[0].notes.every((note) => note.isLetRing)).toBe(true);
+      expect(beats[1].notes[0].isLetRing).toBe(false);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
