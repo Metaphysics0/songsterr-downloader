@@ -60,6 +60,14 @@ const ottavaMap: Record<string, alphaTab.model.Ottavia> = {
   '15mb': alphaTab.model.Ottavia._15mb
 };
 
+const clefMap: Record<string, alphaTab.model.Clef> = {
+  G2: alphaTab.model.Clef.G2,
+  F4: alphaTab.model.Clef.F4,
+  C3: alphaTab.model.Clef.C3,
+  C4: alphaTab.model.Clef.C4,
+  Neutral: alphaTab.model.Clef.Neutral
+};
+
 const harmonicTypeMap: Record<string, alphaTab.model.HarmonicType> = {
   natural: alphaTab.model.HarmonicType.Natural,
   artificial: alphaTab.model.HarmonicType.Artificial,
@@ -472,9 +480,16 @@ export class SongsterrToAlphaTabConverter {
       maxVoiceCount = Math.max(maxVoiceCount, m?.voices?.length || 0);
     }
 
+    let clef: alphaTab.model.Clef | undefined;
     for (let measureIndex = 0; measureIndex < masterBarCount; measureIndex++) {
       const bar = new alphaTab.model.Bar();
       const measure = revision.measures?.[measureIndex];
+      if (measure?.clef && clefMap[measure.clef] !== undefined) {
+        clef = clefMap[measure.clef];
+      }
+      if (clef !== undefined) {
+        bar.clef = clef;
+      }
       const voiceCount = measure?.voices?.length || 0;
 
       if (voiceCount === 0) {

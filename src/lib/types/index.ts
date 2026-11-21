@@ -129,6 +129,7 @@ export interface SongsterrRevisionMeasurePayload {
   /** Ending numbers ([1], [2], [1,2]) or a pre-built bitmask. */
   alternateEnding?: number | number[];
   doubleBarline?: boolean;
+  clef?: string;
   rest?: boolean;
 }
 

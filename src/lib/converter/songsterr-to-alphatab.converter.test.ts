@@ -1848,6 +1848,29 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('clef', () => {
+    it('keeps a clef change until the next one', () => {
+      const bar = (extra = {}) => ({
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ],
+        ...extra
+      });
+      const score = roundTrip({
+        measures: [
+          { signature: [4, 4], ...bar({ clef: 'F4' }) },
+          bar(),
+          bar({ clef: 'G2' })
+        ]
+      });
+      expect(score.tracks[0].staves[0].bars.map((b) => b.clef)).toEqual([
+        alphaTab.model.Clef.F4,
+        alphaTab.model.Clef.F4,
+        alphaTab.model.Clef.G2
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
