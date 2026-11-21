@@ -671,6 +671,12 @@ export class SongsterrToAlphaTabConverter {
       }
     }
 
+    if (beatData.gradualVelocity === 'crescendo') {
+      beat.crescendo = alphaTab.model.CrescendoType.Crescendo;
+    } else if (beatData.gradualVelocity === 'decrescendo') {
+      beat.crescendo = alphaTab.model.CrescendoType.Decrescendo;
+    }
+
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
       beat.vibrato = alphaTab.model.VibratoType.Wide;

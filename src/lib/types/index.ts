@@ -102,6 +102,7 @@ export interface SongsterrRevisionBeatPayload {
   letRing?: boolean;
   brushStroke?: SongsterrRevisionStrokePayload;
   arpeggio?: SongsterrRevisionStrokePayload;
+  gradualVelocity?: string;
 }
 
 export interface SongsterrRevisionVoicePayload {

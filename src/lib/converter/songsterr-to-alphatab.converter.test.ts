@@ -1696,6 +1696,39 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('crescendo', () => {
+    it('keeps crescendo and decrescendo', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    gradualVelocity: 'crescendo'
+                  },
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    gradualVelocity: 'decrescendo'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.crescendo)).toEqual([
+        alphaTab.model.CrescendoType.Crescendo,
+        alphaTab.model.CrescendoType.Decrescendo
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
