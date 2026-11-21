@@ -481,6 +481,8 @@ export class SongsterrToAlphaTabConverter {
     }
 
     let clef: alphaTab.model.Clef | undefined;
+    let keySignature = 0;
+    let keySignatureType = alphaTab.model.KeySignatureType.Major;
     for (let measureIndex = 0; measureIndex < masterBarCount; measureIndex++) {
       const bar = new alphaTab.model.Bar();
       const measure = revision.measures?.[measureIndex];
@@ -490,6 +492,17 @@ export class SongsterrToAlphaTabConverter {
       if (clef !== undefined) {
         bar.clef = clef;
       }
+      const key = measure?.keySignature;
+      if (key && typeof key.accidentalCount === 'number') {
+        const count = Math.max(0, Math.min(7, Math.round(key.accidentalCount)));
+        keySignature = key.transposeAs === 'b' ? -count : count;
+        keySignatureType =
+          key.mode === 'minor'
+            ? alphaTab.model.KeySignatureType.Minor
+            : alphaTab.model.KeySignatureType.Major;
+      }
+      bar.keySignature = keySignature as alphaTab.model.KeySignature;
+      bar.keySignatureType = keySignatureType;
       const voiceCount = measure?.voices?.length || 0;
 
       if (voiceCount === 0) {

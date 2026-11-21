@@ -130,6 +130,11 @@ export interface SongsterrRevisionMeasurePayload {
   alternateEnding?: number | number[];
   doubleBarline?: boolean;
   clef?: string;
+  keySignature?: {
+    accidentalCount?: number;
+    mode?: string;
+    transposeAs?: string;
+  };
   rest?: boolean;
 }
 

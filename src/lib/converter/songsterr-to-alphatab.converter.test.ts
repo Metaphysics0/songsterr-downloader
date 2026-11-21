@@ -1871,6 +1871,37 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('key signature', () => {
+    it('keeps sharps, flats and minor keys', () => {
+      const bar = (keySignature?: object) => ({
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ],
+        ...(keySignature ? { keySignature } : {})
+      });
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            ...bar({ accidentalCount: 3, mode: 'major', transposeAs: '#' })
+          },
+          bar(),
+          bar({ accidentalCount: 1, mode: 'minor', transposeAs: 'b' })
+        ]
+      });
+      expect(
+        score.tracks[0].staves[0].bars.map((b) => [
+          b.keySignature,
+          b.keySignatureType
+        ])
+      ).toEqual([
+        [3, alphaTab.model.KeySignatureType.Major],
+        [3, alphaTab.model.KeySignatureType.Major],
+        [-1, alphaTab.model.KeySignatureType.Minor]
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
