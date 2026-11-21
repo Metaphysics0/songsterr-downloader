@@ -691,6 +691,10 @@ export class SongsterrToAlphaTabConverter {
       beat.wahPedal = alphaTab.model.WahPedal.Closed;
     }
 
+    if (beatData.fadeIn) {
+      beat.fade = alphaTab.model.FadeType.FadeIn;
+    }
+
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
       beat.vibrato = alphaTab.model.VibratoType.Wide;

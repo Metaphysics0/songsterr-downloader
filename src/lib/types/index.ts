@@ -105,6 +105,7 @@ export interface SongsterrRevisionBeatPayload {
   gradualVelocity?: string;
   tremolo?: [number, number];
   wahwah?: string;
+  fadeIn?: boolean;
 }
 
 export interface SongsterrRevisionVoicePayload {

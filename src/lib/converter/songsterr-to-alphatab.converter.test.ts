@@ -1776,6 +1776,22 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('fade in', () => {
+    it('keeps fade in', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              { beats: [{ duration: [1, 1], notes: [E], fadeIn: true }] }
+            ]
+          }
+        ]
+      });
+      expect(firstBeat(score).fade).toBe(alphaTab.model.FadeType.FadeIn);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
