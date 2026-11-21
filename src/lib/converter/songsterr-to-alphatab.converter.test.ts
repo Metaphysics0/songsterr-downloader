@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { unzipSync } from 'fflate';
+import * as alphaTab from '@coderline/alphatab';
 import { SongsterrToAlphaTabConverter } from './songsterr-to-alphatab.converter';
 import type {
   SongsterrRevisionTrackPayload,
@@ -1452,6 +1453,77 @@ describe('SongsterrToAlphaTabConverter', () => {
       });
 
       expect(data.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('lyrics', () => {
+    function reimport(data: Uint8Array): alphaTab.model.Score {
+      return alphaTab.importer.ScoreLoader.loadScoreFromBytes(
+        data,
+        new alphaTab.Settings()
+      );
+    }
+
+    function sungBeats(track: alphaTab.model.Track) {
+      return track.staves[0].bars.flatMap((bar) =>
+        bar.voices[0].beats.filter((beat) => beat.lyrics?.some(Boolean))
+      );
+    }
+
+    it('puts every syllable of a vocal track into the gp7 file (song-3)', () => {
+      const revision = loadRevision('song-3/0.json');
+      const { data } = convertSingle(revision);
+
+      const vocals = reimport(data).tracks[0];
+      const beats = sungBeats(vocals);
+      expect(beats).toHaveLength(464);
+      expect(beats[0].voice.bar.index).toBe(15);
+      expect(beats[0].lyrics![0]).toBe("There's");
+      expect(beats.at(-1)!.lyrics![0]).toBe('n.');
+      expect(readGpif(data)).toContain('<Lyrics dispatched="true">');
+    });
+
+    it('skips rests and tied notes, honours the bar offset and keeps verses apart', () => {
+      const note = { fret: 0, string: 0 };
+      const revision: SongsterrRevisionTrackPayload = {
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ rest: true, duration: [1, 1] }] }]
+          },
+          {
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 4], notes: [note] },
+                  { duration: [1, 4], notes: [{ ...note, tie: true }] },
+                  { duration: [1, 4], rest: true, notes: [{ rest: true }] },
+                  { duration: [1, 4], notes: [note] }
+                ]
+              }
+            ]
+          },
+          { voices: [{ beats: [{ duration: [1, 1], notes: [note] }] }] }
+        ],
+        newLyrics: [
+          { line: 1, offset: 2, text: 'hel-lo world' },
+          { line: 2, offset: 3, text: '' },
+          { line: 3, offset: 3, text: 'two' }
+        ]
+      };
+
+      const { data } = convertSingle(revision);
+      const beats = sungBeats(reimport(data).tracks[0]);
+      expect(beats.map((beat) => [beat.voice.bar.index, beat.lyrics])).toEqual([
+        [1, ['hel-', '']],
+        [1, ['lo', '']],
+        [2, ['world', 'two']]
+      ]);
+    });
+
+    it('leaves tracks with only empty lyric lines alone', () => {
+      const { data } = convertSingle(loadRevision('song-3/1.json'));
+      expect(sungBeats(reimport(data).tracks[0])).toHaveLength(0);
     });
   });
 

@@ -329,6 +329,10 @@ export class SongsterrToAlphaTabConverter {
     const settings = new alphaTab.Settings();
     score.finish(settings);
 
+    revisions.forEach((entry, index) =>
+      this.applyLyrics(score.tracks[index], entry.revision)
+    );
+
     return { score, settings, warnings };
   }
 
@@ -974,6 +978,41 @@ export class SongsterrToAlphaTabConverter {
       );
       masterBar.tempoAutomations.push(tempoAutomation);
     }
+  }
+
+  private applyLyrics(
+    track: alphaTab.model.Track | undefined,
+    revision: SongsterrRevisionTrackPayload
+  ): void {
+    const staff = track?.staves[0];
+    if (!staff || !Array.isArray(revision.newLyrics)) return;
+
+    const lines = revision.newLyrics.filter(
+      (line) => typeof line?.text === 'string' && line.text.trim() !== ''
+    );
+
+    lines.forEach((line, lineIndex) => {
+      const lyrics = new alphaTab.model.Lyrics();
+      lyrics.text = line.text!;
+      lyrics.finish(true);
+
+      const startBar = Math.max(0, (line.offset ?? 1) - 1);
+      let chunk = 0;
+      for (
+        let barIndex = startBar;
+        barIndex < staff.bars.length && chunk < lyrics.chunks.length;
+        barIndex++
+      ) {
+        for (const beat of staff.bars[barIndex].voices[0]?.beats ?? []) {
+          if (chunk >= lyrics.chunks.length) break;
+          if (beat.isRest || beat.isEmpty || beat.notes.length === 0) continue;
+          if (beat.notes.every((note) => note.isTieDestination)) continue;
+
+          if (!beat.lyrics) beat.lyrics = new Array(lines.length).fill('');
+          beat.lyrics[lineIndex] = lyrics.chunks[chunk++];
+        }
+      }
+    });
   }
 
   private pushWarning(

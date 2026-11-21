@@ -111,6 +111,12 @@ export interface SongsterrRevisionMeasurePayload {
   rest?: boolean;
 }
 
+export interface SongsterrRevisionLyricsLine {
+  line?: number;
+  offset?: number;
+  text?: string;
+}
+
 export interface SongsterrRevisionTrackPayload {
   name?: string;
   instrumentId?: number;
@@ -118,6 +124,7 @@ export interface SongsterrRevisionTrackPayload {
   strings?: number;
   measures: SongsterrRevisionMeasurePayload[];
   automations?: SongsterrRevisionAutomations;
+  newLyrics?: SongsterrRevisionLyricsLine[];
   songId?: number;
   revisionId?: number;
   partId?: number;
