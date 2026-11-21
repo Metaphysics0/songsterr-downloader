@@ -1729,6 +1729,28 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('tremolo picking', () => {
+    it('keeps the tremolo speed', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 2], notes: [E], tremolo: [1, 32] },
+                  { duration: [1, 2], notes: [E], tremolo: [1, 16] }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.tremoloPicking?.marks)).toEqual([3, 2]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

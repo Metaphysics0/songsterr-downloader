@@ -677,6 +677,14 @@ export class SongsterrToAlphaTabConverter {
       beat.crescendo = alphaTab.model.CrescendoType.Decrescendo;
     }
 
+    const tremoloMarks = Array.isArray(beatData.tremolo)
+      ? Math.round(Math.log2(beatData.tremolo[1] / beatData.tremolo[0])) - 2
+      : 0;
+    if (tremoloMarks >= 1 && tremoloMarks <= 3) {
+      beat.tremoloPicking = new alphaTab.model.TremoloPickingEffect();
+      beat.tremoloPicking.marks = tremoloMarks;
+    }
+
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
       beat.vibrato = alphaTab.model.VibratoType.Wide;

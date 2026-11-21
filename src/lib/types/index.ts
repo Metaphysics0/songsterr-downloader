@@ -103,6 +103,7 @@ export interface SongsterrRevisionBeatPayload {
   brushStroke?: SongsterrRevisionStrokePayload;
   arpeggio?: SongsterrRevisionStrokePayload;
   gradualVelocity?: string;
+  tremolo?: [number, number];
 }
 
 export interface SongsterrRevisionVoicePayload {
