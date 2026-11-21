@@ -505,6 +505,20 @@ export class SongsterrToAlphaTabConverter {
       staff.addBar(bar);
     }
 
+    for (const bar of staff.bars) {
+      for (const voice of bar.voices) {
+        for (const beat of voice.beats) {
+          if (beat.chordId && !staff.hasChord(beat.chordId)) {
+            const chord = new alphaTab.model.Chord();
+            chord.name = beat.chordId;
+            chord.showDiagram = false;
+            chord.strings = new Array(numStrings).fill(-1);
+            staff.addChord(beat.chordId, chord);
+          }
+        }
+      }
+    }
+
     track.addStaff(staff);
     score.addTrack(track);
   }
@@ -571,6 +585,10 @@ export class SongsterrToAlphaTabConverter {
     const rawText = beatData.text;
     const textStr = typeof rawText === 'string' ? rawText : rawText?.text;
     beat.text = (textStr as string | undefined) || null;
+    const chordName = beatData.chord?.text?.trim();
+    if (chordName) {
+      beat.chordId = chordName;
+    }
 
     if (mappedDuration.isApproximate && !beatData.tuplet) {
       this.pushWarning(warnings, {

@@ -1559,6 +1559,37 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('chords', () => {
+    it('keeps chord names above the beats', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    chord: { text: 'Am7', width: 29 }
+                  },
+                  { duration: [1, 4], notes: [E] },
+                  { duration: [1, 4], notes: [E], chord: { text: 'G' } }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.chord?.name ?? null)).toEqual([
+        'Am7',
+        null,
+        'G'
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
