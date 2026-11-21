@@ -458,6 +458,21 @@ export class SongsterrToAlphaTabConverter {
 
     const tempoPoints = this.findTempoPoints(masterTrack);
     this.applyTempoAutomations(score, tempoPoints, warnings);
+
+    const fermatas = masterTrack?.automations?.fermata;
+    for (const point of Array.isArray(fermatas) ? fermatas : []) {
+      const masterBar = score.masterBars[point.measure];
+      if (!masterBar || typeof point.position !== 'number') continue;
+      const fermata = new alphaTab.model.Fermata();
+      fermata.type =
+        point.type === 'long'
+          ? alphaTab.model.FermataType.Long
+          : point.type === 'medium'
+            ? alphaTab.model.FermataType.Medium
+            : alphaTab.model.FermataType.Short;
+      fermata.length = typeof point.length === 'number' ? point.length : 0;
+      masterBar.addFermata(Math.max(0, Math.round(point.position)), fermata);
+    }
   }
 
   private buildTrack({

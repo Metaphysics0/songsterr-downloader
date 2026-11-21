@@ -40,8 +40,16 @@ export interface SongsterrRevisionAutomationTempoPoint {
   type: number;
 }
 
+export interface SongsterrRevisionFermata {
+  measure: number;
+  position: number;
+  type?: string;
+  length?: number;
+}
+
 export interface SongsterrRevisionAutomations {
   tempo?: SongsterrRevisionAutomationTempoPoint[];
+  fermata?: SongsterrRevisionFermata[];
 }
 
 export interface SongsterrRevisionBendPoint {

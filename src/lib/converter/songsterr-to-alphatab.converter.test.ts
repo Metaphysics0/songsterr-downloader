@@ -2075,6 +2075,39 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('fermata', () => {
+    it('keeps fermatas at their beat', () => {
+      const score = roundTrip({
+        automations: {
+          fermata: [{ measure: 0, position: 960, type: 'medium', length: 0.5 }]
+        },
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 4], notes: [E] },
+                  { duration: [1, 4], notes: [E] },
+                  { duration: [1, 2], notes: [E] }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const fermatas = score.masterBars[0].fermata;
+      expect(
+        fermatas &&
+          [...fermatas.entries()].map(([offset, f]) => [
+            offset,
+            f.type,
+            f.length
+          ])
+      ).toEqual([[960, alphaTab.model.FermataType.Medium, 0.5]]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
