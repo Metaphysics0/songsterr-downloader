@@ -773,6 +773,20 @@ export class SongsterrToAlphaTabConverter {
       beat.ottava = ottava;
     }
 
+    const whammyPoints = beatData.tremoloBar?.points ?? [];
+    if (whammyPoints.some((point) => point.tone !== 0)) {
+      beat.whammyBarType = alphaTab.model.WhammyType.Custom;
+      let previous: string | null = null;
+      for (const point of whammyPoints) {
+        const offset = Math.max(0, Math.min(60, Math.round(point.position)));
+        const value = Math.round(point.tone / 25);
+        const key = `${offset}:${value}`;
+        if (key === previous) continue;
+        previous = key;
+        beat.addWhammyBarPoint(new alphaTab.model.BendPoint(offset, value));
+      }
+    }
+
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
       beat.vibrato = alphaTab.model.VibratoType.Wide;

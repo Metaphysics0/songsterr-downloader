@@ -112,6 +112,7 @@ export interface SongsterrRevisionBeatPayload {
   tapping?: boolean;
   deadSlapped?: boolean;
   octaveClef?: string;
+  tremoloBar?: SongsterrRevisionBendPayload;
 }
 
 export interface SongsterrRevisionVoicePayload {

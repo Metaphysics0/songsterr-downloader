@@ -2033,6 +2033,48 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('whammy bar', () => {
+    it('keeps whammy dives and returns', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    tremoloBar: {
+                      tone: 0,
+                      points: [
+                        { position: 0, tone: 0 },
+                        { position: 0, tone: 0 },
+                        { position: 15, tone: -100 },
+                        { position: 30, tone: 0 }
+                      ]
+                    }
+                  },
+                  {
+                    duration: [1, 2],
+                    notes: [E],
+                    tremoloBar: { tone: 0, points: [{ position: 0, tone: 0 }] }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const [dip, flat] = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(dip.hasWhammyBar).toBe(true);
+      expect(dip.whammyBarPoints!.map((point) => point.value)).toEqual([
+        0, -4, 0
+      ]);
+      expect(flat.hasWhammyBar).toBe(false);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {
