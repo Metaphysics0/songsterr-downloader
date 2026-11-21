@@ -99,6 +99,23 @@ function readMidiTrackNames(data: Uint8Array): string[] {
   return names;
 }
 
+function roundTrip(
+  revision: SongsterrRevisionTrackPayload,
+  trackMeta?: SongsterrStateMetaCurrentTrack
+): alphaTab.model.Score {
+  const { data } = convertSingle(revision, trackMeta);
+  return alphaTab.importer.ScoreLoader.loadScoreFromBytes(
+    data,
+    new alphaTab.Settings()
+  );
+}
+
+function firstBeat(score: alphaTab.model.Score, barIndex = 0) {
+  return score.tracks[0].staves[0].bars[barIndex].voices[0].beats[0];
+}
+
+const E = { fret: 0, string: 0 };
+
 function readGpif(data: Uint8Array): string {
   const entries = unzipSync(data);
   for (const [name, bytes] of Object.entries(entries)) {
@@ -1524,6 +1541,21 @@ describe('SongsterrToAlphaTabConverter', () => {
     it('leaves tracks with only empty lyric lines alone', () => {
       const { data } = convertSingle(loadRevision('song-3/1.json'));
       expect(sungBeats(reimport(data).tracks[0])).toHaveLength(0);
+    });
+  });
+
+  describe('capo', () => {
+    it('keeps the capo fret', () => {
+      const score = roundTrip({
+        capo: 2,
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [{ beats: [{ duration: [1, 1], notes: [E] }] }]
+          }
+        ]
+      });
+      expect(score.tracks[0].staves[0].capo).toBe(2);
     });
   });
 

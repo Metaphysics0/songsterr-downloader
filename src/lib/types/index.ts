@@ -125,6 +125,7 @@ export interface SongsterrRevisionTrackPayload {
   measures: SongsterrRevisionMeasurePayload[];
   automations?: SongsterrRevisionAutomations;
   newLyrics?: SongsterrRevisionLyricsLine[];
+  capo?: number;
   songId?: number;
   revisionId?: number;
   partId?: number;

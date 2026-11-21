@@ -451,6 +451,9 @@ export class SongsterrToAlphaTabConverter {
     }
     const isPercussion = playbackMapping.isPercussion || !!trackMeta.isDrums;
     staff.isPercussion = isPercussion;
+    if (typeof revision.capo === 'number' && revision.capo > 0) {
+      staff.capo = revision.capo;
+    }
     const numStrings = Array.isArray(tuning) ? tuning.length : 6;
 
     // Pre-scan to find the max voice count across all measures.
