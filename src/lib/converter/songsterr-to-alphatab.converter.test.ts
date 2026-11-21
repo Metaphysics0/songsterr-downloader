@@ -2108,6 +2108,30 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('gradual tempo', () => {
+    it('keeps linear tempo changes', () => {
+      const bar = {
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ]
+      };
+      const score = roundTrip({
+        automations: {
+          tempo: [
+            { measure: 0, position: 0, bpm: 120, type: 4 },
+            { measure: 1, position: 0, bpm: 90, type: 4, linear: true }
+          ]
+        },
+        measures: [{ signature: [4, 4], ...bar }, bar]
+      });
+      expect(
+        score.masterBars.map((mb) =>
+          mb.tempoAutomations.map((a) => [a.value, a.isLinear])
+        )
+      ).toEqual([[[120, false]], [[90, true]]]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

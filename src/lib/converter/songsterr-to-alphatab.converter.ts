@@ -1188,7 +1188,7 @@ export class SongsterrToAlphaTabConverter {
           ? Math.max(0, Math.min(1, point.position / (point.type || 4)))
           : 0;
       const tempoAutomation = alphaTab.model.Automation.buildTempoAutomation(
-        false,
+        !!point.linear,
         ratioPosition,
         point.bpm,
         tempoReference,
