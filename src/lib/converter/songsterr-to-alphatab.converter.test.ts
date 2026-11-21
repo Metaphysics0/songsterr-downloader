@@ -1792,6 +1792,37 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('slap, pop and tapping', () => {
+    it('keeps each technique', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 4], notes: [E], slapping: true },
+                  { duration: [1, 4], notes: [E], popping: true },
+                  { duration: [1, 4], notes: [E], tapping: true },
+                  { duration: [1, 4], notes: [E], deadSlapped: true }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(
+        beats.map((beat) => [beat.slap, beat.pop, beat.tap, beat.deadSlapped])
+      ).toEqual([
+        [true, false, false, false],
+        [false, true, false, false],
+        [false, false, true, false],
+        [false, false, false, true]
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

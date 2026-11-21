@@ -106,6 +106,10 @@ export interface SongsterrRevisionBeatPayload {
   tremolo?: [number, number];
   wahwah?: string;
   fadeIn?: boolean;
+  slapping?: boolean;
+  popping?: boolean;
+  tapping?: boolean;
+  deadSlapped?: boolean;
 }
 
 export interface SongsterrRevisionVoicePayload {

@@ -695,6 +695,11 @@ export class SongsterrToAlphaTabConverter {
       beat.fade = alphaTab.model.FadeType.FadeIn;
     }
 
+    beat.slap = !!beatData.slapping;
+    beat.pop = !!beatData.popping;
+    beat.tap = !!beatData.tapping;
+    beat.deadSlapped = !!beatData.deadSlapped;
+
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
       beat.vibrato = alphaTab.model.VibratoType.Wide;
