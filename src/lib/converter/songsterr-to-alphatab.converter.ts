@@ -685,6 +685,12 @@ export class SongsterrToAlphaTabConverter {
       beat.tremoloPicking.marks = tremoloMarks;
     }
 
+    if (beatData.wahwah === 'open') {
+      beat.wahPedal = alphaTab.model.WahPedal.Open;
+    } else if (beatData.wahwah === 'closed') {
+      beat.wahPedal = alphaTab.model.WahPedal.Closed;
+    }
+
     // Beat-level vibrato
     if (beatData.wideVibrato || beatData.vibratoWithTremoloBar) {
       beat.vibrato = alphaTab.model.VibratoType.Wide;

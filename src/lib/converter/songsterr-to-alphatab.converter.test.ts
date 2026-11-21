@@ -1751,6 +1751,31 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('wah', () => {
+    it('keeps open and closed wah', () => {
+      const score = roundTrip({
+        measures: [
+          {
+            signature: [4, 4],
+            voices: [
+              {
+                beats: [
+                  { duration: [1, 2], notes: [E], wahwah: 'open' },
+                  { duration: [1, 2], notes: [E], wahwah: 'closed' }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+      const beats = score.tracks[0].staves[0].bars[0].voices[0].beats;
+      expect(beats.map((beat) => beat.wahPedal)).toEqual([
+        alphaTab.model.WahPedal.Open,
+        alphaTab.model.WahPedal.Closed
+      ]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

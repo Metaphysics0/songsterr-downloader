@@ -104,6 +104,7 @@ export interface SongsterrRevisionBeatPayload {
   arpeggio?: SongsterrRevisionStrokePayload;
   gradualVelocity?: string;
   tremolo?: [number, number];
+  wahwah?: string;
 }
 
 export interface SongsterrRevisionVoicePayload {
