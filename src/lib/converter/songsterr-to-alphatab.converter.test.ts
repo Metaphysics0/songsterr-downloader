@@ -2181,6 +2181,38 @@ describe('SongsterrToAlphaTabConverter', () => {
     });
   });
 
+  describe('instrument changes', () => {
+    it('switches sound partway through the track', () => {
+      const bar = {
+        voices: [
+          { beats: [{ duration: [1, 1] as [number, number], notes: [E] }] }
+        ]
+      };
+      const score = roundTrip({
+        sounds: [
+          { instrumentId: 30, label: 'Distortion Guitar' },
+          { instrumentId: 27, label: 'Electric Guitar (clean)' }
+        ],
+        trackAutomations: {
+          trackSoundAutomations: [
+            { soundId: 0, measure: 0, position: 0 },
+            { soundId: 1, measure: 1, position: 0 },
+            { soundId: 0, measure: 2, position: 0 }
+          ]
+        },
+        measures: [{ signature: [4, 4], ...bar }, bar, bar]
+      });
+      const programs = score.tracks[0].staves[0].bars.map(
+        (b) =>
+          b.voices[0].beats[0].getAutomation(
+            alphaTab.model.AutomationType.Instrument
+          )?.value ?? null
+      );
+      expect(score.tracks[0].playbackInfo.program).toBe(30);
+      expect(programs.slice(1)).toEqual([27, 30]);
+    });
+  });
+
   describe('marker format', () => {
     it('handles string markers', () => {
       const revision: SongsterrRevisionTrackPayload = {

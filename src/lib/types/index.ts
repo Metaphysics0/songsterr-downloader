@@ -170,6 +170,14 @@ export interface SongsterrRevisionTrackPayload {
   volume?: number;
   balance?: number;
   transpose?: { chromatic?: number; octave?: number };
+  sounds?: { instrumentId: number; label?: string }[];
+  trackAutomations?: {
+    trackSoundAutomations?: {
+      soundId: number;
+      measure: number;
+      position: number;
+    }[];
+  };
   songId?: number;
   revisionId?: number;
   partId?: number;

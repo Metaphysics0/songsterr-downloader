@@ -598,6 +598,10 @@ export class SongsterrToAlphaTabConverter {
       staff.addBar(bar);
     }
 
+    if (!isPercussion) {
+      this.applySoundChanges(track, staff, score, revision);
+    }
+
     for (const [note, fret] of this.trillFrets) {
       note.trillValue = fret + note.stringTuning;
     }
@@ -1101,6 +1105,41 @@ export class SongsterrToAlphaTabConverter {
       restBeat.duration = mappedDuration.duration;
       restBeat.dots = mappedDuration.dots;
       voice.addBeat(restBeat);
+    }
+  }
+
+  private applySoundChanges(
+    track: alphaTab.model.Track,
+    staff: alphaTab.model.Staff,
+    score: alphaTab.model.Score,
+    revision: SongsterrRevisionTrackPayload
+  ): void {
+    const sounds = revision.sounds ?? [];
+    const changes = revision.trackAutomations?.trackSoundAutomations ?? [];
+    for (const change of changes) {
+      const sound = sounds[change.soundId];
+      const bar = staff.bars[change.measure];
+      const masterBar = score.masterBars[change.measure];
+      if (!sound || !bar || !masterBar) continue;
+      const program = mapSongsterrInstrumentToPlayback(
+        sound.instrumentId
+      ).program;
+      if (change.measure === 0 && change.position === 0) {
+        track.playbackInfo.program = program;
+        continue;
+      }
+      const barTicks =
+        (masterBar.timeSignatureNumerator * 3840) /
+        masterBar.timeSignatureDenominator;
+      const ratio = Math.max(0, Math.min(1, change.position / barTicks));
+      const beat = bar.voices[0]?.beats[0];
+      beat?.automations.push(
+        alphaTab.model.Automation.buildInstrumentAutomation(
+          false,
+          ratio,
+          program
+        )
+      );
     }
   }
 
