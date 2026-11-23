@@ -97,7 +97,7 @@
           loop
           muted
           playsinline
-          aria-label="Dragging the Songsterr Downloader button up into the browser's bookmarks bar"
+          aria-label="Dragging the Songsterr Downloader button into the bookmarks bar, then clicking the bookmark on a Songsterr tab to open the song ready to download"
         ></video>
       {/if}
       <span class="mt-1 block text-center text-xs text-slate-500">

@@ -1,0 +1,1948 @@
+{
+  "0": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "German-APiano",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.5 0.272727 0.363636 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30475 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "1": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "German-APiano",
+    "pickup": 0,
+    "effects": [
+      { "id": "M13_ModulationDigitalChorus", "params": "0.5 0.5 0.5 0.14" },
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "1 0 0.85 0.265306 0.265306 0.387755 0.326531 0.5 0.387755 0.326531 0.387755 0.326531 0.44898 0.755102 0.693878 0.714286 0.673469 0.673469"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.48 0.27 0.25712" },
+      { "id": "M03_StudioReverbRoomStudioA", "params": "0.74 0.33 0.4 0.87 0" }
+    ]
+  },
+  "2": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "German-APiano",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.45237 0 0.181818 0.383838 0.494949 0.494949 0.424242 0.585859 0.666667 0.787879 0.767677"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "0.81 0.33 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "1 0 0.01904" }
+    ]
+  },
+  "3": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "German-APiano",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.5 0.494949 0.494949 0.494949 0.494949 0.555556 0.666667 0.646465 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M05_StudioReverbPlatePercussive",
+        "params": "1 0.3 0.4 0.25 0.3"
+      },
+      {
+        "id": "A02_ComboAmericanClean",
+        "params": "0 0.52 0.73 0.31333 0.16 0 0"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0 0.17614" }
+    ]
+  },
+  "4": {
+    "path": "Orchestra/Keyboard/Electric Piano",
+    "patch": "MarkI-EPiano",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.30949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.666667 0.69697 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30475 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "5": {
+    "path": "Orchestra/Keyboard/Electric Piano",
+    "patch": "200A-EPiano",
+    "pickup": 0,
+    "effects": [
+      { "id": "M13_ModulationDigitalChorus", "params": "0.18 0.78 0.21 0.62" },
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "1 0 0.85 0 0 0.0612245 0.326531 0.5 0.387755 0.326531 0.387755 0.326531 0.510204 0.5 0.510204 0.591837 0.612245 0.673469"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.75 0.63 0.21903" },
+      {
+        "id": "M02_StudioReverbHallSmallTheater",
+        "params": "1 0.24 0.1 0.06 0.62"
+      },
+      { "id": "E22_VibratoVibe", "params": "0 0.09 1" }
+    ]
+  },
+  "6": {
+    "path": "Orchestra/Keyboard/Clavinet",
+    "patch": "Harpsichord-Key",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.5 0 0.0808081 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "7": {
+    "path": "Orchestra/Keyboard/Clavinet",
+    "patch": "Harpsichord-Key",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0 0.342857 0.5 0.628571 0.857143 0.4 0 0.742857"
+      },
+      { "id": "A01_ComboTop30", "params": "0.75 0.6 0.34 1 0.2 0.31 0 0" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.62 0.5 0" }
+    ]
+  },
+  "8": {
+    "path": "Orchestra/Other/Celesta",
+    "patch": "Celesta-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.84285 0 0.242424 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "9": {
+    "path": "Orchestra/Other/Celesta",
+    "patch": "Celesta-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.5 0 0 0 0.161616 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      { "id": "A02_ComboAmericanClean", "params": "0.12 0.5 0.5 0.385 0 0 0" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.47142" },
+      {
+        "id": "M05_StudioReverbPlatePercussive",
+        "params": "0.78 0.3 0.4 0 0.3"
+      }
+    ]
+  },
+  "10": {
+    "path": "Orchestra/Other/Vibraphone",
+    "patch": "Vibraphone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "1 0 0.5 0.262626 0.262626 0.494949 0.323232 0.494949 0.383838 0.494949 0.383838 0.323232 0.585859 0.494949 0.444444 0.525253 0.666667 0.666667"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.45 0.02 0.38566" },
+      { "id": "M03_StudioReverbRoomStudioA", "params": "1 0.26 0.4 0.87 0.2" },
+      { "id": "E15_ChorusEnsemble", "params": "0.29 0.79 0.16" },
+      { "id": "M12_DelayDigitalDelay", "params": "0.12 0.4 0.08" }
+    ]
+  },
+  "11": {
+    "path": "Orchestra/Other/Vibraphone",
+    "patch": "Vibraphone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.42378 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      { "id": "E23_TremoloOpto", "params": "0.64285 0.13329" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "12": {
+    "path": "Orchestra/Other/Xylophone",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "1 0 0.5 0 0 0.525253 0.494949 0.555556 0.555556 0.585859 0.484848 0 0.545455 0.444444 0.444444 0.262626 0 0"
+      },
+      {
+        "id": "M06_DynamicAnalogDynamic",
+        "params": "0 0 0.23 0.43 0.67 0.22 0.39523 0.45618"
+      },
+      { "id": "M02_StudioReverbHallSmallTheater", "params": "1 0.35 0 0 0.6" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.75237 0.0238 0.24759" },
+      {
+        "id": "M02_StudioReverbHallSmallTheater",
+        "params": "1 0.2 0.5 0.5 0.37"
+      }
+    ]
+  },
+  "13": {
+    "path": "Orchestra/Other/Xylophone",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.5 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "14": {
+    "path": "Orchestra/Other/Vibraphone",
+    "patch": "Vibraphone-Tuned",
+    "pickup": 0,
+    "effects": [
+      { "id": "M13_ModulationDigitalChorus", "params": "0.5 0.5 0.5 0.14" },
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "1 0 0.85 0.265306 0.265306 0.387755 0.326531 0.5 0.387755 0.326531 0.387755 0.326531 0.510204 0.5 0.510204 0.591837 0.673469 0.673469"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.45 0 0.16189" },
+      {
+        "id": "M03_StudioReverbRoomStudioA",
+        "params": "0.73 0.74 0.22 0.09 0.37"
+      }
+    ]
+  },
+  "15": {
+    "path": "Stringed/Other Stringed Instruments/Banjo",
+    "patch": "5-Banjo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.474747"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.21428 0.32998" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.44 0.4 0.5 0.2" }
+    ]
+  },
+  "16": {
+    "path": "Orchestra/Keyboard/Organ",
+    "patch": "Jazz-Organ",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.56661 0.272727 0.333333 0.494949 0.494949 0.494949 1 1 1 1 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "17": {
+    "path": "Orchestra/Keyboard/Organ",
+    "patch": "Jazz-Organ",
+    "pickup": 0,
+    "effects": [
+      { "id": "E27_CompressorSorr", "params": "0.5 0.6" },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.575 0 0.262626 0.272727 0.30303 0.323232 0.272727 0.616162 0.30303 0.727273 0.969697"
+      },
+      {
+        "id": "A12_SpeakerRotary",
+        "params": "0 0.34 0.25 0.5 0.5 0.5 0.5 0.5 0.5 0.4 0.4 0.3 0.7"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.65472" },
+      { "id": "M03_StudioReverbRoomStudioA", "params": "0.62 0.9 0.25 0.4 0.3" }
+    ]
+  },
+  "18": {
+    "path": "Orchestra/Keyboard/Organ",
+    "patch": "Jazz-Organ",
+    "pickup": 0,
+    "effects": [
+      { "id": "E06_DistortionRat", "params": "0 1 0.62" },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.575 0 0.262626 0.272727 0.30303 0.323232 0.272727 0.616162 0.30303 0.727273 0.969697"
+      },
+      {
+        "id": "A12_SpeakerRotary",
+        "params": "0 0.34 0.25 0.5 0.5 0.5 0.5 0.5 0.5 0.4 0.4 0.3 0.7"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.82332" },
+      { "id": "M03_StudioReverbRoomStudioA", "params": "0.62 1 0.25 0.4 0.3" }
+    ]
+  },
+  "19": {
+    "path": "Orchestra/Keyboard/Organ",
+    "patch": "Ballad-Organ",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "A12_SpeakerRotary",
+        "params": "0 0.34 0.25 0.494949 0.5 0.5 0.5 0.5 0.5 0.4 0.4 0.3 0.7"
+      },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.575 0 0.262626 0.30303 0.30303 0.323232 0.636364 0.616162 0.646465 0.606061 0.363636"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.42379" },
+      { "id": "M03_StudioReverbRoomStudioA", "params": "1 0.6 0.25 0.4 0.3" }
+    ]
+  },
+  "20": {
+    "path": "Orchestra/Winds/Other Winds",
+    "patch": "Oboe-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.75 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.47141" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.34 0.4 0.5 0.2" }
+    ]
+  },
+  "21": {
+    "path": "Stringed/Acoustic Guitars/Steel Guitar",
+    "patch": "Accordion",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.676768"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.62855" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.43 0.4 0.5 0.2" }
+    ]
+  },
+  "22": {
+    "path": "Orchestra/Winds/Harmonica",
+    "patch": "Harmonica",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.22142 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M01_StudioReverbHallConcertHall",
+        "params": "1 0.5 0.3 0.5 0.3 0.05"
+      }
+    ]
+  },
+  "23": {
+    "path": "Stringed/Acoustic Guitars/Steel Guitar",
+    "patch": "Bandoneon",
+    "pickup": 0,
+    "effects": [
+      { "id": "E30_EqGEq", "params": "0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.685714" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.69999" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.43 0.4 0.5 0.2" }
+    ]
+  },
+  "24": {
+    "path": "Stringed/Acoustic Guitars/Nylon Guitar",
+    "patch": "Concerto-Nylon",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.525253"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.21428 0.86377" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.27713 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "25": {
+    "path": "Stringed/Acoustic Guitars/Steel Guitar",
+    "patch": "D-Steel",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0.131313 0.494949 0.494949 0.494949 0.494949 0.585859 0.585859 0.525253"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.33805" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.43 0.4 0.5 0.2" }
+    ]
+  },
+  "26": {
+    "path": "Stringed/Electric Guitars/Jazz Guitar",
+    "patch": "ES-Guitar",
+    "pickup": 0,
+    "effects": [
+      { "id": "A02_ComboAmericanClean", "params": "0.73 0.54 0.58 0.29 0 0 0" },
+      {
+        "id": "M01_StudioReverbHallConcertHall",
+        "params": "0.5 0.20285 0.35 0.5 0.6 0"
+      },
+      {
+        "id": "E30_EqGEq",
+        "params": "0.383838 0.494949 0.494949 0.494949 0.494949 0.333333 0.161616 0.383838"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.17619 0" }
+    ]
+  },
+  "27": {
+    "path": "Stringed/Electric Guitars/Clean Guitar",
+    "patch": "Strat-Guitar",
+    "pickup": 1,
+    "effects": [
+      {
+        "id": "A01_ComboTop30",
+        "params": "0.61 0.59 0.38 0.511667 0.21 0.29 0 0"
+      },
+      {
+        "id": "E30_EqGEq",
+        "params": "0.494949 0.232323 0.373737 0.494949 0.373737 0.494949 0.494949 0.777778"
+      }
+    ]
+  },
+  "28": {
+    "path": "Stringed/Electric Guitars/Clean Guitar",
+    "patch": "Strat-Guitar",
+    "pickup": 1,
+    "effects": [
+      {
+        "id": "A01_ComboTop30",
+        "params": "0.61 0.59 0.38 0.511667 0.21 0.29 0 0"
+      },
+      { "id": "E30_EqGEq", "params": "0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.541667" }
+    ]
+  },
+  "29": {
+    "path": "Stringed/Electric Guitars/Overdrive Guitar",
+    "patch": "Strat-Guitar",
+    "pickup": 4,
+    "effects": [
+      { "id": "E03_OverdriveScreamer", "params": "0.84 0.5 0.84" },
+      { "id": "A05_StackBritishVintage", "params": "0.85 0.67 0.36 0.66 0.52" },
+      {
+        "id": "E30_EqGEq",
+        "params": "0.494949 0.373737 0.494949 0.40404 0.484848 0.484848 0.484848 0.363636"
+      }
+    ]
+  },
+  "30": {
+    "path": "Stringed/Electric Guitars/Distortion Guitar",
+    "patch": "Classic-Guitar",
+    "pickup": 2,
+    "effects": [
+      { "id": "E03_OverdriveScreamer", "params": "0.85 0 0.67" },
+      {
+        "id": "A06_StackBritishStack",
+        "params": "1 0.91 0.67 0.32 0.69 0.51 0.95 0"
+      },
+      {
+        "id": "E30_EqGEq",
+        "params": "0.171717 0.474747 0.474747 0.474747 0.474747 0.474747 0.474747 0.222222"
+      }
+    ]
+  },
+  "31": {
+    "path": "Stringed/Electric Guitars/Distortion Guitar",
+    "patch": "Classic-Guitar",
+    "pickup": 2,
+    "effects": [
+      { "id": "E03_OverdriveScreamer", "params": "0.85 0 0.67" },
+      {
+        "id": "A06_StackBritishStack",
+        "params": "1 0.91 0.67 0.32 0.69 0.51 0.95 0"
+      },
+      {
+        "id": "E30_EqGEq",
+        "params": "0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.161616"
+      }
+    ]
+  },
+  "32": {
+    "path": "Stringed/Basses/Acoustic Bass",
+    "patch": "Acoustic-Bass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E31_EqBEq",
+        "params": "0.555556 0.606061 0.494949 0.494949 0.494949 0.494949 0.494949 0.676768"
+      },
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.21428 0.40475 0.26666"
+      },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.44 0.4 0.5 0.2" }
+    ]
+  },
+  "33": {
+    "path": "Stringed/Basses/Clean Bass",
+    "patch": "Pre-Bass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "A10_StackClassic",
+        "params": "0.45 0 0 0.63 0.37 0.39 0.39 0.54808"
+      },
+      {
+        "id": "E31_EqBEq",
+        "params": "0.656566 0.59596 0.59596 0.676768 0.333333 0.616162 0.707071 0.191919"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.64856 0.07139" }
+    ]
+  },
+  "34": {
+    "path": "Stringed/Basses/Clean Bass",
+    "patch": "Pre-Bass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "A10_StackClassic",
+        "params": "0.45 0 0 0.63 0.37 0.39 0.39 0.71"
+      },
+      {
+        "id": "E31_EqBEq",
+        "params": "0.657143 0.6 0.6 0.685714 0.342857 0.628571 0.714286 0.5"
+      }
+    ]
+  },
+  "35": {
+    "path": "Stringed/Basses/Fretless Bass",
+    "patch": "Fretless-Bass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "A10_StackClassic",
+        "params": "0.45 0 0 0.63 0.37 0.39 0.39 0.71"
+      },
+      {
+        "id": "E31_EqBEq",
+        "params": "0.656566 0.59596 0.59596 0.676768 0.333333 0.616162 0.707071 0.555556"
+      }
+    ]
+  },
+  "36": {
+    "path": "Stringed/Basses/Slap Bass",
+    "patch": "Modern-Bass",
+    "pickup": 3,
+    "effects": [
+      { "id": "E27_CompressorSorr", "params": "0.5 0.6" },
+      {
+        "id": "A11_StackAural",
+        "params": "0.45 0.786295 0.63 0.707071 0.63 0.616162 0.76 0.333333 0.64 0.767677 0.99 0.834681 0.6"
+      },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.62 0 0.494949 0.555556 0.555556 0.494949 0.272727 0.494949 0.747475 0.606061 0.686869"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.68 0.11 0.28519" }
+    ]
+  },
+  "37": {
+    "path": "Stringed/Basses/Slap Bass",
+    "patch": "Pre-Bass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E31_EqBEq",
+        "params": "0.0285714 0.542857 0.571429 0.542857 0.6 0 0 0.4"
+      },
+      { "id": "A10_StackClassic", "params": "0.44 0 0 0.65 0.36 0.05 0.66 1" },
+      {
+        "id": "M06_DynamicAnalogDynamic",
+        "params": "0 0 0.59 0 0.4 0.6 0.45475 0.46141"
+      }
+    ]
+  },
+  "38": {
+    "path": "Stringed/Basses/Synth Bass",
+    "patch": "FMSyn-Bass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E31_EqBEq",
+        "params": "0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.242424"
+      }
+    ]
+  },
+  "39": {
+    "path": "Orchestra/Synth/Bass",
+    "patch": "Dep-Bass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E31_EqBEq",
+        "params": "0.383838 0.525253 0.494949 0.525253 0.494949 0.69697 0.636364 0"
+      }
+    ]
+  },
+  "40": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Violin-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.96188 0.494949 0.494949 0.494949 0.494949 0.494949 0.363636 0.494949 0.444444 0.808081 0.606061"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "41": {
+    "path": "Orchestra/Strings/Viola",
+    "patch": "Viola-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.37616 0.494949 0.494949 0.606061 0.414141 0.333333 0.414141 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "42": {
+    "path": "Orchestra/Strings/Cello",
+    "patch": "Cello-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.40476 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "43": {
+    "path": "Orchestra/Strings/Contrabass",
+    "patch": "Contrabass-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.47498 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29522 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "44": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Violin1-Ensemble",
+    "pickup": 0,
+    "effects": [
+      { "id": "M07_DynamicClassicDynamic", "params": "0.72 0.5 0.55" },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.5 0.612245 0.55102 0.489796 0.489796 0.428571 0.306122 0.408163 0.530612 0.55102 0.612245"
+      },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" },
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "0 0 0.44663 0 0 0 0 0 0.484848 0.545455 0.444444 0.464646 0.424242 0.363636 0.525253 0.606061 0.686869 0.707071"
+      },
+      {
+        "id": "M01_StudioReverbHallConcertHall",
+        "params": "1 0.6 0.35 0.5 0.6 0"
+      }
+    ]
+  },
+  "45": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Violin1-Ensemble-Pizz",
+    "pickup": 0,
+    "effects": [
+      { "id": "E28_PitchOctaver", "params": "0.86 0 0.89" },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.76 0 0 0.367347 0.387755 0.469388 0.714286 0.673469 0.530612 0.387755 0.265306"
+      },
+      { "id": "E15_ChorusEnsemble", "params": "1 0.24 1" },
+      { "id": "M07_DynamicClassicDynamic", "params": "1 0.78 0.16617" },
+      {
+        "id": "M02_StudioReverbHallSmallTheater",
+        "params": "1 0.6 0.27 0.23 0.92"
+      }
+    ]
+  },
+  "46": {
+    "path": "Orchestra/Strings/Harp",
+    "patch": "Harp-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.78809 0.616162 0.494949 0.616162 0.616162 0.474747 0.616162 0.616162 0.616162 0.616162 0.616162"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "47": {
+    "path": "Orchestra/Other/Timpani",
+    "patch": "TimpaniHi-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.75 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.23333 0.5" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "48": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Violin1-Ensemble",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.79523 0.272727 0.444444 0.494949 0.585859 0.494949 0.494949 0.5 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "49": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Violin1-Ensemble",
+    "pickup": 0,
+    "effects": [
+      { "id": "M07_DynamicClassicDynamic", "params": "0.72 0.5 0.55" },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.5 0.612245 0.55102 0.489796 0.489796 0.428571 0.306122 0.408163 0.530612 0.55102 0.612245"
+      },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" },
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "0 0 0.40856 0 0 0 0 0 0.484848 0.545455 0.444444 0.464646 0.424242 0.363636 0.525253 0.606061 0.686869 0.707071"
+      },
+      {
+        "id": "M01_StudioReverbHallConcertHall",
+        "params": "1 0.6 0.35 0.5 0.6 0"
+      }
+    ]
+  },
+  "50": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Violin1-Ensemble",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.6119 0.666667 0.666667 0.666667 0.666667 0.666667 0.666667 0.494949 0.414141 0.555556 0.444444"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "51": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Lucid-Pad",
+    "pickup": 0,
+    "effects": [
+      { "id": "M07_DynamicClassicDynamic", "params": "0.72 0.5 0.55" },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.5 0.606061 0.545455 0.525253 0.555556 0.525253 0.555556 0.383838 0.444444 0.717172 0.828283"
+      },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" },
+      {
+        "id": "M09_GraphicEQ15Band",
+        "params": "0 0 0.36094 0 0 0 0 0 0.484848 0.545455 0.444444 0.464646 0.424242 0.363636 0.333333 0.414141 0 0"
+      },
+      {
+        "id": "M01_StudioReverbHallConcertHall",
+        "params": "1 0.6 0.35 0.5 0.6 0"
+      }
+    ]
+  },
+  "52": {
+    "path": "Orchestra/Other/Singer",
+    "patch": "Vocal-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.25 0.5 0.5 0.5 0.5 0.346939 0.612245 0.632653 0.5 0.693878 0.5"
+      },
+      { "id": "M13_ModulationDigitalChorus", "params": "0.28 0.5 0.5 0.64" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.2619 0.5" },
+      {
+        "id": "M02_StudioReverbHallSmallTheater",
+        "params": "0.85 0.6 0.5 0.5 0.6"
+      }
+    ]
+  },
+  "53": {
+    "path": "Orchestra/Other/Singer",
+    "patch": "MetaChoir-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.25 0.5 0.5 0.5 0.5 0.346939 0.612245 0.632653 0.5 0.693878 0.5"
+      },
+      { "id": "M13_ModulationDigitalChorus", "params": "0.28 0.5 0.5 0.19237" },
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.87142 0.72857 0.42425"
+      },
+      {
+        "id": "M02_StudioReverbHallSmallTheater",
+        "params": "1 0.22857 0.5 0.5 0.6"
+      }
+    ]
+  },
+  "54": {
+    "path": "Orchestra/Other/Singer",
+    "patch": "MetaChoir-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.69044 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.585859 0 0.494949"
+      },
+      { "id": "E15_ChorusEnsemble", "params": "0.15714 0.53808 0" }
+    ]
+  },
+  "55": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "OBStrings-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.43095 0.494949 0.494949 0.494949 0.494949 0.747475 0.747475 0.616162 0.666667 0.525253 0.262626"
+      },
+      { "id": "M13_ModulationDigitalChorus", "params": "0.28 0.68 0.5 1" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.8238 0.15713 0.14522" },
+      {
+        "id": "M02_StudioReverbHallSmallTheater",
+        "params": "1 0.6 0.5 0.5 0.6"
+      }
+    ]
+  },
+  "56": {
+    "path": "Orchestra/Winds/Trumpet",
+    "patch": "Trumpet-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.60595 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.69697 0.666667 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.43333 0.18571 0.42378" }
+    ]
+  },
+  "57": {
+    "path": "Orchestra/Winds/Trombone",
+    "patch": "Trombone-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.625 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.46189 0.18571 0.45237" }
+    ]
+  },
+  "58": {
+    "path": "Orchestra/Winds/Tuba",
+    "patch": "BassTuba-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.67261 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.69697 0.69697 0.494949 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.19523 0.37614" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "59": {
+    "path": "Orchestra/Winds/Trumpet",
+    "patch": "Trumpet-Sordino-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.625 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.13809 0.29043" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "60": {
+    "path": "Orchestra/Winds/Other Winds",
+    "patch": "FrenchHorn-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.2238 0.44281" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.21187 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "62": {
+    "path": "Orchestra/Synth/Brass",
+    "patch": "Simple-Brass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.75 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.17619 0.36666" }
+    ]
+  },
+  "63": {
+    "path": "Orchestra/Synth/Brass",
+    "patch": "Matrix-Brass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.52 0.5 0.5 0.5 0.5 0.346939 0.612245 0.632653 0.5 0.693878 0.5"
+      },
+      { "id": "M13_ModulationDigitalChorus", "params": "0.28 0.5 0.5 1" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.1238 0.26521" },
+      {
+        "id": "M02_StudioReverbHallSmallTheater",
+        "params": "0.80475 0.34619 0.11 0 0.6"
+      }
+    ]
+  },
+  "64": {
+    "path": "Orchestra/Winds/Saxophone",
+    "patch": "Soprano-Sax",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.23332 0.34758" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "65": {
+    "path": "Orchestra/Winds/Saxophone",
+    "patch": "Alto-Sax",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.16666 0.34761" }
+    ]
+  },
+  "66": {
+    "path": "Orchestra/Winds/Saxophone",
+    "patch": "Tenor-Sax",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.4714 0.32853" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.21904 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "67": {
+    "path": "Orchestra/Winds/Saxophone",
+    "patch": "Baritone-Sax",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333 0.583333"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.23333 0.33808" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.20951 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "68": {
+    "path": "Orchestra/Winds/Other Winds",
+    "patch": "Oboe-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.75 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.6333 0.17618 0.48086" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.34 0.4 0.5 0.2" }
+    ]
+  },
+  "69": {
+    "path": "Orchestra/Winds/Other Winds",
+    "patch": "EnglishHorn-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.625 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.38569 0.19523 0.5" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.55 0.4 0.5 0.2" }
+    ]
+  },
+  "70": {
+    "path": "Orchestra/Winds/Bassoon",
+    "patch": "Bassoon-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.20476 0.38571" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "71": {
+    "path": "Orchestra/Winds/Clarinet",
+    "patch": "Clarinet-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.625 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.19523 0.42378" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "72": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Piccolo-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.638333 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.33809 0.21428 0.51903"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "73": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Flute-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.638333 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.38571 0.2238 0.54761" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "74": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.19523 0.38568" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "75": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Flute-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.638333 0.494949 0.494949 0.494949 0.494949 0.494949 0.69697 0.666667 0.69697 0.606061 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.4714" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "76": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.29047 0.42377" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "77": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Flute-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.638333 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.16666 0.40476" }
+    ]
+  },
+  "78": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.23333 0.40473" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "79": {
+    "path": "Orchestra/Winds/Flute",
+    "patch": "Flute-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.638333 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.17619 0.42378" }
+    ]
+  },
+  "80": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Classic-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.25 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.23333 0.25235" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "81": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Classic-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.21189 0.494949 0.363636 0.242424 0.333333 0.494949 0.494949 0.525253 0.717172 0.777778 0.606061"
+      },
+      { "id": "E15_ChorusEnsemble", "params": "0.35714 0.6619 0.81904" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "82": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Bottle-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.13571 0.494949 0.494949 0.494949 0.494949 0.414141 0.494949 0.494949 0.747475 0.69697 0.747475"
+      },
+      { "id": "E17_ChorusBChorus", "params": "0.3 0.5 0.91427" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.20476 0.37617" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "83": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Brassy-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.13571 0 0 0 0.525253 0 0 0 0 0.494949 0.494949"
+      },
+      { "id": "E17_ChorusBChorus", "params": "0.1 0.41428 1" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.35712 0.21426 0.25231" }
+    ]
+  },
+  "84": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Classic-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.25 0 0 0.272727 0.111111 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.20476 0.16664" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "85": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Vox-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.27857 0.494949 0.494949 0.272727 0.222222 0.383838 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.21428 0.45234" }
+    ]
+  },
+  "86": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Classic-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.4619 0.494949 0.494949 0.494949 0.222222 0.222222 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      },
+      { "id": "E16_ChorusString", "params": "0.5 1" }
+    ]
+  },
+  "87": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Classic-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.24284 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.66185 0.11904 0.20475"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "88": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Intimacy-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.5 0 0 0.414141 0.363636 0.555556 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.36664 0.5" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.6857 0.62856 0.9 0.99999"
+      }
+    ]
+  },
+  "89": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Vox-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.18568 0.64282 0.41181"
+      },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.64285 0.494949 0.494949 0.494949 0.333333 0.242424 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "0.99998 0.7619 0.82857 0.5 0.21903"
+      }
+    ]
+  },
+  "90": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Brassy-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.20474 0.85236 0.44046"
+      },
+      { "id": "E17_ChorusBChorus", "params": "0.3 0.5 0.4" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "91": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Vocal-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.64282 0.18569 0.38095"
+      },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.74759 0.333333 0.494949 0.494949 0.383838 0 0.494949 0.494949 0.414141 0.383838 0.242424"
+      },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "92": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Lush-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.5 0.494949 0.494949 0.494949 0.242424 0.222222 0.494949 0.494949 0.494949 0.0808081 0.494949"
+      },
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.27142 0.60473 0.99519"
+      },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "93": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Lucid-Pad",
+    "pickup": 0,
+    "effects": [
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.13809 0.64044" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "94": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Vocal-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.31903 0.69522 0.52618"
+      },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.66187 0.494949 0.494949 0.494949 0.414141 0.272727 0.494949 0.494949 0.717172 0.777778 0.888889"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.91428 0.4 0.5 0.55238"
+      }
+    ]
+  },
+  "95": {
+    "path": "Orchestra/Synth/Pad",
+    "patch": "Rosin-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.31903 0.10473 0.39283"
+      },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.75238 0.494949 0.494949 0.494949 0.414141 0.272727 0.494949 0.494949 0.222222 0.222222 0"
+      },
+      { "id": "M05_StudioReverbPlatePercussive", "params": "1 0.5 0.3 0.5 0.5" }
+    ]
+  },
+  "96": {
+    "path": "Orchestra/Synth/Sequencer",
+    "patch": "Harpy-Seq",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.4619 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.87618"
+      }
+    ]
+  },
+  "97": {
+    "path": "Orchestra/Other/Celesta",
+    "patch": "Mini-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.32618 0.474747 0.474747 0.474747 0.474747 0.474747 0.474747 0.474747 0.474747 0.474747 0.474747"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "98": {
+    "path": "Orchestra/Synth/Sequencer",
+    "patch": "Bottle-Pad",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.32619 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848 0.484848"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "99": {
+    "path": "Orchestra/Synth/Sequencer",
+    "patch": "Rubber-Lead",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.3738 0 0 0 0 0.474747 0.484848 0.484848 0.484848 0.484848 0.484848"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.31428 0.4 0.5 0.7619"
+      }
+    ]
+  },
+  "100": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Celesta-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.70476 0 0 0 0.30303 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.7238 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.73809 0.5 0.5" }
+    ]
+  },
+  "101": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.44047 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "102": {
+    "path": "Orchestra/Synth/Lead",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.44047 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "103": {
+    "path": "Orchestra/Synth/Brass",
+    "patch": "Simple-Brass",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.78809 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      },
+      { "id": "E24_TremoloBias", "params": "0.5 0.44761" }
+    ]
+  },
+  "104": {
+    "path": "Stringed/Electric Guitars/Clean Guitar",
+    "patch": "Electric-Sitar",
+    "pickup": 1,
+    "effects": [
+      {
+        "id": "A01_ComboTop30",
+        "params": "0.61 0.59 0.38 0.511667 0.21 0.29 0 0"
+      },
+      {
+        "id": "E30_EqGEq",
+        "params": "0.333333 0.444444 0.484848 0.484848 0.484848 0.484848 0.484848 0.666667"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "105": {
+    "path": "Stringed/Other Stringed Instruments/Banjo",
+    "patch": "5-Banjo",
+    "pickup": 0,
+    "effects": [
+      { "id": "E30_EqGEq", "params": "0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.685714" },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.53809 0.2619 0.34902" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.44 0.4 0.5 0.2" }
+    ]
+  },
+  "106": {
+    "path": "Stringed/Other Stringed Instruments/Ukulele",
+    "patch": "CC-Ukulele",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0.050505 0.242424 0.161616 0.494949 0.494949 0.494949 0.494949 0.585859"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.7" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.44 0.4 0.5 0.2" }
+    ]
+  },
+  "107": {
+    "path": "Stringed/Other Stringed Instruments/Banjo",
+    "patch": "5-Banjo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0 0.363636 0.494949 0.494949 0.494949 0.494949 0.494949 0.858586"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.28095 0.17618 0.5776" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.44 0.4 0.5 0.2" }
+    ]
+  },
+  "108": {
+    "path": "Orchestra/Other/Xylophone",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.7 0.494949 0.717172 0.494949 0.666667 0.717172 0.69697 0.494949 0.242424 0.444444 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.43329 0.21427 0.738" },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "109": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "Bagpipe",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.666667 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.15713 0.37616" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "110": {
+    "path": "Orchestra/Strings/Violin",
+    "patch": "Violin-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.33809 0.494949 0.494949 0.494949 0.494949 0.777778 0.777778 0.828283 0.747475 0.444444 0.494949"
+      },
+      {
+        "id": "M07_DynamicClassicDynamic",
+        "params": "0.33809 0.19523 0.59521"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "111": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "Oboe-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.45737 0 0 0.161616 0.333333 0.414141 0.69697 0.828283 0.777778 0.525253 0.494949"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.32855 0.16666 0.56665" }
+    ]
+  },
+  "112": {
+    "path": "Orchestra/Other/Celesta",
+    "patch": "Celesta-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.75 0 0 0.585859 0.666667 0.474747 0.666667 0.666667 0.666667 0.666667 0.666667"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.33809 0.17619 0.66189" }
+    ]
+  },
+  "113": {
+    "path": "Orchestra/Other/Celesta",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.73095 0.131313 0.222222 0.272727 0.666667 0.666667 0.666667 0.666667 0.666667 0.666667 0.666667"
+      }
+    ]
+  },
+  "114": {
+    "path": "Orchestra/Other/Vibraphone",
+    "patch": "Vibraphone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.75 0 0.242424 0.242424 0.30303 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.12856 0.43331" }
+    ]
+  },
+  "115": {
+    "path": "Orchestra/Other/Xylophone",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.68332 0.616162 0.616162 0.616162 0.616162 0.777778 0.717172 0.616162 0.272727 0.222222 0.616162"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.52856 0.14761 0.45236" }
+    ]
+  },
+  "116": {
+    "path": "Orchestra/Other/Xylophone",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.75 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.57618 0.54759 0.26185" }
+    ]
+  },
+  "117": {
+    "path": "Orchestra/Other/Xylophone",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.7595 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.414141 0.383838 0.191919"
+      }
+    ]
+  },
+  "118": {
+    "path": "Orchestra/Other/Xylophone",
+    "patch": "Xylophone-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.70238 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162"
+      }
+    ]
+  },
+  "119": {
+    "path": "Orchestra/Other/Celesta",
+    "patch": "Celesta-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.90238 0 0 0.525253 0.666667 0.666667 0.666667 0.666667 0.666667 0.666667 0.666667"
+      }
+    ]
+  },
+  "120": {
+    "path": "Stringed/Acoustic Guitars/Steel Guitar",
+    "patch": "D-Steel",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "E30_EqGEq",
+        "params": "0 0.333333 0.494949 0.494949 0.494949 0.494949 0.494949 0.555556"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.75238" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.43 0.4 0.5 0.2" }
+    ]
+  },
+  "121": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.47141 0.272727 0.333333 0.494949 0 0 0.131313 0 0.272727 0.969697 1"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.21428 0.10949" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "122": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 0 0.3238 0 0.191919 0.111111 0.363636 0.494949 0.494949 0.494949 0.888889 0.666667 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.5 0.7" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "123": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "1 1 0.47618 0 0 0 0 0.474747 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.31904 0.5" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "124": {
+    "path": "Drums/Idiophone Percussion/Maracas",
+    "patch": "Celesta-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.73095 0.494949 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "125": {
+    "path": "Orchestra/Keyboard/Acoustic Piano",
+    "patch": "Recorder-Solo",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.33332 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949 0.494949"
+      },
+      { "id": "M07_DynamicClassicDynamic", "params": "0.5 0.19523 0.46187" },
+      { "id": "M04_StudioReverbRoomAmbience", "params": "1 0.6 0.4 0.5 0.2" }
+    ]
+  },
+  "126": {
+    "path": "Drums/Idiophone Percussion/Hand Clap",
+    "patch": "GroupHandClap-Percu",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.5 0.494949 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162 0.616162"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.30476 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "127": {
+    "path": "Drums/Idiophone Percussion/Maracas",
+    "patch": "TimpaniHi-Tuned",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.79761 0.494949 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758 0.575758"
+      },
+      {
+        "id": "M04_StudioReverbRoomAmbience",
+        "params": "1 0.29523 0.4 0.5 0.2"
+      }
+    ]
+  },
+  "drums": {
+    "path": "Drums/Drums/Drumkit",
+    "patch": "Drumkit-Master",
+    "pickup": 0,
+    "effects": [
+      {
+        "id": "M06_DynamicAnalogDynamic",
+        "params": "0.42 0.18 0.39 0.38 0.29046 0.4 0.54857 0.5"
+      },
+      {
+        "id": "M08_GraphicEQ10Band",
+        "params": "0 0 0.30712 0.363636 0.414141 0.545455 0.494949 0.40404 0.363636 0.383838 0.525253 0.606061 0.686869"
+      },
+      {
+        "id": "M05_StudioReverbPlatePercussive",
+        "params": "1 0.13 0.3 0.5 0.5"
+      }
+    ]
+  }
+}

@@ -43,3 +43,7 @@ export function trackDownloadFailed(props: TrackDownloadFailedParams) {
 export function trackYouTubeVideoClicked() {
   mixpanel.track('YouTube Video Clicked');
 }
+
+export function trackHireLinkClicked(placement: string) {
+  mixpanel.track('Hire Link Clicked', { placement });
+}

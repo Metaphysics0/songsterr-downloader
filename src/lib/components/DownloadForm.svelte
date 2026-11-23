@@ -12,6 +12,7 @@
   import MpakIcon from '$lib/icons/MpakIcon.svelte';
   import MidiDownloadOptions from './MidiDownloadOptions.svelte';
   import MpakDownloadOptions from './MpakDownloadOptions.svelte';
+  import HireNote from './HireNote.svelte';
   import type {
     MidiDownloadOptions as MidiDownloadOptionsValue,
     MpakDownloadOptions as MpakDownloadOptionsValue
@@ -24,6 +25,7 @@
   let { selectedSong }: Props = $props();
 
   let downloading: 'tab' | 'midi' | 'mpak' | null = $state(null);
+  let hasDownloaded = $state(false);
   let midiDownloadOptions = $state<MidiDownloadOptionsValue>({
     separateTracks: false
   });
@@ -35,7 +37,7 @@
     if (downloading) return;
     downloading = 'tab';
     try {
-      await downloadGuitarPro(selectedSong);
+      if (await downloadGuitarPro(selectedSong)) hasDownloaded = true;
     } finally {
       downloading = null;
     }
@@ -45,9 +47,10 @@
     if (downloading) return;
     downloading = 'midi';
     try {
-      await downloadMidiFile(selectedSong, {
+      const saved = await downloadMidiFile(selectedSong, {
         separateTracks: midiDownloadOptions.separateTracks
       });
+      if (saved) hasDownloaded = true;
     } finally {
       downloading = null;
     }
@@ -57,9 +60,10 @@
     if (downloading) return;
     downloading = 'mpak';
     try {
-      await downloadMpakFile(selectedSong, {
+      const saved = await downloadMpakFile(selectedSong, {
         allVideos: mpakDownloadOptions.allVideos
       });
+      if (saved) hasDownloaded = true;
     } finally {
       downloading = null;
     }
@@ -128,6 +132,10 @@
     class="cursor-pointer text-slate-400 font-light underline hover:text-slate-500 bg-transparent mb-1"
     onclick={deselectSong}>Select another</button
   >
+
+  {#if hasDownloaded}
+    <HireNote />
+  {/if}
 </div>
 
 <style>
